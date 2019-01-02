@@ -31,14 +31,16 @@ const getSessionId = () => {
 }
 
 const getApiUrl = url => {
+
+	return `${api_url}`
   // 除去(Admin or admin)
-  url = url.replace(/(A|a)dmin\//, '')
+//  url = url.replace(/(A|a)dmin\//, '')
 
   // 替换控制器驼峰为下划线
-  let func = url.substr(url.indexOf('/'))
-  let controller = url.substr(0, url.indexOf('/')).replace(/([a-zA-Z])([A-Z])/g, '$1_$2').toLowerCase()
+  //let func = url.substr(url.indexOf('/'))
+  //let controller = url.substr(0, url.indexOf('/')).replace(/([a-zA-Z])([A-Z])/g, '$1_$2').toLowerCase()
 
-  return `${api_url}/${controller}${func}`
+ // return `${api_url}/${controller}${func}`
 }
 
 const getAvatarUrl = (id, size = 120) => {

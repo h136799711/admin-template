@@ -44,9 +44,9 @@
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
     }
     .c_icon{
-        padding: 10px 10px;
+        padding: 1px 12px;
         position: absolute;
-        top: -4px;
+        top: 0px;
         left: 25px;
         font-size: 20px;
         color: #a6a9ac;
@@ -54,15 +54,15 @@
     .u_logo{
         padding: 10px 10px;
         position: absolute;
-        top: 24px;
+        top: 20px;
         left: 25px;
         font-size: 20px;
         color: #a6a9ac;
     }
     .p_logo{
-        padding: 10px 10px;
+        padding: 3px 10px;
         position: absolute;
-        top: -4px;
+        top: 0px;
         left: 28px;
         font-size: 16px;
         color: #a6a9ac;
@@ -133,14 +133,14 @@
     }
     .codeImg{
         width: 120px;
-        height: 36px;
+        height: 33px;
         position: absolute;
-        right: 28px;
+        right: 30px;
         top: 1px;
     }
     .codeImg img{
-        width: 120px;
-        height: 41px;
+        width: 100%;
+        height: 100%;
         border-radius: 4px;
     }
     .codeImg span.by-icon{
@@ -175,7 +175,7 @@
 <template>
     <div class="main-login" >
         <div class="top_div">
-            <h1>后台登录</h1>
+            <h1>Log In</h1>
         </div>
         <form action="" class="loginForm form clearfix validate-form" method="post">
             <div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 250px; text-align: center;">
@@ -185,18 +185,18 @@
                     <div :class="[isPswFocus ? 'right_hand': 'initial_right_hand']"></div>
                 </div>
                 <p style="padding: 30px 0 10px; position: relative;">
-                    <span class="by-icon by-yonghuming u_logo"></span> <input class="ipt" v-model.trim="user.username" @keydown.enter="login" ref="username_input" type="text" name="username" placeholder="请输入手机号(仅支持手机号登录)" value="" tabindex="1">
+                    <span class="by-icon by-yonghuming u_logo"></span> <input class="ipt" v-model.trim="user.mobile" @keydown.enter="login" ref="username_input" type="text" name="username" placeholder="mobile(only can log in by mobile)" value="" tabindex="1">
                 </p>
                 <p style="position: relative;"><span class="by-icon by-iconfontlock p_logo"></span>
-                    <input class="ipt" id="password" v-model="user.password" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)" type="password" ref="password_input" name="password" placeholder="请输入密码" value="" tabindex="2">
+                    <input class="ipt" id="password" v-model="user.password" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)" type="password" ref="password_input" name="password" placeholder="password" value="" tabindex="2">
                 </p>
                 <p style="position: relative; margin: 10px 0">
             <span style="width: 347px; overflow: hidden; display: inline-block">
                 <span class="by-verify by-icon c_icon"></span>
-                <input class="ipt sm" v-model.trim="user.verifyCode" tabindex="3" name="verify" maxlength="4" id="code" @keydown.enter="login" type="text" placeholder="验证码" value="">
+                <input class="ipt sm" v-model.trim="user.verifyCode" tabindex="3" name="verify" maxlength="4" id="code" @keydown.enter="login" type="text" placeholder="verify code" value="">
                 <span class="codeImg">
                     <template v-if="user.verifyImg == 'error'">
-                        <span @click="refresh_verify" class="code_retry">重新获取验证码</span>
+                        <span @click="refresh_verify" class="code_retry">Refresh Code</span>
                     </template>
                     <template v-else>
                         <span v-if="user.verifyImg == ''" class="inf-rotate by-icon by-iconloading-copy"></span>
@@ -208,10 +208,10 @@
                 <div style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
                     <p style="margin: 0 35px 20px 45px;">
                         <span style="float: right;">
-                    <a style="background: rgb(0, 142, 173); padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
+                    <a style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
                        href="javascript:void(0);"
                        @click="login"
-                       class="ajax-post">{{ isLogging ? '登录...' : '登录'}}</a>
+                       class="ajax-post">{{ isLogging ? 'Log in...' : 'Log In'}}</a>
                 </span>
                     </p>
                 </div>
@@ -232,7 +232,7 @@
       isPswFocus: false,
       user: {
         verifyImg: '',
-        username: '',
+        mobile: '',
         password: '',
         verifyCode: '',
         verifyId: 0
@@ -259,11 +259,11 @@
         window.tools.alertError(this.loginError.msg);
       }
       if (oldVal === types.ByUserLoginReq) {
-        window.tools.alertInfo('登录中...');
+        window.tools.alertInfo('process...');
       }
       if (oldVal === types.ByUserLoginSuc && this.loginUser) {
         this.isLogging = false;
-        let msg = this.loginUser.nickname + ', 登录成功';
+        let msg = this.loginUser.nickname + ', Login Success';
         window.tools.alertSuc(msg);
         window.tools.setSessionId(this.loginUser.auto_login_code);
         setTimeout(() => {
@@ -277,13 +277,13 @@
       this.isPswFocus = is;
     },
     checkLogin () {
-      if (this.user.username === '') {
-        window.tools.alertError('用户名不能为空');
+      if (this.user.mobile === '') {
+        window.tools.alertError('mobile required');
         this.$refs.username_input.focus();
         return false;
       }
       if (this.user.password === '') {
-        window.tools.alertError('密码不能为空');
+        window.tools.alertError('password required');
         this.$refs.password_input.focus();
         return false;
       }

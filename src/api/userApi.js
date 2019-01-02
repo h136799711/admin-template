@@ -16,7 +16,11 @@ const userApi = {
   },
   login: (data, cb, failCb) => {
     console.debug('[ajax] userApi::login 用户登录', data);
-    let url = window.tools.getApiUrl('user/login');
+    let url = window.tools.getApiUrl();
+    data.loginInfo = '';
+    data.deviceType = 'vue-web';
+    data.deviceToken = '';
+    data.service_type = "by_UserLoginSession_loginByMobilePassword";
     http.methods.apiPost(url, data).then((res) => {
       if (res.code === 0) {
         cb(res);
