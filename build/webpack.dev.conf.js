@@ -53,9 +53,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
+      title: process.env.PLATFORM_NAME,
       filename: 'index.html',
-      template: 'index.html',
-      inject: true
+      template: '!!underscore-template-loader!./index.html',
+      inject: true,
+      version: process.env.VERSION,
     }),
     // copy custom static assets
     new CopyWebpackPlugin([

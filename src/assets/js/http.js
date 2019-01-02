@@ -23,12 +23,15 @@ const apiMethods = {
     apiPost (url, data) {
       return new Promise((resolve, reject) => {
         var qs = require('qs');
+        data.app_version = window.tools.getVersion();
+        data.app_type = 'vue-web';
+        data.client_id = window.tools.getAppId();
         data = qs.stringify(data);
         axios.post(url, data, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'BY-APP-ID': tools.getAppId(),
-            'BY-SESSION-ID': tools.getSessionId()
+            'BY-CLIENT-ID': window.tools.getAppId(),
+            'BY-SESSION-ID': window.tools.getSessionId()
           }
         }).then((response) => {
           let data = response.data;

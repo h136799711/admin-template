@@ -221,11 +221,11 @@
 </template>
 
 <script>
-import http from '../../assets/js/http';
-import * as types from '../../store/mutation-types';
-import securityCodeApi from '../../api/securityCodeApi.js';
+	import http from '../../assets/js/http';
+	import * as types from '../../store/mutation-types';
+	import securityCodeApi from '../../api/securityCodeApi.js';
 
-export default {
+	export default {
   data () {
     return {
       isLogging: false,
@@ -300,7 +300,7 @@ export default {
       securityCodeApi.image_create([], function (resData) {
         console.log(resData);
         this.user.verifyId = resData.id;
-        this.user.verifyImg = window.tools.getApiUrl('security_code/image_src') + '?id=' + resData.id + '&app_id=' + window.tools.getAppId() + '&session_id=' + window.tools.getSessionId();
+        this.user.verifyImg = resData.code;
       }.bind(this), function (failMsg) {
         console.log(failMsg);
         this.user.verifyImg = 'error';

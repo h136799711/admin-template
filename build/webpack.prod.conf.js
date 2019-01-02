@@ -37,8 +37,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
-          warnings: false
-        }
+          warnings: false,
+          drop_debugger: true,
+					drop_console: true
+				}
       },
       sourceMap: config.build.productionSourceMap,
       parallel: true
@@ -67,7 +69,9 @@ const webpackConfig = merge(baseWebpackConfig, {
         ? 'index.html'
         : config.build.index,
       template: 'index.html',
+			title: process.env.PLATFORM_NAME,
       inject: true,
+			version: process.env.VERSION,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

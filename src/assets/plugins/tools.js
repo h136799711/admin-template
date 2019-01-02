@@ -1,15 +1,19 @@
 /* eslint-disable */
 // tools.js 包含工具方法和固定的配置信息, 后期考虑移植配置信息到config.js 中
-const api_url = window.itboye.api_url
-const picture_url = window.itboye.picture_url
+const api_url = process.env.API_ROOT_URI
+const picture_url = process.env.PICTURE_UPLOAD_URI
+const client_id = process.env.CLIENT_ID
 
+const getVersion = () => {
+  return process.env.APP_VERSION
+}
 const getAppId = () => {
-  return window.itboye.appId
+  return client_id
 }
 
 // 设置会话id
 const setSessionId = (sessionId) => {
-  console.log('session_id', sessionId)
+  console.debug('set session_id', sessionId)
   window.cache.setValue('BY_SESSION_ID', sessionId, 3600)
 }
 
@@ -20,6 +24,7 @@ const getSessionId = () => {
   if (typeof (sessionId) === 'undefined' || sessionId === '') {
     let UUID = require('uuid')
     sessionId = ('BY' + UUID.v4()).replace(/-/g, '')
+		console.debug('generate session id', sessionId)
   }
   setSessionId(sessionId)
   return sessionId
@@ -59,7 +64,7 @@ const returnTop = () => {
 }
 
 const tools = {
-  getApiUrl, getAvatarUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
+	getVersion, getApiUrl, getAvatarUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
 }
 
 export default tools
