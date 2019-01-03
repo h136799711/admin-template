@@ -18,8 +18,6 @@ const userApi = {
     console.debug('[ajax] userApi::login 用户登录', data);
     let url = window.tools.getApiUrl();
     data.loginInfo = '';
-    data.deviceType = 'vue-web';
-    data.deviceToken = '';
     data.service_type = "by_UserLoginSession_loginByMobilePassword";
     http.methods.apiPost(url, data).then((res) => {
       if (res.code === 0) {
@@ -31,7 +29,7 @@ const userApi = {
   },
   getUserData (cb, failCb) {
     console.debug('[ajax] userApi::getUserData 获取用户数据');
-    let url = window.tools.getApiUrl('index/user_data');
+    let url = window.tools.getApiUrl();
     http.methods.apiPost(url).then((res) => {
       console.log(res);
       if (res.code === 0) {

@@ -26,6 +26,8 @@ const apiMethods = {
         data.app_version = window.tools.getVersion();
         data.app_type = 'vue-web';
         data.client_id = window.tools.getAppId();
+				data.deviceType = 'vue-web';
+				data.deviceToken = '';
         data = qs.stringify(data);
         axios.post(url, data, {
           headers: {

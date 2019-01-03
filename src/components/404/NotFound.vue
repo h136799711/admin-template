@@ -12,20 +12,20 @@
 </style>
 
 <template>
-    <div class="not-found0-404">404 NotFound</div>
+  <div class="not-found0-404">
+    404 NotFound
+  </div>
 </template>
 
 <script>
-import http from '../../assets/js/http';
+	import http from '../../assets/js/http'
 
-export default {
+	export default {
+  mixins: [http],
   data () {
     return {
       pageLoading: true
-    };
-  },
-  methods: {
-    //
+    }
   },
   computed: {
 
@@ -33,6 +33,8 @@ export default {
   created () {
     // 这里获取数据
   },
-  mixins: [http]
-};
+  methods: {
+    //
+  }
+}
 </script>

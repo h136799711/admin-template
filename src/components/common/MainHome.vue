@@ -698,95 +698,145 @@
 
 </style>
 <template>
-    <div class="wrapper skin-blue" v-show="isLoading" v-loading.fullscreen.lock="!isLoading">
-        <!--头部信息-->
-        <div class="main-topbar">
-            <div class="topbar-wrap">
-                <div class="topbar-head topbar-left">
-                    <a class="topbar-btn topbar-logo topbar-left" href="javascript:void(0);">
-                        <span class="by-icon icon-logo by-SaaSguanlikongzhitai"></span>
-                    </a>
-                    <a href="javascript:void(0);" class="topbar-home-link topbar-btn topbar-left" @click="userLinkClick('/admin/index')">
-                        <span>{{ platformInfo.all }}</span>
-                    </a>
-                </div>
+  <div
+    v-show="isLoading"
+    v-loading.fullscreen.lock="!isLoading"
+    class="wrapper skin-blue"
+  >
+    <!--头部信息-->
+    <div class="main-topbar">
+      <div class="topbar-wrap">
+        <div class="topbar-head topbar-left">
+          <a
+            class="topbar-btn topbar-logo topbar-left"
+            href="javascript:void(0);"
+          >
+            <span class="by-icon icon-logo by-SaaSguanlikongzhitai" />
+          </a>
+          <a
+            href="javascript:void(0);"
+            class="topbar-home-link topbar-btn topbar-left"
+            @click="userLinkClick('/admin/index')"
+          >
+            <span>{{ platformInfo.all }}</span>
+          </a>
+        </div>
 
-                <div class="topbar-info topbar-right topbar-clearfix" >
-                    <div style="display:none;" class="dropdown topbar-notice topbar-left topbar-info-dropdown topbar-info-item" >
-                        <a href="javascript:void(0);" class="topbar-btn topbar-btn-notice topbar-hover-dark">
-                            <span class="topbar-btn-notice-icon icon-bell by-icon by-xiaoxi"></span>
-                            <span class="topbar-btn-notice-num">0</span>
-                        </a>
-                    </div>
-                    <div  class="hidden topbar-product topbar-left topbar-info-item">
-                        <div class="topbar-btn topbar-product-btn" @click="iframeRefresh">
-                            <span><i class="by-icon by-loading"></i>刷新</span>
-                        </div>
-                    </div>
-                    <TopBarDropMenu :name="userInfo.mobile" :links="userDropMenus" @logout="logout"></TopBarDropMenu>
-                    <div class="topbar-product topbar-left topbar-info-item">
-                        <div class="topbar-btn topbar-product-btn" @click="toggleFullScreen">
-                            <i title="全屏 F11" class="by-icon by-webtubiaoku10"></i>
-                        </div>
-                    </div>
-                </div>
+        <div class="topbar-info topbar-right topbar-clearfix">
+          <div
+            style="display:none;"
+            class="dropdown topbar-notice topbar-left topbar-info-dropdown topbar-info-item"
+          >
+            <a
+              href="javascript:void(0);"
+              class="topbar-btn topbar-btn-notice topbar-hover-dark"
+            >
+              <span class="topbar-btn-notice-icon icon-bell by-icon by-xiaoxi" />
+              <span class="topbar-btn-notice-num">
+                0
+              </span>
+            </a>
+          </div>
+          <div class="hidden topbar-product topbar-left topbar-info-item">
+            <div
+              class="topbar-btn topbar-product-btn"
+              @click="iframeRefresh"
+            >
+              <span><i class="by-icon by-loading" />刷新</span>
             </div>
+          </div>
+          <TopBarDropMenu
+            :name="userInfo.mobile"
+            :links="userDropMenus"
+            @logout="logout"
+          />
+          <div class="topbar-product topbar-left topbar-info-item">
+            <div
+              class="topbar-btn topbar-product-btn"
+              @click="toggleFullScreen"
+            >
+              <i
+                title="全屏 F11"
+                class="by-icon by-webtubiaoku10"
+              />
+            </div>
+          </div>
         </div>
-        <div class="main-body" :class="{ 'main-sidebar-mini': isMiniMenu, 'main-sidebar-full': !isMiniMenu}">
-            <!--左边导航-->
-            <div class="main-sidebar">
-                <div class="sidebar-content main-sidebar">
-                    <div class="sidebar-inner">
-                        <div class="sidebar-fold" @click="toggleMiniMenu">
-                            <span class="by-icon" :class="isMiniMenu ? 'by-fold' : 'by-santiaogang'"></span>
-                        </div>
-                        <div class="sidebar-nav-wrap">
-                            <SideBarNav :isNavActive="activeNavIndex === index"
-                                        v-for="(menu, index) in menuList"
-                                        :key="menu.Id" :navMenu="menu"
-                                        :index="index"
-                                        :navMaxHeight="navMaxHeight"
-                                        :activeIndex="activeNavMenuIndex"
-                                        @NavOnClick="SideBarNavOnClick"
-                                        @NavOnActive="SideBarNavOnActive">
-                            </SideBarNav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--产品部分-->
-            <div class="main-product" :class="{ 'main-product-col-1': isShowSecondMenu }">
-                <SecondNavBar :isShowSecondMenu="isShowSecondMenu"
-                              v-if="secondMenuData"
-                              :menu="secondMenuData"
-                              @isShowSecondMenu="toggleSecondMenu">
-                </SecondNavBar>
-                <!--中间内容-->
-                <div class="content-wrapper" :style="{left: isShowSecondMenu ? 180 + 'px' : '0'}">
-                    <transition
-                            name="custom-classes-transition"
-                            enter-active-class="animated fadeIn"
-                    >
-                        <slot name="main-content"></slot>
-                    </transition>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-
+    <div
+      class="main-body"
+      :class="{ 'main-sidebar-mini': isMiniMenu, 'main-sidebar-full': !isMiniMenu}"
+    >
+      <!--左边导航-->
+      <div class="main-sidebar">
+        <div class="sidebar-content main-sidebar">
+          <div class="sidebar-inner">
+            <div
+              class="sidebar-fold"
+              @click="toggleMiniMenu"
+            >
+              <span
+                class="by-icon"
+                :class="isMiniMenu ? 'by-fold' : 'by-santiaogang'"
+              />
+            </div>
+            <div class="sidebar-nav-wrap">
+              <SideBarNav
+                v-for="(menu, index) in menuList"
+                :key="menu.Id"
+                :is-nav-active="activeNavIndex === index"
+                :nav-menu="menu"
+                :index="index"
+                :nav-max-height="navMaxHeight"
+                :active-index="activeNavMenuIndex"
+                @NavOnClick="SideBarNavOnClick"
+                @NavOnActive="SideBarNavOnActive"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--产品部分-->
+      <div
+        class="main-product"
+        :class="{ 'main-product-col-1': isShowSecondMenu }"
+      >
+        <SecondNavBar
+          v-if="secondMenuData"
+          :is-show-second-menu="isShowSecondMenu"
+          :menu="secondMenuData"
+          @isShowSecondMenu="toggleSecondMenu"
+        />
+        <!--中间内容-->
+        <div
+          class="content-wrapper"
+          :style="{left: isShowSecondMenu ? 180 + 'px' : '0'}"
+        >
+          <transition
+            name="custom-classes-transition"
+            enter-active-class="animated fadeIn"
+          >
+            <slot name="main-content" />
+          </transition>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import http from '../../assets/js/http';
-import SideBarNav from '../../components/common/SideBarNav';
-import SecondNavBar from '../../components/common/SecondNavBar';
-import TopBarDropMenu from '../../components/common/TopBarDropMenu';
-import _ from 'lodash';
+	import http from '../../assets/js/http'
+	import SideBarNav from '../../components/common/SideBarNav'
+	import SecondNavBar from '../../components/common/SecondNavBar'
+	import TopBarDropMenu from '../../components/common/TopBarDropMenu'
+	import _ from 'lodash'
 
-export default {
+	export default {
   name: 'MainHome',
   componentName: 'MainHome',
   components: { SideBarNav, SecondNavBar, TopBarDropMenu },
+  mixins: [http],
   data () {
     return {
       isDropUserMenu: false,
@@ -812,143 +862,142 @@ export default {
         //                    { 'name': '皮肤设置', url: '#/admin/skin' },
         { 'name': '安全退出', method: 'logout' }
       ]
-    };
+    }
   },
   computed: {
     isLoading () {
-      return this.$store.getters.userSessionData.loading;
+      return this.$store.getters.userSessionData.loading
     },
     userSessionData () {
-      return this.$store.getters.userSessionData;
+      return this.$store.getters.userSessionData
     },
     userAvatarUrl () {
-      return window.tools.getAvatarUrl(this.userInfo.id);
+      return window.tools.getAvatarUrl(this.userInfo.id)
     },
     navMaxHeight () {
       // const navNumber = this.menuList.length;
       // 顶部导航高度50 侧边导航切换按钮高度30 菜单头40
-      return document.body.clientHeight - 40 * (2 + 2) - 50 - 30;
+      return document.body.clientHeight - 40 * (2 + 2) - 50 - 30
     }
   },
   watch: {
     userSessionData: function (newValue) {
-      console.debug('用戶數據', newValue);
+      console.debug('用戶數據', newValue)
       if (newValue.loading === 2) {
-        console.debug('正在请求');
-        return;
+        console.debug('正在请求')
+        return
       }
       if (newValue.code === 0) {
-        let data = _.cloneDeep(newValue.data);
-        console.debug('登录成功', data);
-        this.loadMenu(data.menuList);
-        this.loadUserInfo(data.userInfo);
-        this.loadPlatformInfo(data.platformInfo);
-        window.tools.alertClose();
+        let data = _.cloneDeep(newValue.data)
+        console.debug('登录成功', data)
+        this.loadMenu(data.menuList)
+        this.loadUserInfo(data.userInfo)
+        this.loadPlatformInfo(data.platformInfo)
+        window.tools.alertClose()
       } else if (newValue.msg) {
-        console.debug('登录失败', newValue);
-        window.tools.alertWarn(newValue.msg);
+        console.debug('登录失败', newValue)
+        window.tools.alertWarn(newValue.msg)
         setTimeout(() => {
-          this.$router.push('/login');
-        }, 2500);
+          this.$router.push('/login')
+        }, 2500)
       } else {
-        console.debug('登录失败', newValue);
+        console.debug('登录失败', newValue)
         setTimeout(() => {
-          this.$router.push('/login');
-        }, 2500);
+          this.$router.push('/login')
+        }, 2500)
       }
-    }
-  },
-  methods: {
-    getUserData () {
-      window.tools.alertInfo('获取数据...');
-      this.$store.dispatch('getUserSessionData');
-    },
-    // 切换迷你侧边导航
-    toggleMiniMenu () {
-      this.isMiniMenu = !this.isMiniMenu;
-    },
-    // 切换显示二级菜单
-    toggleSecondMenu () {
-      this.isShowSecondMenu = !this.isShowSecondMenu;
-    },
-    // 导航按钮被点击
-    SideBarNavOnClick (index, menu) {
-      this.activeNavMenuIndex = index;
-      this.secondMenuData = menu;
-      this.isShowSecondMenu = !!menu;
-    },
-    // 导航激活点亮
-    SideBarNavOnActive (index) {
-      this.activeNavIndex = index;
-    },
-    // 切换全屏
-    toggleFullScreen () {
-      window.screenfull.toggle();
-    },
-    // 刷新iframe
-    iframeRefresh () {
-      console.log(this.$route.fullPath);
-    },
-    // 退出
-    logout () {
-      console.log('logout');
-      this.$router.push('logout');
-    },
-    // 链接点击
-    userLinkClick (link) {
-      window.tools.returnTop();
-      setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link)); }, 1);
-    },
-    queryChildMenu (data = [], action) {
-      if (typeof action !== 'function') return;
-      let ret = [];
-      data.forEach(val => {
-        if (action(val)) {
-          val.IsFront = (parseInt(val.IsFront) === 1);
-          ret.push(val);
-        }
-      });
-      return ret;
-    },
-    loadChildMenu (list = [], data = []) {
-      list = list.map(val => {
-        val.children = this.queryChildMenu(data, (v) => (v.ParentId === val.Id));
-        val.AllowExpand = val.children.length > 0 && val.url !== '#';
-        return val;
-      });
-      return list;
-    },
-    // 菜单数据处理
-    loadMenu (menuList = []) {
-      let newList = this.queryChildMenu(menuList, (v) => (v.ParentId === 0));
-      newList = this.loadChildMenu(newList, menuList);
-      newList = newList.map(val => {
-        val.children = this.loadChildMenu(val.children, menuList);
-        return val;
-      });
-      console.log(newList);
-      this.menuList = newList;
-    },
-    getApiUrl (url) {
-      return window.tools.getApiUrl(url);
-    },
-    // 加载用户信息
-    loadUserInfo (userInfo) {
-      this.userInfo.nickname = userInfo.nickname;
-      this.userInfo.id = userInfo.id;
-      this.userInfo.username = userInfo.username;
-      this.userInfo.head = userInfo.head;
-      this.userInfo.mobile = userInfo.mobile;
-    },
-    // 加载平台信息
-    loadPlatformInfo (PlatformInfo) {
-      this.platformInfo.all = PlatformInfo;
     }
   },
   created () {
-    this.getUserData();
+    this.getUserData()
   },
   mounted () {},
-  mixins: [http]
-};
+  methods: {
+    getUserData () {
+      window.tools.alertInfo('获取数据...')
+      this.$store.dispatch('getUserSessionData')
+    },
+    // 切换迷你侧边导航
+    toggleMiniMenu () {
+      this.isMiniMenu = !this.isMiniMenu
+    },
+    // 切换显示二级菜单
+    toggleSecondMenu () {
+      this.isShowSecondMenu = !this.isShowSecondMenu
+    },
+    // 导航按钮被点击
+    SideBarNavOnClick (index, menu) {
+      this.activeNavMenuIndex = index
+      this.secondMenuData = menu
+      this.isShowSecondMenu = !!menu
+    },
+    // 导航激活点亮
+    SideBarNavOnActive (index) {
+      this.activeNavIndex = index
+    },
+    // 切换全屏
+    toggleFullScreen () {
+      window.screenfull.toggle()
+    },
+    // 刷新iframe
+    iframeRefresh () {
+      console.log(this.$route.fullPath)
+    },
+    // 退出
+    logout () {
+      console.log('logout')
+      this.$router.push('logout')
+    },
+    // 链接点击
+    userLinkClick (link) {
+      window.tools.returnTop()
+      setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link)) }, 1)
+    },
+    queryChildMenu (data = [], action) {
+      if (typeof action !== 'function') return
+      let ret = []
+      data.forEach(val => {
+        if (action(val)) {
+          val.IsFront = (parseInt(val.IsFront) === 1)
+          ret.push(val)
+        }
+      })
+      return ret
+    },
+    loadChildMenu (list = [], data = []) {
+      list = list.map(val => {
+        val.children = this.queryChildMenu(data, (v) => (v.ParentId === val.Id))
+        val.AllowExpand = val.children.length > 0 && val.url !== '#'
+        return val
+      })
+      return list
+    },
+    // 菜单数据处理
+    loadMenu (menuList = []) {
+      let newList = this.queryChildMenu(menuList, (v) => (v.ParentId === 0))
+      newList = this.loadChildMenu(newList, menuList)
+      newList = newList.map(val => {
+        val.children = this.loadChildMenu(val.children, menuList)
+        return val
+      })
+      console.log(newList)
+      this.menuList = newList
+    },
+    getApiUrl (url) {
+      return window.tools.getApiUrl(url)
+    },
+    // 加载用户信息
+    loadUserInfo (userInfo) {
+      this.userInfo.nickname = userInfo.nickname
+      this.userInfo.id = userInfo.id
+      this.userInfo.username = userInfo.username
+      this.userInfo.head = userInfo.head
+      this.userInfo.mobile = userInfo.mobile
+    },
+    // 加载平台信息
+    loadPlatformInfo (PlatformInfo) {
+      this.platformInfo.all = PlatformInfo
+    }
+  }
+}
 </script>

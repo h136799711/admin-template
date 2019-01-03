@@ -1,22 +1,33 @@
 <template>
-    <div class="main-content" v-loading.body="pageLoading">
-        <el-alert
-                title="欢迎您使用本系统"
-                type="success"
-                description="">
-        </el-alert>
-    </div>
+  <div
+    v-loading.body="pageLoading"
+    class="main-content"
+  >
+    <el-alert
+      title="欢迎您使用本系统"
+      type="success"
+      description=""
+    />
+  </div>
 </template>
 
 <script>
-import http from '../../assets/js/http';
-import routeLoad from '../../assets/js/routeLoad';
+	import http from '../../assets/js/http'
+	import routeLoad from '../../assets/js/routeLoad'
 
-export default {
+	export default {
+  mixins: [http, routeLoad],
   data () {
     return {
       pageLoading: false
-    };
+    }
+  },
+  computed: {
+
+  },
+  created () {
+    // 这里获取数据
+    this.loadData()
   },
   methods: {
     // 获取数据 必须要要有个loadData方法以供刷新使用
@@ -27,14 +38,6 @@ export default {
       //                console.log(`${this.$route.path}:loadData`);
       //                this.pageLoading = false;
     }
-  },
-  computed: {
-
-  },
-  created () {
-    // 这里获取数据
-    this.loadData();
-  },
-  mixins: [http, routeLoad]
-};
+  }
+}
 </script>

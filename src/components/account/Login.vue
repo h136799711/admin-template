@@ -173,59 +173,111 @@
 </style>
 
 <template>
-    <div class="main-login" >
-        <div class="top_div">
-            <h1>Log In</h1>
-        </div>
-        <form action="" class="loginForm form clearfix validate-form" method="post">
-            <div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 250px; text-align: center;">
-                <div style="width: 165px; height: 96px; position: absolute;">
-                    <div class="tou"></div>
-                    <div :class="[isPswFocus ? 'left_hand': 'initial_left_hand']"></div>
-                    <div :class="[isPswFocus ? 'right_hand': 'initial_right_hand']"></div>
-                </div>
-                <p style="padding: 30px 0 10px; position: relative;">
-                    <span class="by-icon by-yonghuming u_logo"></span> <input class="ipt" v-model.trim="user.mobile" @keydown.enter="login" ref="username_input" type="text" name="username" placeholder="mobile(only can log in by mobile)" value="" tabindex="1">
-                </p>
-                <p style="position: relative;"><span class="by-icon by-iconfontlock p_logo"></span>
-                    <input class="ipt" id="password" v-model="user.password" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)" type="password" ref="password_input" name="password" placeholder="password" value="" tabindex="2">
-                </p>
-                <p style="position: relative; margin: 10px 0">
-            <span style="width: 347px; overflow: hidden; display: inline-block">
-                <span class="by-verify by-icon c_icon"></span>
-                <input class="ipt sm" v-model.trim="user.verifyCode" tabindex="3" name="verify" maxlength="4" id="code" @keydown.enter="login" type="text" placeholder="verify code" value="">
-                <span class="codeImg">
-                    <template v-if="user.verifyImg == 'error'">
-                        <span @click="refresh_verify" class="code_retry">Refresh Code</span>
-                    </template>
-                    <template v-else>
-                        <span v-if="user.verifyImg == ''" class="inf-rotate by-icon by-iconloading-copy"></span>
-                        <img :src="user.verifyImg" class="verifyImg" @click="refresh_verify" />
-                    </template>
-                </span>
-            </span>
-                </p>
-                <div style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
-                    <p style="margin: 0 35px 20px 45px;">
-                        <span style="float: right;">
-                    <a style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
-                       href="javascript:void(0);"
-                       @click="login"
-                       class="ajax-post">{{ isLogging ? 'Log in...' : 'Log In'}}</a>
-                </span>
-                    </p>
-                </div>
-            </div>
-        </form>
+  <div class="main-login">
+    <div class="top_div">
+      <h1>Log In</h1>
     </div>
+    <form
+      action=""
+      class="loginForm form clearfix validate-form"
+      method="post"
+    >
+      <div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 250px; text-align: center;">
+        <div style="width: 165px; height: 96px; position: absolute;">
+          <div class="tou" />
+          <div :class="[isPswFocus ? 'left_hand': 'initial_left_hand']" />
+          <div :class="[isPswFocus ? 'right_hand': 'initial_right_hand']" />
+        </div>
+        <p style="padding: 30px 0 10px; position: relative;">
+          <span class="by-icon by-yonghuming u_logo" /> <input
+            ref="username_input"
+            v-model.trim="user.mobile"
+            class="ipt"
+            type="text"
+            name="username"
+            placeholder="mobile(only can log in by mobile)"
+            value=""
+            tabindex="1"
+            @keydown.enter="login"
+          >
+        </p>
+        <p style="position: relative;">
+          <span class="by-icon by-iconfontlock p_logo" />
+          <input
+            id="password"
+            ref="password_input"
+            v-model="user.password"
+            class="ipt"
+            type="password"
+            name="password"
+            placeholder="password"
+            value=""
+tabindex="2" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
+          >
+        </p>
+        <p style="position: relative; margin: 10px 0">
+          <span style="width: 347px; overflow: hidden; display: inline-block">
+            <span class="by-verify by-icon c_icon" />
+            <input
+              id="code"
+              v-model.trim="user.verifyCode"
+              class="ipt sm"
+              tabindex="3"
+              name="verify"
+              maxlength="4"
+              type="text"
+              placeholder="verify code"
+value="" @keydown.enter="login"
+            >
+            <span class="codeImg">
+              <template v-if="user.verifyImg == 'error'">
+                <span
+                  class="code_retry"
+                  @click="refresh_verify"
+                >
+                  Refresh Code
+                </span>
+              </template>
+              <template v-else>
+                <span
+                  v-if="user.verifyImg == ''"
+                  class="inf-rotate by-icon by-iconloading-copy"
+                />
+                <img
+                  :src="user.verifyImg"
+                  class="verifyImg"
+                  @click="refresh_verify"
+                >
+              </template>
+            </span>
+          </span>
+        </p>
+        <div style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
+          <p style="margin: 0 35px 20px 45px;">
+            <span style="float: right;">
+              <a
+                style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
+                href="javascript:void(0);"
+                class="ajax-post"
+                @click="login"
+              >
+                {{ isLogging ? 'Log in...' : 'Log In' }}
+              </a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
-	import http from '../../assets/js/http';
-	import * as types from '../../store/mutation-types';
-	import securityCodeApi from '../../api/securityCodeApi.js';
+	import http from '../../assets/js/http'
+	import * as types from '../../store/mutation-types'
+	import securityCodeApi from '../../api/securityCodeApi.js'
 
 	export default {
+  mixins: [http],
   data () {
     return {
       isLogging: false,
@@ -237,85 +289,84 @@
         verifyCode: '',
         verifyId: 0
       }
-    };
+    }
   },
   computed: {
     loginError () {
-      return this.$store.getters.loginError;
+      return this.$store.getters.loginError
     },
     loginUser () {
-      return this.$store.getters.loginUser;
+      return this.$store.getters.loginUser
     },
     loginStatus () {
-      return this.$store.getters.loginStatus;
+      return this.$store.getters.loginStatus
     }
   },
   watch: {
     loginStatus: function (oldVal, newVal) {
-      console.log(oldVal, this.loginError);
+      console.log(oldVal, this.loginError)
       if (oldVal === types.ByUserLoginFail) {
-        this.isLogging = false;
-        this.refresh_verify();
-        window.tools.alertError(this.loginError.msg);
+        this.isLogging = false
+        this.refresh_verify()
+        window.tools.alertError(this.loginError.msg)
       }
       if (oldVal === types.ByUserLoginReq) {
-        window.tools.alertInfo('process...');
+        window.tools.alertInfo('process...')
       }
       if (oldVal === types.ByUserLoginSuc && this.loginUser) {
-        this.isLogging = false;
-        let msg = this.loginUser.nickname + ', Login Success';
-        window.tools.alertSuc(msg);
-        window.tools.setSessionId(this.loginUser.auto_login_code);
+        this.isLogging = false
+        let msg = this.loginUser.nickname + ', Login Success'
+        window.tools.alertSuc(msg)
+        window.tools.setSessionId(this.loginUser.auto_login_code)
         setTimeout(() => {
-          this.jump2Admin();
-        }, 1000);
+          this.jump2Admin()
+        }, 1000)
       }
-    }
-  },
-  methods: {
-    pswFocus (is) {
-      this.isPswFocus = is;
-    },
-    checkLogin () {
-      if (this.user.mobile === '') {
-        window.tools.alertError('mobile required');
-        this.$refs.username_input.focus();
-        return false;
-      }
-      if (this.user.password === '') {
-        window.tools.alertError('password required');
-        this.$refs.password_input.focus();
-        return false;
-      }
-      return true;
-    },
-    login () {
-      if (!this.checkLogin()) return;
-      this.isLogging = true;
-      console.log('dispatch');
-      this.$store.dispatch('login', this.user);
-    },
-    refresh_verify () {
-      this.user.verifyImg = '';
-      securityCodeApi.image_create([], function (resData) {
-        console.log(resData);
-        this.user.verifyId = resData.id;
-        this.user.verifyImg = resData.code;
-      }.bind(this), function (failMsg) {
-        console.log(failMsg);
-        this.user.verifyImg = 'error';
-      }.bind(this));
-    },
-    jump2Admin () {
-      this.$router.push({ path: '/admin' });
     }
   },
   created () {
-    this.refresh_verify();
+    this.refresh_verify()
   },
   mounted () {
-    console.log('mounted');
+    console.log('mounted')
   },
-  mixins: [http]
-};
+  methods: {
+    pswFocus (is) {
+      this.isPswFocus = is
+    },
+    checkLogin () {
+      if (this.user.mobile === '') {
+        window.tools.alertError('mobile required')
+        this.$refs.username_input.focus()
+        return false
+      }
+      if (this.user.password === '') {
+        window.tools.alertError('password required')
+        this.$refs.password_input.focus()
+        return false
+      }
+      return true
+    },
+    login () {
+      if (!this.checkLogin()) return
+      this.isLogging = true
+      console.log('dispatch')
+      this.$store.dispatch('login', this.user)
+    },
+    refresh_verify () {
+      this.user.verifyImg = ''
+      securityCodeApi.image_create([], function (resData) {
+        console.log(resData)
+        this.user.verifyId = resData.id
+        this.user.verifyImg = resData.code
+      }.bind(this), function (failMsg) {
+        console.log(failMsg)
+        this.user.verifyImg = 'error'
+      }.bind(this))
+    },
+    jump2Admin () {
+      this.$router.push({ path: '/admin' })
+    }
+  }
+}
 </script>

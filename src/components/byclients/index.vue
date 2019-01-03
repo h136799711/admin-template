@@ -1,6 +1,6 @@
 
 <template>
-    <div class="main-login">
-        byclients
-    </div>
+  <div class="main-login">
+    byclients
+  </div>
 </template>
