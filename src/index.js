@@ -52,7 +52,27 @@ window.cache = cache
 window.tools = tools
 window.tools.md5Utils = md5Utils
 window.tools.base64Utils = base64Utils
-window.tools.finger = finger
+window.tools.finger = new finger();
+window.tools.getDeviceToken = function () {
+  let token = cache.getValue('BY_TOKEN');
+  if (token) {
+    return token;
+  }
+	if (window.requestIdleCallback) {
+		requestIdleCallback(function () {
+      window.tools.finger.get(function (components) {
+				cache.setValue('BY_TOKEN', components, 7200);
+			})
+		})
+	} else {
+		setTimeout(function () {
+			window.tools.finger.get(function (components) {
+				cache.setValue('BY_TOKEN', components, 7200);
+			})
+		}, 500)
+	}
+	return "";
+}
 
 const bus = new Vue()
 window.bus = bus

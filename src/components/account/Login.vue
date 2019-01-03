@@ -328,7 +328,7 @@ value="" @keydown.enter="login"
     this.refresh_verify()
   },
   mounted () {
-    console.log('mounted')
+    console.log('mounted', process.env)
   },
   methods: {
     pswFocus (is) {

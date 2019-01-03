@@ -1,5 +1,6 @@
 /* eslint-disable */
 // tools.js 包含工具方法和固定的配置信息, 后期考虑移植配置信息到config.js 中
+
 const api_url = process.env.API_ROOT_URI
 const picture_url = process.env.PICTURE_UPLOAD_URI
 const client_id = process.env.CLIENT_ID

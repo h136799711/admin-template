@@ -3,10 +3,12 @@
 const HtmlWebpackPlugin = require ('html-webpack-plugin')
 const CopyWebpackPlugin = require ('copy-webpack-plugin')
 const {VueLoaderPlugin} = require ('vue-loader')
-
 const utils = require ('./utils')
 
+
 module.exports = {
+	entry: './src/index.js',
+
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {
@@ -14,7 +16,8 @@ module.exports = {
 			'pages': utils.resolve ('src/pages'),
 			'store': utils.resolve ('src/store'),
 			'api': utils.resolve ('src/api'),
-			'components': utils.resolve ('src/components')
+			'components': utils.resolve ('src/components'),
+			'vue$': 'vue/dist/vue.esm.js'
 		}
 	},
 
@@ -66,6 +69,7 @@ module.exports = {
 
 	plugins: [
 		new HtmlWebpackPlugin ({
+			title: 'Admin',
 			filename: 'index.html',
 			template: 'index.html',
 			inject: true

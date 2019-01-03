@@ -1,11 +1,12 @@
 {
-  "name": "vue-webpack-4",
+  "name": "admin-template",
   "version": "1.0.0",
-  "description": "A Vuejs template using Webpack 4",
+  "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --progress --config build/webpack.config.dev.js",
-    "prod": "webpack --config build/webpack.config.prod.js",
+    "dev": "webpack-dev-server --progress --mode development --config build/webpack.config.dev.js",
+    "prod": "webpack --mode production --config build/webpack.config.prod.js",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "test": "jest --config test/jest.config.js"
@@ -15,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv-webpack": "^1.6.0",
     "element-ui": "^2.4.11",
     "fingerprintjs2": "^1.8.6",
     "js-base64": "^2.5.0",
@@ -35,6 +37,7 @@
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-component": "^1.1.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-env": "^1.7.0",

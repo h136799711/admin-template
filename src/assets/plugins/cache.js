@@ -9,7 +9,6 @@ const setCookie = (name, value, expireTime) => {
   var newDate = new Date((d.getTime() + expireTime * 1000));
   var expires = 'expires=' + newDate.toGMTString();
   document.cookie = name + '=' + escape(value) + '; ' + expires;
-  console.info('cookie= ', document.cookie);
 };
 // 获取cookie
 const getCookie = (name) => {

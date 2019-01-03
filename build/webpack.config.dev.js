@@ -3,21 +3,18 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
-
-const HOST = 'localhost'
-const PORT = 8081
+const DotEnv = require ('dotenv-webpack')
 
 module.exports = merge(baseConfig, {
 	mode: 'development',
 
 	devServer: {
-		title: 'Admin',
 		clientLogLevel: 'warning',
 		hot: true,
 		contentBase: 'dist',
 		compress: true,
-		host: HOST,
-		port: PORT,
+		host: 'localhost',
+		port: '8082',
 		open: true,
 		overlay: { warnings: false, errors: true },
 		publicPath: '/',
@@ -47,6 +44,10 @@ module.exports = merge(baseConfig, {
 	},
 
 	plugins: [
+		new DotEnv({
+			path: './.env.dev', // load this now instead of the ones in '.env'
+			safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+		}),
 		new webpack.HotModuleReplacementPlugin()
 	]
 })
