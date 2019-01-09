@@ -1,7 +1,4 @@
 <style>
-    *{
-        box-sizing: border-box;
-    }
     .main-login{
         width: 100%;
         height: 100vh;
@@ -10,7 +7,6 @@
         color: #222;
         font-size: 12px;
     }
-    *{padding: 0;margin: 0;}
     .top_div{
         background: #008ead;
         width: 100%;
@@ -260,6 +256,7 @@ value="" @keydown.enter="login"
                 href="javascript:void(0);"
                 class="ajax-post"
                 @click="login"
+                @keyup.enter="login"
               >
                 {{ isLogging ? 'Log in...' : 'Log In' }}
               </a>
@@ -318,6 +315,7 @@ value="" @keydown.enter="login"
         let msg = this.loginUser.nickname + ', Login Success'
         window.tools.alertSuc(msg)
         window.tools.setSessionId(this.loginUser.auto_login_code)
+        window.tools.setUID(this.loginUser.id)
         setTimeout(() => {
           this.jump2Admin()
         }, 1000)

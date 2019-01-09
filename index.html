@@ -7,9 +7,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title><%= htmlWebpackPlugin.options.title  || '管理后台' %></title>
+  <title><%= process.env.PLATFORM_NAME  || 'Admin' %></title>
   <meta name="generate-date" content="<%= new Date() %>"  />
-  <meta name="v" content="<%= htmlWebpackPlugin.options.version || 'unknown' %>"  />
+  <meta name="v" content="<%= process.env.APP_VERSION || 'unknown' %>"  />
 </head>
 <body>
 <% if (htmlWebpackPlugin.options.unsupportedBrowser) { %>

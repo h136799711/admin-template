@@ -8,11 +8,11 @@
         v-if="navMenu.AllowExpand"
         class="sidebar-title-inner"
         @click="toggleNav"
-        @mouseenter="navOnMouseHover(navMenu.Name, $event)"
+        @mouseenter="navOnMouseHover(navMenu.title, $event)"
       >
         <span class="sidebar-title-icon by-triangle_right by-icon" />
         <span class="sidebar-title-text">
-          {{ navMenu.Name }}
+          {{ navMenu.title }}
         </span>
       </div>
       <div
@@ -20,7 +20,7 @@
         class="sidebar-title-inner"
       >
         <span class="sidebar-title-text">
-          {{ navMenu.Name }}
+          {{ navMenu.title }}
         </span>
       </div>
     </div>
@@ -45,29 +45,29 @@
             <div class="nav-icon sidebar-trans">
               <span
                 class="boyefont"
-                :class="menu.Icon!='' ? menu.Icon : 'by-menu'"
+                :class="menu.icon!='' ? menu.icon : 'by-menu'"
               />
             </div>
             <span class="nav-title">
-              {{ menu.Name }}&nbsp;
+              {{ menu.title }}&nbsp;
             </span>
           </a>
         </template>
         <template v-else>
           <a
-            :href="!menu.IsFront ? menuUrl(menu.UrlAddress) : routerUrl(menu.UrlAddress)"
+            :href="!menu.IsFront ? menuUrl(menu.url) : routerUrl(menu.url)"
             class="sidebar-trans"
-            @click.prevent="!menu.IsFront ? mainFrameJump(menu.UrlAddress) : routerJump(menu.UrlAddress)"
+            @click.prevent="!menu.IsFront ? mainFrameJump(menu.url) : routerJump(menu.url)"
             @mouseenter="navOnMouseHover(menu.Name, $event)"
           >
             <div class="nav-icon sidebar-trans">
               <span
                 class="boyefont"
-                :class="menu.Icon!='' ? menu.Icon : 'by-menu'"
+                :class="menu.icon!='' ? menu.icon : 'by-menu'"
               />
             </div>
             <span class="nav-title">
-              {{ menu.Name }}&nbsp;
+              {{ menu.title }}&nbsp;
             </span>
           </a>
         </template>

@@ -1,4 +1,8 @@
 <style>
+  *{
+    box-sizing: border-box;
+  }
+  *{padding: 0;margin: 0;}
   .text-center{
     text-align: center;
   }

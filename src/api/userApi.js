@@ -30,7 +30,8 @@ const userApi = {
   getUserData (cb, failCb) {
     console.debug('[ajax] userApi::getUserData 获取用户数据');
     let url = window.tools.getApiUrl();
-    http.methods.apiPost(url).then((res) => {
+    let data = {'service_type': 'by_UserLoginSession_adminData'};
+    http.methods.apiPost(url, data).then((res) => {
       console.log(res);
       if (res.code === 0) {
         cb(res);

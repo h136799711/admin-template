@@ -13,6 +13,24 @@ const getAppId = () => {
 }
 
 // 设置会话id
+const setUID = (uid) => {
+	console.debug('set uid', uid)
+	window.cache.setValue('BY_UID', uid, 3600)
+}
+
+// 获取会话id
+const getUID = () => {
+	let uid = window.cache.getValue('BY_UID')
+	console.debug('getUID', uid)
+	if (typeof (uid) === 'undefined' || uid === '') {
+		uid = 0
+		console.debug('generate uid', uid)
+	}
+	setUID(uid)
+	return uid
+}
+
+// 设置会话id
 const setSessionId = (sessionId) => {
   console.debug('set session_id', sessionId)
   window.cache.setValue('BY_SESSION_ID', sessionId, 3600)
@@ -89,6 +107,7 @@ const getDeviceType = () => {
 
 const tools = {
   getDeviceType,
+  getUID,setUID,
 	getVersion, getApiUrl, getAvatarUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
 }
 

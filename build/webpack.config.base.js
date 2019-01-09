@@ -69,7 +69,6 @@ module.exports = {
 
 	plugins: [
 		new HtmlWebpackPlugin ({
-			title: 'Admin',
 			filename: 'index.html',
 			template: 'index.html',
 			inject: true

@@ -5,7 +5,7 @@
       <div class="product-nav-stage product-nav-stage-main">
         <div class="product-nav-scene product-nav-main-scene">
           <div class="product-nav-title">
-            {{ menu.Name }}
+            {{ menu.title }}
           </div>
           <div class="product-nav-list">
             <ul>
@@ -17,12 +17,12 @@
                 <div>
                   <a
                     v-if="!subMenu.children"
-                    :href="subMenu.IsFront ? routerUrl(subMenu.UrlAddress) : menuUrl(subMenu.UrlAddress) "
-                    @click.prevent="routerJump(subMenu.UrlAddress, index)"
+                    :href="subMenu.IsFront ? routerUrl(subMenu.url) : menuUrl(subMenu.url) "
+                    @click.prevent="routerJump(subMenu.url, index)"
                   >
                     <div class="nav-icon" />
                     <div class="nav-title">
-                      {{ subMenu.Name }}
+                      {{ subMenu.title }}
                     </div>
                   </a>
                   <a
@@ -33,7 +33,7 @@
                       <span class="icon-arrow-down" />
                     </div>
                     <div class="nav-title">
-                      {{ subMenu.Name }}
+                      {{ subMenu.title }}
                     </div>
                   </a>
                 </div>
@@ -43,7 +43,7 @@
                     :key="`${index}-${v}`"
                   >
                     <div>
-                      <a :href="!item.IsFront ? menuUrl(item.UrlAddress) : routerUrl(item.UrlAddress)">
+                      <a :href="!item.IsFront ? menuUrl(item.url) : routerUrl(item.url)">
                         <div class="nav-icon" />
                         <div class="nav-title">
                           {item.Name}

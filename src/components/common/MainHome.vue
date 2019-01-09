@@ -958,7 +958,7 @@
       let ret = []
       data.forEach(val => {
         if (action(val)) {
-          val.IsFront = (parseInt(val.IsFront) === 1)
+          val.IsFront = (parseInt(val.url_type) === 1)
           ret.push(val)
         }
       })
@@ -966,21 +966,20 @@
     },
     loadChildMenu (list = [], data = []) {
       list = list.map(val => {
-        val.children = this.queryChildMenu(data, (v) => (v.ParentId === val.Id))
-        val.AllowExpand = val.children.length > 0 && val.url !== '#'
+        val.children = this.queryChildMenu(data, (v) => (v.pid == val.id))
+        val.AllowExpand = val.children.length > 0 && val.url === '#'
         return val
       })
       return list
     },
     // 菜单数据处理
     loadMenu (menuList = []) {
-      let newList = this.queryChildMenu(menuList, (v) => (v.ParentId === 0))
+      let newList = this.queryChildMenu(menuList, (v) => (v.pid == 0))
       newList = this.loadChildMenu(newList, menuList)
       newList = newList.map(val => {
         val.children = this.loadChildMenu(val.children, menuList)
         return val
       })
-      console.log(newList)
       this.menuList = newList
     },
     getApiUrl (url) {
