@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 import '../theme/reset.css' // elementui theme
 import '../theme/index.css' // elementui theme
 import VueRouter from 'vue-router'
-// import NProgress from 'nprogress';
+import NProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 import store from './store/index'
 import routes from './routes'
@@ -34,12 +34,12 @@ router.beforeEach((to, from, next) => {
   // const hideLeft = to.meta.hideLeft
   // store.dispatch('showLeftMenu', hideLeft)
   // store.dispatch('showLoading', true)
-  // NProgress.start();
+  NProgress.start();
   next()
 })
 
 router.afterEach(transition => {
-  // NProgress.done();
+  NProgress.done();
 })
 
 Vue.use(ElementUI)

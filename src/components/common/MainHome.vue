@@ -860,7 +860,7 @@
       userDropMenus: [
         //                    { 'name': '修改密码', url: '#/user/update_password' },
         //                    { 'name': '皮肤设置', url: '#/admin/skin' },
-        { 'name': '安全退出', method: 'logout' }
+        { 'name': '安全退出', url: '/logout' }
       ]
     }
   },

@@ -6,6 +6,7 @@ const userApi = {
   logout: (data, cb, failCb) => {
     console.debug('[ajax] userApi::logout 用户登出', data);
     let url = window.tools.getApiUrl('user/logout');
+		data.service_type = "by_UserLoginSession_logout";
     http.methods.apiPost(url, data).then((res) => {
       if (res.code === 0) {
         cb(res);
@@ -13,6 +14,7 @@ const userApi = {
         failCb(res);
       }
     });
+    window.tools.clear();
   },
   login: (data, cb, failCb) => {
     console.debug('[ajax] userApi::login 用户登录', data);

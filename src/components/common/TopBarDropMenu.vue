@@ -71,12 +71,8 @@ export default {
     userMenuClick (link) {
       this.dropMenu(false)
       if (link.url) {
-        if (this.$route.name !== 'admin/index') this.$router.push({ name: 'admin/index' })
-        this.$store.dispatch('mainFrameJump', '')
-        window.tools.returnTop()
-        setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link.url)) }, 1)
-      }
-      if (link.method) {
+      	this.$router.push(link.url);
+      } else if (link.method) {
         this.$emit(link.method)
       }
     }

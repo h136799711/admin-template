@@ -17,7 +17,7 @@
                 <div>
                   <a
                     v-if="!subMenu.children"
-                    :href="subMenu.IsFront ? routerUrl(subMenu.url) : menuUrl(subMenu.url) "
+                    href="javascript:void(0)"
                     @click.prevent="routerJump(subMenu.url, index)"
                   >
                     <div class="nav-icon" />
@@ -127,23 +127,25 @@ export default {
       setTimeout(() => { this.$store.dispatch('mainFrameJump', this.menuUrl(UrlAddress)) }, 1)
     },
     routerJump (UrlAddress, index) {
-      console.log('routerJump', UrlAddress)
+      // console.log('routerJump', UrlAddress)
+      // return;
       //                this.navOnClick(index);
       //                this.$store.dispatch('routerReloadData');
       //                window.tools.returnTop();
-      //                console.log('router location', this.$router.resolve(`${UrlAddress}`, false, false).href);
+      // console.log('router location', this.$router.resolve(`${UrlAddress}`, false, false).href);
       var location = this.$router.resolve(UrlAddress, '#', false).location
       console.log('location', location)
-      this.$router.push(location)
+      this.$router.push(UrlAddress)
     },
     menuUrl (UrlAddress) {
       console.log('menuUrl', UrlAddress)
-      return window.tools.getApiUrl(UrlAddress)
+      return UrlAddress
     },
     routerUrl (UrlAddress) {
-      console.log('routerUrl', UrlAddress)
-      console.log('routerUrl', this.$router.resolve(`${UrlAddress}`, false, false).href)
-      return this.$router.resolve(`${UrlAddress}`, '#', false).href + '?t=' + (new Date()).getTime()
+      return UrlAddress
+      // console.log('routerUrl', UrlAddress)
+      // console.log('routerUrl', this.$router.resolve(`${UrlAddress}`, false, false).href)
+      // return this.$router.resolve(`${UrlAddress}`).href + '?t=' + (new Date()).getTime()
     }
   }
 }

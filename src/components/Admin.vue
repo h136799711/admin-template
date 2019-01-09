@@ -14,19 +14,8 @@
     return {}
   },
   computed: {
-    mainFrameSrc () {
-      return this.$store.state.mainFrameSrc
-    },
-    mainFrameLoading () {
-      return this.$store.state.mainFrameLoading
-    }
   },
   methods: {
-    mainFrameLoad () {
-      if (!this.mainFrameSrc === '') {
-        this.$store.dispatch('mainFrameJumpEnd')
-      }
-    }
   }
 }
 </script>

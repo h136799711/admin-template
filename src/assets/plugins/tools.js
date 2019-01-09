@@ -11,7 +11,9 @@ const getVersion = () => {
 const getAppId = () => {
   return client_id
 }
-
+const clear = () => {
+	window.cache.clear();
+}
 // 设置会话id
 const setUID = (uid) => {
 	console.debug('set uid', uid)
@@ -106,6 +108,7 @@ const getDeviceType = () => {
 }
 
 const tools = {
+	clear,
   getDeviceType,
   getUID,setUID,
 	getVersion, getApiUrl, getAvatarUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId

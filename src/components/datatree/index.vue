@@ -639,6 +639,7 @@
         this.cache = []
       }
       datatreeApi.query({ 'parent_id': parentId, 'page_size': 654321 }, (resp) => {
+      	console.debug('resp ', resp)
         this.loading = false
         this.count = parseInt(resp.count)
         suc(resp.list)

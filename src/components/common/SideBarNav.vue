@@ -35,7 +35,7 @@
         class="nav-item"
         :class="{ active: activeIndex == `${index}-${i}` }"
         @click="navClick(i)"
-        @mouseenter="navOnMouseHover(menu.Name, $event)"
+        @mouseenter="navOnMouseHover(menu.title, $event)"
       >
         <template v-if="menu.AllowExpand">
           <a
@@ -54,12 +54,9 @@
           </a>
         </template>
         <template v-else>
-          <a
-            :href="!menu.IsFront ? menuUrl(menu.url) : routerUrl(menu.url)"
-            class="sidebar-trans"
-            @click.prevent="!menu.IsFront ? mainFrameJump(menu.url) : routerJump(menu.url)"
-            @mouseenter="navOnMouseHover(menu.Name, $event)"
-          >
+            <a href="#"
+               @click="routerJump(menu.url)"
+            >
             <div class="nav-icon sidebar-trans">
               <span
                 class="boyefont"
@@ -69,7 +66,7 @@
             <span class="nav-title">
               {{ menu.title }}&nbsp;
             </span>
-          </a>
+            </a>
         </template>
       </li>
     </ul>
@@ -110,20 +107,10 @@ export default {
     navClick (index) {
       this.$emit('NavOnClick', `${this.index}-${index}`, this.navMenu.children[index].children.length > 0 ? this.navMenu.children[index] : false)
     },
-    mainFrameJump (UrlAddress) {
-      if (this.$route.name !== 'Home/Index') this.$router.push({ name: 'Home/Index' })
-      this.$store.dispatch('mainFrameJump', '')
-      window.tools.returnTop()
-      setTimeout(() => { this.$store.dispatch('mainFrameJump', this.menuUrl(UrlAddress)) }, 1)
-    },
     routerJump (UrlAddress) {
-      this.$store.dispatch('routerReloadData')
       window.tools.returnTop()
-      this.$router.push(`${UrlAddress}`)
-    },
-    menuUrl (UrlAddress) {
-      //                return this.$router.resolve(`${UrlAddress}`).href;
-      return window.tools.getApiUrl(UrlAddress)
+      console.log(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
+      window.location.href = this.$router.resolve(UrlAddress, '#', false).href
     },
     routerUrl (UrlAddress) {
       return this.$router.resolve(`${UrlAddress}`).href

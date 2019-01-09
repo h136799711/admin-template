@@ -13,6 +13,7 @@ const DatatreeIndex = r => require.ensure([], () => r(require('./components/data
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
+	{ path: '/', redirect: '/admin' },
   // 登录
   { path: '/login', component: Login },
   // 退出
@@ -21,16 +22,14 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
-      { path: 'index', component: AdminIndex },
-      {
-        path: 'datatree',
-        component: Datatree,
-        children: [
-          { path: 'index', component: DatatreeIndex }
-        ]
-      },
-      { path: '', component: AdminIndex },
-      { path: '*', component: NotFound }
+			{
+				path: 'datatree',
+				component: Datatree,
+				children: [
+					{ name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
+				]
+			},
+			{ path: 'index/index', component: AdminIndex },
     ]
   },
   { path: '*', component: NotFound }

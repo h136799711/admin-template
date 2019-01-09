@@ -6,6 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="" <% if(htmlWebpackPlugin.files.manifest) { %> manifest="<%= htmlWebpackPlugin.files.manifest %>"<% } %>> <!--<![endif]-->
 
 <head>
+  <base href="<%= process.env.SITE_ROOT_URI %>">
   <meta charset="utf-8">
   <title><%= process.env.PLATFORM_NAME  || 'Admin' %></title>
   <meta name="generate-date" content="<%= new Date() %>"  />

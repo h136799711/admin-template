@@ -3,38 +3,41 @@
 
 // 设置cookie , 过期时间 单位秒
 const setCookie = (name, value, expireTime) => {
-  name = tools.md5Utils.hex_hmac_md5('hebidu', name);
-  // value = tools.base64Utils.encode(value);
-  var d = new Date();
-  var newDate = new Date((d.getTime() + expireTime * 1000));
-  var expires = 'expires=' + newDate.toGMTString();
-  document.cookie = name + '=' + escape(value) + '; ' + expires;
+  // name = tools.md5Utils.hex_hmac_md5('hebidu', name);
+	if (expireTime) {
+		var date = new Date();
+		date.setTime(date.getTime()+(expireTime * 1000));
+		var expires = "; expires="+date.toGMTString();
+	} else {
+		var expires = "";
+	}
+	document.cookie = name+"="+value+expires+"; path=/";
+  // var d = new Date();
+  // var newDate = new Date((d.getTime() + expireTime * 1000));
+  // var expires = 'expires=' + newDate.toGMTString();
+  // document.cookie = name + '=' + escape(value) + '; ' + expires;
 };
 // 获取cookie
 const getCookie = (name) => {
-  name = tools.md5Utils.hex_hmac_md5('hebidu', name) + '=';
-  let ca = document.cookie.split(';');
-  var value = '';
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) === ' ') c = c.substring(1);
-    if (c.indexOf(name) !== -1) {
-      value = c.substring(name.length, c.length);
-      // value = tools.base64Utils.decode(value);
-      break;
-    }
-  }
-  return value;
+	// var nameEQ = tools.md5Utils.hex_hmac_md5('hebidu', name) + '=';
+	var nameEQ = name + '=';
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return '';
 };
 // 清除cookie
 const clearCookie = () => {
-  var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
-  if (keys) {
-    for (var i = keys.length; i--;) {
-      document.cookie = keys[i] + '=0;expires=' + new Date(0).toGMTString();
-    }
-  }
-};
+	var keys = document.cookie.match (/[^ =;]+(?=\=)/g);
+	if (keys) {
+		for (var i = keys.length; i > 0; i--) {
+			document.cookie = keys[i] + '=0;expires=' + new Date (0).toUTCString ()
+		}
+	}
+}
 
 // 缓存设置
 const getBigDataValue = (key) => {

@@ -314,7 +314,7 @@ value="" @keydown.enter="login"
         this.isLogging = false
         let msg = this.loginUser.nickname + ', Login Success'
         window.tools.alertSuc(msg)
-        window.tools.setSessionId(this.loginUser.auto_login_code)
+        window.tools.setSessionId(this.loginUser.sid)
         window.tools.setUID(this.loginUser.id)
         setTimeout(() => {
           this.jump2Admin()
