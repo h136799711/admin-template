@@ -48,6 +48,8 @@
 		let html = document.getElementsByTagName ('html')[0];
 		html.setAttribute ('lang', lang);
 
+		window.itboye = window.itboye || {};
+		window.itboye.clientInfo = window.itboye.clientInfo || {};
 		window.itboye.clientInfo.version = "<%= process.env.APP_VERSION || 'unknown' %>";
 	}
 </script>

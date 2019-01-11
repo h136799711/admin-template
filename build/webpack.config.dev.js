@@ -14,7 +14,7 @@ module.exports = merge(baseConfig, {
 		hot: true,
 		contentBase: 'dist',
 		compress: true,
-		host: 'localhost',
+		host: 'local.e.hebidu.cn',
 		port: '8082',
 		open: true,
 		overlay: { warnings: false, errors: true },
