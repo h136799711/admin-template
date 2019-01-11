@@ -836,9 +836,9 @@
 
 <script>
 	import http from '../../assets/js/http'
-	import SideBarNav from '../../components/common/SideBarNav'
-	import SecondNavBar from '../../components/common/SecondNavBar'
-	import TopBarDropMenu from '../../components/common/TopBarDropMenu'
+	import SideBarNav from '../common/SideBarNav'
+	import SecondNavBar from '../common/SecondNavBar'
+	import TopBarDropMenu from '../common/TopBarDropMenu'
 	import _ from 'lodash'
 
 	export default {

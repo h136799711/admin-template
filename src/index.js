@@ -26,6 +26,7 @@ import en from './i18n/en'
 
 const messages = {
 	en: {
+		...en,
 		...enLocale // 或者用 Object.assign({ message: 'hello' }, enLocale)
 	},
 	'zh-cn': {

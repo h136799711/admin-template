@@ -12,7 +12,7 @@
       >
         <span class="sidebar-title-icon by-triangle_right by-icon" />
         <span class="sidebar-title-text">
-          {{ navMenu.title }}
+          {{ $t(navMenu.title) }}
         </span>
       </div>
       <div
@@ -20,7 +20,7 @@
         class="sidebar-title-inner"
       >
         <span class="sidebar-title-text">
-          {{ navMenu.title }}
+          {{ $t(navMenu.title) }}
         </span>
       </div>
     </div>
@@ -49,7 +49,7 @@
               />
             </div>
             <span class="nav-title">
-              {{ menu.title }}&nbsp;
+              {{ $t(menu.title) }}
             </span>
           </a>
         </template>
@@ -63,8 +63,7 @@
                 :class="menu.icon!='' ? menu.icon : 'by-menu'"
               />
             </div>
-            <span class="nav-title">
-              {{ menu.title }}&nbsp;
+            <span class="nav-title">{{ $t(menu.title) }}
             </span>
             </a>
         </template>
