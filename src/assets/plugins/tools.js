@@ -108,11 +108,16 @@ const getDeviceType = () => {
 }
 
 const getBrowseLanguage = () => {
-	let lang = 'en';
-	if (navigator.language) {
-		 lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+	let lang = window.cache.getValue('lang');
+	if (!lang) {
+		if (navigator.language) {
+			lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+			lang = lang.substr (0, 2);//获取浏览器配置语言前两位
+		} else {
+			lang = 'en';
+		}
 	}
-	lang = lang.substr (0, 2);//获取浏览器配置语言前两位
+
 	return lang;
 }
 

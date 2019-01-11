@@ -874,7 +874,7 @@
             'name': 'English', method: 'changeLanguages', 'value': 'en'
         },
         {
-            'name': '中文简体', method: 'changeLanguages', 'value': 'zh'
+            'name': '中文简体', method: 'changeLanguages', 'value': 'zh-cn'
         }
       ]
     }
@@ -928,11 +928,13 @@
   },
   mounted () {},
   methods: {
-    changeLanguages () {
-      console.log('changeLanguages');
+    changeLanguages (lang) {
+      console.log('changeLanguages', lang)
+      window.cache.setValue('lang', lang.value, 24*3600)
+      window.location.reload();
     },
     getUserData () {
-      window.tools.alertInfo(this.$i18n.t('loading'))
+      window.tools.alertInfo(this.$i18n.t('Loading'))
       this.$store.dispatch('getUserSessionData')
     },
     // 切换迷你侧边导航

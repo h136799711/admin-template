@@ -21,20 +21,19 @@ import finger from 'fingerprintjs2'
 import VueI18n from 'vue-i18n'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import zhCN from './i18n/zh-CN'
+import en from './i18n/en'
 
 const messages = {
 	en: {
 		...enLocale // 或者用 Object.assign({ message: 'hello' }, enLocale)
 	},
-	zh: {
-		Loading: '加载中...',
-		Processing: '执行中...',
-		'Please Login Again': '请重新登录',
-		'Please Try Again': '请重试',
-		'Logout': '安全退出',
+	'zh-cn': {
+		...zhCN,
 		...zhLocale // 或者用 Object.assign({ message: '你好' }, zhLocale)
 	}
 }
+console.log(messages)
 
 axios.defaults.baseURL = ''
 axios.defaults.timeout = 15000
@@ -66,11 +65,9 @@ Vue.use(ElementUI, {
 Vue.use(VueRouter)
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-	locale: 'zh', // set locale
+	locale: 'en', // set locale
 	messages, // set locale messages
 })
-i18n.locale = tools.getBrowseLanguage();
-console.log('locale=', i18n.locale)
 window.Lockr = Lockr
 window.moment = moment
 window.axios = axios
@@ -100,7 +97,8 @@ window.tools.getDeviceToken = function () {
 	}
 	return "";
 }
-
+i18n.locale = tools.getBrowseLanguage();
+console.log('locale= ', i18n.locale)
 const bus = new Vue()
 window.bus = bus
 window.tools.alertError = (msg) => {
