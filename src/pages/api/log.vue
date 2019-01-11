@@ -25,6 +25,7 @@
                                             format="yyyy-MM-dd"
                                             value-format="yyyyMMdd"
                                             align="left"
+                                            :editable="false"
                                             type="date"
                                             :placeholder="$t('Date')"
                                             :picker-options="pickerDateOption">
@@ -146,6 +147,7 @@
 		created() {
 		},
         mounted: function() {
+			this.queryForm.ymd = (new Date()).format('yyyyMMdd');
 		    this.refresh();
         },
 		methods: {
