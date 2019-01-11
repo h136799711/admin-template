@@ -18,6 +18,23 @@ import md5Utils from './assets/plugins/md5Utils'
 import cache from './assets/plugins/cache'
 import tools from './assets/plugins/tools'
 import finger from 'fingerprintjs2'
+import VueI18n from 'vue-i18n'
+import enLocale from 'element-ui/lib/locale/lang/en'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+
+const messages = {
+	en: {
+		...enLocale // 或者用 Object.assign({ message: 'hello' }, enLocale)
+	},
+	zh: {
+		Loading: '加载中...',
+		Processing: '执行中...',
+		'Please Login Again': '请重新登录',
+		'Please Try Again': '请重试',
+		'Logout': '安全退出',
+		...zhLocale // 或者用 Object.assign({ message: '你好' }, zhLocale)
+	}
+}
 
 axios.defaults.baseURL = ''
 axios.defaults.timeout = 15000
@@ -42,8 +59,18 @@ router.afterEach(transition => {
   NProgress.done();
 })
 
-Vue.use(ElementUI)
+Vue.use(VueI18n)
+Vue.use(ElementUI, {
+	i18n: (key, value) => i18n.t(key, value)
+})
 Vue.use(VueRouter)
+// Create VueI18n instance with options
+const i18n = new VueI18n({
+	locale: 'zh', // set locale
+	messages, // set locale messages
+})
+i18n.locale = tools.getBrowseLanguage();
+console.log('locale=', i18n.locale)
 window.Lockr = Lockr
 window.moment = moment
 window.axios = axios
@@ -122,5 +149,6 @@ window.itboye.vue_instance = new Vue({
   components: { App },
   template: '<App/>',
   router,
-  store
+  store,
+	i18n
 }).$mount('#app')

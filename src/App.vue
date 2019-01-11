@@ -177,12 +177,14 @@
 export default {
   name: 'App',
   components: {
+  },
+  beforeMount: function () {
   }
 }
 </script>
 
 <style>
-  @import url(//at.alicdn.com/t/font_rxk5730c95wv1jor.css);
+  @import url(//at.alicdn.com/t/font_326734_89xyndgaxai.css);
 
   span.by-icon,i.by-icon{
     font-family: 'boyefont';

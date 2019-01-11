@@ -5,6 +5,7 @@
       class="topbar-btn topbar-info-dropdown-toggle"
       @click.stop="dropMenu()"
     >
+      <i :class="iconClass"></i>
       <span>{{ name }}</span>
     </a>
     <ul
@@ -40,6 +41,10 @@ export default {
       type: String,
       required: true
     },
+    iconClass: {
+      type: String,
+      required: false
+    },
     links: {
       type: Array,
       default: function () {
@@ -73,7 +78,7 @@ export default {
       if (link.url) {
       	this.$router.push(link.url);
       } else if (link.method) {
-        this.$emit(link.method)
+        this.$emit(link.method, link)
       }
     }
   }

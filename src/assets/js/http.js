@@ -42,7 +42,7 @@ const apiMethods = {
         }).then((response) => {
           let data = response.data;
           if (data.code === 1111) {
-            window.tools.alertWarn('请重新登录');
+            window.tools.alertWarn(itboye.vue_instance.$i18n.t('Please Login Again'));
             // reject(data);
             window.itboye.vue_instance.$router.push('/login');
             resolve(data);
@@ -51,7 +51,7 @@ const apiMethods = {
           }
         }).catch((response) => {
           console.log(response);
-          window.tools.alertWarn('请求超时，请检查网络');
+          window.tools.alertWarn(itboye.vue_instance.$i18n.t('Please Try Again'));
           resolve(response);
         });
       });
@@ -121,7 +121,7 @@ const apiMethods = {
         }, (response) => {
           reject(response);
           bus.$message({
-            message: '请求超时，请检查网络',
+            message: window.tools.alertWarn(itboye.vue_instance.$i18n.t('Please Try Again')),
             type: 'warning'
           });
         });

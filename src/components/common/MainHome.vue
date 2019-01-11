@@ -168,6 +168,7 @@
     }
     .main-topbar .topbar-info-item {
         display: inline-block;
+        position: relative;
     }
     .main-topbar .topbar-notice .topbar-btn {
         padding: 0 16px;
@@ -175,6 +176,7 @@
     .main-topbar .topbar-info .topbar-btn {
         padding: 0 18px;
         height: 50px;
+        font-size: 18px;
         display: block;
         z-index: 2;
         background: #373d41;
@@ -214,7 +216,7 @@
         padding: 0;
         position: absolute;
         top: 100%;
-        right: 0;
+        left: 0;
         visibility: hidden;
         float: left;
         list-style: none;
@@ -258,7 +260,7 @@
     }
     .main-topbar .topbar-info-dropdown-memu-list {
         padding: 10px 0;
-        margin: -2px;
+        margin: 0px;
     }
     .main-body {
         position: absolute;
@@ -747,16 +749,23 @@
           </div>
           <TopBarDropMenu
             :name="userInfo.mobile"
+            iconClass=""
             :links="userDropMenus"
             @logout="logout"
           />
+            <TopBarDropMenu
+                    name=""
+                    iconClass="by-icon by-duoyuyan"
+                    :links="languages"
+                    @changeLanguages="changeLanguages"
+            />
           <div class="topbar-product topbar-left topbar-info-item">
             <div
               class="topbar-btn topbar-product-btn"
               @click="toggleFullScreen"
             >
               <i
-                title="全屏 F11"
+                title="Fullscreen F11"
                 class="by-icon by-webtubiaoku10"
               />
             </div>
@@ -858,9 +867,15 @@
       activeNavMenuIndex: false,
       secondMenuData: false,
       userDropMenus: [
-        //                    { 'name': '修改密码', url: '#/user/update_password' },
-        //                    { 'name': '皮肤设置', url: '#/admin/skin' },
-        { 'name': '安全退出', url: '/logout' }
+        { 'name': this.$i18n.t('Logout'), url: '/logout' }
+      ],
+      languages: [
+        {
+            'name': 'English', method: 'changeLanguages', 'value': 'en'
+        },
+        {
+            'name': '中文简体', method: 'changeLanguages', 'value': 'zh'
+        }
       ]
     }
   },
@@ -913,8 +928,11 @@
   },
   mounted () {},
   methods: {
+    changeLanguages () {
+      console.log('changeLanguages');
+    },
     getUserData () {
-      window.tools.alertInfo('获取数据...')
+      window.tools.alertInfo(this.$i18n.t('loading'))
       this.$store.dispatch('getUserSessionData')
     },
     // 切换迷你侧边导航
