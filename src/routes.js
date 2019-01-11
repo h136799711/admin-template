@@ -40,6 +40,7 @@ const routes = [
 				]
 			},
 			{ path: 'index/index', component: AdminIndex },
+			{ path: '*', component: NotFound }
     ]
   },
   { path: '*', component: NotFound }
