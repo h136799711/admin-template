@@ -108,7 +108,7 @@ const getDeviceType = () => {
 }
 
 const getBrowseLanguage = () => {
-	let lang = window.cache.getValue('lang');
+	let lang = window.cache.getValue ('lang');
 	if (!lang) {
 		if (navigator.language) {
 			lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
@@ -121,8 +121,16 @@ const getBrowseLanguage = () => {
 	return lang;
 }
 
+const getTimezone = () => {
+	var timezone = (0 - ((new Date ()).getTimezoneOffset ()) / 60);
+	window.cache.setValue ('timezone', timezone, 8*3600);
+	console.log ("时差", timezone, '小时');
+	return timezone;
+}
+
 const tools = {
 	getBrowseLanguage,
+	getTimezone,
 	clear,
 	getDeviceType,
 	getUID, setUID,

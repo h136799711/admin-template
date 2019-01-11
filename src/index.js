@@ -17,7 +17,7 @@ import base64Utils from 'js-base64'
 import md5Utils from './assets/plugins/md5Utils'
 import cache from './assets/plugins/cache'
 import tools from './assets/plugins/tools'
-import finger from 'fingerprintjs2'
+import Finger from 'fingerprintjs2'
 import VueI18n from 'vue-i18n'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
@@ -69,6 +69,8 @@ const i18n = new VueI18n({
 	locale: 'en', // set locale
 	messages, // set locale messages
 })
+window.itboye = window.itboye || {}
+window.itboye.clientInfo = window.itboye.clientInfo || {}
 window.Lockr = Lockr
 window.moment = moment
 window.axios = axios
@@ -77,7 +79,7 @@ window.cache = cache
 window.tools = tools
 window.tools.md5Utils = md5Utils
 window.tools.base64Utils = base64Utils.Base64
-window.tools.finger = new finger();
+window.tools.finger = new Finger()
 window.tools.getDeviceToken = function () {
   let token = cache.getValue('BY_TOKEN');
   if (token) {
@@ -87,12 +89,14 @@ window.tools.getDeviceToken = function () {
 		requestIdleCallback(function () {
       window.tools.finger.get(function (components) {
 				cache.setValue('BY_TOKEN', components, 7200);
+				itboye.clientInfo.deviceToken = components;
 			})
 		})
 	} else {
 		setTimeout(function () {
 			window.tools.finger.get(function (components) {
 				cache.setValue('BY_TOKEN', components, 7200);
+				itboye.clientInfo.deviceToken = components;
 			})
 		}, 500)
 	}
@@ -141,7 +145,6 @@ window.tools.alertWarn = (msg) => {
 window.tools.alertClose = () => {
   if (bus._byAlert) bus._byAlert.close()
 }
-window.itboye = window.itboye || {}
 
 window.itboye.vue_instance = new Vue({
   el: '#app',

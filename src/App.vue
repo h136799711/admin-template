@@ -178,7 +178,9 @@ export default {
   name: 'App',
   components: {
   },
-  beforeMount: function () {
+  mounted: function () {
+    window.itboye.clientInfo.lang = window.tools.getBrowseLanguage()
+    window.itboye.clientInfo.timezone = window.tools.getTimezone()
   }
 }
 </script>

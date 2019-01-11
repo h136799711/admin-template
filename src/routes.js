@@ -10,6 +10,9 @@ const AdminIndex = r => require.ensure([], () => r(require('./pages/admin/index.
 const Datatree = r => require.ensure([], () => r(require('./pages/datatree/index.vue')), 'datatree')
 const DatatreeIndex = r => require.ensure([], () => r(require('./pages/datatree/index.vue')), 'datatreeIndex')
 
+// 接口日志
+const ApiRequestLog = r => require.ensure([], () => r(require('./pages/api/log.vue')), 'apiRequestLog')
+
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -27,6 +30,13 @@ const routes = [
 				component: Datatree,
 				children: [
 					{ name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
+				]
+			},
+			{
+				path: 'api',
+				component: ApiRequestLog,
+				children: [
+					{ name: 'apiRequestLog', path: 'log', component: ApiRequestLog }
 				]
 			},
 			{ path: 'index/index', component: AdminIndex },
