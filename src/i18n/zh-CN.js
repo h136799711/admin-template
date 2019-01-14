@@ -44,6 +44,18 @@ exports.default = {
 	'Root': '根',
 	'Save': '保存',
 	'Reset': '重置',
+	'Action': '操作',
+	'Roles': '角色',
+	'ID': 'ID',
+	'Enable': '启用',
+	'Disable': '禁用',
+	'Policy': '策略',
+	'Menu': '菜单',
+	'Back': '后退',
+	'SelectItems': '请先选择',
+	'Checked': '选中项',
+	'Unchecked': '未选中项',
+
 	// 短语
 	'Action Confirm': '操作确定?',
 	'Please Input Alias': '请输入别名',

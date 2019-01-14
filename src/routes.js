@@ -14,6 +14,10 @@ const DatatreeIndex = r => require.ensure([], () => r(require('./pages/datatree/
 const ApiRequestLog = r => require.ensure([], () => r(require('./pages/api/log.vue')), 'apiRequestLog')
 // 应用管理
 const ClientsIndex = r => require.ensure([], () => r(require('./pages/clients/index.vue')), 'clientsIndex')
+// 角色管理
+const RolesIndex = r => require.ensure([], () => r(require('./pages/roles/index.vue')), 'rolesIndex')
+// 角色菜单
+const RolesMenu = r => require.ensure([], () => r(require('./pages/roles/menu.vue')), 'rolesMenu')
 
 const routes = [
   // 地址为空的时候跳转
@@ -48,6 +52,8 @@ const routes = [
 					{ name: 'ClientsIndex', path: 'index', component: ClientsIndex }
 				]
 			},
+			{ path: 'roles/index', component: RolesIndex },
+			{ path: 'roles/menu/:id', component: RolesMenu, props: true },
 			{ path: 'index/index', component: AdminIndex },
 			{ path: '*', component: NotFound }
     ]

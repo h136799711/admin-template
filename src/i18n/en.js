@@ -44,6 +44,17 @@ exports.default = {
 	'Root': 'Root',
 	'Save': 'Save',
 	'Reset': 'Reset',
+	'Action': 'Action',
+	'Roles': 'Roles',
+	'ID': 'ID',
+	'Enable': 'Enable',
+	'Disable': 'Disable',
+	'Policy': 'Policy',
+	'Menu': 'Menu',
+	'Back': 'Back',
+	'SelectItems': 'Please Select Items',
+	'Checked': 'Checked',
+	'Unchecked': 'Unchecked',
 
 	'Datatree': 'Data Dictionary',
 

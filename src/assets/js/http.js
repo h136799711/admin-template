@@ -21,6 +21,7 @@ const apiMethods = {
       });
     },
     apiPost (url, data) {
+
       return new Promise((resolve, reject) => {
         var qs = require('qs');
         if (!data) data = {};
