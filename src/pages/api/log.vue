@@ -76,11 +76,14 @@
                 </div>
                 <div class="text-center">
                     <el-pagination
+                            background
                             :current-page="currentPage"
                             :page-sizes="[10, 20, 30, 50]"
                             :page-size="pageSize"
                             layout="total, sizes, prev, pager, next, jumper"
                             :total="count"
+                            @prev-click="byPagerCurrentChange"
+                            @next-click="byPagerCurrentChange"
                             @size-change="byPagerSizeChange"
                             @current-change="byPagerCurrentChange"
                     />
@@ -175,25 +178,21 @@
                 this.refresh()
 			},
 			query(suc) {
-				this.loading = true
-				apiLogApi.query ({'order': this.order, 'ymd': this.queryForm.ymd, 'page_size': this.pageSize}, (resp) => {
-					console.debug ('resp ', resp)
-					this.loading = false
-					this.count = parseInt (resp.count)
-					suc (resp.list)
-				}, (resp) => {
-					window.tools.alertError (resp.msg)
-					this.loading = false
-				})
 			},
 			refresh() {
 				// 刷新当前
-				this.list = []
-				this.count = 0
-				this.tableData = []
-				this.query ((list) => {
-                    this.tableData = list;
-				})
+                this.tableData = []
+                this.loading = true
+                apiLogApi.query ({'order': this.order, 'ymd': this.queryForm.ymd, 'page_index': this.currentPage, 'page_size': this.pageSize}, (resp) => {
+                    console.debug ('resp ', resp)
+                    this.loading = false
+                    console.debug('currentPage', this.currentPage)
+                    this.count = parseInt (resp.count)
+                    this.tableData = resp.list
+                }, (resp) => {
+                    window.tools.alertError (resp.msg)
+                    this.loading = false
+                })
 			}
 		}
 	}
