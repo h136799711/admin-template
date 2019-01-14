@@ -42,6 +42,8 @@ exports.default = {
 	'Label': '标签',
 	'Alias': '别名',
 	'Root': '根',
+	'Save': '保存',
+	'Reset': '重置',
 	// 短语
 	'Action Confirm': '操作确定?',
 	'Please Input Alias': '请输入别名',
@@ -52,5 +54,12 @@ exports.default = {
 
 	// 服务器返回的固定数据
 	'系统管理': '系统管理',
-	'数据字典': '数据字典'
+	'数据字典': '数据字典',
+
+	// 应用
+	'ClientName': '应用名称',
+	'ClientSecret': '应用密钥',
+	'ClientTotalLimit': '接口总调用次数',
+	'ClientDayLimit': '接口每日调用次数',
+	'ClientAlg': '通信算法'
 };

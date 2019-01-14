@@ -7,6 +7,7 @@
             <el-button
                     type="primary"
                     size="small"
+                    :loading="loading"
                     @click="refresh()"
             >
                 <span class="by-icon by-shuaxin"/>
@@ -33,7 +34,7 @@
                                 </el-form-item>
 
                                 <el-form-item>
-                                    <el-button type="primary" @click="onSearch">{{ $t('Search') }}</el-button>
+                                    <el-button :loading="loading" type="primary" @click="onSearch"  icon="el-icon-search">{{ $t('Search') }}</el-button>
                                 </el-form-item>
                             </el-form>
                     </div>

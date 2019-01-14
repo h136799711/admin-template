@@ -13,15 +13,15 @@
                 {{ $t('Datatree') }}
             </el-breadcrumb-item>
         </el-breadcrumb>
-
         <el-alert
-                class="margin-sm-bottom"
+                class=""
                 title=""
                 type="info"
                 :description="$t('DatatreeeDescription')"
                 show-icon
         />
-        <el-button-group>
+
+        <el-button-group class="margin-sm-top">
             <el-tooltip placement="right">
                 <div slot="content">
                     {{ $t('Refresh') }}{{ $t('Current Data') }}
@@ -75,7 +75,7 @@
                         <div style="height: 33px;">
                             <el-button
                                     type="primary"
-                                    icon="edit"
+                                    icon="el-icon-edit"
                                     size="mini"
                                     @click="datatreeAction('edit')"
                             >
@@ -83,7 +83,7 @@
                             </el-button>
                             <el-button
                                     type="primary"
-                                    icon="plus"
+                                    icon="el-icon-plus"
                                     size="mini"
                                     @click="datatreeAction('add')"
                             >
@@ -91,7 +91,7 @@
                             </el-button>
                             <el-button
                                     type="danger"
-                                    icon="delete"
+                                    icon="el-icon-delete"
                                     size="mini"
                                     @click="datatreeBulkDelete"
                             >

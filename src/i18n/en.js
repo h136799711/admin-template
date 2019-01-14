@@ -42,6 +42,8 @@ exports.default = {
 	'Label': 'Label',
 	'Alias': 'Alias',
 	'Root': 'Root',
+	'Save': 'Save',
+	'Reset': 'Reset',
 
 	'Datatree': 'Data Dictionary',
 
@@ -58,5 +60,13 @@ exports.default = {
 	'数据字典': 'Data Dictionary',
 	'接口调用日志': 'Request Log',
 	'应用管理': 'Applications',
-	'系统配置': 'System Settings'
+	'系统配置': 'System Settings',
+
+
+	// 应用
+	'ClientName': 'Client Name',
+	'ClientSecret': 'Client Secret',
+	'ClientTotalLimit': 'Total Request Limit',
+	'ClientDayLimit': 'Daily Request Limit',
+	'ClientAlg': 'Encryption Algorithm'
 };
