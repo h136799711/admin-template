@@ -70,14 +70,15 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin ({
 			filename: 'index.html',
+			favicon: 'favicon.ico',
 			template: 'index.html',
 			inject: true
 		}),
-		new VueLoaderPlugin (),
-		new CopyWebpackPlugin ([{
-			from: utils.resolve ('static'),
-			to: utils.resolve ('dist/static'),
-			toType: 'dir'
-		}])
+		new VueLoaderPlugin ()
+		// new CopyWebpackPlugin ([{
+		// 	from: utils.resolve ('static'),
+		// 	to: utils.resolve ('dist/static'),
+		// 	toType: 'dir'
+		// }])
 	]
 }

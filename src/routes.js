@@ -18,6 +18,8 @@ const ClientsIndex = r => require.ensure([], () => r(require('./pages/clients/in
 const RolesIndex = r => require.ensure([], () => r(require('./pages/roles/index.vue')), 'rolesIndex')
 // 角色菜单
 const RolesMenu = r => require.ensure([], () => r(require('./pages/roles/menu.vue')), 'rolesMenu')
+// 策略管理
+const PolicyIndex = r => require.ensure([], () => r(require('./pages/policy/index.vue')), 'policyIndex')
 
 const routes = [
   // 地址为空的时候跳转
@@ -52,6 +54,7 @@ const routes = [
 					{ name: 'ClientsIndex', path: 'index', component: ClientsIndex }
 				]
 			},
+			{ path: 'policy/index', component: PolicyIndex },
 			{ path: 'roles/index', component: RolesIndex },
 			{ path: 'roles/menu/:id', component: RolesMenu, props: true },
 			{ path: 'index/index', component: AdminIndex },

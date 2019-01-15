@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Success': '成功',
 	'Home': '主页',
 	'Loading': '加载中...',
 	'Processing': '执行中...',
@@ -55,11 +56,14 @@ exports.default = {
 	'SelectItems': '请先选择',
 	'Checked': '选中项',
 	'Unchecked': '未选中项',
+	'Version': '版本',
+	'Statements': '语句',
 
 	// 短语
 	'Action Confirm': '操作确定?',
 	'Please Input Alias': '请输入别名',
 	'Please Input Name': '请输入名称',
+	'JsonFormatString': '请输入json格式的字符串',
 
 	// 长整句话
 	'DatatreeeDescription': '1. 根节点 可以点击来加载一级数据 2. 编辑只能编辑第一个',
