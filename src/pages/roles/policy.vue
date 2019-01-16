@@ -40,7 +40,7 @@
         >
             {{ $t('Delete') }} {{ $t('Unchecked') }}
         </el-button>
-        <h2 class="h2 margin-md">{{ $t('Menu') }}</h2>
+        <h2 class="h2 margin-md">{{ $t('Policy') }}</h2>
         <el-tree
                 highlight-current
                 ref="tree"
@@ -104,7 +104,7 @@
                 });
             },
         	onSave() {
-                api.attachMenu ({'role_id': this.id, 'menu_id': this.$refs.tree.getCheckedKeys().join(',')}, (res) => {
+                api.attachPolicies ({'role_id': this.id, 'policy_ids': this.$refs.tree.getCheckedKeys().join(',')}, (res) => {
                     this.refresh()
                 }, (res) => {
                     console.log (res)
@@ -127,9 +127,9 @@
 
                             let data = {
                             	'role_id': this.id,
-                                'menu_ids': this.getUncheckedKeys().join(',')
+                                'policy_ids': this.getUncheckedKeys().join(',')
                             }
-                            api.deleteMenu (data, (res) => {
+                            api.removePolicies (data, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.refresh()
                                 done()
@@ -152,7 +152,7 @@
 				console.log(this.id)
 				// 刷新当前
                 this.loading = true
-                api.menu ({'role_id': this.id}, (resp) => {
+                api.policy ({'role_id': this.id}, (resp) => {
                     console.debug ('resp ', resp)
                     this.loading = false
                     if (resp.length === 2) {

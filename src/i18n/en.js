@@ -58,8 +58,11 @@ exports.default = {
 	'Unchecked': 'Unchecked',
 	'Version': 'Version',
 	'Statements': 'Statements',
-
+	'Remove': 'Remove',
 	'Datatree': 'Data Dictionary',
+	'PrefixOfPhone': 'Prefix Of Phone',
+	'Mobile': 'Mobile',
+	'User': 'User',
 
 	// 短语
 	'Action Confirm': 'Action Confirm?',

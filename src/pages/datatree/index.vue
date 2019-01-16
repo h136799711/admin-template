@@ -28,7 +28,7 @@
                 </div>
                 <el-button
                         type="primary"
-                        size="small"
+                        size="mini"
                         @click="refresh()"
                 >
                     <span class="by-icon by-shuaxin"/>

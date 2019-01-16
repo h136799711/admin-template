@@ -6,7 +6,7 @@
         <el-button-group>
             <el-button
                     type="primary"
-                    size="small"
+                    size="mini"
                     :loading="loading"
                     @click="refresh()"
             >

@@ -58,6 +58,10 @@ exports.default = {
 	'Unchecked': '未选中项',
 	'Version': '版本',
 	'Statements': '语句',
+	'Remove': '移除',
+	'PrefixOfPhone': '电话区号',
+	'Mobile': '手机号',
+	'User': '用户',
 
 	// 短语
 	'Action Confirm': '操作确定?',

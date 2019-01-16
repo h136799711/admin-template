@@ -18,6 +18,10 @@ const ClientsIndex = r => require.ensure([], () => r(require('./pages/clients/in
 const RolesIndex = r => require.ensure([], () => r(require('./pages/roles/index.vue')), 'rolesIndex')
 // 角色菜单
 const RolesMenu = r => require.ensure([], () => r(require('./pages/roles/menu.vue')), 'rolesMenu')
+// 角色策略
+const RolesPolicy = r => require.ensure([], () => r(require('./pages/roles/policy.vue')), 'rolesPolicy')
+// 角色用户
+const RolesUser = r => require.ensure([], () => r(require('./pages/roles/user.vue')), 'rolesUser')
 // 策略管理
 const PolicyIndex = r => require.ensure([], () => r(require('./pages/policy/index.vue')), 'policyIndex')
 
@@ -54,10 +58,30 @@ const routes = [
 					{ name: 'ClientsIndex', path: 'index', component: ClientsIndex }
 				]
 			},
-			{ path: 'policy/index', component: PolicyIndex },
-			{ path: 'roles/index', component: RolesIndex },
+			{
+				path: 'roles',
+				component: RolesIndex,
+				children: [
+					{ path: 'index', component: RolesIndex }
+				]
+			},
 			{ path: 'roles/menu/:id', component: RolesMenu, props: true },
-			{ path: 'index/index', component: AdminIndex },
+			{ path: 'roles/policy/:id', component: RolesPolicy, props: true },
+			{ path: 'roles/user/:id', component: RolesUser, props: true },
+			{
+				path: 'policy',
+				component: PolicyIndex,
+				children: [
+					{ path: 'index', component: PolicyIndex }
+				]
+			},
+			{
+				path: 'index',
+				component: AdminIndex,
+				children: [
+					{ path: 'index', component: AdminIndex }
+				]
+			},
 			{ path: '*', component: NotFound }
     ]
   },
