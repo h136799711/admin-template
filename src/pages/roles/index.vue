@@ -39,10 +39,12 @@
                 />
                 <el-table-column
                         prop="name"
+                        width="160px"
                         :label="$t('Name')"
                 />
                 <el-table-column
                         prop="note"
+                        width="200px"
                         :label="$t('Note')"
                 />
                 <el-table-column

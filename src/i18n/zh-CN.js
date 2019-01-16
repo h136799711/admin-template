@@ -62,6 +62,7 @@ exports.default = {
 	'PrefixOfPhone': '电话区号',
 	'Mobile': '手机号',
 	'User': '用户',
+	'Nick': '昵称',
 
 	// 短语
 	'Action Confirm': '操作确定?',

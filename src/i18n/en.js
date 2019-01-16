@@ -63,6 +63,7 @@ exports.default = {
 	'PrefixOfPhone': 'Prefix Of Phone',
 	'Mobile': 'Mobile',
 	'User': 'User',
+	'Nick': 'Nick',
 
 	// 短语
 	'Action Confirm': 'Action Confirm?',

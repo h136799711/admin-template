@@ -19,8 +19,17 @@
             >
                 <span class="by-icon by-shuaxin"/>
             </el-button>
-
         </el-tooltip>
+        <el-button
+                type="primary"
+                size="mini"
+                check-strictly="true"
+                :loading="loading"
+                @click="onAdd()"
+        >
+            <span class="el-icon-plus"/>
+            {{$t('Add')}}
+        </el-button>
 
         <h2 class="h2 margin-md">{{ $t('User') }}</h2>
 
@@ -87,11 +96,54 @@
                     @size-change="byPagerSizeChange"
                     @current-change="byPagerCurrentChange" />
         </div>
+
+        <!-- Add Form -->
+        <el-dialog
+                :show-close="false"
+                :modal-append-to-body="false"
+                :title="$t('Add')"
+                :visible.sync="dialogAddVisible"
+        >
+            <el-form
+                    status-icon
+                    ref="addForm"
+                    :model="addForm"
+                    label-position="right"
+                    label-width="100px"
+            >
+                <el-form-item
+                        :label="$t('Mobile')"
+                        prop="name">
+                    <el-autocomplete
+                            :clearable="true"
+                            v-model="addDialog.mobile"
+                            :fetch-suggestions="querySearchAsync"
+                            :placeholder="$t('Mobile')"
+                            @clear="onMobileClear"
+                            @select="handleSelect"
+                    ></el-autocomplete>
+                </el-form-item>
+
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogAddVisible = false">
+                    {{ $t('Cancel') }}
+                </el-button>
+                <el-button
+                        :loading="loading"
+                        type="primary"
+                        @click="submitAddForm()"
+                >
+                    {{ $t('Confirm') }}
+                </el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 	import api from '../../api/roleApi'
+	import userApi from '../../api/userApi'
 	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
 
 	export default {
@@ -106,6 +158,13 @@
 				queryForm: {
 					mobile: ''
                 },
+                addForm: {
+				    user_id: 0
+                },
+                addDialog: {
+				    mobile: ''
+                },
+                dialogAddVisible: false,
 				currentPage: 0,
                 pageSize: 10,
 				loading: false,
@@ -118,13 +177,56 @@
 			}
 		},
 		computed: {},
-		watch: {},
+		watch: {
+            dialogAddVisible: function(oldVal, newVal) {
+            	if (newVal === false) {
+                    this.addDialog.mobile = ''
+                    this.addForm.user_id = 0
+                }
+            }
+        },
 		created() {
             this.refresh();
         },
         mounted: function() {
         },
 		methods: {
+        	onMobileClear() {
+            	console.log('onMobileClear')
+                this.addForm.user_id = 0;
+            },
+            handleSelect(item) {
+                console.log(item);
+                this.addForm.user_id = item.id;
+            },
+            querySearchAsync(queryString, cb) {
+                userApi.queryByPagingNoCount({'mobile': queryString}, (res) => {
+                    var formatRes = [];
+                	for(var i=0;i < res.length;i++) {
+                        formatRes.push({
+                        	value: res[i].mobile,
+                            id: res[i].id
+                        })
+                	}
+                    cb(formatRes);
+                }, (res) => {
+                    window.tools.alertError (res.msg)
+                })
+            },
+        	submitAddForm() {
+                if (this.addForm.user_id > 0) {
+                	api.attachUser({'user_id': this.addForm.user_id, 'role_id': this.id}, (res) => {
+                        this.refresh()
+                        this.dialogAddVisible = false
+                    }, (res) => {
+                        window.tools.alertError (res.msg)
+                        this.dialogAddVisible = false
+                    })
+                }
+            },
+        	onAdd() {
+        		this.dialogAddVisible = true;
+            },
             byPagerSizeChange(val) {
                 this.pageSize = val
                 this.refresh ()
@@ -143,9 +245,10 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
+                            console.log(uid)
                             let data = {
+                                'user_id': uid,
                             	'role_id': this.id,
-                                'uid': uid
                             }
                             api.removeUser (data, (res) => {
                                 instance.confirmButtonLoading = false

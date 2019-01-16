@@ -3,6 +3,10 @@
 import http from '../assets/js/http.js';
 
 const userApi = {
+	queryByPagingNoCount: (data, suc, fail) => {
+		data.service_type = 'by_UserAccount_query';
+		http.methods.defaultPost('', data, suc, fail);
+  },
   logout: (data, cb, failCb) => {
     console.debug('[ajax] userApi::logout 用户登出', data);
     let url = window.tools.getApiUrl('user/logout');
