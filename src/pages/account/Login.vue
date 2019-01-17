@@ -220,7 +220,7 @@ tabindex="2" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(fals
               class="ipt sm"
               tabindex="3"
               name="verify"
-              maxlength="4"
+              maxlength="6"
               type="text"
               placeholder="verify code"
 value="" @keydown.enter="login"
