@@ -63,6 +63,21 @@ exports.default = {
 	'Mobile': '手机号',
 	'User': '用户',
 	'Nick': '昵称',
+	'Notification': '通知',
+	'System': '系统',
+	'Summary': '摘要',
+	'Read': '已读',
+	'Unread': '未读',
+	'View': '查看',
+	'Number': '数值',
+	'Char': '单字符',
+	'Text': '字符串',
+	'Array': '数组',
+	'Enum': '枚举',
+	'ValueType': '值类型',
+	'Value': '值',
+	'Category': '类别',
+
 
 	// 短语
 	'Action Confirm': '操作确定?',

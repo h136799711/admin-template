@@ -697,6 +697,14 @@
         border-radius: 0 0;
         background-color: #425160;
     }
+    .el-badge__content.is-fixed {
+      position: absolute;
+      border-radius: 0px;
+      background: #373d41;
+      border: 0px;
+      top: 15px;
+      right: 2px;
+    }
 
 </style>
 <template>
@@ -745,6 +753,17 @@
               @click="iframeRefresh"
             >
               <span><i class="by-icon by-loading" />刷新</span>
+            </div>
+          </div>
+
+          <div class="topbar-product topbar-left topbar-info-item">
+            <div
+                    class="topbar-btn topbar-product-btn"
+                    @click="goMessage"
+            >
+              <el-badge :value="unreadMsgCnt" :max="99" class="item">
+                <i class="el-icon-bell" />
+              </el-badge>
             </div>
           </div>
           <TopBarDropMenu
@@ -836,6 +855,7 @@
 
 <script>
 	import http from '../../assets/js/http'
+	import api from '../../api/msgApi'
 	import SideBarNav from '../common/SideBarNav'
 	import SecondNavBar from '../common/SecondNavBar'
 	import TopBarDropMenu from '../common/TopBarDropMenu'
@@ -849,6 +869,7 @@
   data () {
     return {
       isDropUserMenu: false,
+      unreadMsgCnt: 0,
       menuList: [],
       userInfo: {
         nickname: '',
@@ -925,9 +946,20 @@
   },
   created () {
     this.getUserData()
+    this.getUnreadMsg()
   },
   mounted () {},
   methods: {
+  	getUnreadMsg() {
+  	  	api.getUnreadCount({'uid': window.tools.getUID()}, (resp) => {
+  	  		this.unreadMsgCnt = resp
+        }, (resp) => {
+        })
+    },
+  	goMessage() {
+        window.tools.returnTop()
+        window.location.href = this.$router.resolve('/admin/message/index', '#', false).href
+    },
     changeLanguages (lang) {
       console.log('changeLanguages', lang)
       window.cache.setValue('lang', lang.value, 24*3600)

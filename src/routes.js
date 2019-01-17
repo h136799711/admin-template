@@ -25,6 +25,10 @@ const RolesUser = r => require.ensure([], () => r(require('./pages/roles/user.vu
 // 策略管理
 const PolicyIndex = r => require.ensure([], () => r(require('./pages/policy/index.vue')), 'policyIndex')
 
+const MessageIndex = r => require.ensure([], () => r(require('./pages/message/index.vue')), 'messageIndex')
+// 配置
+const ConfigIndex = r => require.ensure([], () => r(require('./pages/config/index.vue')), 'ConfigIndex')
+
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -73,6 +77,20 @@ const routes = [
 				component: PolicyIndex,
 				children: [
 					{ path: 'index', component: PolicyIndex }
+				]
+			},
+			{
+				path: 'message',
+				component: MessageIndex,
+				children: [
+					{ path: 'index', component: MessageIndex }
+				]
+			},
+			{
+				path: 'config',
+				component: ConfigIndex,
+				children: [
+					{ path: 'index', component: ConfigIndex }
 				]
 			},
 			{
