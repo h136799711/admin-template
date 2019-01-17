@@ -18,10 +18,8 @@
 </template>
 
 <script>
-	import http from '../../assets/js/http'
-
 	export default {
-  mixins: [http],
+  mixins: [],
   data () {
     return {
       pageLoading: true
