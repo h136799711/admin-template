@@ -14,13 +14,20 @@
                 </el-form-item>
                 <el-form-item :label="$t('ClientSecret')">
                     <el-input disabled="disabled" v-model="editForm.clientSecret"></el-input>
-                    <el-button icon="el-icon-refresh" @click.prevent="reset()"> {{ $t('Reset') }}</el-button>
+                    <el-button icon="el-icon-refresh" :loading="loading" @click.prevent="reset()"> {{ $t('Reset') }}</el-button>
                 </el-form-item>
                 <el-form-item :label="$t('ClientName')">
                     <el-input v-model="editForm.clientName"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('ClientAlg')">
-                    <el-input v-model="editForm.clientAlg"></el-input>
+                    <el-select v-model="editForm.clientAlg" >
+                        <el-option
+                                v-for="item in algList"
+                                :key="item.id"
+                                :label="item.label"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('ClientDayLimit')">
                     <el-input v-model="dailyLimitDesc"></el-input>
@@ -49,6 +56,10 @@
 		},
 		data() {
 			return {
+                algList: [
+                    {id: 'nothing', label: 'None'},
+                    {id: 'md5v3', label: 'MD5 Version 3'}
+                ],
 				editForm: {
 					clientId: '',
 					clientName: '',
@@ -77,12 +88,13 @@
 		},
 		watch: {},
 		created() {
+            this.refresh ();
 		},
 		mounted: function () {
-			this.refresh ();
 		},
 		methods: {
 			reset() {
+				this.loading = true
 				api.reset ({}, (resp) => {
 					console.debug ('resp ', resp)
 					this.loading = false

@@ -24,10 +24,12 @@ const RolesPolicy = r => require.ensure([], () => r(require('./pages/roles/polic
 const RolesUser = r => require.ensure([], () => r(require('./pages/roles/user.vue')), 'rolesUser')
 // 策略管理
 const PolicyIndex = r => require.ensure([], () => r(require('./pages/policy/index.vue')), 'policyIndex')
-
+// 消息
 const MessageIndex = r => require.ensure([], () => r(require('./pages/message/index.vue')), 'messageIndex')
 // 配置
 const ConfigIndex = r => require.ensure([], () => r(require('./pages/config/index.vue')), 'ConfigIndex')
+// 菜单
+const MenuIndex = r => require.ensure([], () => r(require('./pages/menu/index.vue')), 'MenuIndex')
 
 const routes = [
   // 地址为空的时候跳转
@@ -91,6 +93,13 @@ const routes = [
 				component: ConfigIndex,
 				children: [
 					{ path: 'index', component: ConfigIndex }
+				]
+			},
+			{
+				path: 'menu',
+				component: MenuIndex,
+				children: [
+					{ path: 'index', component: MenuIndex }
 				]
 			},
 			{

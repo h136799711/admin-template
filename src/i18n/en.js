@@ -78,6 +78,9 @@ exports.default = {
 	'ValueType': 'Value Type',
 	'Value': 'Value',
 	'Category': 'Category',
+	'Append': 'Append',
+	'Icon': 'Icon',
+	'Url': 'Url',
 
 	// 短语
 	'Action Confirm': 'Action Confirm?',

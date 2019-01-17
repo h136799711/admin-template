@@ -77,6 +77,9 @@ exports.default = {
 	'ValueType': '值类型',
 	'Value': '值',
 	'Category': '类别',
+	'Append': '追加',
+	'Icon': '小图标',
+	'Url': '链接',
 
 
 	// 短语
