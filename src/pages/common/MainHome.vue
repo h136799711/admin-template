@@ -784,10 +784,7 @@
               class="topbar-btn topbar-product-btn"
               @click="toggleFullScreen"
             >
-              <i
-                title="Fullscreen F11"
-                class="by-icon by-webtubiaoku10"
-              />
+              <i title="Fullscreen F11" class="by-icon by-webtubiaoku10"></i>
             </div>
           </div>
         </div>
