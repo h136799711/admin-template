@@ -22,7 +22,7 @@ const setUID = (uid) => {
 
 // 获取会话id
 const getUID = () => {
-	let uid = window.cache.getValue ('BY_UID')
+	var uid = window.cache.getValue ('BY_UID')
 	console.debug ('getUID', uid)
 	if (typeof (uid) === 'undefined' || uid === '') {
 		uid = 0
@@ -30,6 +30,22 @@ const getUID = () => {
 	}
 	setUID (uid)
 	return uid
+}
+// 设置头像地址
+const setAvatar = (avatar) => {
+	console.debug ('set avatar', avatar)
+	window.cache.setValue ('BY_AVATAR', avatar, 3600)
+}
+
+// 获取会话id
+const getAvatar = () => {
+	var avatar = window.cache.getValue ('BY_AVATAR')
+	console.debug ('getAvatar', avatar)
+	if (typeof (avatar) === 'undefined' || avatar === '') {
+		avatar = 0
+	}
+	setAvatar (avatar)
+	return avatar
 }
 
 // 设置会话id
@@ -64,7 +80,7 @@ const getApiUrl = url => {
 	// return `${api_url}/${controller}${func}`
 }
 
-const getAvatarUrl = () => {
+const getAvatarUploadUrl = () => {
 	return `${picture_url}`
 }
 
@@ -134,7 +150,8 @@ const tools = {
 	clear,
 	getDeviceType,
 	getUID, setUID,
-	getVersion, getApiUrl, getAvatarUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
+	getAvatar, setAvatar,
+	getVersion, getApiUrl, getAvatarUploadUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
 }
 
 Date.prototype.format = function(fmt) {

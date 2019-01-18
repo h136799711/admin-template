@@ -1,3 +1,16 @@
+<style>
+  .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 8px;
+  }
+  a.topbar-btn.topbar-info-dropdown-toggle {
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
 <template>
   <div class="dropdown topbar-left topbar-info-item topbar-info-dropdown">
     <a
@@ -5,6 +18,7 @@
       class="topbar-btn topbar-info-dropdown-toggle"
       @click.stop="dropMenu()"
     >
+      <img v-if="head" :src="head" alt="avatar" class="avatar" />
       <i :class="iconClass"></i>
       <span>{{ name }}</span>
     </a>
@@ -40,6 +54,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    head: {
+      required: false,
+      type: String
     },
     iconClass: {
       type: String,

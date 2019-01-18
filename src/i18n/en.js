@@ -91,12 +91,16 @@ exports.default = {
 	'Or': 'Or',
 	'Click': 'Click',
 	'Upload': 'Upload',
+	'Avatar': 'Avatar',
 
 	// 短语
 	'Action Confirm': 'Action Confirm?',
+	'Please Input {0}': 'Please Input {0}',
+	'Please Input Title': 'Please Input Title',
 	'Please Input Alias': 'Please Input Alias',
 	'Please Input Name': 'Please Input Name',
 	'Please Input Password': 'Please Input Password',
+	'Please Input Statements': 'Please Input Statements',
 	'JsonFormatString': 'Please Input Json String',
 	'FileTypeLimitJpg': 'Upload Pictures Can Only Be In JPG Format!',
 	'FileSizeLimit2MB': 'The Size Of Uploaded Images Should Not Exceed 2MB!',
@@ -108,11 +112,10 @@ exports.default = {
 
 	// 服务器返回的固定数据
 	// 菜单
-	'系统管理': 'System',
-	'数据字典': 'Data Dictionary',
-	'接口调用日志': 'Request Log',
-	'应用管理': 'Applications',
-	'系统配置': 'System Settings',
+	'DataDictionary': 'Data Dictionary',
+	'ApiLog': 'Request Log',
+	'Clients': 'Clients',
+	'SystemSettings': 'System Settings',
 
 
 	// 应用

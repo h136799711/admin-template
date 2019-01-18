@@ -177,7 +177,7 @@
         padding: 0 18px;
         height: 50px;
         font-size: 18px;
-        display: block;
+        display: flex;
         z-index: 2;
         background: #373d41;
         border-right: 1px solid #2a2f32;
@@ -768,6 +768,7 @@
           </div>
           <TopBarDropMenu
             :name="userInfo.mobile"
+            :head="userInfo.head"
             iconClass=""
             :links="userDropMenus"
             @logout="logout"
@@ -876,7 +877,7 @@
         username: '',
         mobile: '',
         id: '',
-        head: 0
+        head: ''
       },
       platformInfo: {
         all: '',
@@ -1046,6 +1047,7 @@
       this.userInfo.username = userInfo.username
       this.userInfo.head = userInfo.head
       this.userInfo.mobile = userInfo.mobile
+      window.tools.setAvatar(userInfo.head)
     },
     // 加载平台信息
     loadPlatformInfo (PlatformInfo) {

@@ -90,12 +90,16 @@ exports.default = {
 	'Or': '或',
 	'Click': '点击',
 	'Upload': '上传',
+	'Remark': '备注',
 
 
 	// 短语
 	'Action Confirm': '操作确定?',
+	'Please Input {0}': '请输入{0}',
+	'Please Input Title': '请输入标题',
 	'Please Input Alias': '请输入别名',
 	'Please Input Name': '请输入名称',
+	'Please Input Statements': '请输入策略语句',
 	'JsonFormatString': '请输入json格式的字符串',
 	'Please Input Password': '请输入密码',
 	'FileTypeLimitJpg': '上传头像图片只能是 JPG 格式!',
@@ -106,8 +110,11 @@ exports.default = {
 	'Two_Password_Not_Match': '新密码和确认密码不一致',
 
 	// 服务器返回的固定数据
-	'系统管理': '系统管理',
-	'数据字典': '数据字典',
+	'DataDictionary': '数据字典',
+	'ApiLog': '接口调用日志',
+	'Clients': '应用管理',
+	'SystemSettings': '系统配置',
+	'Avatar': '头像',
 
 	// 应用
 	'ClientName': '应用名称',
