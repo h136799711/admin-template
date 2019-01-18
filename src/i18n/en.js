@@ -81,14 +81,30 @@ exports.default = {
 	'Append': 'Append',
 	'Icon': 'Icon',
 	'Url': 'Url',
+	'Password': 'Password',
+	'Old_Password': 'Old Password',
+	'New_Password': 'New Password',
+	'ModifyPassword': 'Modify Password',
+	'Confirm_Password': 'Confirm Password',
+	'Drag': 'Drag',
+	'File': 'File',
+	'Or': 'Or',
+	'Click': 'Click',
+	'Upload': 'Upload',
 
 	// 短语
 	'Action Confirm': 'Action Confirm?',
 	'Please Input Alias': 'Please Input Alias',
 	'Please Input Name': 'Please Input Name',
+	'Please Input Password': 'Please Input Password',
 	'JsonFormatString': 'Please Input Json String',
+	'FileTypeLimitJpg': 'Upload Pictures Can Only Be In JPG Format!',
+	'FileSizeLimit2MB': 'The Size Of Uploaded Images Should Not Exceed 2MB!',
+
+
 	// 描述语言
 	'DatatreeeDescription': '1. Only Can Edit The First Selected',
+	'Two_Password_Not_Match': 'Confirmed Password And New Password Do Not Match',
 
 	// 服务器返回的固定数据
 	// 菜单

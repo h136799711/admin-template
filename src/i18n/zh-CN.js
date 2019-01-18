@@ -80,6 +80,16 @@ exports.default = {
 	'Append': '追加',
 	'Icon': '小图标',
 	'Url': '链接',
+	'Password': '密码',
+	'Old_Password': '旧密码',
+	'New_Password': '新密码',
+	'ModifyPassword': '修改密码',
+	'Confirm_Password': '确认密码',
+	'Drag': '拖动',
+	'File': '文件',
+	'Or': '或',
+	'Click': '点击',
+	'Upload': '上传',
 
 
 	// 短语
@@ -87,9 +97,13 @@ exports.default = {
 	'Please Input Alias': '请输入别名',
 	'Please Input Name': '请输入名称',
 	'JsonFormatString': '请输入json格式的字符串',
+	'Please Input Password': '请输入密码',
+	'FileTypeLimitJpg': '上传头像图片只能是 JPG 格式!',
+	'FileSizeLimit2MB': '上传头像图片大小不能超过 2MB!',
 
 	// 长整句话
 	'DatatreeeDescription': '1. 根节点 可以点击来加载一级数据 2. 编辑只能编辑第一个',
+	'Two_Password_Not_Match': '新密码和确认密码不一致',
 
 	// 服务器返回的固定数据
 	'系统管理': '系统管理',

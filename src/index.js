@@ -34,7 +34,6 @@ const messages = {
 		...zhLocale // 或者用 Object.assign({ message: '你好' }, zhLocale)
 	}
 }
-console.log(messages)
 
 axios.defaults.baseURL = ''
 axios.defaults.timeout = 15000

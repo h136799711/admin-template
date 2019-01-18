@@ -64,8 +64,8 @@ const getApiUrl = url => {
 	// return `${api_url}/${controller}${func}`
 }
 
-const getAvatarUrl = (id, size = 120) => {
-	return `${picture_url}?uid=${id}&size=${size}`
+const getAvatarUrl = () => {
+	return `${picture_url}`
 }
 
 const getKeyInObject = (object, exp) => {

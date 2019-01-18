@@ -2,6 +2,8 @@
 const NotFound = r => require.ensure([], () => r(require('./pages/404/NotFound.vue')), 'notFound')
 const Login = r => require.ensure([], () => r(require('./pages/account/Login.vue')), 'login')
 const Logout = r => require.ensure([], () => r(require('./pages/account/Logout.vue')), 'logout')
+const Password = r => require.ensure([], () => r(require('./pages/account/password.vue')), 'password')
+const Avatar = r => require.ensure([], () => r(require('./pages/account/avatar.vue')), 'avatar')
 // admin组件，管理后台首页部分
 const Admin = r => require.ensure([], () => r(require('./pages/Admin.vue')), 'admin')
 const AdminIndex = r => require.ensure([], () => r(require('./pages/admin/index.vue')), 'adminIndex')
@@ -102,6 +104,8 @@ const routes = [
 					{ path: 'index', component: MenuIndex }
 				]
 			},
+			{ path: 'account/password', component: Password },
+			{ path: 'account/avatar', component: Avatar },
 			{
 				path: 'index',
 				component: AdminIndex,

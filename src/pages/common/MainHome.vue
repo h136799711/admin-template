@@ -888,6 +888,8 @@
       activeNavMenuIndex: false,
       secondMenuData: false,
       userDropMenus: [
+        { 'name': this.$i18n.t('Avatar'), url: '/admin/account/avatar' },
+        { 'name': this.$i18n.t('ModifyPassword'), url: '/admin/account/password' },
         { 'name': this.$i18n.t('Logout'), url: '/logout' }
       ],
       languages: [

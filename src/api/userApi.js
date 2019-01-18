@@ -3,6 +3,10 @@
 import http from '../assets/js/http.js';
 
 const userApi = {
+  updatePassword(data, suc, fail) {
+		data.service_type = 'by_UserLoginSession_updatePassword';
+		http.methods.defaultPost('', data, suc, fail);
+  },
 	queryByPagingNoCount: (data, suc, fail) => {
 		data.service_type = 'by_UserAccount_query';
 		http.methods.defaultPost('', data, suc, fail);
