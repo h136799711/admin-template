@@ -45,12 +45,12 @@ const actions = {
 		console.debug ('用户登录成功后获取用户会话数据')
 		commit (types.ByUserSessionDataReq)
 		let sessionData = window.cache.getBigDataValue (types.ByUserSessionDataReq)
-		// if (sessionData && sessionData !== '') {
-		// 	console.debug ('[cache] getUserSessionData 使用缓存')
-		// 	sessionData = window.tools.base64Utils.decode (sessionData)
-		// 	commit (types.ByUserSessionDataSuc, JSON.parse (sessionData))
-		// 	return
-		// }
+		if (sessionData && sessionData !== '') {
+			console.debug ('[cache] getUserSessionData 使用缓存')
+			sessionData = window.tools.base64Utils.decode (sessionData)
+			commit (types.ByUserSessionDataSuc, JSON.parse (sessionData))
+			return
+		}
 		userApi.getUserData ((res) => {
 			commit (types.ByUserSessionDataSuc, res)
 		}, (res) => {

@@ -159,7 +159,7 @@
               this.refresh();
             },
 			sortTable(data) {
-				console.log ('排序', data.column, data.prop, data.order)
+				console.debug ('排序', data.column, data.prop, data.order)
 				if (data.prop === 'sort' && data.order === 'ascending') {
 					this.order = 'cnt,asc'
 				} else {
@@ -168,12 +168,12 @@
                 this.refresh()
 			},
 			byPagerSizeChange(val) {
-				console.log (`每页 ${val} 条`)
+				console.debug (`每页 ${val} 条`)
 				this.pageSize = val
                 this.refresh()
 			},
 			byPagerCurrentChange(val) {
-				console.log (`当前页: ${val}`)
+				console.debug (`当前页: ${val}`)
 				this.currentPage = val
                 this.refresh()
 			},

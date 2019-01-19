@@ -292,7 +292,7 @@
                     window.tools.alertError (resp.msg)
                     this.loading = false
                 })
-                console.log(this.editForm)
+                console.debug(this.editForm)
             },
 			submitAddForm() {
                 this.loading = true
@@ -313,7 +313,7 @@
                 });
             },
 			onAppend(data) {
-                console.log('data', data)
+                console.debug('data', data)
                 this.dialogAddVisible = true
                 this.addForm = {
                     pid: data.id,
@@ -326,7 +326,7 @@
 
             },
             onRemove(node, data) {
-                console.log('data', data)
+                console.debug('data', data)
                 this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {
                     confirmButtonText: this.$i18n.t('Confirm'),
                     cancelButtonText: this.$i18n.t('Cancel'),
@@ -341,7 +341,7 @@
                                 this.refresh()
                                 done()
                             }, (res) => {
-                                console.log (res)
+                                console.debug (res)
                                 done()
                                 window.tools.alertError (res.msg)
                                 instance.confirmButtonLoading = false
@@ -360,7 +360,7 @@
 				this.loading = true
 				api.queryAll ({}, (resp) => {
 					this.loading = false
-                    console.log(resp)
+                    console.debug(resp)
 					this.list = [{
 						id: '0',
                         label: 'Root',

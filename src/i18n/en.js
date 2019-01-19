@@ -94,6 +94,7 @@ exports.default = {
 	'Avatar': 'Avatar',
 
 	// 短语
+	'WelcomeToUse': 'Welcome And Pleasure To Use This System !',
 	'Action Confirm': 'Action Confirm?',
 	'Please Input {0}': 'Please Input {0}',
 	'Please Input Title': 'Please Input Title',

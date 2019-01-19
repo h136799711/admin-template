@@ -9,13 +9,13 @@
 	import MainHome from './common/MainHome.vue'
 
 	export default {
-  components: { MainHome },
-  data () {
-    return {}
-  },
-  computed: {
-  },
-  methods: {
-  }
-}
+      components: { MainHome },
+      data () {
+        return {}
+      },
+      computed: {
+      },
+      methods: {
+      }
+    }
 </script>

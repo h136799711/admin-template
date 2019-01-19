@@ -301,7 +301,7 @@ value="" @keydown.enter="login"
   },
   watch: {
     loginStatus: function (oldVal, newVal) {
-      console.log(oldVal, this.loginError)
+      console.debug(oldVal, this.loginError)
       if (oldVal === types.ByUserLoginFail) {
         this.isLogging = false
         this.refresh_verify()
@@ -326,7 +326,7 @@ value="" @keydown.enter="login"
     this.refresh_verify()
   },
   mounted () {
-    console.log('mounted', process.env)
+    console.debug('mounted', process.env)
   },
   methods: {
     pswFocus (is) {
@@ -348,17 +348,17 @@ value="" @keydown.enter="login"
     login () {
       if (!this.checkLogin()) return
       this.isLogging = true
-      console.log('dispatch')
+      console.debug('dispatch')
       this.$store.dispatch('login', this.user)
     },
     refresh_verify () {
       this.user.verifyImg = ''
       securityCodeApi.image_create([], function (resData) {
-        console.log(resData)
+        console.debug(resData)
         this.user.verifyId = resData.id
         this.user.verifyImg = resData.code
       }.bind(this), function (failMsg) {
-        console.log(failMsg)
+        console.debug(failMsg)
         this.user.verifyImg = 'error'
       }.bind(this))
     },

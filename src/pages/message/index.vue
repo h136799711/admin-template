@@ -154,13 +154,13 @@
                 api.info({'id': row.id}, (resp) => {
                     this.viewForm = Object.assign(this.viewForm, resp)
                     this.viewForm.loading = false
-                    console.log(this.viewForm)
+                    console.debug(this.viewForm)
                 }, (resp) => {
                     this.viewForm.loading = false
                 })
             },
 			tableRowClassName({row, rowIndex}) {
-                console.log(row)
+                console.debug(row)
                 if (parseInt(row.msgStatus) === 1) {
                     return 'read';
                 } else if (parseInt(row.msgStatus) === 0) {

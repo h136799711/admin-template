@@ -107,7 +107,7 @@
                 api.attachPolicies ({'role_id': this.id, 'policy_ids': this.$refs.tree.getCheckedKeys().join(',')}, (res) => {
                     this.refresh()
                 }, (res) => {
-                    console.log (res)
+                    console.debug (res)
                     window.tools.alertError (res.msg)
                 })
             },
@@ -134,7 +134,7 @@
                                 this.refresh()
                                 done()
                             }, (res) => {
-                                console.log (res)
+                                console.debug (res)
                                 done()
                                 window.tools.alertError (res.msg)
                                 instance.confirmButtonLoading = false
@@ -144,12 +144,12 @@
                         }
                     }
                 }).then (() => {
-                    console.log ('[ajax] delete datatree')
+                    console.debug ('[ajax] delete datatree')
                 }).catch (() => {
                 })
             },
 			refresh() {
-				console.log(this.id)
+				console.debug(this.id)
 				// 刷新当前
                 this.loading = true
                 api.policy ({'role_id': this.id}, (resp) => {

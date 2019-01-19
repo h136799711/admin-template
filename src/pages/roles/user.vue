@@ -192,11 +192,11 @@
         },
 		methods: {
         	onMobileClear() {
-            	console.log('onMobileClear')
+            	console.debug('onMobileClear')
                 this.addForm.user_id = 0;
             },
             handleSelect(item) {
-                console.log(item);
+                console.debug(item);
                 this.addForm.user_id = item.id;
             },
             querySearchAsync(queryString, cb) {
@@ -245,7 +245,7 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
-                            console.log(uid)
+                            console.debug(uid)
                             let data = {
                                 'user_id': uid,
                             	'role_id': this.id,
@@ -255,7 +255,7 @@
                                 this.refresh()
                                 done()
                             }, (res) => {
-                                console.log (res)
+                                console.debug (res)
                                 done()
                                 window.tools.alertError (res.msg)
                                 instance.confirmButtonLoading = false
@@ -269,7 +269,7 @@
                 })
             },
 			refresh() {
-				console.log(this.id)
+				console.debug(this.id)
 				// 刷新当前
                 this.loading = true
                 api.user ({'role_id': this.id, 'mobile': this.queryForm.mobile}, (resp) => {

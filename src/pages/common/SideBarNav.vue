@@ -108,7 +108,7 @@ export default {
     },
     routerJump (UrlAddress) {
       window.tools.returnTop()
-//      console.log(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
+//      console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
       window.location.href = this.$router.resolve(UrlAddress, '#', false).href
     },
     routerUrl (UrlAddress) {

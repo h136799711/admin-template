@@ -961,7 +961,7 @@
         window.location.href = this.$router.resolve('/admin/message/index', '#', false).href
     },
     changeLanguages (lang) {
-      console.log('changeLanguages', lang)
+      console.debug('changeLanguages', lang)
       window.cache.setValue('lang', lang.value, 24*3600)
       window.location.reload();
     },
@@ -993,11 +993,11 @@
     },
     // 刷新iframe
     iframeRefresh () {
-      console.log(this.$route.fullPath)
+      console.debug(this.$route.fullPath)
     },
     // 退出
     logout () {
-      console.log('logout')
+      console.debug('logout')
       this.$router.push('logout')
     },
     // 链接点击

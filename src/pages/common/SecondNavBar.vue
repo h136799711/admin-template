@@ -101,12 +101,12 @@
 		computed: {},
 		watch: {
 			routerReloadData: (newValue) => {
-				console.log ('刷新', newValue)
+				console.debug ('刷新', newValue)
 			}
 		},
 		mounted() {
 			window.bus.$on ('F5', (text) => {
-				console.log ('F5', text)
+				console.debug ('F5', text)
 			})
 		},
 		// todo 监听路由变化
@@ -129,17 +129,17 @@
 			},
 			routerJump(UrlAddress, index) {
 				window.tools.returnTop ()
-//      console.log(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
+//      console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
 				window.location.href = this.$router.resolve (UrlAddress, '#', false).href
 			},
 			menuUrl(UrlAddress) {
-				console.log ('menuUrl', UrlAddress)
+				console.debug ('menuUrl', UrlAddress)
 				return UrlAddress
 			},
 			routerUrl(UrlAddress) {
 				return UrlAddress
-				// console.log('routerUrl', UrlAddress)
-				// console.log('routerUrl', this.$router.resolve(`${UrlAddress}`, false, false).href)
+				// console.debug('routerUrl', UrlAddress)
+				// console.debug('routerUrl', this.$router.resolve(`${UrlAddress}`, false, false).href)
 				// return this.$router.resolve(`${UrlAddress}`).href + '?t=' + (new Date()).getTime()
 			}
 		}

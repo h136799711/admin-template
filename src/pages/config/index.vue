@@ -363,7 +363,7 @@
                                 this.queryConfig()
                                 done()
                             }, (res) => {
-                                console.log (res)
+                                console.debug (res)
                                 done()
                                 window.tools.alertError (res.msg)
                                 instance.confirmButtonLoading = false
@@ -373,7 +373,7 @@
                         }
                     }
                 }).then (() => {
-                    console.log ('[ajax] delete datatree')
+                    console.debug ('[ajax] delete datatree')
                 }).catch (() => {
                 })
             },
@@ -457,7 +457,7 @@
                 api.listCate({}, (resp) => {
                 	this.loading = false
                     this.cateList = resp
-                    console.log(this.cateList)
+                    console.debug(this.cateList)
                     for (var a in resp) {
                 		this.queryForm.cate = a
                         break;

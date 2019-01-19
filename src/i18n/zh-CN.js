@@ -94,6 +94,8 @@ exports.default = {
 
 
 	// 短语
+
+	'WelcomeToUse': '欢迎您使用本系统!',
 	'Action Confirm': '操作确定?',
 	'Please Input {0}': '请输入{0}',
 	'Please Input Title': '请输入标题',

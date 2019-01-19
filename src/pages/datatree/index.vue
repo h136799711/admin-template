@@ -401,7 +401,7 @@
 		},
 		methods: {
 			selectTableAll(selection) {
-				console.log (selection)
+				console.debug (selection)
 				this.selectTableRowId = ''
 				if (selection.length === 0) {
 					this.editForm = {
@@ -427,7 +427,7 @@
 						this.editForm.sort = selection[i].sort
 					}
 				}
-				console.log (this.selectTableRowId)
+				console.debug (this.selectTableRowId)
 			},
 			selectTable(selection, row) {
 				if (selection.length === 0) {
@@ -455,8 +455,8 @@
 						this.editForm.sort = selection[i].sort
 					}
 				}
-				console.log ('选择项的id', this.selectTableRowId)
-				console.log ('编辑项目的信息', this.editForm)
+				console.debug ('选择项的id', this.selectTableRowId)
+				console.debug ('编辑项目的信息', this.editForm)
 			},
 			datatreeBulkDelete() {
 				this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {
@@ -483,7 +483,7 @@
 									this.currentNodeName = ''
 								})
 							}, (res) => {
-								console.log (res)
+								console.debug (res)
 								window.tools.alertError (res.msg)
 								setTimeout (() => {
 									done ()
@@ -495,12 +495,12 @@
 						}
 					}
 				}).then (() => {
-					console.log ('[ajax] delete datatree')
+					console.debug ('[ajax] delete datatree')
 				}).catch (() => {
 				})
 			},
 			sortTable(data) {
-				console.log ('排序', data.column, data.prop, data.order)
+				console.debug ('排序', data.column, data.prop, data.order)
 				if (data.prop === 'sort' && data.order === 'ascending') {
 					this.order = 2
 				} else {
@@ -509,12 +509,12 @@
 				this.loadRightTable (this.currentDtId)
 			},
 			byPagerSizeChange(val) {
-				console.log (`每页 ${val} 条`)
+				console.debug (`每页 ${val} 条`)
 				this.pageSize = val
 				this.loadRightTable (this.currentDtId)
 			},
 			byPagerCurrentChange(val) {
-				console.log (`当前页: ${val}`)
+				console.debug (`当前页: ${val}`)
 				this.currentPage = val
 				this.loadRightTable (this.currentDtId)
 			},
@@ -527,7 +527,7 @@
 							let label = model.name
 							datatreeApi.add (model, (data) => {
 								// 操作成功，重新加载
-								console.log ('[api] success', data, this.currentNode)
+								console.debug ('[api] success', data, this.currentNode)
 								delete this.cache['k' + this.currentDtId]
 								this.currentNode.insertChild ({data: {id: data, label: label}})
 								this.loadNode (this.currentNode, (res) => {
@@ -542,13 +542,13 @@
 							// let label = model.name;
 							datatreeApi.update (model, (data) => {
 								// 操作成功，重新加载
-								console.log ('[api] success', data, this.$refs.tree2)
+								console.debug ('[api] success', data, this.$refs.tree2)
 								delete this.cache['k' + this.currentDtId]
 								this.loadNode (this.currentNode, (res) => {
-									console.log ('[api] loadNode', res)
+									console.debug ('[api] loadNode', res)
 									let children = this.currentNode.childNodes
 									for (let i = 0; i < children.length; i++) {
-										console.log ('[api] node.data', children[i], children[i].data)
+										console.debug ('[api] node.data', children[i], children[i].data)
 										for (let j = 0; j < res.length; j++) {
 											if (res[j].id === children[i].data.id) {
 												children[i].data = res[j]
@@ -572,7 +572,7 @@
 							})
 						}
 					} else {
-						console.log ('error submit!!')
+						console.debug ('error submit!!')
 						return false
 					}
 				})
@@ -585,16 +585,16 @@
 				}
 			},
 			remove(ids) {
-				console.log ('remove= ' + ids)
-				console.log (this.list)
-				console.log ('tree', this.$refs.tree2)
+				console.debug ('remove= ' + ids)
+				console.debug (this.list)
+				console.debug ('tree', this.$refs.tree2)
 				// 删除节点
 				for (var i = 0; i < this.list.length; i++) {
 					var id = this.list[i].id
 					if (ids.indexOf (id) === -1) {
 						continue
 					}
-					console.log (this.list[i])
+					console.debug (this.list[i])
 				}
 			},
 			loadRightTable(parentId) {
@@ -602,7 +602,7 @@
 				this.loading = true
 				let key = 'k' + parentId
 				this.currentDtId = parentId
-				console.log (key)
+				console.debug (key)
 				if (this.cache.hasOwnProperty (key)) {
 					let data = this.cache[key]
 					console.debug ('使用缓存', key, data)
@@ -678,7 +678,7 @@
 				})
 			},
 			loadNode(node, resolve) {
-				console.log ('当前节点', this.currentNode)
+				console.debug ('当前节点', this.currentNode)
 				if (node === null) {
 					return
 				}

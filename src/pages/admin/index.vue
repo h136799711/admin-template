@@ -35,7 +35,7 @@
       // if (this.pageLoading) return;
       //                tools.alertWarn('加载中...');
       //                this.pageLoading = true;
-      //                console.log(`${this.$route.path}:loadData`);
+      //                console.debug(`${this.$route.path}:loadData`);
       //                this.pageLoading = false;
     }
   }

@@ -1,46 +1,20 @@
 <template>
-  <div
-    v-loading.body="mainFrameLoading"
-    class="main-content iframe"
-  >
-    <iframe
-      name="mainframe"
-      class="LRADMS_iframe"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      :src="defaultSrc"
-      @load="mainFrameLoad"
-    />
-  </div>
+  <el-alert
+          :title="$t('WelcomeToUse')"
+          type="success">
+  </el-alert>
 </template>
 
 <script>
-
-	export default {
-  data () {
-    return {}
-  },
-  computed: {
-    mainFrameSrc () {
-      return this.$store.state.mainFrameSrc
+  export default {
+    data () {
+      return {}
     },
-    mainFrameLoading () {
-      return this.$store.state.mainFrameLoading
+    computed: {
     },
-    defaultSrc () {
-      return '#/welcome/hello'
-    }
-  },
-  watch: {
-    mainFrameSrc (val) {
-      document.mainframe.location.href = val
-    }
-  },
-  methods: {
-    mainFrameLoad () {
-      this.$store.dispatch('mainFrameJumpEnd')
+    watch: {
+    },
+    methods: {
     }
   }
-}
 </script>

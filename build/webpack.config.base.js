@@ -17,7 +17,8 @@ module.exports = {
 			'store': utils.resolve ('src/store'),
 			'api': utils.resolve ('src/api'),
 			'components': utils.resolve ('src/components'),
-			'vue$': 'vue/dist/vue.esm.js'
+			'vue$': 'vue/dist/vue.esm.js',
+			'@': utils.resolve ('./src')
 		}
 	},
 
