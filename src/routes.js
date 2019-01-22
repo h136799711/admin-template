@@ -32,6 +32,12 @@ const MessageIndex = r => require.ensure([], () => r(require('./pages/message/in
 const ConfigIndex = r => require.ensure([], () => r(require('./pages/config/index.vue')), 'ConfigIndex')
 // 菜单
 const MenuIndex = r => require.ensure([], () => r(require('./pages/menu/index.vue')), 'MenuIndex')
+// 相册
+const AlbumIndex = r => require.ensure([], () => r(require('./pages/album/index.vue')), 'albumIndex')
+// 相册分类
+const AlbumCategory = r => require.ensure([], () => r(require('./pages/album/category.vue')), 'AlbumCategory')
+// 相册照片
+const AlbumPhoto = r => require.ensure([], () => r(require('./pages/album/photo.vue')), 'AlbumPhoto')
 
 const routes = [
   // 地址为空的时候跳转
@@ -90,6 +96,21 @@ const routes = [
 					{ path: 'index', component: MessageIndex }
 				]
 			},
+			{
+				path: 'album',
+				component: AlbumIndex,
+				children: [
+					{ path: 'index', component: AlbumIndex }
+				]
+			},
+			{
+				path: 'album',
+				component: AlbumCategory,
+				children: [
+					{ path: 'category', component: AlbumCategory }
+				]
+			},
+			{ path: 'album/photo/:id', component: AlbumPhoto, props: true },
 			{
 				path: 'config',
 				component: ConfigIndex,

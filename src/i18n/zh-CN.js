@@ -91,10 +91,19 @@ exports.default = {
 	'Click': '点击',
 	'Upload': '上传',
 	'Remark': '备注',
+	'CreateTime': '创建时间',
+	'Album': '相册',
+	'Source': '来源',
+	'Description': '描述',
+	'Total': '总数',
+	'Internet': '互联网',
+	'Original': '原创',
+	'Tag': '标签',
+	'Photo': '照片',
 
 
 	// 短语
-
+	'MustBeNumber': '必须是一个数值',
 	'WelcomeToUse': '欢迎您使用本系统!',
 	'Action Confirm': '操作确定?',
 	'Please Input {0}': '请输入{0}',
@@ -105,6 +114,7 @@ exports.default = {
 	'JsonFormatString': '请输入json格式的字符串',
 	'Please Input Password': '请输入密码',
 	'FileTypeLimitJpg': '上传头像图片只能是 JPG 格式!',
+	'FileTypeLimitJpgPng': '上传头像图片只能是 JPG或PNG 格式!',
 	'FileSizeLimit2MB': '上传头像图片大小不能超过 2MB!',
 
 	// 长整句话

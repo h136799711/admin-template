@@ -92,8 +92,18 @@ exports.default = {
 	'Click': 'Click',
 	'Upload': 'Upload',
 	'Avatar': 'Avatar',
+	'CreateTime': 'Create Time',
+	'Album': 'Album',
+	'Source': 'Source',
+	'Description': 'Description',
+	'Total': 'Total',
+	'Internet': 'Internet',
+	'Original': 'Original',
+	'Tag': 'Tag',
+	'Photo': 'Photo',
 
 	// 短语
+	'MustBeNumber': 'Must Be A Number',
 	'WelcomeToUse': 'Welcome And Pleasure To Use This System !',
 	'Action Confirm': 'Action Confirm?',
 	'Please Input {0}': 'Please Input {0}',
@@ -105,7 +115,7 @@ exports.default = {
 	'JsonFormatString': 'Please Input Json String',
 	'FileTypeLimitJpg': 'Upload Pictures Can Only Be In JPG Format!',
 	'FileSizeLimit2MB': 'The Size Of Uploaded Images Should Not Exceed 2MB!',
-
+	'FileTypeLimitJpgPng': 'Upload Pictures Can Only Be In JPG Or PNG Format!',
 
 	// 描述语言
 	'DatatreeeDescription': '1. Only Can Edit The First Selected',
