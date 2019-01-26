@@ -4,7 +4,14 @@
         <div>
             <el-form :inline="true" :model="queryForm" class="demo-form-inline">
                 <el-form-item >
-                    <el-input size="mini" v-model="queryForm.title" />
+                    <el-select size="mini" v-model="queryForm.position" >
+                        <el-option
+                                v-for="item in positionOptions"
+                                :key="item.code"
+                                :label="item.name"
+                                :value="item.code">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-button :loading="loading" type="primary" @click="refresh()"  size="mini" icon="el-icon-search">{{ $t('Search') }}</el-button>
@@ -115,28 +122,15 @@
                 </el-form-item>
 
                 <el-form-item
-                        :label="$t('Category')"
-                        prop="cate_id"
-                >
-                    <el-select v-model="editForm.cate_id" >
-                        <el-option
-                                v-for="item in category"
-                                :key="item.id"
-                                :label="item.title"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
                         :label="$t('Source')"
                         prop="source"
                 >
                     <el-select v-model="editForm.source" >
                         <el-option
-                                v-for="item in sourceOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                v-for="item in positionOptions"
+                                :key="item.code"
+                                :label="item.name"
+                                :value="item.code">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -145,30 +139,6 @@
                         prop="desc"
                 >
                     <el-input v-model="editForm.desc" type="textarea" />
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Tag')"
-                        prop="tags"
-                >
-                    <el-tag
-                            :key="tag"
-                            v-for="tag in dynamicTags"
-                            closable
-                            :disable-transitions="false"
-                            @close="handleClose(tag)">
-                        {{tag}}
-                    </el-tag>
-                    <el-input
-                            class="input-new-tag"
-                            v-if="inputVisible"
-                            v-model="inputValue"
-                            ref="saveTagInput"
-                            size="small"
-                            @keyup.enter.native="handleInputConfirm"
-                            @blur="handleInputConfirm"
-                    >
-                    </el-input>
-                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
                 </el-form-item>
                 <el-form-item
                         label=""
@@ -196,97 +166,6 @@
                 </el-button>
             </div>
         </el-dialog>
-
-        <!-- Add Form -->
-        <el-dialog
-                :show-close="false"
-                :modal-append-to-body="false"
-                :title="$t('Add')"
-                :visible.sync="dialogAddVisible"
-        >
-            <el-form
-                    status-icon
-                    ref="addForm"
-                    :model="addForm"
-                    label-position="right"
-                    :rules="rules"
-                    label-width="100px"
-            >
-                <el-form-item
-                        :label="$t('Title')"
-                        prop="title" >
-                    <el-input v-model="addForm.title"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Category')"
-                        prop="cate_id"
-                >
-                    <el-select v-model="addForm.cate_id" >
-                        <el-option
-                                v-for="item in category"
-                                :key="item.id"
-                                :label="item.title"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Source')"
-                        prop="source"
-                >
-                    <el-select v-model="addForm.source" >
-                        <el-option
-                                v-for="item in sourceOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Description')"
-                        prop="desc"
-                >
-                    <el-input v-model="addForm.desc" type="textarea" />
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Tag')"
-                        prop="tags"
-                >
-                    <el-tag
-                            :key="tag"
-                            v-for="tag in dynamicTags"
-                            closable
-                            :disable-transitions="false"
-                            @close="handleClose(tag)">
-                        {{tag}}
-                    </el-tag>
-                    <el-input
-                            class="input-new-tag"
-                            v-if="inputVisible"
-                            v-model="inputValue"
-                            ref="saveTagInput"
-                            size="small"
-                            @keyup.enter.native="handleInputConfirm"
-                            @blur="handleInputConfirm"
-                    >
-                    </el-input>
-                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer" >
-                <el-button @click="dialogAddVisible = false">
-                    {{ $t('Cancel') }}
-                </el-button>
-                <el-button
-                        :loading="loading"
-                        type="primary"
-                        @click="submitAddForm()"
-                >
-                    {{ $t('Confirm') }}
-                </el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
@@ -307,10 +186,7 @@
                 inputVisible: false,
                 inputValue: '',
 				positionOptions: [
-                    {value: '1', label: this.$i18n.t('Internet')},
-                    {value: '2', label: this.$i18n.t('Original')}
                 ],
-                category: [],
 				queryForm: {
 					position: '',
                     page_index: 1,
@@ -342,8 +218,12 @@
 		watch: {
         },
 		created() {
-			api.queryCategory({}, (resp) => {
-                this.category = resp;
+			api.queryPosition({}, (resp) => {
+				console.debug(resp)
+                if (resp.length > 0) {
+                    this.queryForm.position = resp[0].code
+                    this.positionOptions = resp
+                }
                 this.refresh ();
             }, (resp) => {
                 window.tools.alertError (resp.msg)

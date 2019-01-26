@@ -101,6 +101,8 @@ exports.default = {
 	'Original': 'Original',
 	'Tag': 'Tag',
 	'Photo': 'Photo',
+	'Image': 'Image',
+	'Banner': 'Banner',
 
 	// 短语
 	'MustBeNumber': 'Must Be A Number',

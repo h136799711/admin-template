@@ -100,6 +100,8 @@ exports.default = {
 	'Original': '原创',
 	'Tag': '标签',
 	'Photo': '照片',
+	'Image': '图片',
+	'Banner': '横幅',
 
 
 	// 短语

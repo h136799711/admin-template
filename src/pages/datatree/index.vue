@@ -638,6 +638,10 @@
 			)
 			},
 			treeNodeClick(data, node, tree) {
+
+                console.debug('treenode click')
+                if (this.loading) return
+                this.loading = true
 				this.loadNode (node, (res) => {
 				})
 			},
@@ -658,7 +662,6 @@
 					this.currentNodeName = tmp
 					resolve (this.convert (list))
                     console.debug('load right table', parentId)
-					this.loadRightTable (parentId)
 				})
 			},
 			convert(list) {
