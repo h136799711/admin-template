@@ -32,6 +32,9 @@ const MessageIndex = r => require.ensure([], () => r(require('./pages/message/in
 const ConfigIndex = r => require.ensure([], () => r(require('./pages/config/index.vue')), 'ConfigIndex')
 // 菜单
 const MenuIndex = r => require.ensure([], () => r(require('./pages/menu/index.vue')), 'MenuIndex')
+// 轮播
+const BannersIndex = r => require.ensure([], () => r(require('./pages/banners/index.vue')), 'bannersIndex')
+
 // 相册
 const AlbumIndex = r => require.ensure([], () => r(require('./pages/album/index.vue')), 'albumIndex')
 // 相册分类
@@ -51,6 +54,13 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
+			{
+				path: 'banners',
+				component: BannersIndex,
+				children: [
+					{ path: 'index', component: BannersIndex }
+				]
+			},
 			{
 				path: 'datatree',
 				component: Datatree,

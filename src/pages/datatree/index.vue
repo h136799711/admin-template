@@ -459,14 +459,14 @@
 				console.debug ('编辑项目的信息', this.editForm)
 			},
 			datatreeBulkDelete() {
-				this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+				this.$confirm (this.$i18n.t('Action Confirm'), this.$i18n.t('Alert'), {
 					confirmButtonText: this.$i18n.t('Confirm'),
 					cancelButtonText: this.$i18n.t('Cancel'),
 					type: 'warning',
 					beforeClose: (action, instance, done) => {
 						if (action === 'confirm') {
 							instance.confirmButtonLoading = true
-							instance.confirmButtonText = window.vue_instance.$i18n.t('Processing').value
+							instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 							let data = {
 								'id': this.selectTableRowId
 							}
@@ -475,7 +475,6 @@
 								instance.confirmButtonLoading = false
 								// 删除本地相应的数据
 								this.remove (this.selectTableRowId)
-								delete this.cache['k' + this.currentParentId]
 								this.list = []
 								this.treeExpandKeys = [this.currentParentId]
 								this.query (0, (list) => {
@@ -483,12 +482,10 @@
 									this.currentNodeName = ''
 								})
 							}, (res) => {
+                                instance.confirmButtonLoading = false
 								console.debug (res)
 								window.tools.alertError (res.msg)
-								setTimeout (() => {
-									done ()
-									instance.confirmButtonLoading = false
-								}, 3000)
+                                done ()
 							})
 						} else {
 							done ()
@@ -528,8 +525,7 @@
 							datatreeApi.add (model, (data) => {
 								// 操作成功，重新加载
 								console.debug ('[api] success', data, this.currentNode)
-								delete this.cache['k' + this.currentDtId]
-								this.currentNode.insertChild ({data: {id: data, label: label}})
+								this.currentNode.insertChild ({data: {id: data.id, label: label}})
 								this.loadNode (this.currentNode, (res) => {
 								})
 								this.$refs[formName].resetFields ()
@@ -543,7 +539,6 @@
 							datatreeApi.update (model, (data) => {
 								// 操作成功，重新加载
 								console.debug ('[api] success', data, this.$refs.tree2)
-								delete this.cache['k' + this.currentDtId]
 								this.loadNode (this.currentNode, (res) => {
 									console.debug ('[api] loadNode', res)
 									let children = this.currentNode.childNodes
@@ -600,55 +595,24 @@
 			loadRightTable(parentId) {
 				// 载入右侧表格数据
 				this.loading = true
-				let key = 'k' + parentId
 				this.currentDtId = parentId
-				console.debug (key)
-				if (this.cache.hasOwnProperty (key)) {
-					let data = this.cache[key]
-					console.debug ('使用缓存', key, data)
-					this.count = parseInt (data.length)
-					let index = (this.currentPage - 1 > 0 ? this.currentPage - 1 : 0) * this.pageSize
-					let pagerData = []
-					console.debug ('分页数据', this.count, data.length - index, this.pageSize)
-					for (var i = 0; i < (data.length - index) && i < this.pageSize; i++) {
-						pagerData.push (data[i + index])
-					}
-					console.debug ('分页数据', pagerData)
-					this.tableData = pagerData
-					if (this.tableData.length > 0) {
-						// 有数据的父级节点
-						this.currentParentId = parentId
-					}
-				} else {
-					console.debug ('没有缓存数据', this.cache)
-				}
-				setTimeout (() => {
-					this.loading = false
-				}, 500)
+                datatreeApi.query({'parent_id': parentId, 'page_size': this.pageSize, 'page_index': this.currentPage},
+                  (resp) => {
+                	this.loading = false
+                    this.tableData = resp.list
+                    this.count = parseInt(resp.count)
+                }, (resp) => {
+                    window.tools.alertError (resp.msg)
+                    this.loading = false
+                })
 			},
 			query(parentId, suc) {
 				this.loading = true
-				let key = 'k' + parentId
-				if (this.cache.hasOwnProperty (key)) {
-					console.debug ('使用缓存', key)
-					suc (this.cache[key])
-					this.loadRightTable (parentId)
-					setTimeout (() => {
-						this.loading = false
-					}, 600)
-					return
-				}
-				if (this.cache.length > 0) {
-					// 大于30以上清空
-					this.cache = []
-				}
-				datatreeApi.query ({'parent_id': parentId, 'page_size': 654321}, (resp) => {
-					console.debug ('resp ', resp)
+				console.log('parent_id', parentId)
+				datatreeApi.query ({'parent_id': parentId, 'page_size': 500}, (resp) => {
 					this.loading = false
-					this.count = parseInt (resp.count)
 					suc (resp.list)
-					this.cache['k' + parentId] = resp.list
-					this.loadRightTable (parentId)
+                    this.loadRightTable (parentId)
 				}, (resp) => {
 					window.tools.alertError (resp.msg)
 					this.loading = false
@@ -683,16 +647,17 @@
 					return
 				}
 				this.currentNode = node
-				console.debug ('节点点击', node)
 				let parentId = 0
 				let tmp = ''
 				if (node.level > 0) {
 					parentId = node.data.id
 					tmp = node.data.label
 				}
+                console.debug ('节点点击', node.data.id, parentId)
 				this.query (parentId, (list) => {
 					this.currentNodeName = tmp
 					resolve (this.convert (list))
+                    console.debug('load right table', parentId)
 					this.loadRightTable (parentId)
 				})
 			},
