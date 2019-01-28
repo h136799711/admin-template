@@ -102,6 +102,18 @@ exports.default = {
 	'Photo': '照片',
 	'Image': '图片',
 	'Banner': '横幅',
+	'OneYear': '一年',
+	'ThreeYear': '三年',
+	'CreatedBy': '创建者',
+	'JumpUrl': '跳转地址',
+	'JumpType': '跳转地址类型',
+	'Position': '位置',
+	'DateRange': '日期范围',
+	'StartDate': '开始日期',
+	'EndDate': '结束日期',
+	'Showing': '显示时间',
+	'Width': '宽',
+	'Height': '高',
 
 
 	// 短语

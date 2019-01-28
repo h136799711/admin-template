@@ -103,6 +103,18 @@ exports.default = {
 	'Photo': 'Photo',
 	'Image': 'Image',
 	'Banner': 'Banner',
+	'OneYear': 'One Year',
+	'ThreeYear': 'Three Year',
+	'CreatedBy': 'Created By',
+	'JumpUrl': 'Jump Url',
+	'JumpType': 'Url Type',
+	'Position': 'Position',
+	'DateRange': 'Date Range',
+	'StartDate': 'Start Date',
+	'EndDate': 'End Date',
+	'Showing': 'Showing',
+	'Width': 'Width',
+	'Height': 'Height',
 
 	// 短语
 	'MustBeNumber': 'Must Be A Number',

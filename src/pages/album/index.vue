@@ -38,20 +38,32 @@
                     :element-loading-text="$t('Loading')"
                     style="width: 100%"
             >
+                <el-table-column type="expand">
+                    <template slot-scope="props">
+                        <el-row type="flex" >
+                            <el-col :span="6" v-for="p in props.row.photos" >
+                                <a :href="p.photo_uri" target="_blank">
+                                <img :src="p.photo_uri" class="margin-sm" style="width: 120px;height: auto;"/>
+                                </a>
+                            </el-col>
+                        </el-row>
+                    </template>
+                </el-table-column>
                 <el-table-column
                         prop="id"
                         width="40px"
                         :label="$t('ID')"
                 />
                 <el-table-column
+                        width="160px"
                         prop="title"
                         :label="$t('Title')"
                 />
-                <el-table-column
-                        width="160px"
-                        prop="description"
-                        :label="$t('Description')"
-                />
+                <!--<el-table-column-->
+                        <!--width="160px"-->
+                        <!--prop="description"-->
+                        <!--:label="$t('Description')"-->
+                <!--/>-->
                 <el-table-column
                         prop="source"
                         :label="$t('Source')"/>

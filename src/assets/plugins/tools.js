@@ -84,6 +84,14 @@ const getAvatarUploadUrl = () => {
 	return `${picture_url}`
 }
 
+const getImgUrl = (imgUrl) => {
+	if (!_.startsWith(imgUrl, 'http')) {
+		imgUrl = window.tools.getApiUrl() + imgUrl
+	}
+
+	return imgUrl
+}
+
 const getKeyInObject = (object, exp) => {
 	if (typeof object === 'undefined') return undefined
 	let args = exp.split ('.')
@@ -145,6 +153,7 @@ const getTimezone = () => {
 }
 
 const tools = {
+	getImgUrl,
 	getBrowseLanguage,
 	getTimezone,
 	clear,
