@@ -41,6 +41,8 @@ const AlbumIndex = r => require.ensure([], () => r(require('./pages/album/index.
 const AlbumCategory = r => require.ensure([], () => r(require('./pages/album/category.vue')), 'AlbumCategory')
 // 相册照片
 const AlbumPhoto = r => require.ensure([], () => r(require('./pages/album/photo.vue')), 'AlbumPhoto')
+// 文章
+const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/index.vue')), 'CmsArticle')
 
 const routes = [
   // 地址为空的时候跳转
@@ -54,6 +56,13 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
+			{
+				path: 'cms_article',
+				component: CmsArticle,
+				children: [
+					{ path: 'index', component: CmsArticle }
+				]
+			},
 			{
 				path: 'banners',
 				component: BannersIndex,

@@ -3,6 +3,9 @@
     box-sizing: border-box;
   }
   *{padding: 0;margin: 0;}
+  table {
+    font-size: 75%;
+  }
   .text-center{
     text-align: center;
   }
@@ -186,7 +189,7 @@ export default {
 </script>
 
 <style>
-  @import url(//at.alicdn.com/t/font_326734_h6sq6h2ecb8.css);
+  @import url(//at.alicdn.com/t/font_326734_w5oh297eo8.css);
 
   span.by-icon,i.by-icon{
     font-family: 'boyefont';

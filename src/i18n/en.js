@@ -115,11 +115,18 @@ exports.default = {
 	'Showing': 'Showing',
 	'Width': 'Width',
 	'Height': 'Height',
+	'Status': 'Status',
+	'Cover': 'Cover',
+	'Article': 'Article',
+	'All': 'All',
+	'Author': 'Author',
+	'Cms': 'CMS',
 
 	// 短语
 	'MustBeNumber': 'Must Be A Number',
 	'WelcomeToUse': 'Welcome And Pleasure To Use This System !',
 	'Action Confirm': 'Action Confirm?',
+	'Please Input': 'Please Input',
 	'Please Input {0}': 'Please Input {0}',
 	'Please Input Title': 'Please Input Title',
 	'Please Input Alias': 'Please Input Alias',
@@ -148,5 +155,9 @@ exports.default = {
 	'ClientSecret': 'Client Secret',
 	'ClientTotalLimit': 'Total Request Limit',
 	'ClientDayLimit': 'Daily Request Limit',
-	'ClientAlg': 'Encryption Algorithm'
+	'ClientAlg': 'Encryption Algorithm',
+
+	// 文章
+	'CmsArticle.draft': 'Draft',
+	'CmsArticle.published': 'Published',
 };

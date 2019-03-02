@@ -114,12 +114,19 @@ exports.default = {
 	'Showing': '显示时间',
 	'Width': '宽',
 	'Height': '高',
+	'Status': '状态',
+	'Cover': '封面',
+	'Article': '文章',
+	'All': '全部',
+	'Author': '作者',
+	'Cms': '内容管理系统',
 
 
 	// 短语
 	'MustBeNumber': '必须是一个数值',
 	'WelcomeToUse': '欢迎您使用本系统!',
 	'Action Confirm': '操作确定?',
+	'Please Input': '请输入',
 	'Please Input {0}': '请输入{0}',
 	'Please Input Title': '请输入标题',
 	'Please Input Alias': '请输入别名',
@@ -147,5 +154,9 @@ exports.default = {
 	'ClientSecret': '应用密钥',
 	'ClientTotalLimit': '接口总调用次数',
 	'ClientDayLimit': '接口每日调用次数',
-	'ClientAlg': '通信算法'
+	'ClientAlg': '通信算法',
+
+	// 文章
+	'CmsArticle.draft': '草稿',
+	'CmsArticle.published': '已发布',
 };
