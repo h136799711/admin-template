@@ -51,7 +51,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="id"
-                        width="40px"
+                        width="80px"
                         :label="$t('ID')"
                 />
                 <el-table-column
