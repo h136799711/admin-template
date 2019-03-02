@@ -41,7 +41,7 @@
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-row type="flex" >
-                            <el-col :span="6" v-for="p in props.row.photos" >
+                            <el-col :span="6" v-for="p in props.row.photos" :key="p.id" >
                                 <a :href="p.photo_uri" target="_blank">
                                 <img :src="p.photo_uri" class="margin-sm" style="width: 120px;height: auto;"/>
                                 </a>
