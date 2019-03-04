@@ -120,6 +120,7 @@ exports.default = {
 	'All': '全部',
 	'Author': '作者',
 	'Cms': '内容管理系统',
+	'Content': '内容',
 
 
 	// 短语

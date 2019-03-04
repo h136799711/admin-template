@@ -17,6 +17,12 @@ const articleApi = {
 	},
 	delete (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_CmsArticle_delete'}), suc, fail);
+	},
+	publish (data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_CmsArticle_publish'}), suc, fail);
+	},
+	draft (data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_CmsArticle_draft'}), suc, fail);
 	}
 
 }

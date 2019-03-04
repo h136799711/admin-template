@@ -3,6 +3,21 @@
         border-radius: 5px;
         margin: 0px;
     }
+    .el-tag + .el-tag {
+        margin-left: 10px;
+    }
+    .button-new-tag {
+        margin-left: 10px;
+        height: 32px;
+        line-height: 30px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .input-new-tag {
+        width: 90px;
+        margin-left: 10px;
+        vertical-align: bottom;
+    }
 </style>
 <template>
     <div class="main-content by-datatree padding-md-bottom padding-md-top">
@@ -76,7 +91,7 @@
                     />
                     <el-table-column
                             prop="title"
-                            width="160px"
+                            width="220px"
                             :label="$t('Title')"
                     >
                         <template slot-scope="scope">
@@ -85,26 +100,35 @@
                     </el-table-column>
                     <el-table-column
                             prop="cover"
-                            width="160px"
+                            width="140px"
                             :label="$t('Cover')"
                     >
                         <template slot-scope="scope">
                             <img alt="cover" :src="scope.row.cover" style="width:120px;height: auto;"/>
                         </template>
                     </el-table-column>
-
                     <el-table-column
-                            prop="summary"
-                            width="180px"
-                            :label="$t('Summary')"
+                            prop="come_from"
+                            width="100px"
+                            :label="$t('Source')"
                     >
                         <template slot-scope="scope">
-                            {{scope.row.summary}}
+                            {{scope.row.come_from}}
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="tags"
+                            width="120px"
+                            :label="$t('Tag')"
+                    >
+                        <template slot-scope="scope">
+                            {{scope.row.tags}}
                         </template>
                     </el-table-column>
                     <el-table-column
                             prop="author_nick"
-                            width="160px"
+                            width="100px"
                             :label="$t('Author')"
                     >
                         <template slot-scope="scope">
@@ -113,7 +137,7 @@
                     </el-table-column>
                     <el-table-column
                             prop="views"
-                            width="100px"
+                            width="90px"
                             :label="$t('View')"
                     >
                         <template slot-scope="scope">
@@ -123,12 +147,29 @@
 
                     <el-table-column
                             prop="cf_status"
-                            width="200px"
+                            width="180px"
                             :label="$t('Status')"
                     >
                         <template slot-scope="scope">
                             <span >
                                 {{ $t('CmsArticle.' + scope.row.publish_status) }}
+
+                            <el-button
+                                    v-if="scope.row.publish_status == 'draft'"
+                                    type="primary"
+                                    size="mini"
+                                    icon="by-icon by-shangjia"
+                                    @click="onPublish(scope.row.id)">
+                                {{$t('Publish')}}
+                            </el-button>
+                            <el-button
+                                    v-if="scope.row.publish_status == 'published'"
+                                    type="primary"
+                                    size="mini"
+                                    icon="by-icon by-xiajia"
+                                    @click="onDraft(scope.row.id)">
+                                {{$t('No')}}-{{$t('Publish')}}
+                            </el-button>
                             </span>
                         </template>
                     </el-table-column>
@@ -184,109 +225,67 @@
                     <el-input v-model="editForm.title"/>
                 </el-form-item>
                 <el-form-item
+                        required
+                        :label="$t('Source')"
+                        prop="come_from">
+                    <el-input v-model="editForm.come_from" />
+                </el-form-item>
+                <el-form-item
+                        required
+                        :label="$t('Summary')"
+                        prop="summary">
+                    <el-input type="textarea" rows="5" v-model="editForm.summary"/>
+                </el-form-item>
+                <el-form-item
                         :label="$t('Category')"
                         prop="category"
                 >
-                    <el-select size="mini" v-model="editForm.cate_id" clearable placeholder="请选择">
+                    <el-select size="mini" v-model="editForm.category_id" clearable placeholder="请选择">
                         <el-option
                                 v-for="item in category"
-                                :key="item.id"
+                                :key="item.code"
                                 :label="item.name"
-                                :value="item.id">
+                                :value="item.code">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item
-                        :label="$t('CfProject.CanExcess')"
-                        prop="can_excess"
-                >
-                    <el-switch :active-value="1" :inactive-value="0" v-model="editForm.can_excess"></el-switch>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('RealName')"
-                        prop="realname"
-                >
-                    <el-input v-model="editForm.realname" />
-                </el-form-item>
-                <el-form-item
-                        :label="$t('IdCardNo')"
-                        prop="id_card_no"
-                >
-                    <el-input v-model="editForm.id_card_no" />
-                </el-form-item>
-                <el-form-item
-                        :label="$t('ValidDate')"
-                        prop="id_valid_date"
-                >
-                    <el-date-picker
-                            :disabled="this.longTermChecked"
-                            v-model="editForm.id_valid_date"
-                            type="date"
-                            :picker-options="pickerOptions2"
-                            value-format="yyyyMMdd">
-                    </el-date-picker>
-                    <el-checkbox v-model="longTermChecked">{{$t('LongTerm')}}</el-checkbox>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('BankCardNo')"
-                        prop="bank_card_no"
-                >
-                    <el-input v-model="editForm.bank_card_no" />
-                </el-form-item>
-                <el-form-item
-                        :label="$t('CfProject.IdCardImgHold')"
+                        :label="$t('Cover')"
                         prop="cover"
                 >
-                    <ImgUploader ref="idCardImgHold" @onUploadSuccess="onIdCardHoldUploadSuccess" :defaultImgUrl="editForm.id_card_img_hold" :clear="imgUploadClear" imgType="id_card"/>
+                    <ImgUploader ref="editImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="editForm.cover" :clear="imgUploadClear" imgType="cms_article"/>
                 </el-form-item>
                 <el-form-item
-                        :label="$t('CfProject.IdCardImgFront')"
-                        prop="cover"
+                        :label="$t('Tag')"
+                        prop="tag"
                 >
-                    <ImgUploader ref="idCardImgFront" @onUploadSuccess="onIdCardFrontUploadSuccess" :defaultImgUrl="editForm.id_card_img_front" :clear="imgUploadClear" imgType="id_card"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('CfProject.TargetMoney')"
-                        prop="target_money"
-                >
-                    <el-input v-model="editForm.target_money"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('CfProject.Cover')"
-                        prop="cover"
-                >
-                    <ImgUploader ref="editImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="editForm.cover" :clear="imgUploadClear" imgType="cf_cover"/>
+                    <el-tag
+                            :key="t"
+                            v-for="t in editForm.tags"
+                            closable
+                            :disable-transitions="false"
+                            @close="handleClose(tag)">
+                        {{t}}
+                    </el-tag>
+                    <el-input
+                            class="input-new-tag"
+                            ref="refEditTag"
+                            v-if="inputVisible"
+                            v-model="inputValue"
+                            size="small"
+                            @keyup.enter.native="handleInputConfirm"
+                            @blur="handleInputConfirm"
+                    >
+                    </el-input>
+                    <el-button v-else class="button-new-tag" size="small" @click="showInput">{{$t('Add') + $t('Tag')}}</el-button>
                 </el-form-item>
 
                 <el-form-item
-                        :label="$t('CfProject.Period')"
-                        prop="description"
+                        :label="$t('Content')"
+                        prop="content"
                 >
-                    <!--<el-date-picker-->
-                            <!--v-model="editForm.date_range"-->
-                            <!--type="daterange"-->
-                            <!--:picker-options="pickerOptions2"-->
-                            <!--range-separator="-"-->
-                            <!--value-format="timestamp"-->
-                            <!--:start-placeholder="$t('StartDate')"-->
-                            <!--:end-placeholder="$t('EndDate')">-->
-                    <!--</el-date-picker>-->
-
-                    <el-input v-model="editForm.days" />
+                    <mavon-editor ref="md" @imgAdd="editorImgAdd" v-model="editForm.content"/>
                 </el-form-item>
-                <el-form-item
-                        :label="$t('Hide')"
-                        prop="hidden"
-                >
-                    <el-switch :active-value="1" :inactive-value="0" v-model="editForm.hidden"></el-switch>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('CfProject.Detail')"
-                        prop="detail"
-                >
-                    <mavon-editor ref="md" @imgAdd="editorImgAdd" v-model="editForm.detail"/>
-                </el-form-item>
-
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogEditVisible = false">
@@ -321,6 +320,12 @@
                 </el-form-item>
                 <el-form-item
                         required
+                        :label="$t('Source')"
+                        prop="come_from">
+                    <el-input v-model="addForm.come_from" />
+                </el-form-item>
+                <el-form-item
+                        required
                         :label="$t('Summary')"
                         prop="summary">
                     <el-input type="textarea" rows="5" v-model="addForm.summary"/>
@@ -332,9 +337,9 @@
                     <el-select size="mini" v-model="addForm.category_id" clearable placeholder="请选择">
                         <el-option
                                 v-for="item in category"
-                                :key="item.id"
+                                :key="item.code"
                                 :label="item.name"
-                                :value="item.id">
+                                :value="item.code">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -342,13 +347,37 @@
                         :label="$t('Cover')"
                         prop="cover"
                 >
-                    <ImgUploader ref="editImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="addForm.cover" :clear="imgUploadClear" imgType="cms_article"/>
+                    <ImgUploader ref="addImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="addForm.cover" :clear="imgUploadClear" imgType="cms_article"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Tag')"
+                        prop="tag"
+                >
+                    <el-tag
+                            :key="t"
+                            v-for="t in addForm.tags"
+                            closable
+                            :disable-transitions="false"
+                            @close="handleClose(tag)">
+                        {{t}}
+                    </el-tag>
+                    <el-input
+                            class="input-new-tag"
+                            ref="refAddTag"
+                            v-if="inputVisible"
+                            v-model="inputValue"
+                            size="small"
+                            @keyup.enter.native="handleInputConfirm"
+                            @blur="handleInputConfirm"
+                    >
+                    </el-input>
+                    <el-button v-else class="button-new-tag" size="small" @click="showInput">{{$t('Add')}}{{$t('Tag')}}</el-button>
                 </el-form-item>
                 <el-form-item
                         :label="$t('Content')"
                         prop="content"
                 >
-                    <mavon-editor ref="md" @imgAdd="editorImgAdd" v-model="editForm.content"/>
+                    <mavon-editor ref="md" @imgAdd="editorImgAdd" v-model="addForm.content"/>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -364,6 +393,7 @@
                 </el-button>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -385,12 +415,15 @@
 		},
 		data() {
 			return {
+				inputVisible: false,
+                inputValue: '',
                 imgUploadClear: false,
 				pickerOptions2: {},
 				queryForm: {
 					status: '',
 					category_id: '',
 					title: '',
+                    contain_detail: 1,
 					page_index: 1, // 当前页码
 					page_size: 10,
 				},
@@ -400,11 +433,19 @@
                     summary: '',
                     cover: '',
                     category_id: '',
-                    tags: ''
+                    tags: [],
+                    content: '',
+                    come_from: ''
                 },
 				editForm: {
 					id: 0,
-
+                    title: '',
+                    summary: '',
+                    cover: '',
+                    category_id: '',
+                    tags: [],
+                    content: '',
+                    come_from: ''
 				},
 
 				count: 0,
@@ -448,6 +489,68 @@
 			this.refresh ();
 		},
 		methods: {
+			onPublish(id) {
+				this.loading = true
+                articleApi.publish ({id: id}, (resp) => {
+                    this.loading = false
+                    window.tools.alertSuc (this.$i18n.t ('Action') + this.$i18n.t ('Success'))
+                    this.refresh ()
+                }, (resp) => {
+                    window.tools.alertError (resp.msg)
+                    this.loading = false
+                })
+            },
+            onDraft(id) {
+                this.loading = true
+                articleApi.draft ({id: id}, (resp) => {
+                    this.loading = false
+                    window.tools.alertSuc (this.$i18n.t ('Action') + this.$i18n.t ('Success'))
+                    this.refresh ()
+                }, (resp) => {
+                    window.tools.alertError (resp.msg)
+                    this.loading = false
+                })
+            },
+            showInput() {
+                this.inputVisible = true;
+                this.$nextTick(_ => {
+                    if (this.dialogAddVisible) {
+                        this.$refs.refAddTag.$refs.input.focus();
+                    } else if (this.dialogEditVisible) {
+                        this.$refs.refEditTag.$refs.input.focus();
+                    }
+                });
+            },
+            handleInputConfirm() {
+                let inputValue = this.inputValue;
+                if (inputValue) {
+                    this.inputVisible = false
+                    this.inputValue = ''
+                    if (this.dialogAddVisible) {
+                    	for (let t in this.addForm.tags) {
+                    		if (this.addForm.tags[t] == inputValue) {
+                    			return ;
+                            }
+                        }
+                        this.addForm.tags.push(inputValue)
+                    } else if (this.dialogEditVisible) {
+                        for (let t in this.editForm.tags) {
+                            if (this.editForm.tags[t] == inputValue) {
+                                return;
+                            }
+                        }
+                        this.editForm.tags.push(inputValue)
+                    }
+                }
+
+            },
+            handleClose(tag) {
+            	if (this.dialogAddVisible) {
+                    this.addForm.tags.splice(this.addForm.tags.indexOf(tag), 1);
+                } else if (this.dialogEditVisible) {
+                    this.editForm.tags.splice(this.editForm.tags.indexOf(tag), 1);
+                }
+            },
             onDelete(id) {
                 this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {
                     confirmButtonText: this.$i18n.t('Confirm'),
@@ -480,7 +583,8 @@
             editorImgAdd(pos, file){
                 fileApi.upload(file, 'cms_article').then(({data}) => {
                 	if (data.code === 0) {
-                        this.$refs.md.$img2Url(pos, window.tools.getImgUrl(data.data.relative_path))
+                		let imgUrl = window.tools.getImgUrl(data.data.relative_path)
+                        this.$refs.md.$img2Url(pos, imgUrl)
                     } else {
                         window.tools.alertError(data.msg)
                     }
@@ -497,12 +601,12 @@
                 console.debug ('image upload success', data)
             },
 			submitEditForm() {
-                if (this.longTermChecked) {
-                    this.editForm.id_valid_date = 1
-                }
+
 				this.$refs.editForm.validate ((valid) => {
 					if (valid) {
-						cfProjectApi.update (this.editForm, (resp) => {
+                        let data = Object.assign({}, this.editForm)
+                        data.tags = data.tags.join(",")
+                        articleApi.update (data, (resp) => {
 							this.loading = false
 							this.dialogEditVisible = false
 							window.tools.alertSuc (this.$i18n.t ('Action') + this.$i18n.t ('Success'))
@@ -519,10 +623,9 @@
 			submitAddForm() {
 				this.$refs.addForm.validate ((valid) => {
 					if (valid) {
-						if (this.longTermChecked) {
-                            this.addForm.id_valid_date = 1
-                        }
-						cfProjectApi.create (this.addForm, (resp) => {
+						let data = Object.assign({}, this.addForm)
+                        data.tags = data.tags.join(",")
+						articleApi.create (data, (resp) => {
 							this.loading = false
 							this.dialogAddVisible = false
 							window.tools.alertSuc (this.$i18n.t ('Action') + this.$i18n.t ('Success'))
@@ -543,18 +646,21 @@
                     summary: '',
                     cover: '',
                     category_id: '',
-                    tags: ''
+                    tags: [],
+                    content: '',
+                    come_from: ''
 				}
 				this.dialogAddVisible = true
 			},
 			onEdit(row) {
 				this.editForm.id = row.id
+                this.editForm.come_from = row.come_from
 				this.editForm.title = row.title
 				this.editForm.summary = row.summary
                 this.editForm.content = row.content
 				this.editForm.cover = row.cover
                 this.editForm.category_id = row.category_id
-                this.editForm.tags = row.tags
+                this.editForm.tags = row.tags.length > 0 ? row.tags.split(',') : []
                 this.dialogEditVisible = true;
 			},
 			byPagerSizeChange(val) {

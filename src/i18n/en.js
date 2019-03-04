@@ -121,6 +121,7 @@ exports.default = {
 	'All': 'All',
 	'Author': 'Author',
 	'Cms': 'CMS',
+	'Content': 'Content',
 
 	// 短语
 	'MustBeNumber': 'Must Be A Number',
