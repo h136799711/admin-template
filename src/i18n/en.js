@@ -124,6 +124,8 @@ exports.default = {
 	'Content': 'Content',
 
 	// 短语
+	'PublicKey': 'Public Key',
+	'SecretKey': 'Secret Key',
 	'MustBeNumber': 'Must Be A Number',
 	'WelcomeToUse': 'Welcome And Pleasure To Use This System !',
 	'Action Confirm': 'Action Confirm?',

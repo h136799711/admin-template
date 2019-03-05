@@ -32,6 +32,11 @@
                 <el-form-item :label="$t('ClientDayLimit')">
                     <el-input v-model="dailyLimitDesc"></el-input>
                 </el-form-item>
+                <el-form-item :label="$t('SecretKey')">
+                    <el-button class="margin-sm-bottom" icon="el-icon-refresh" :loading="loading" @click.prevent="resetSecret()"> {{ $t('Reset') }}</el-button>
+                    <div></div>
+                    <el-input spellcheck="false" type="textarea" :rows="30" disabled="disabled" v-model="editForm.mySecretKey"></el-input>
+                </el-form-item>
 
                 <el-form-item>
                     <el-button :loading="loading" type="primary" @click="onSave" icon="by-icon by-Icon-baocun"> {{ $t('Save') }}
@@ -58,12 +63,14 @@
 			return {
                 algList: [
                     {id: 'nothing', label: 'None'},
-                    {id: 'md5v3', label: 'MD5 Version 3'}
+                    {id: 'rsa_v2', label: 'RSA2'}
                 ],
 				editForm: {
 					clientId: '',
 					clientName: '',
 					clientSecret: '',
+                    myPubKey: '',
+                    mySecretKey: '',
 					apiAlg: 'nothing',
 					dailyLimit: 500
 				},
@@ -93,6 +100,17 @@
 		mounted: function () {
 		},
 		methods: {
+            resetSecret() {
+                this.loading = true
+                api.renew ({}, (resp) => {
+                    console.debug ('resp ', resp)
+                    this.loading = false
+                    this.editForm.mySecretKey = resp
+                }, (resp) => {
+                    window.tools.alertError (resp.msg)
+                    this.loading = false
+                })
+            },
 			reset() {
 				this.loading = true
 				api.reset ({}, (resp) => {
@@ -118,6 +136,8 @@
 					this.editForm.clientName = resp.client_name
 					this.editForm.clientAlg = resp.api_alg
 					this.editForm.dailyLimit = resp.day_limit
+                    this.editForm.myPubKey = resp.my_pub_key
+                    this.editForm.mySecretKey = resp.my_private_key
 				}, (resp) => {
 					window.tools.alertError (resp.msg)
 					this.loading = false
@@ -143,6 +163,8 @@
 					this.editForm.clientName = resp.client_name
 					this.editForm.clientAlg = resp.api_alg
 					this.editForm.dailyLimit = resp.day_limit
+                    this.editForm.myPubKey = tools.base64Utils.decode(resp.my_pub_key)
+                    this.editForm.mySecretKey = tools.base64Utils.decode(resp.my_private_key)
 				}, (resp) => {
 					window.tools.alertError (resp.msg)
 					this.loading = false

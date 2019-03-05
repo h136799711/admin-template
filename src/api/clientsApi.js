@@ -42,6 +42,9 @@ const clientsApi = {
 			}
 		});
 	},
+	renew (data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Clients_renew'}), suc, fail);
+	},
 	reset (data, suc, fail) {
 		let url = window.tools.getApiUrl ();
 		data.service_type = 'by_Clients_resetClientSecretKey';

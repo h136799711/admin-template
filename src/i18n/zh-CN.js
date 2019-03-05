@@ -124,6 +124,8 @@ exports.default = {
 
 
 	// 短语
+	'PublicKey': '公钥',
+	'SecretKey': '私钥',
 	'MustBeNumber': '必须是一个数值',
 	'WelcomeToUse': '欢迎您使用本系统!',
 	'Action Confirm': '操作确定?',

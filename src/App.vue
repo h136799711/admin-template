@@ -16,43 +16,43 @@
     margin-bottom: 15px;
   }
   .margin-sm-top{
-    margin-top: 5px;
+    margin-top: 5px !important;
   }
   .margin-sm-bottom{
-    margin-bottom: 5px;
+    margin-bottom: 5px !important;
   }
   .margin-sm-left{
-    margin-left: 5px;
+    margin-left: 5px !important;
   }
   .margin-sm-right{
-    margin-right: 5px;
+    margin-right: 5px !important;
   }
   .margin-sm{
-    margin: 5px;
+    margin: 5px !important;
   }
   .margin-xs-top{
-    margin-top: 2px;
+    margin-top: 2px !important;
   }
   .margin-xs-bottom{
-    margin-bottom: 2px;
+    margin-bottom: 2px !important;
   }
   .margin-xs-left{
-    margin-left: 2px;
+    margin-left: 2px !important;
   }
   .margin-xs-right{
-    margin-right: 2px;
+    margin-right: 2px !important;
   }
   .margin-xs{
-    margin: 2px;
+    margin: 2px !important;
   }
   .margin-md{
-    margin: 15px;
+    margin: 15px !important;
   }
   .margin-md-top{
-    margin-top: 15px;
+    margin-top: 15px !important;
   }
   .margin-md-bottom{
-    margin-bottom: 15px;
+    margin-bottom: 15px !important;
   }
   .margin-md-left{
     margin-left: 15px;
