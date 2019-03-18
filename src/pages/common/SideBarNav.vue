@@ -107,9 +107,13 @@ export default {
       this.$emit('NavOnClick', `${this.index}-${index}`, this.navMenu.children[index].children.length > 0 ? this.navMenu.children[index] : false)
     },
     routerJump (UrlAddress) {
-      window.tools.returnTop()
+      if (this.$route.path === UrlAddress) {
+          return
+      }
+      //console.debug(this.$route.path, UrlAddress)
+      this.$router.push({path: UrlAddress})
 //      console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
-      window.location.href = this.$router.resolve(UrlAddress, '#', false).href
+//      window.location.href = this.$router.resolve(UrlAddress, '#', false).href
     },
     routerUrl (UrlAddress) {
       return this.$router.resolve(`${UrlAddress}`).href

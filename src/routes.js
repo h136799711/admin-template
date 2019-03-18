@@ -44,6 +44,10 @@ const AlbumPhoto = r => require.ensure([], () => r(require('./pages/album/photo.
 // 文章
 const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/index.vue')), 'CmsArticle')
 
+// Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
+const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
+// Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
+
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -56,6 +60,13 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
+			{
+				path: 'spcate',
+				component: SpCate,
+				children: [
+					{ path: 'index/:id?', component: SpCate, props: true }
+				]
+			},
 			{
 				path: 'cms_article',
 				component: CmsArticle,

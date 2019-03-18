@@ -2,6 +2,8 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Publish': '发布',
+	'No':'不',
 	'Success': '成功',
 	'Home': '主页',
 	'Loading': '加载中...',
@@ -121,6 +123,8 @@ exports.default = {
 	'Author': '作者',
 	'Cms': '内容管理系统',
 	'Content': '内容',
+	'Leaf': '叶子节点',
+	'Shop': '商城',
 
 
 	// 短语

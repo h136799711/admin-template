@@ -2,6 +2,8 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Publish': 'Publish',
+	'No':'No',
 	'Fail': 'Fail ',
 	'Home': 'Home ',
 	'Loading': 'Loading ',
@@ -122,6 +124,8 @@ exports.default = {
 	'Author': 'Author',
 	'Cms': 'CMS',
 	'Content': 'Content',
+	'Leaf': 'Leaf',
+	'Shop': 'Shop',
 
 	// 短语
 	'PublicKey': 'Public Key',
