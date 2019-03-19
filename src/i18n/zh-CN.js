@@ -132,6 +132,7 @@ exports.default = {
 	'Attribute': '属性',
 	'single': '单选',
 	'multiple': '多选',
+	'Relate': '关联',
 
 
 	// 短语

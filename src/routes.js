@@ -48,6 +48,7 @@ const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/
 const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
 const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vue')), 'SpProp')
 const SpPropValue = r => require.ensure([], () => r(require('./pages/sp_prop/value.vue')), 'SpPropValue')
+const SpPropRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_prop.vue')), 'SpPropRelate')
 // Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 
 const routes = [
@@ -69,6 +70,7 @@ const routes = [
 					{ path: 'index/:id?', component: SpCate, props: true }
 				]
 			},
+			{ path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
 			{
 				path: 'sp_prop',
 				component: SpProp,

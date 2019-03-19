@@ -80,8 +80,7 @@
                         width="100px"
                         :label="$t('Leaf')">
                     <template slot-scope="scope">
-                        {{$t('' + scope.row.leaf)}}
-
+                        {{scope.row.leaf}}
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -93,12 +92,11 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="320px"
+                        width="200px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
                         <el-button
-                                v-if="scope.row.leaf"
                                 size="mini"
                                 icon="el-icon-edit"
                                 @click="onRelateProp(scope.row)">
@@ -147,8 +145,7 @@
                         :label="$t('Leaf')"
                         prop="leaf"
                 >
-                    <el-radio v-model="addForm.leaf" :label="0">{{$t('0')}}</el-radio>
-                    <el-radio v-model="addForm.leaf" :label="1">{{$t('1')}}</el-radio>
+                    <el-input v-model="addForm.leaf" />
                 </el-form-item>
                 <el-form-item
                         :label="$t('Sort')"
@@ -197,8 +194,7 @@
                         :label="$t('Leaf')"
                         prop="leaf"
                 >
-                    <el-radio v-model="editForm.leaf" :label="0">{{$t('0')}}</el-radio>
-                    <el-radio v-model="editForm.leaf" :label="1">{{$t('1')}}</el-radio>
+                    <el-input v-model="editForm.leaf" />
                 </el-form-item>
                 <el-form-item
                         :label="$t('Sort')"
@@ -297,9 +293,6 @@
             this.refresh()
         },
 		methods: {
-            onRelateProp(row) {
-                this.$router.replace({path: '/admin/spcate/relate_prop/' + row.id})
-            },
 			back() {
 			    this.$router.replace({path: '/admin/spcate/index/' + this.grandpa})
             },
