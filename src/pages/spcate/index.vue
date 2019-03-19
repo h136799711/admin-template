@@ -43,6 +43,9 @@
                 @click="refresh()">
             {{ $t('Refresh')}}
         </el-button>
+        <div class="margin-md-bottom margin-md-top">
+            最多3层
+        </div>
 
         <div class="grid-content margin-md-top">
             <el-table
@@ -60,7 +63,6 @@
                         :label="$t('ID')"
                 />
                 <el-table-column
-                        width="240px"
                         prop="title"
                         :label="$t('Title')"
                 >
@@ -73,6 +75,13 @@
                         prop="level"
                         :label="$t('Level')"
                 >
+                </el-table-column>
+                <el-table-column
+                        width="100px"
+                        :label="$t('Leaf')">
+                    <template slot-scope="scope">
+                        {{scope.row.leaf}}
+                    </template>
                 </el-table-column>
                 <el-table-column
                         width="100px"
@@ -291,7 +300,7 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
-                            api.delete ({id: id}, (res) => {
+                            spCateApi.delete ({id: id}, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.refresh()
                                 done()
@@ -340,6 +349,7 @@
 			},
 			onAdd() {
 				this.addForm = {
+					parent_id: this.queryForm.parent_id,
                     title: '',
                     leaf: 0,
                     sort: 0
