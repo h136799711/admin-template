@@ -135,6 +135,7 @@ exports.default = {
 	'multiple': 'Multiple',
 
 	// 短语
+	'PropertyValue': 'Property Value',
 	'ColorProperty': 'Color Property',
 	'SaleProperty': 'Sale Property',
 	'PropertyType': 'Type',

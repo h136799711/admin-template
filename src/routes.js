@@ -47,6 +47,7 @@ const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/
 // Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
 const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vue')), 'SpProp')
+const SpPropValue = r => require.ensure([], () => r(require('./pages/sp_prop/value.vue')), 'SpPropValue')
 // Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 
 const routes = [
@@ -75,6 +76,7 @@ const routes = [
 					{ path: 'index', component: SpProp}
 				]
 			},
+			{ path: 'sp_prop/value/:id', component: SpPropValue, props: true },
 			{
 				path: 'cms_article',
 				component: CmsArticle,

@@ -135,6 +135,7 @@ exports.default = {
 
 
 	// 短语
+	'PropertyValue': '属性值',
 	'ColorProperty': '颜色属性',
 	'SaleProperty': '销售属性',
 	'PropertyType': '类型',

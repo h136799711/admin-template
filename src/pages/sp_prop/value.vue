@@ -1,6 +1,9 @@
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
-        <div>
+        <div class="h4 margin-md-bottom" style="font-size: 2rem;">
+            属性值管理
+        </div>
+        <div class="hidden">
             <el-form :inline="true" :model="queryForm" class="demo-form-inline">
                 <el-form-item >
                     <el-input v-model="queryForm.title" size="mini"  />
@@ -10,6 +13,14 @@
                 </el-form-item>
             </el-form>
         </div>
+        <el-button
+                type="primary"
+                size="mini"
+                icon="el-icon-back"
+                :loading="loading"
+                @click="back()">
+            {{ $t('Back')}}
+        </el-button>
         <el-button
                 type="primary"
                 size="mini"
@@ -47,30 +58,7 @@
                         :label="$t('Title')"
                 >
                     <template slot-scope="scope">
-                        <router-link :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="120px"
-                        prop="is_sale"
-                        :label="$t('Is') + $t('SaleProperty')"
-                >
-                    <template slot-scope="scope">
-                        {{$t('' + scope.row.is_sale)}}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('Is') + $t('ColorProperty')">
-                    <template slot-scope="scope">
-                        {{$t('' + scope.row.is_color)}}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('PropertyType')">
-                    <template slot-scope="scope">
-                        {{$t(scope.row.prop_type)}}
+                        {{scope.row.title}}
                     </template>
                 </el-table-column>
 
@@ -79,11 +67,6 @@
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
-                        <el-button
-                                size="mini"
-                                @click="onAddValue(scope.row)">
-                            {{$t('PropertyValue')}}
-                        </el-button>
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"
@@ -112,7 +95,6 @@
                     @current-change="byPagerCurrentChange" />
         </div>
 
-
         <el-dialog
                 :show-close="false"
                 :modal-append-to-body="false"
@@ -126,59 +108,11 @@
                     :rules="rules"
                     label-width="100px"
             >
-
                 <el-form-item
                         :label="$t('Title')"
                         required
                         prop="title" >
                     <el-input v-model="addForm.title"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Is') + $t('SaleProperty')"
-                        prop="is_sale"
-                >
-                    <el-select size="mini" v-model="addForm.is_sale">
-                        <el-option
-                                :key="0"
-                                :label="$t('No')"
-                                :value="0">
-                        </el-option>
-                        <el-option
-                                :key="1"
-                                :label="$t('Yes')"
-                                :value="1">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Is') + $t('ColorProperty')"
-                        prop="is_color"
-                >
-                    <el-select size="mini" v-model="addForm.is_color">
-                        <el-option
-                                :key="0"
-                                :label="$t('No')"
-                                :value="0">
-                        </el-option>
-                        <el-option
-                                :key="1"
-                                :label="$t('Yes')"
-                                :value="1">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('PropertyType')"
-                        prop="type"
-                >
-                    <el-select size="mini" v-model="addForm.prop_type">
-                        <el-option
-                                v-for="item in propTypeOptions"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer" >
@@ -217,52 +151,6 @@
                         prop="title" >
                     <el-input v-model="editForm.title"/>
                 </el-form-item>
-                <el-form-item
-                        :label="$t('Is') + $t('SaleProperty')"
-                        prop="is_sale"
-                ><el-select size="mini" v-model="editForm.is_sale">
-                    <el-option
-                            :key="0"
-                            :label="$t('No')"
-                            :value="0">
-                    </el-option>
-                    <el-option
-                            :key="1"
-                            :label="$t('Yes')"
-                            :value="1">
-                    </el-option>
-                </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Is') + $t('ColorProperty')"
-                        prop="is_color"
-                >
-                    <el-select size="mini" v-model="editForm.is_color">
-                        <el-option
-                                :key="0"
-                                :label="$t('No')"
-                                :value="0">
-                        </el-option>
-                        <el-option
-                                :key="1"
-                                :label="$t('Yes')"
-                                :value="1">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('PropertyType')"
-                        prop="type"
-                >
-                    <el-select size="mini" v-model="editForm.prop_type">
-                        <el-option
-                                v-for="item in propTypeOptions"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer" >
                 <el-button @click="dialogEditVisible = false">
@@ -282,12 +170,16 @@
 </template>
 
 <script>
-	import spPropApi from '../../api/spPropApi'
+	import spPropValueApi from '../../api/spPropValueApi'
 	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
 	import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
 	import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
 
 	export default {
+		props: {
+			id: String
+        },
+
 		components: {
 			ElForm,
 			ElButtonGroup,
@@ -295,31 +187,17 @@
 		},
 		data() {
 			return {
-                propTypeOptions: [
-                        {code: 'single', 'name': this.$i18n.t('single')},
-                        {code: 'multiple', 'name': this.$i18n.t('multiple')}
-                ],
-
-                inputVisible: false,
-                inputValue: '',
-                grandpa: 0,
 				queryForm: {
-                    title: '',
+					title: '',
                     page_index: 1,
                     page_size: 10
 				},
 				addForm: {
 					title: '',
-                    is_color: 0,
-                    is_sale: 0,
-                    prop_type: 'single',
 				},
 				editForm: {
                 	id: 0,
                     title: '',
-                    is_color: 0,
-                    is_sale: 0,
-                    prop_type: 'single',
 				},
 				rules: {
 					title: [
@@ -373,7 +251,7 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
-                            spPropApi.delete ({id: id}, (res) => {
+                            spPropValueApi.delete ({id: id}, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.refresh()
                                 done()
@@ -392,7 +270,7 @@
                 })
             },
 			submitEditForm() {
-                spPropApi.update (this.editForm, (resp) => {
+                spPropValueApi.update (this.editForm, (resp) => {
 					this.loading = false
 					this.dialogEditVisible = false
                     this.refresh()
@@ -405,7 +283,7 @@
 			submitAddForm() {
 				this.$refs.addForm.validate((valid) => {
 					if (valid) {
-                        spPropApi.create (this.addForm, (resp) => {
+                        spPropValueApi.create (this.addForm, (resp) => {
 							this.loading = false
 							this.dialogAddVisible = false
 							window.tools.alertSuc (this.$i18n.t('Action') + this.$i18n.t('Success'))
@@ -419,14 +297,9 @@
 					}
 				});
 			},
-            onAddValue(row) {
-                this.$router.replace({path: '/admin/sp_prop/value/' + parseInt(row.id)})
-            },
 			onAdd() {
 				this.addForm.title = ''
-                this.addForm.is_color = 0
-                this.addForm.is_sale = 0
-                this.addForm.prop_type = 'single'
+                this.addForm.prop_id = this.id
 				this.dialogAddVisible = true
 			},
 			onEdit(row) {
@@ -444,7 +317,8 @@
 				this.tableData = []
 				this.loading = true
                 let that = this
-                spPropApi.query(that.queryForm, (resp) => {
+                let data = Object.assign({prop_id: this.id}, that.queryForm)
+                spPropValueApi.query(data, (resp) => {
                     that.tableData = resp.list
                     that.count = parseInt(resp.count)
                     that.loading = false
