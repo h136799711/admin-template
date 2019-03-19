@@ -2,8 +2,12 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Is': '是否',
+	'0': '否',
+	'1': '是',
 	'Publish': '发布',
-	'No':'不',
+	'No':'否',
+	'Yes': '是',
 	'Success': '成功',
 	'Home': '主页',
 	'Loading': '加载中...',
@@ -125,9 +129,15 @@ exports.default = {
 	'Content': '内容',
 	'Leaf': '叶子节点',
 	'Shop': '商城',
+	'Attribute': '属性',
+	'single': '单选',
+	'multiple': '多选',
 
 
 	// 短语
+	'ColorProperty': '颜色属性',
+	'SaleProperty': '销售属性',
+	'PropertyType': '类型',
 	'PublicKey': '公钥',
 	'SecretKey': '私钥',
 	'MustBeNumber': '必须是一个数值',

@@ -46,6 +46,7 @@ const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/
 
 // Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
+const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vue')), 'SpProp')
 // Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 
 const routes = [
@@ -65,6 +66,13 @@ const routes = [
 				component: SpCate,
 				children: [
 					{ path: 'index/:id?', component: SpCate, props: true }
+				]
+			},
+			{
+				path: 'sp_prop',
+				component: SpProp,
+				children: [
+					{ path: 'index', component: SpProp}
 				]
 			},
 			{

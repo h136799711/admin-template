@@ -2,8 +2,12 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Is': 'Is',
+	'0': 'No',
+	'1': 'Yes',
 	'Publish': 'Publish',
 	'No':'No',
+	'Yes': 'Yes',
 	'Fail': 'Fail ',
 	'Home': 'Home ',
 	'Loading': 'Loading ',
@@ -126,8 +130,14 @@ exports.default = {
 	'Content': 'Content',
 	'Leaf': 'Leaf',
 	'Shop': 'Shop',
+	'Attribute': 'Attribute',
+	'single': 'Single',
+	'multiple': 'Multiple',
 
 	// 短语
+	'ColorProperty': 'Color Property',
+	'SaleProperty': 'Sale Property',
+	'PropertyType': 'Type',
 	'PublicKey': 'Public Key',
 	'SecretKey': 'Secret Key',
 	'MustBeNumber': 'Must Be A Number',
