@@ -93,16 +93,16 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="320px"
+                        width="360px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
                         <el-button
                                 v-if="scope.row.leaf"
                                 size="mini"
-                                icon="el-icon-edit"
+                                icon="el-icon-edit-outline"
                                 @click="onRelateProp(scope.row)">
-                            {{$t('Relate')}}
+                            {{$t('Relate')}}{{$t('Property')}}
                         </el-button>
                         <el-button
                                 size="mini"
@@ -298,7 +298,7 @@
         },
 		methods: {
             onRelateProp(row) {
-                this.$router.replace({path: '/admin/spcate/relate_prop/' + row.id})
+                this.$router.replace({path: '/admin/spcate/relate_prop/' + row.id, params: {grandpa: this.grandpa}})
             },
 			back() {
 			    this.$router.replace({path: '/admin/spcate/index/' + this.grandpa})

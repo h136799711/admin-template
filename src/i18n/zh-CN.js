@@ -133,6 +133,7 @@ exports.default = {
 	'single': '单选',
 	'multiple': '多选',
 	'Relate': '关联',
+	'Property': '属性',
 
 
 	// 短语

@@ -134,6 +134,7 @@ exports.default = {
 	'single': 'Single',
 	'multiple': 'Multiple',
 	'Relate': 'Relate',
+	'Property': 'Property',
 
 	// 短语
 	'PropertyValue': 'Property Value',

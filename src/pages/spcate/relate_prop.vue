@@ -9,14 +9,7 @@
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
         <div>
-            <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-                <el-form-item >
-                    <el-input v-model="queryForm.title" size="mini"  />
-                </el-form-item>
-                <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="refresh()"  size="mini" icon="el-icon-search">{{ $t('Search') }}</el-button>
-                </el-form-item>
-            </el-form>
+
         </div>
         <el-button
                 type="primary"
@@ -67,27 +60,31 @@
                         :label="$t('Title')"
                 >
                     <template slot-scope="scope">
-                        <router-link :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
+                        {{scope.row.title}}
                     </template>
                 </el-table-column>
+
                 <el-table-column
                         width="120px"
-                        prop="level"
-                        :label="$t('Level')"
+                        prop="is_sale"
+                        :label="$t('Is') + $t('SaleProperty')"
                 >
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('Leaf')">
                     <template slot-scope="scope">
-                        {{scope.row.leaf}}
+                        {{$t('' + scope.row.is_sale)}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="100px"
-                        :label="$t('Sort')">
+                        :label="$t('Is') + $t('ColorProperty')">
                     <template slot-scope="scope">
-                        {{scope.row.sort}}
+                        {{$t('' + scope.row.is_color)}}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="100px"
+                        :label="$t('PropertyType')">
+                    <template slot-scope="scope">
+                        {{$t(scope.row.prop_type)}}
                     </template>
                 </el-table-column>
 
@@ -98,22 +95,10 @@
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
-                                icon="el-icon-edit"
-                                @click="onRelateProp(scope.row)">
-                            {{$t('Relate')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="onEdit(scope.row)">
-                            {{$t('Edit')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
                                 type="danger"
                                 icon="el-icon-delete"
-                                @click="onDelete(scope.row.id)">
-                            {{$t('Delete')}}
+                                @click="onRemove(scope.row.id)">
+                            {{$t('Remove')}}
                         </el-button>
                     </template>
                 </el-table-column>
@@ -294,9 +279,9 @@
         },
 		methods: {
 			back() {
-			    this.$router.replace({path: '/admin/spcate/index/' + this.grandpa})
+			    this.$router.replace({path: '/admin/spcate/index/' + this.$route.params.grandpa})
             },
-			onDelete(id) {
+            onRemove(id) {
                 this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {
                     confirmButtonText: this.$i18n.t('Confirm'),
                     cancelButtonText: this.$i18n.t('Cancel'),
@@ -376,21 +361,14 @@
 				this.tableData = []
 				this.loading = true
                 let that = this
-                spCateApi.info({id: this.queryForm.parent_id},  (resp) => {
-                    that.grandpa = resp.parent_id
-                    // that.loading = false
-                    spCateApi.query(that.queryForm, (resp) => {
-                        that.tableData = resp
-                        that.loading = false
-                    }, (resp) => {
-                        window.tools.alertError (resp.msg)
-                        that.loading = false
-                    })
+                let data = Object.assign({cate_id: this.$route.params.id}, that.queryForm)
+                spCateApi.getProp(data, (resp) => {
+                    that.tableData = resp
+                    that.loading = false
                 }, (resp) => {
                     window.tools.alertError (resp.msg)
                     that.loading = false
                 })
-
 			}
 		}
 	}
