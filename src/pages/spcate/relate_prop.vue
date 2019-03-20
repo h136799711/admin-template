@@ -1,11 +1,3 @@
-<style>
-    .banner-img {
-        max-width: 120px;
-        /*height: 120px;*/
-        height: auto;
-    }
-
-</style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
         <div>
@@ -37,7 +29,6 @@
             {{ $t('Refresh')}}
         </el-button>
         <div class="margin-md-bottom margin-md-top">
-            最多3层
         </div>
 
         <div class="grid-content margin-md-top">
