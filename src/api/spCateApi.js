@@ -21,8 +21,14 @@ const spCateApi = {
 	relateProp (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_relateProp'}), suc, fail);
 	},
+	removeProp (data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_removeProp'}), suc, fail);
+	},
 	relateBrand (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_relateBrand'}), suc, fail);
+	},
+	removeBrand (data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_removeBrand'}), suc, fail);
 	},
 	getProp (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_getProp'}), suc, fail);

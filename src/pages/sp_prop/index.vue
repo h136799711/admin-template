@@ -47,7 +47,7 @@
                         :label="$t('Title')"
                 >
                     <template slot-scope="scope">
-                        <router-link :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
+                        {{scope.row.title}}
                     </template>
                 </el-table-column>
                 <el-table-column

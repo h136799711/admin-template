@@ -1,8 +1,6 @@
 <style>
-    .banner-img {
-        max-width: 120px;
-        /*height: 120px;*/
-        height: auto;
+    .blue {
+        color: blue;
     }
 
 </style>
@@ -44,7 +42,13 @@
             {{ $t('Refresh')}}
         </el-button>
         <div class="margin-md-bottom margin-md-top">
-            最多3层
+            <el-button
+                type="text"
+                size="mini"
+                v-if="grandpa !== -1"
+                @click="back()">
+            {{grandpaTitle}}>>
+        </el-button>
         </div>
 
         <div class="grid-content margin-md-top">
@@ -67,7 +71,7 @@
                         :label="$t('Title')"
                 >
                     <template slot-scope="scope">
-                        <router-link :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
+                        <router-link class="blue" :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -250,6 +254,7 @@
 		},
 		data() {
 			return {
+                grandpaTitle: '',
                 inputVisible: false,
                 inputValue: '',
                 grandpa: 0,
@@ -385,6 +390,7 @@
                 let that = this
                 spCateApi.info({id: this.queryForm.parent_id},  (resp) => {
                     that.grandpa = resp.parent_id
+                    that.grandpaTitle = resp.title;
                     // that.loading = false
                     spCateApi.query(that.queryForm, (resp) => {
                         that.tableData = resp
