@@ -135,6 +135,24 @@ exports.default = {
 	'Relate': '关联',
 	'Property': '属性',
 	'Brand': '品牌',
+	'Payment': '支付',
+	'PayOrder': '支付订单',
+	'PayCode': '支付编号',
+	'OrderCode': '订单编号',
+	'PayTime': '支付时间',
+	'MerchantOrderCode': '商户订单号',
+	'PayType': '支付类型',
+	'Money': '金额',
+	'PayStatus': '支付状态',
+	'Paid': '已支付',
+	'NotPaid': '未支付',
+	'Initiate': '发起',
+	'CallbackUrl': '回调地址',
+	'Channel': '渠道',
+	'TradeNo': '交易号',
+	'NotifyTime': '回调时间',
+	'Notify': '通知',
+	'History': '历史',
 
 
 	// 短语
@@ -180,4 +198,10 @@ exports.default = {
 	// 文章
 	'CmsArticle.draft': '草稿',
 	'CmsArticle.published': '已发布',
+
+	// Unit
+	'Unit.Yuan': '元',
+
+	// PayType
+	'PcAliPay': '支付宝-电脑端',
 };

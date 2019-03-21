@@ -52,7 +52,9 @@ const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vu
 const SpPropValue = r => require.ensure([], () => r(require('./pages/sp_prop/value.vue')), 'SpPropValue')
 const SpPropRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_prop.vue')), 'SpPropRelate')
 // Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
-
+// Pay ***********************
+const PayOrder = r => require.ensure([], () => r(require('./pages/pay_order/index.vue')), 'PayOrder')
+// Pay END *******************
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -65,6 +67,13 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
+			{
+				path: 'pay_order',
+				component: PayOrder,
+				children: [
+					{ path: 'index', component: PayOrder }
+				]
+			},
 			{
 				path: 'sp_brand',
 				component: SpBrand,

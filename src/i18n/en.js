@@ -136,6 +136,24 @@ exports.default = {
 	'Relate': 'Relate',
 	'Property': 'Property',
 	'Brand': 'Brand',
+	'Payment': 'Payment',
+	'PayOrder': 'Pay Order',
+	'PayCode': 'Pay Code',
+	'OrderCode': 'Order Code',
+	'PayTime': 'Pay Time',
+	'MerchantOrderCode': 'Merchant Order Code',
+	'PayType': 'Pay Type',
+	'Money': 'Money',
+	'PayStatus': 'Pay Status',
+	'Paid': 'Paid',
+	'NotPaid': 'NotPaid',
+	'Initiate': 'Initiate',
+	'CallbackUrl': 'Callback Url',
+	'Channel': 'Channel',
+	'TradeNo': 'Trade No.',
+	'NotifyTime': 'Notify Time',
+	'Notify': 'Notify',
+	'History': 'History',
 
 	// 短语
 	'PropertyValue': 'Property Value',
@@ -181,4 +199,10 @@ exports.default = {
 	// 文章
 	'CmsArticle.draft': 'Draft',
 	'CmsArticle.published': 'Published',
+
+	// Unit
+	'Unit.Yuan': 'Yuan',
+
+	// PayType
+	'PcAliPay': 'AliPay PC',
 };
