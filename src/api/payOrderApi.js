@@ -8,6 +8,9 @@ const payOrderApi = {
 	},
 	query (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_PayOrder_query'}), suc, fail);
+	},
+	notifyHistory(data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_PayOrder_notifyHistory'}), suc, fail);
 	}
 };
 

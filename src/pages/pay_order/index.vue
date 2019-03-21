@@ -14,19 +14,30 @@
 </style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
-        <div>
+        <div v-if="!notifyVisible">
             <el-form :inline="true" :model="queryForm" class="demo-form-inline">
                 <el-form-item >
                     <el-radio v-model="queryForm.pay_status" :label="0">{{$t('NotPaid')}}</el-radio>
                     <el-radio v-model="queryForm.pay_status" :label="1">{{$t('Paid')}}</el-radio>
                 </el-form-item>
                 <el-form-item>
+                    <el-input :placeholder="$t('Merchant') + $t('OrderCode')" v-model="queryForm.merchant_order_code" />
+                </el-form-item>
+                <el-form-item>
                     <el-button :loading="loading" type="primary" @click="refresh()"  size="mini" icon="el-icon-search">{{ $t('Search') }}</el-button>
                 </el-form-item>
             </el-form>
         </div>
-
         <el-button
+                v-if="notifyVisible"
+                type="primary"
+                size="mini"
+                icon="el-icon-back"
+                @click="back()">
+            {{ $t('Back')}}
+        </el-button>
+        <el-button
+                v-if="!notifyVisible"
                 type="primary"
                 size="mini"
                 icon="by-icon by-shuaxin"
@@ -35,7 +46,71 @@
             {{ $t('Refresh')}}
         </el-button>
 
-        <div class="grid-content margin-md-top">
+        <div v-if="notifyVisible" class="grid-content margin-md-top">
+            <!-- History Table Start -->
+            <el-table
+                    ref="notifyTable"
+                    v-loading="loading"
+                    :data="notifyHistory"
+                    stripe
+                    sortable="custom"
+                    :element-loading-text="$t('Loading')"
+                    style="width: 100%"
+            >
+
+                <el-table-column
+                        width="120px"
+                        prop="channel"
+                        :label="$t('Channel')"
+                >
+                    <template slot-scope="scope">
+                        {{scope.row.client_id}}({{scope.row.channel}})
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="180px"
+                        prop="pay_code"
+                        :label="$t('PayCode')"
+                >
+                    <template slot-scope="scope">
+                        {{scope.row.pay_code}}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="140px"
+                        :label="$t('Notify') + $t('Status')">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.notify_status">{{$t('Success')}}</span>
+                        <span v-else>{{$t('Processing')}}</span>
+                    </template>
+                </el-table-column>
+
+                <el-table-column
+                        width="140px"
+                        :label="$t('Notify') + $t('Count')">
+                    <template slot-scope="scope">
+                        {{scope.row.notify_cnt}}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="140px"
+                        :label="$t('Last') + $t('NotifyTime')">
+                    <template slot-scope="scope">
+                        {{(new Date(scope.row.last_notify_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="140px"
+                        :label="$t('Next') + $t('NotifyTime')">
+                    <template slot-scope="scope">
+                        {{(new Date(scope.row.next_notify_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                    </template>
+                </el-table-column>
+            </el-table>
+            <!-- History Table End -->
+        </div>
+
+        <div  class="grid-content margin-md-top " :style="notifyVisible ?'display:none':'display:block' ">
             <el-table
                     ref="table"
                     v-loading="loading"
@@ -45,11 +120,11 @@
                     :element-loading-text="$t('Loading')"
                     style="width: 100%"
             >
-                <el-table-column type="expand">
+                <el-table-column width="100px" type="expand" :label="$t('Detail')">
                     <template slot-scope="props">
                         <el-form label-position="left" class="extra_info">
                             <el-form-item
-                                :label="$t('CallbackUrl')">
+                                :label="$t('Merchant') + $t('CallbackUrl')">
                                 <span>{{ unescape(props.row.callback) }}</span>
                             </el-form-item>
                             <el-form-item
@@ -91,7 +166,7 @@
                 </el-table-column>
                 <el-table-column
                         width="160px"
-                        :label="$t('MerchantOrderCode')">
+                        :label="$t('Merchant') + $t('OrderCode')">
                     <template slot-scope="scope">
                         {{scope.row.merchant_order_code}}
                     </template>
@@ -101,7 +176,8 @@
                         width="120px"
                         :label="$t('Money')">
                     <template slot-scope="scope">
-                        {{scope.row.money/100}} {{$t('Unit.Yuan')}}
+                        {{$t('Initiate')}}: {{scope.row.money/100}} {{$t('Unit.Yuan')}}<br/>
+                        {{$t('Notify')}}: {{scope.row.notify_money/100}} {{$t('Unit.Yuan')}}
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -130,16 +206,16 @@
                     </template>
                 </el-table-column>
             </el-table>
-        </div>
-        <div class="text-center">
-            <el-pagination
-                    :current-page="queryForm.page_index"
-                    :page-sizes="[10, 20, 30, 50]"
-                    :page-size="queryForm.pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="count"
-                    @size-change="byPagerSizeChange"
-                    @current-change="byPagerCurrentChange" />
+            <div class="text-center">
+                <el-pagination
+                        :current-page="queryForm.page_index"
+                        :page-sizes="[10, 20, 30, 50]"
+                        :page-size="queryForm.pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="count"
+                        @size-change="byPagerSizeChange"
+                        @current-change="byPagerCurrentChange" />
+            </div>
         </div>
 
     </div>
@@ -160,7 +236,9 @@
 		},
 		data() {
 			return {
+                notifyHistory: [],
 				queryForm: {
+                    merchant_order_code: '',
 					pay_status: 1,
                     page_index: 1,
                     page_size: 10
@@ -174,6 +252,7 @@
 				count: 0,
 				tableData: [],
 				loading: false,
+                notifyVisible: false
 			}
 		},
 		computed: {
@@ -188,7 +267,10 @@
         },
 		methods: {
             onNotifyHistory(row) {
-
+                this.queryNotifyHistory(row.pay_code)
+            },
+            back(){
+                this.notifyVisible = false
             },
             unescape(url) {
                 return decodeURIComponent(url)
@@ -221,7 +303,19 @@
                     window.tools.alertError (resp.msg)
                     that.loading = false
                 })
-			}
+			},
+            queryNotifyHistory(payCode) {
+            	this.loading = true
+                let that = this
+                that.notifyVisible = true
+            	payOrder.notifyHistory({pay_code: payCode}, (resp) => {
+                    that.notifyHistory = resp
+                    that.loading = false
+                }, (resp) => {
+                    window.tools.alertError (resp.msg)
+                    that.loading = false
+                })
+            }
 		}
 	}
 </script>

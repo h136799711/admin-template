@@ -141,7 +141,7 @@ exports.default = {
 	'PayCode': 'Pay Code',
 	'OrderCode': 'Order Code',
 	'PayTime': 'Pay Time',
-	'MerchantOrderCode': 'Merchant Order Code',
+	'Merchant': 'Merchant',
 	'PayType': 'Pay Type',
 	'Money': 'Money',
 	'PayStatus': 'Pay Status',
@@ -154,6 +154,10 @@ exports.default = {
 	'NotifyTime': 'Notify Time',
 	'Notify': 'Notify',
 	'History': 'History',
+	'Count': 'Count',
+	'Last': 'Last',
+	'Next': 'Next',
+	'Detail': 'Detail',
 
 	// 短语
 	'PropertyValue': 'Property Value',

@@ -140,7 +140,7 @@ exports.default = {
 	'PayCode': '支付编号',
 	'OrderCode': '订单编号',
 	'PayTime': '支付时间',
-	'MerchantOrderCode': '商户订单号',
+	'Merchant': '商户',
 	'PayType': '支付类型',
 	'Money': '金额',
 	'PayStatus': '支付状态',
@@ -153,6 +153,10 @@ exports.default = {
 	'NotifyTime': '回调时间',
 	'Notify': '通知',
 	'History': '历史',
+	'Count': '次数',
+	'Last': '最近',
+	'Next': '下次',
+	'Detail': '详情',
 
 
 	// 短语
