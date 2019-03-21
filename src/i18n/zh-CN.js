@@ -134,6 +134,7 @@ exports.default = {
 	'multiple': '多选',
 	'Relate': '关联',
 	'Property': '属性',
+	'Brand': '品牌',
 
 
 	// 短语

@@ -1,8 +1,8 @@
 <style>
-    .blue {
-        color: blue;
+    .icon {
+        width: 48px;
+        height: 48px;
     }
-
 </style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
@@ -19,15 +19,6 @@
         <el-button
                 type="primary"
                 size="mini"
-                icon="el-icon-back"
-                v-if="grandpa !== -1"
-                :loading="loading"
-                @click="back()">
-            {{ $t('Back')}}
-        </el-button>
-        <el-button
-                type="primary"
-                size="mini"
                 icon="el-icon-plus"
                 :loading="loading"
                 @click="onAdd()">
@@ -41,15 +32,6 @@
                 @click="refresh()">
             {{ $t('Refresh')}}
         </el-button>
-        <div class="margin-md-bottom margin-md-top">
-            <el-button
-                type="text"
-                size="mini"
-                v-if="grandpa !== -1"
-                @click="back()">
-            {{grandpaTitle}}>>
-        </el-button>
-        </div>
 
         <div class="grid-content margin-md-top">
             <el-table
@@ -67,54 +49,35 @@
                         :label="$t('ID')"
                 />
                 <el-table-column
-                        width="160px"
+                        width="120px"
+                        prop="is_sale"
+                        :label="$t('Image')"
+                >
+                    <template slot-scope="scope">
+                        <img :src="scope.row.icon" alt="icon" class="icon" />
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="180px"
                         prop="title"
                         :label="$t('Title')"
                 >
                     <template slot-scope="scope">
-                        <router-link class="blue" :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
+                        {{scope.row.title}}
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="120px"
-                        prop="level"
-                        :label="$t('Level')"
-                >
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('Leaf')">
+                        :label="$t('Description')">
                     <template slot-scope="scope">
-                        {{$t('' + scope.row.leaf)}}
-
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('Sort')">
-                    <template slot-scope="scope">
-                        {{scope.row.sort}}
+                        {{$t('' + scope.row.description)}}
                     </template>
                 </el-table-column>
 
                 <el-table-column
+                        width="320px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
-                        <el-button
-                                v-if="scope.row.leaf"
-                                size="mini"
-                                icon="by-icon by-pinpai"
-                                @click="onRelateBrand(scope.row)">
-                            {{$t('Relate')}}{{$t('Brand')}}
-                        </el-button>
-                        <el-button
-                                v-if="scope.row.leaf"
-                                size="mini"
-                                icon="el-icon-edit-outline"
-                                @click="onRelateProp(scope.row)">
-                            {{$t('Relate')}}{{$t('Property')}}
-                        </el-button>
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"
@@ -131,6 +94,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+        </div>
+        <div class="text-center">
+            <el-pagination
+                    :current-page="queryForm.page_index"
+                    :page-sizes="[10, 20, 30, 50]"
+                    :page-size="queryForm.pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="count"
+                    @size-change="byPagerSizeChange"
+                    @current-change="byPagerCurrentChange" />
         </div>
 
 
@@ -154,18 +127,16 @@
                         prop="title" >
                     <el-input v-model="addForm.title"/>
                 </el-form-item>
-                <el-form-item
-                        :label="$t('Leaf')"
-                        prop="leaf"
-                >
-                    <el-radio v-model="addForm.leaf" :label="0">{{$t('0')}}</el-radio>
-                    <el-radio v-model="addForm.leaf" :label="1">{{$t('1')}}</el-radio>
+
+                <el-form-item :label="$t('Icon')"
+                              prop="icon">
+                    <ImgUploader ref="addImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="addForm.icon" :clear="imgUploadClear" imgType="brand_icon"/>
                 </el-form-item>
                 <el-form-item
-                        :label="$t('Sort')"
-                        prop="sort"
-                >
-                    <el-input-number v-model="addForm.sort" :min="0" :max="100000" ></el-input-number>
+                        :label="$t('Description')"
+                        required
+                        prop="description" >
+                    <el-input type="textarea" rows="5" v-model="addForm.description"/>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer" >
@@ -204,31 +175,16 @@
                         prop="title" >
                     <el-input v-model="editForm.title"/>
                 </el-form-item>
-                <el-form-item
-                        :label="$t('Leaf')"
-                        prop="leaf"
-                >
-                    <el-radio v-model="editForm.leaf" :label="0">{{$t('0')}}</el-radio>
-                    <el-radio v-model="editForm.leaf" :label="1">{{$t('1')}}</el-radio>
+                <el-form-item :label="$t('Icon')"
+                    prop="icon">
+                    <ImgUploader ref="editImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="editForm.icon" :clear="imgUploadClear" imgType="brand_icon"/>
                 </el-form-item>
                 <el-form-item
-                        :label="$t('Sort')"
-                        prop="sort"
-                >
-                    <el-input-number v-model="editForm.sort" :min="0" :max="100000" ></el-input-number>
+                        :label="$t('Description')"
+                        prop="description" >
+                    <el-input type="textarea" rows="5" v-model="editForm.description"/>
                 </el-form-item>
 
-                <el-form-item
-                        label=""
-                        prop="id"
-                        class="hidden"
-                >
-                    <el-input
-                            v-model="editForm.id"
-                            :disabled="true"
-                            class="hidden"
-                    />
-                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer" >
                 <el-button @click="dialogEditVisible = false">
@@ -248,36 +204,40 @@
 </template>
 
 <script>
-	import spCateApi from '../../api/spCateApi'
+	import fileApi from '../../api/fileApi'
+	import spBrand from '../../api/spBrandApi'
 	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
 	import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
 	import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+	import ImgUploader from '@/components/img-uploader.vue'
+
 
 	export default {
 		components: {
 			ElForm,
 			ElButtonGroup,
-			ElButton
+			ElButton,
+					ImgUploader
 		},
 		data() {
 			return {
-                grandpaTitle: '',
-                inputVisible: false,
-                inputValue: '',
+                imgUploadClear: false,
                 grandpa: 0,
 				queryForm: {
-					parent_id: 0,
                     title: '',
+                    page_index: 1,
+                    page_size: 10
 				},
 				addForm: {
 					title: '',
-                    leaf: 0,
-                    sort: 0,
+                    description: 0,
+                    icon: 0,
 				},
 				editForm: {
+                	id: 0,
                     title: '',
-                    leaf: 0,
-                    sort: 0,
+                    description: 0,
+                    icon: 0,
 				},
 				rules: {
 					title: [
@@ -295,12 +255,11 @@
 		computed: {
 		},
 		watch: {
-            '$route' (to, from) {
-                console.debug("fullPath", this.$router.history.current.fullPath)
-                console.debug(to, from)
-				this.queryForm.parent_id = parseInt(to.params.id)
-                this.refresh()
-			}
+            dialogAddVisible(newVal) {
+                if (!newVal) {
+                    this.imgUploadClear = true
+                }
+            },
         },
 		created() {
 
@@ -309,14 +268,32 @@
             this.refresh()
         },
 		methods: {
-            onRelateBrand(row) {
-                this.$router.replace({path: '/admin/spcate/relate_brand/' + row.id, params: {grandpa: this.grandpa}})
+            editorImgAdd(pos, file){
+                fileApi.upload(file, 'brand_icon').then(({data}) => {
+                    if (data.code === 0) {
+                        let imgUrl = window.tools.getImgUrl(data.data.relative_path)
+                        this.$refs.md.$img2Url(pos, imgUrl)
+                    } else {
+                        window.tools.alertError(data.msg)
+                    }
+                }).catch((reason) => {
+                    window.tools.alertError(reason)
+                })
             },
-            onRelateProp(row) {
-                this.$router.replace({path: '/admin/spcate/relate_prop/' + row.id, params: {grandpa: this.grandpa}})
+            onUploadSuccess(data) {
+                if (this.dialogAddVisible) {
+                    this.addForm.icon = window.tools.getImgUrl(data.path)
+                } else if (this.dialogEditVisible) {
+                    this.editForm.icon = window.tools.getImgUrl(data.path)
+                }
             },
-			back() {
-			    this.$router.replace({path: '/admin/spcate/index/' + this.grandpa})
+            byPagerSizeChange(val) {
+                this.queryForm.pageSize = val
+                this.refresh ()
+            },
+            byPagerCurrentChange(val) {
+                this.queryForm.currentPage = val
+                this.refresh ()
             },
 			onDelete(id) {
                 this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {
@@ -328,7 +305,7 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
-                            spCateApi.delete ({id: id}, (res) => {
+                            spBrand.delete ({id: id}, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.refresh()
                                 done()
@@ -347,7 +324,7 @@
                 })
             },
 			submitEditForm() {
-				spCateApi.update (this.editForm, (resp) => {
+                spBrand.update (this.editForm, (resp) => {
 					this.loading = false
 					this.dialogEditVisible = false
                     this.refresh()
@@ -358,10 +335,9 @@
 				})
 			},
 			submitAddForm() {
-                console.log(this.addForm)
 				this.$refs.addForm.validate((valid) => {
 					if (valid) {
-						spCateApi.create (this.addForm, (resp) => {
+                        spBrand.create (this.addForm, (resp) => {
 							this.loading = false
 							this.dialogAddVisible = false
 							window.tools.alertSuc (this.$i18n.t('Action') + this.$i18n.t('Success'))
@@ -375,22 +351,24 @@
 					}
 				});
 			},
+            onAddValue(row) {
+                this.$router.replace({path: '/admin/sp_prop/value/' + parseInt(row.id)})
+            },
 			onAdd() {
 				this.addForm = {
-					parent_id: this.queryForm.parent_id,
                     title: '',
-                    leaf: 0,
-                    sort: 0
-				}
+                    description: '',
+                    icon: '',
+                }
 				this.dialogAddVisible = true
 			},
 			onEdit(row) {
                 this.editForm = {
-                    sort: row.sort,
                     id: row.id,
                     title: row.title,
-                    leaf: row.leaf
-                }
+                    description: row.description,
+                    icon: row.icon,
+                 }
 				this.dialogEditVisible = true;
 			},
 			refresh() {
@@ -398,22 +376,14 @@
 				this.tableData = []
 				this.loading = true
                 let that = this
-                spCateApi.info({id: this.queryForm.parent_id},  (resp) => {
-                    that.grandpa = resp.parent_id
-                    that.grandpaTitle = resp.title;
-                    // that.loading = false
-                    spCateApi.query(that.queryForm, (resp) => {
-                        that.tableData = resp
-                        that.loading = false
-                    }, (resp) => {
-                        window.tools.alertError (resp.msg)
-                        that.loading = false
-                    })
+                spBrand.query(that.queryForm, (resp) => {
+                    that.tableData = resp.list
+                    that.count = parseInt(resp.count)
+                    that.loading = false
                 }, (resp) => {
                     window.tools.alertError (resp.msg)
                     that.loading = false
                 })
-
 			}
 		}
 	}

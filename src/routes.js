@@ -46,6 +46,8 @@ const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/
 
 // Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
+const SpBrand = r => require.ensure([], () => r(require('./pages/sp_brand/index.vue')), 'SpBrand')
+const SpBrandRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_brand.vue')), 'SpBrandRelate')
 const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vue')), 'SpProp')
 const SpPropValue = r => require.ensure([], () => r(require('./pages/sp_prop/value.vue')), 'SpPropValue')
 const SpPropRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_prop.vue')), 'SpPropRelate')
@@ -64,6 +66,13 @@ const routes = [
     component: Admin,
     children: [
 			{
+				path: 'sp_brand',
+				component: SpBrand,
+				children: [
+					{ path: 'index', component: SpBrand, props: true }
+				]
+			},
+			{
 				path: 'spcate',
 				component: SpCate,
 				children: [
@@ -71,6 +80,7 @@ const routes = [
 				]
 			},
 			{ path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
+			{ path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
 			{
 				path: 'sp_prop',
 				component: SpProp,

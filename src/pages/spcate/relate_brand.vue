@@ -1,3 +1,9 @@
+<style>
+    .icon {
+        width: 48px;
+        height: 48px;
+    }
+</style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
         <div>
@@ -27,7 +33,7 @@
             {{ $t('Refresh')}}
         </el-button>
         <div class="margin-md-bottom margin-md-top">
-            选择属性进行关联
+            选择品牌进行关联
         </div>
 
         <div  class="grid-content margin-md-top">
@@ -45,8 +51,18 @@
                         width="90px"
                         :label="$t('ID')"
                 />
+
                 <el-table-column
-                        width="260px"
+                        width="120px"
+                        prop="is_sale"
+                        :label="$t('Image')"
+                >
+                    <template slot-scope="scope">
+                        <img :src="scope.row.icon" alt="icon" class="icon" />
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="180px"
                         prop="title"
                         :label="$t('Title')"
                 >
@@ -54,30 +70,13 @@
                         {{scope.row.title}}
                     </template>
                 </el-table-column>
+                <el-table-column
+                        :label="$t('Description')">
+                    <template slot-scope="scope">
+                        {{$t('' + scope.row.description)}}
+                    </template>
+                </el-table-column>
 
-                <el-table-column
-                        width="120px"
-                        prop="is_sale"
-                        :label="$t('Is') + $t('SaleProperty')"
-                >
-                    <template slot-scope="scope">
-                        {{$t('' + scope.row.is_sale)}}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('Is') + $t('ColorProperty')">
-                    <template slot-scope="scope">
-                        {{$t('' + scope.row.is_color)}}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="100px"
-                        :label="$t('PropertyType')">
-                    <template slot-scope="scope">
-                        {{$t(scope.row.prop_type)}}
-                    </template>
-                </el-table-column>
                 <el-table-column
                         width="100px"
                         :label="$t('Is') + $t('Relate')">
@@ -129,7 +128,7 @@
 	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
 	import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
 	import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
-	import spPropApi from "../../api/spPropApi"
+	import spBrandApi from "../../api/spBrandApi"
 
 	export default {
 		components: {
@@ -201,13 +200,12 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
-                            spCateApi.removeProp ({prop_id: id, cate_id: this.$route.params.id}, (res) => {
+                            spCateApi.removeBrand ({prop_id: id, cate_id: this.$route.params.id}, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.removePropId(id)
                                 this.refresh()
                                 done()
                             }, (res) => {
-                                console.debug (res)
                                 done()
                                 window.tools.alertError (res.msg)
                                 instance.confirmButtonLoading = false
@@ -221,7 +219,7 @@
                 })
             },
 			onRelate(id) {
-                spCateApi.relateProp ({cate_id: this.$route.params.id, prop_id: id}, (resp) => {
+                spCateApi.relateBrand ({cate_id: this.$route.params.id, brand_id: id}, (resp) => {
                     this.loading = false
                     this.propsData.push({id: id})
                     this.refresh()
@@ -235,7 +233,7 @@
                 this.tableData = []
                 this.loading = true
                 let that = this
-                spPropApi.query(this.queryForm, (resp) => {
+                spBrandApi.query(this.queryForm, (resp) => {
                     that.count = parseInt(resp.count)
                     that.tableData = resp.list
                     that.loading = false
@@ -243,14 +241,13 @@
                     window.tools.alertError (resp.msg)
                     that.loading = false
                 })
-
 			},
             getPropData() {
                 this.propsData = []
                 this.loading = true
                 let that = this
                 let data = Object.assign({cate_id: this.$route.params.id}, that.queryForm)
-                spCateApi.getProp(data, (resp) => {
+                spCateApi.getBrand(data, (resp) => {
                     that.propsData = resp
                     that.loading = false
                     this.refresh()
