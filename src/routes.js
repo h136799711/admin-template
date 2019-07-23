@@ -41,7 +41,20 @@ const AlbumIndex = r => require.ensure([], () => r(require('./pages/album/index.
 const AlbumCategory = r => require.ensure([], () => r(require('./pages/album/category.vue')), 'AlbumCategory')
 // 相册照片
 const AlbumPhoto = r => require.ensure([], () => r(require('./pages/album/photo.vue')), 'AlbumPhoto')
+// 文章
+const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/index.vue')), 'CmsArticle')
 
+// Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
+const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
+const SpBrand = r => require.ensure([], () => r(require('./pages/sp_brand/index.vue')), 'SpBrand')
+const SpBrandRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_brand.vue')), 'SpBrandRelate')
+const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vue')), 'SpProp')
+const SpPropValue = r => require.ensure([], () => r(require('./pages/sp_prop/value.vue')), 'SpPropValue')
+const SpPropRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_prop.vue')), 'SpPropRelate')
+// Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
+// Pay ***********************
+const PayOrder = r => require.ensure([], () => r(require('./pages/pay_order/index.vue')), 'PayOrder')
+// Pay END *******************
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -54,6 +67,44 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
+			{
+				path: 'pay_order',
+				component: PayOrder,
+				children: [
+					{ path: 'index', component: PayOrder }
+				]
+			},
+			{
+				path: 'sp_brand',
+				component: SpBrand,
+				children: [
+					{ path: 'index', component: SpBrand, props: true }
+				]
+			},
+			{
+				path: 'spcate',
+				component: SpCate,
+				children: [
+					{ path: 'index/:id?', component: SpCate, props: true }
+				]
+			},
+			{ path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
+			{ path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
+			{
+				path: 'sp_prop',
+				component: SpProp,
+				children: [
+					{ path: 'index', component: SpProp}
+				]
+			},
+			{ path: 'sp_prop/value/:id', component: SpPropValue, props: true },
+			{
+				path: 'cms_article',
+				component: CmsArticle,
+				children: [
+					{ path: 'index', component: CmsArticle }
+				]
+			},
 			{
 				path: 'banners',
 				component: BannersIndex,

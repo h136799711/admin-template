@@ -515,11 +515,11 @@
             },
             onUploadSuccess(data) {
 				if (this.dialogAddVisible) {
-                    this.addForm.img_url = data.path
+                    this.addForm.img_url = this.getImgUrl(data.path)
                     this.addForm.w = data.w
                     this.addForm.h = data.h
                 } else if (this.dialogEditVisible) {
-                    this.editForm.img_url = data.path
+                    this.editForm.img_url = this.getImgUrl(data.path)
                     this.editForm.w = data.w
                     this.editForm.h = data.h
                 }

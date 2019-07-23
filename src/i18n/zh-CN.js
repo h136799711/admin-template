@@ -2,6 +2,12 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Is': '是否',
+	'0': '否',
+	'1': '是',
+	'Publish': '发布',
+	'No':'否',
+	'Yes': '是',
 	'Success': '成功',
 	'Home': '主页',
 	'Loading': '加载中...',
@@ -114,12 +120,56 @@ exports.default = {
 	'Showing': '显示时间',
 	'Width': '宽',
 	'Height': '高',
+	'Status': '状态',
+	'Cover': '封面',
+	'Article': '文章',
+	'All': '全部',
+	'Author': '作者',
+	'Cms': '内容管理系统',
+	'Content': '内容',
+	'Leaf': '叶子节点',
+	'Shop': '商城',
+	'Attribute': '属性',
+	'single': '单选',
+	'multiple': '多选',
+	'Relate': '关联',
+	'Property': '属性',
+	'Brand': '品牌',
+	'Payment': '支付',
+	'PayOrder': '支付订单',
+	'PayCode': '支付编号',
+	'OrderCode': '订单编号',
+	'PayTime': '支付时间',
+	'Merchant': '商户',
+	'PayType': '支付类型',
+	'Money': '金额',
+	'PayStatus': '支付状态',
+	'Paid': '已支付',
+	'NotPaid': '未支付',
+	'Initiate': '发起',
+	'CallbackUrl': '回调地址',
+	'Channel': '渠道',
+	'TradeNo': '交易号',
+	'NotifyTime': '回调时间',
+	'Notify': '通知',
+	'History': '历史',
+	'Count': '次数',
+	'Last': '最近',
+	'Next': '下次',
+	'Detail': '详情',
 
 
 	// 短语
+	'PropertyValue': '属性值',
+	'ColorProperty': '颜色属性',
+	'SaleProperty': '销售属性',
+	'PropertyType': '类型',
+	'PublicKey': '公钥',
+	'SecretKey': '私钥',
 	'MustBeNumber': '必须是一个数值',
 	'WelcomeToUse': '欢迎您使用本系统!',
 	'Action Confirm': '操作确定?',
+	'Please Input': '请输入',
 	'Please Input {0}': '请输入{0}',
 	'Please Input Title': '请输入标题',
 	'Please Input Alias': '请输入别名',
@@ -147,5 +197,15 @@ exports.default = {
 	'ClientSecret': '应用密钥',
 	'ClientTotalLimit': '接口总调用次数',
 	'ClientDayLimit': '接口每日调用次数',
-	'ClientAlg': '通信算法'
+	'ClientAlg': '通信算法',
+
+	// 文章
+	'CmsArticle.draft': '草稿',
+	'CmsArticle.published': '已发布',
+
+	// Unit
+	'Unit.Yuan': '元',
+
+	// PayType
+	'PcAliPay': '支付宝-电脑端',
 };
