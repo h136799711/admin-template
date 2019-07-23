@@ -5,42 +5,58 @@ const api_url = process.env.API_ROOT_URI
 const picture_url = process.env.PICTURE_UPLOAD_URI
 const client_id = process.env.CLIENT_ID
 
+const getRouteMode = () => {
+  return process.env.ROUTE_MODE
+}
 const getVersion = () => {
 	return process.env.APP_VERSION
 }
 const getAppId = () => {
-	return client_id
+  return getClientId()
 }
 const clear = () => {
 	window.cache.clear ();
 }
+
+const setClientId = (clientId) => {
+  window.cache.setValue('BY_CLIENT_ID', clientId, 3600)
+}
+
+const getClientId = () => {
+  let cId = window.cache.getValue('BY_CLIENT_ID')
+  if (typeof (cId) === 'undefined' || cId === '') {
+    cId = client_id
+  }
+  setClientId(cId)
+  return cId
+}
 // 设置会话id
 const setUID = (uid) => {
-	// console.debug ('set uid', uid)
+  console.debug('set uid', uid)
 	window.cache.setValue ('BY_UID', uid, 3600)
 }
 
 // 获取会话id
 const getUID = () => {
 	var uid = window.cache.getValue ('BY_UID')
-	// console.debug ('getUID', uid)
+  console.debug('getUID', uid)
 	if (typeof (uid) === 'undefined' || uid === '') {
 		uid = 0
-		// console.debug ('generate uid', uid)
+      console.debug('generate uid', uid)
 	}
 	setUID (uid)
 	return uid
 }
 // 设置头像地址
 const setAvatar = (avatar) => {
-	// console.debug ('set avatar', avatar)
+  console.debug('set avatar', avatar)
 	window.cache.setValue ('BY_AVATAR', avatar, 3600)
 }
 
 // 获取会话id
 const getAvatar = () => {
 	var avatar = window.cache.getValue ('BY_AVATAR')
-	// console.debug ('getAvatar', avatar)
+  console.debug('getAvatar', avatar)
 	if (typeof (avatar) === 'undefined' || avatar === '') {
 		avatar = 0
 	}
@@ -50,18 +66,18 @@ const getAvatar = () => {
 
 // 设置会话id
 const setSessionId = (sessionId) => {
-	// console.debug ('set session_id', sessionId)
+  console.debug('set session_id', sessionId)
 	window.cache.setValue ('BY_SESSION_ID', sessionId, 3600)
 }
 
 // 获取会话id
 const getSessionId = () => {
 	let sessionId = window.cache.getValue ('BY_SESSION_ID')
-	// console.debug ('getSessionId', sessionId)
+  console.debug('getSessionId', sessionId)
 	if (typeof (sessionId) === 'undefined' || sessionId === '') {
 		let UUID = require ('uuid')
 		sessionId = ('BY' + UUID.v4 ()).replace (/-/g, '')
-		// console.debug ('generate session id', sessionId)
+      console.debug('generate session id', sessionId)
 	}
 	setSessionId (sessionId)
 	return sessionId
@@ -138,17 +154,17 @@ const getBrowseLanguage = () => {
 			lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
 			lang = lang.substr (0, 2);//获取浏览器配置语言前两位
 			// if (inArray)
-			let supportLanguages = ['en', 'zh']
+          let supportLanguages = ['en', 'zh']
 			let isExists = supportLanguages.some(function (i) {
-				return (i === lang)
+              return (i === lang)
 			})
 			if (isExists) {
-				return lang
+              return lang
 			} else {
-				return 'zh'
+              return 'zh'
 			}
 		} else {
-			lang = 'zh'
+          lang = 'zh'
 		}
 	}
 
@@ -163,12 +179,14 @@ const getTimezone = () => {
 }
 
 const tools = {
+  getRouteMode,
 	getImgUrl,
 	getBrowseLanguage,
 	getTimezone,
 	clear,
 	getDeviceType,
 	getUID, setUID,
+  getClientId, setClientId,
 	getAvatar, setAvatar,
 	getVersion, getApiUrl, getAvatarUploadUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
 }
