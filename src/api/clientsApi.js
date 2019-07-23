@@ -1,69 +1,74 @@
 /* eslint-disable */
-'use strict';
-import http from '../assets/js/http.js';
+'use strict'
+import http from '../assets/js/http.js'
 
 const clientsApi = {
   info (data, suc, fail) {
-    let url = window.tools.getApiUrl();
-    data.service_type = 'by_Clients_info';
+    let url = window.tools.getApiUrl()
+    data.service_type = 'by_Clients_info'
     http.methods.apiPost(url, data).then((res) => {
-    	console.log(res);
+      console.log(res)
       if (res.code === 0) {
         if (typeof suc === 'function') {
-          suc(res.data);
+          suc(res.data)
         } else {
-          tools.alertSuc(res.msg);
+          tools.alertSuc(res.msg)
         }
       } else {
         if (typeof fail === 'function') {
-          fail(res);
+          fail(res)
         } else {
-          tools.alertError(res.msg);
+          tools.alertError(res.msg)
         }
       }
-    });
+    })
   },
 	update (data, suc, fail) {
-		let url = window.tools.getApiUrl();
-		data.service_type = 'by_Clients_update';
+      let url = window.tools.getApiUrl()
+      data.service_type = 'by_Clients_update'
 		http.methods.apiPost(url, data).then((res) => {
 			if (res.code === 0) {
 				if (typeof suc === 'function') {
-					suc(res.data);
+                  suc(res.data)
 				} else {
-					tools.alertSuc(res.msg);
+                  tools.alertSuc(res.msg)
 				}
 			} else {
 				if (typeof fail === 'function') {
-					fail(res);
+                  fail(res)
 				} else {
-					tools.alertError(res.msg);
+                  tools.alertError(res.msg)
 				}
 			}
-		});
-	},
-	renew (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Clients_renew'}), suc, fail);
+        })
 	},
 	reset (data, suc, fail) {
-		let url = window.tools.getApiUrl ();
-		data.service_type = 'by_Clients_resetClientSecretKey';
-		http.methods.apiPost (url, data).then ((res) => {
+      let url = window.tools.getApiUrl()
+      data.service_type = 'by_Clients_resetClientSecretKey'
+      http.methods.apiPost(url, data).then((res) => {
 			if (res.code === 0) {
 				if (typeof suc === 'function') {
-					suc (res.data);
+                  suc(res.data)
 				} else {
-					tools.alertSuc (res.msg);
+                  tools.alertSuc(res.msg)
 				}
 			} else {
 				if (typeof fail === 'function') {
-					fail (res);
+                  fail(res)
 				} else {
-					tools.alertError (res.msg);
+                  tools.alertError(res.msg)
 				}
 			}
-		});
-	}
-};
+      })
+    },
+  query (data, suc, fail) {
+    data.service_type = 'by_Clients_query'
+    http.methods.defaultPost('', data, suc, fail)
+  },
+  create (data, suc, fail) {
+    data.service_type = 'by_Clients_create'
+    http.methods.defaultPost('', data, suc, fail)
+  },
+}
 
-export default clientsApi;
+export default clientsApi

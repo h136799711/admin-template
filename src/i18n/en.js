@@ -158,6 +158,7 @@ exports.default = {
 	'Last': 'Last',
 	'Next': 'Next',
 	'Detail': 'Detail',
+	'Scene': 'Scene',
 
 	// 短语
 	'PropertyValue': 'Property Value',

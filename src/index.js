@@ -33,7 +33,7 @@ const messages = {
 		...en,
 		...enLocale // 或者用 Object.assign({ message: 'hello' }, enLocale)
 	},
-	'zh-cn': {
+  'zh': {
 		...zhCN,
 		...zhLocale // 或者用 Object.assign({ message: '你好' }, zhLocale)
 	}
@@ -43,6 +43,8 @@ axios.defaults.baseURL = ''
 axios.defaults.timeout = 15000
 axios.defaults.headers['Content-Type'] = 'application/json'
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.withCredentials = false
+
 
 const router = new VueRouter({
   mode: 'hash',

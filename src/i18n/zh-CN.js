@@ -157,6 +157,7 @@ exports.default = {
 	'Last': '最近',
 	'Next': '下次',
 	'Detail': '详情',
+	'Scene': '场景',
 
 
 	// 短语
