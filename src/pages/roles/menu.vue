@@ -104,7 +104,7 @@
                 });
             },
         	onSave() {
-                api.attachMenu ({'role_id': this.id, 'menu_id': this.$refs.tree.getCheckedKeys().join(',')}, (res) => {
+              api.attachMenus({ 'role_id': this.id, 'menu_ids': this.$refs.tree.getCheckedKeys().join(',') }, (res) => {
                     this.refresh()
                 }, (res) => {
                     window.tools.alertError (res.msg)

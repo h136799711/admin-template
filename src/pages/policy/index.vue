@@ -348,7 +348,11 @@
 				// 刷新当前
 				this.tableData = []
 				this.loading = true
-				api.query ({'name': this.queryForm.name}, (resp) => {
+              api.query({
+                'name': this.queryForm.name,
+                page_index: this.currentPage,
+                page_size: this.pageSize
+              }, (resp) => {
 					console.debug ('resp ', resp)
 					this.loading = false
 					this.count = parseInt (resp.count)

@@ -24,8 +24,8 @@ const roleApi = {
 		data.service_type = 'by_AuthRole_removeMenus';
 		http.methods.defaultPost('', data, suc, fail);
 	},
-	attachMenu (data, suc, fail) {
-		data.service_type = 'by_AuthRole_attachMenu';
+	attachMenus (data, suc, fail) {
+		data.service_type = 'by_AuthRole_attachMenus'
 		http.methods.defaultPost('', data, suc, fail);
 	},
 	policy (data, suc, fail) {
