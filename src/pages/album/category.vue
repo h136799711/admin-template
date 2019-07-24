@@ -62,6 +62,16 @@
                 </el-table-column>
             </el-table>
         </div>
+        <div class="text-center">
+            <el-pagination
+                    :current-page="queryForm.page_index"
+                    :page-sizes="[10, 20, 30, 50]"
+                    :page-size="queryForm.page_size"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="count"
+                    @size-change="byPagerSizeChange"
+                    @current-change="byPagerCurrentChange"/>
+        </div>
 
 
         <el-dialog
@@ -162,6 +172,8 @@
 		data() {
 			return {
 				queryForm: {
+                  page_index: 1,
+                  page_size: 10
 				},
 				addForm: {
 				},
@@ -230,6 +242,14 @@
                 this.editForm.title = row.title
 				this.dialogEditVisible = true;
 			},
+          byPagerSizeChange (val) {
+            this.queryForm.page_size = val
+            this.refresh()
+          },
+          byPagerCurrentChange (val) {
+            this.queryForm.page_index = val
+            this.refresh()
+          },
 			refresh() {
 				// 刷新当前
 				this.tableData = []
@@ -237,7 +257,8 @@
 				api.queryCategory (this.queryForm, (resp) => {
 					console.debug ('resp ', resp)
 					this.loading = false
-					this.tableData = resp
+                  this.count = parseInt(resp.count)
+                  this.tableData = resp.list
 				}, (resp) => {
 					window.tools.alertError (resp.msg)
 					this.loading = false
