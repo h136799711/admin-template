@@ -39,6 +39,10 @@ const albumApi = {
 		data.service_type = 'by_AlbumCategory_query';
 		http.methods.defaultPost('', data, suc, fail);
 	},
+  queryAllCategory (data, suc, fail) {
+    data.service_type = 'by_AlbumCategory_all'
+    http.methods.defaultPost('', data, suc, fail)
+  },
 	createCategory(data, suc, fail) {
 		data.service_type = 'by_AlbumCategory_create';
 		http.methods.defaultPost('', data, suc, fail);

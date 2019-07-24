@@ -376,7 +376,7 @@
             }
         },
 		created() {
-			api.queryCategory({}, (resp) => {
+          api.queryAllCategory({}, (resp) => {
                 this.category = resp;
                 this.refresh ();
             }, (resp) => {
@@ -385,6 +385,7 @@
             });
 		},
 		mounted: function () {
+          // this.refresh();
 		},
 		methods: {
             onPhotoManage(id) {
