@@ -55,6 +55,10 @@ const SpPropRelate = r => require.ensure([], () => r(require('./pages/spcate/rel
 // Pay ***********************
 const PayOrder = r => require.ensure([], () => r(require('./pages/pay_order/index.vue')), 'PayOrder')
 // Pay END *******************
+
+// Video ***********************
+const VideoCate = r => require.ensure([], () => r(require('./pages/video/cate.vue')), 'VideoCate')
+// Video END *******************
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -67,6 +71,13 @@ const routes = [
   { path: '/admin',
     component: Admin,
     children: [
+		{
+			path: 'video',
+			component: VideoCate,
+			children: [
+				{ path: 'cate', component: VideoCate }
+			]
+		},
 			{
 				path: 'pay_order',
 				component: PayOrder,

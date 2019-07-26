@@ -159,6 +159,8 @@ exports.default = {
 	'Next': 'Next',
 	'Detail': 'Detail',
 	'Scene': 'Scene',
+	'Video': 'Video',
+	'VideoCate': 'Video Category',
 
 	// 短语
 	'PropertyValue': 'Property Value',

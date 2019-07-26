@@ -158,6 +158,8 @@ exports.default = {
 	'Next': '下次',
 	'Detail': '详情',
 	'Scene': '场景',
+	'Video': '视频',
+	'VideoCate': '视频分类',
 
 
 	// 短语

@@ -186,29 +186,31 @@
         </div>
         <p style="padding: 30px 0 10px; position: relative;">
           <span class="by-icon by-yonghuming u_logo" /> <input
-            ref="username_input"
-            v-model.trim="user.mobile"
-            class="ipt"
-            type="text"
-            name="username"
-            placeholder="mobile(only can log in by mobile)"
-            value=""
-            tabindex="1"
-            @keydown.enter="login"
+                ref="username_input"
+                autocomplete="username"
+                v-model.trim="user.mobile"
+                class="ipt"
+                type="text"
+                name="username"
+                placeholder="mobile(only can log in by mobile)"
+                value=""
+                tabindex="1"
+                @keydown.enter="login"
           >
         </p>
         <p style="position: relative;">
           <span class="by-icon by-iconfontlock p_logo" />
           <input
-            id="password"
-            ref="password_input"
-            v-model="user.password"
-            class="ipt"
-            type="password"
-            name="password"
-            placeholder="password"
-            value=""
-tabindex="2" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
+                  autocomplete="current-password"
+                  id="password"
+                  ref="password_input"
+                  v-model="user.password"
+                  class="ipt"
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  value=""
+                  tabindex="2" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
           >
         </p>
         <p style="position: relative; margin: 10px 0">
