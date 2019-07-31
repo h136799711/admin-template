@@ -310,7 +310,7 @@
       onView (row) {
         let vtype = encodeURIComponent(row.v_type)
         let vuri = encodeURIComponent(row.v_uri)
-        this.$router.push({ path: 'view/' + vtype + '/' + vuri })
+        this.$router.push({ path: 'play/' + vtype + '/' + vuri })
       },
       submitEditForm () {
         api.update(this.editForm, (resp) => {

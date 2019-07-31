@@ -60,7 +60,7 @@ const PayOrder = r => require.ensure([], () => r(require('./pages/pay_order/inde
 const VideoIndex = r => require.ensure([], () => r(require('./pages/video/index.vue')), 'VideoIndex')
 const VideoCate = r => require.ensure([], () => r(require('./pages/video/cate.vue')), 'VideoCate')
 const VideoSource = r => require.ensure([], () => r(require('./pages/video/source.vue')), 'VideoSource')
-const VideoView = r => require.ensure([], () => r(require('./pages/video/view.vue')), 'VideoView')
+const VideoPlay = r => require.ensure([], () => r(require('./pages/video/play.vue')), 'VideoPlay')
 // Video END *******************
 
 const routes = [
@@ -86,7 +86,7 @@ const routes = [
       },
 
       { path: 'video/source/:id', component: VideoSource, props: true },
-      { path: 'video/source/view/:vtype/:vuri', component: VideoView, props: true },
+      { path: 'video/source/play/:vtype/:vuri', component: VideoPlay, props: true },
       {
         path: 'pay_order',
         component: PayOrder,

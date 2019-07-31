@@ -1,14 +1,32 @@
+<style>
+    .center-player {
+        width: 480px;
+        margin: 0 auto;
+    }
+
+    iframe {
+        border: 0px;
+    }
+</style>
 <template>
-    <div>
-        <video-player ref="videoPlayer" :playlistAutoPlayDelaySeconds="playlistAutoPlayDelaySeconds"
+    <div class="center-player">
+        <iframe v-if="vtype == 'iframe_insert'" width="640px" height="480px" :src="vuri" allowfullscreen></iframe>
+
+        <video-player v-if="vtype != 'iframe_insert' && vtype != 'cloud_disk'" ref="videoPlayer"
+                      :playlistAutoPlayDelaySeconds="playlistAutoPlayDelaySeconds"
                       :playlist-enable="playlistEnable" :brand="brand" :sources="sources"
                       :options="videoOptions"></video-player>
     </div>
 </template>
 
 <script>
+  import VideoPlayer from '@/components/video-player.vue'
+
   export default {
-    name: 'view',
+    name: 'play',
+    components: {
+      VideoPlayer
+    },
     props: {
       vtype: {
         type: String,
