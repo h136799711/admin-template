@@ -160,6 +160,9 @@ exports.default = {
 	'Scene': '场景',
 	'Video': '视频',
 	'VideoCate': '视频分类',
+	'VideoType': '视频源类型',
+	'VideoUri': '视频播放源',
+	'ComeFrom': '来源',
 
 
 	// 短语

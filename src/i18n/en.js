@@ -161,6 +161,9 @@ exports.default = {
 	'Scene': 'Scene',
 	'Video': 'Video',
 	'VideoCate': 'Video Category',
+	'VideoType': 'Video Type',
+	'VideoUri': 'Video Uri',
+	'ComeFrom': 'Come From',
 
 	// 短语
 	'PropertyValue': 'Property Value',

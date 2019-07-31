@@ -6,6 +6,7 @@
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
+        line-height: 0px;
         position: relative;
         overflow: hidden;
     }
@@ -44,7 +45,7 @@
             :show-file-list="false"
             :on-success="handleSuccess"
             :before-upload="beforeUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <img v-if="imageUrl" :src="imageUrl" :class="imgCls">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
     <el-input v-model="imageUrl" v-if="sourceType === '0' " />
@@ -55,6 +56,12 @@
 <script>
 	export default {
 		props: {
+          imgCls: {
+            type: String,
+            default () {
+              return 'avatar'
+            }
+          },
 			defaultImgUrl: String,
 			show: String,// remote , local, all
             imgType: String,
@@ -76,6 +83,9 @@
 		    		this.imageUrl = ''
                 }
             },
+          defaultImgUrl (newVal) {
+            this.imageUrl = this.defaultImgUrl
+          },
             imageUrl(newVal) {
 		    	if (newVal.length === '') {
 		    		this.imageUrl = this.defaultImgUrl

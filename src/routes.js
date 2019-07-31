@@ -57,156 +57,165 @@ const PayOrder = r => require.ensure([], () => r(require('./pages/pay_order/inde
 // Pay END *******************
 
 // Video ***********************
+const VideoIndex = r => require.ensure([], () => r(require('./pages/video/index.vue')), 'VideoIndex')
 const VideoCate = r => require.ensure([], () => r(require('./pages/video/cate.vue')), 'VideoCate')
+const VideoSource = r => require.ensure([], () => r(require('./pages/video/source.vue')), 'VideoSource')
+const VideoView = r => require.ensure([], () => r(require('./pages/video/view.vue')), 'VideoView')
 // Video END *******************
+
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
-	{ path: '/', redirect: '/admin' },
+  { path: '/', redirect: '/admin' },
   // 登录
   { path: '/login', component: Login },
   // 退出
   { path: '/logout', component: Logout },
   // 登录后管理首页
-  { path: '/admin',
+  {
+    path: '/admin',
     component: Admin,
     children: [
-		{
-			path: 'video',
-			component: VideoCate,
-			children: [
-				{ path: 'cate', component: VideoCate }
-			]
-		},
-			{
-				path: 'pay_order',
-				component: PayOrder,
-				children: [
-					{ path: 'index', component: PayOrder }
-				]
-			},
-			{
-				path: 'sp_brand',
-				component: SpBrand,
-				children: [
-					{ path: 'index', component: SpBrand, props: true }
-				]
-			},
-			{
-				path: 'spcate',
-				component: SpCate,
-				children: [
-					{ path: 'index/:id?', component: SpCate, props: true }
-				]
-			},
-			{ path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
-			{ path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
-			{
-				path: 'sp_prop',
-				component: SpProp,
-				children: [
-					{ path: 'index', component: SpProp}
-				]
-			},
-			{ path: 'sp_prop/value/:id', component: SpPropValue, props: true },
-			{
-				path: 'cms_article',
-				component: CmsArticle,
-				children: [
-					{ path: 'index', component: CmsArticle }
-				]
-			},
-			{
-				path: 'banners',
-				component: BannersIndex,
-				children: [
-					{ path: 'index', component: BannersIndex }
-				]
-			},
-			{
-				path: 'datatree',
-				component: Datatree,
-				children: [
-					{ name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
-				]
-			},
-			{
-				path: 'api',
-				component: ApiRequestLog,
-				children: [
-					{ name: 'apiRequestLog', path: 'log', component: ApiRequestLog }
-				]
-			},
-			{
-				path: 'clients',
-				component: ClientsIndex,
-				children: [
-					{ name: 'ClientsIndex', path: 'index', component: ClientsIndex }
-				]
-			},
-			{
-				path: 'roles',
-				component: RolesIndex,
-				children: [
-					{ path: 'index', component: RolesIndex }
-				]
-			},
-			{ path: 'roles/menu/:id', component: RolesMenu, props: true },
-			{ path: 'roles/policy/:id', component: RolesPolicy, props: true },
-			{ path: 'roles/user/:id', component: RolesUser, props: true },
-			{
-				path: 'policy',
-				component: PolicyIndex,
-				children: [
-					{ path: 'index', component: PolicyIndex }
-				]
-			},
-			{
-				path: 'message',
-				component: MessageIndex,
-				children: [
-					{ path: 'index', component: MessageIndex }
-				]
-			},
-			{
-				path: 'album',
-				component: AlbumIndex,
-				children: [
-					{ path: 'index', component: AlbumIndex }
-				]
-			},
-			{
-				path: 'album',
-				component: AlbumCategory,
-				children: [
-					{ path: 'category', component: AlbumCategory }
-				]
-			},
-			{ path: 'album/photo/:id', component: AlbumPhoto, props: true },
-			{
-				path: 'config',
-				component: ConfigIndex,
-				children: [
-					{ path: 'index', component: ConfigIndex }
-				]
-			},
-			{
-				path: 'menu',
-				component: MenuIndex,
-				children: [
-					{ path: 'index', component: MenuIndex }
-				]
-			},
-			{ path: 'account/password', component: Password },
-			{ path: 'account/avatar', component: Avatar },
-			{
-				path: 'index',
-				component: AdminIndex,
-				children: [
-					{ path: 'index', component: AdminIndex }
-				]
-			},
-			{ path: '*', component: NotFound }
+      {
+        path: 'video',
+        component: VideoIndex,
+        children: [
+          { path: 'index', component: VideoIndex },
+          { path: 'cate', component: VideoCate }
+        ]
+      },
+
+      { path: 'video/source/:id', component: VideoSource, props: true },
+      { path: 'video/source/view/:vtype/:vuri', component: VideoView, props: true },
+      {
+        path: 'pay_order',
+        component: PayOrder,
+        children: [
+          { path: 'index', component: PayOrder }
+        ]
+      },
+      {
+        path: 'sp_brand',
+        component: SpBrand,
+        children: [
+          { path: 'index', component: SpBrand, props: true }
+        ]
+      },
+      {
+        path: 'spcate',
+        component: SpCate,
+        children: [
+          { path: 'index/:id?', component: SpCate, props: true }
+        ]
+      },
+      { path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
+      { path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
+      {
+        path: 'sp_prop',
+        component: SpProp,
+        children: [
+          { path: 'index', component: SpProp }
+        ]
+      },
+      { path: 'sp_prop/value/:id', component: SpPropValue, props: true },
+      {
+        path: 'cms_article',
+        component: CmsArticle,
+        children: [
+          { path: 'index', component: CmsArticle }
+        ]
+      },
+      {
+        path: 'banners',
+        component: BannersIndex,
+        children: [
+          { path: 'index', component: BannersIndex }
+        ]
+      },
+      {
+        path: 'datatree',
+        component: Datatree,
+        children: [
+          { name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
+        ]
+      },
+      {
+        path: 'api',
+        component: ApiRequestLog,
+        children: [
+          { name: 'apiRequestLog', path: 'log', component: ApiRequestLog }
+        ]
+      },
+      {
+        path: 'clients',
+        component: ClientsIndex,
+        children: [
+          { name: 'ClientsIndex', path: 'index', component: ClientsIndex }
+        ]
+      },
+      {
+        path: 'roles',
+        component: RolesIndex,
+        children: [
+          { path: 'index', component: RolesIndex }
+        ]
+      },
+      { path: 'roles/menu/:id', component: RolesMenu, props: true },
+      { path: 'roles/policy/:id', component: RolesPolicy, props: true },
+      { path: 'roles/user/:id', component: RolesUser, props: true },
+      {
+        path: 'policy',
+        component: PolicyIndex,
+        children: [
+          { path: 'index', component: PolicyIndex }
+        ]
+      },
+      {
+        path: 'message',
+        component: MessageIndex,
+        children: [
+          { path: 'index', component: MessageIndex }
+        ]
+      },
+      {
+        path: 'album',
+        component: AlbumIndex,
+        children: [
+          { path: 'index', component: AlbumIndex }
+        ]
+      },
+      {
+        path: 'album',
+        component: AlbumCategory,
+        children: [
+          { path: 'category', component: AlbumCategory }
+        ]
+      },
+      { path: 'album/photo/:id', component: AlbumPhoto, props: true },
+      {
+        path: 'config',
+        component: ConfigIndex,
+        children: [
+          { path: 'index', component: ConfigIndex }
+        ]
+      },
+      {
+        path: 'menu',
+        component: MenuIndex,
+        children: [
+          { path: 'index', component: MenuIndex }
+        ]
+      },
+      { path: 'account/password', component: Password },
+      { path: 'account/avatar', component: Avatar },
+      {
+        path: 'index',
+        component: AdminIndex,
+        children: [
+          { path: 'index', component: AdminIndex }
+        ]
+      },
+      { path: '*', component: NotFound }
     ]
   },
   { path: '*', component: NotFound }

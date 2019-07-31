@@ -28,3 +28,8 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+        "videojs-brand": "^0.0.4",
+        "videojs-contextmenu-ui": "^5.1.1",
+        "videojs-playlist": "^4.3.1",
+        "videojs-playlist-ui": "^3.5.2",
