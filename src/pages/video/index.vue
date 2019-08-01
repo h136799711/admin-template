@@ -21,8 +21,18 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+
                 <el-form-item>
-                    <el-input size="mini" v-model="queryForm.title"/>
+                    <el-select size="mini" v-model="queryForm.show_status">
+                        <el-option :key="1" :label="$t('OnShelves')" :value="1">
+                        </el-option>
+                        <el-option :key="0" :label="$t('OffShelves')" :value="0">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item>
+                    <el-input size="mini" :placeholder="$t('Title')" v-model="queryForm.title"/>
                 </el-form-item>
                 <el-form-item>
                     <el-button :loading="loading" type="primary" @click="refresh()" size="mini" icon="el-icon-search">{{
@@ -100,13 +110,28 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="200px"
+                        width="320px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
+
+                        <el-button
+                                v-if="scope.row.show_status == 0"
+                                size="mini"
+                                icon="el-icon-top"
+                                @click="OnShelves(scope.row.id)">
+                            {{$t('OnShelves')}}
+                        </el-button>
+                        <el-button
+                                v-if="scope.row.show_status == 1"
+                                size="mini"
+                                icon="el-icon-bottom"
+                                @click="OffShelves(scope.row.id)">
+                            {{$t('OffShelves')}}
+                        </el-button>
                         <el-button
                                 size="mini"
-                                icon="el-icon-edit"
+                                icon="el-icon-video-play"
                                 @click="onVideoSource(scope.row.id)">
                             {{$t('Source')}}
                         </el-button>
@@ -292,6 +317,7 @@
         inputValue: '',
         category: [],
         queryForm: {
+          show_status: 0,
           cate_id: 0,
           title: '',
           page_index: 1,
@@ -349,6 +375,28 @@
       // this.refresh();
     },
     methods: {
+      OnShelves (id) {
+        api.onShelves({ id: id }, (resp) => {
+          this.loading = false
+          this.dialogEditVisible = false
+          this.refresh()
+        }, (resp) => {
+          window.tools.alertError(resp.msg)
+          this.loading = false
+          this.dialogEditVisible = false
+        })
+      },
+      OffShelves (id) {
+        api.offShelves({ id: id }, (resp) => {
+          this.loading = false
+          this.dialogEditVisible = false
+          this.refresh()
+        }, (resp) => {
+          window.tools.alertError(resp.msg)
+          this.loading = false
+          this.dialogEditVisible = false
+        })
+      },
       onVideoSource (id) {
         this.$router.push({ path: 'source/' + id })
       },

@@ -163,6 +163,8 @@ exports.default = {
 	'VideoType': '视频源类型',
 	'VideoUri': '视频播放源',
 	'ComeFrom': '来源',
+	'OffShelves': '下架',
+	'OnShelves': '上架',
 
 
 	// 短语

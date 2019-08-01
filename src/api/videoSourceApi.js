@@ -15,6 +15,9 @@ const videoSourceApi = {
   query (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_VideoSource_query' }), suc, fail)
   },
+  queryComeFrom (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_VideoSource_queryComeFrom' }), suc, fail)
+  },
   delete (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_VideoSource_delete' }), suc, fail)
   }

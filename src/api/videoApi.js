@@ -18,6 +18,12 @@ const videoApi = {
   delete (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_delete' }), suc, fail)
   },
+  offShelves (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_offline' }), suc, fail)
+  },
+  onShelves (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_online' }), suc, fail)
+  },
 
 }
 

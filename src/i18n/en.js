@@ -164,6 +164,8 @@ exports.default = {
 	'VideoType': 'Video Type',
 	'VideoUri': 'Video Uri',
 	'ComeFrom': 'Come From',
+	'OffShelves': 'Off Shelves',
+	'OnShelves': 'On Shelves',
 
 	// 短语
 	'PropertyValue': 'Property Value',

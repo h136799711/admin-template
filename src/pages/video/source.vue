@@ -5,6 +5,14 @@
         <el-button
                 type="primary"
                 size="mini"
+                icon="el-icon-back"
+                @click="$router.replace('/admin/video/index')"
+        >
+            {{$t('Back')}}
+        </el-button>
+        <el-button
+                type="primary"
+                size="mini"
                 icon="el-icon-plus"
                 :loading="loading"
                 @click="onAdd()">
@@ -36,7 +44,7 @@
                 />
                 <el-table-column
                         width="160px"
-                        prop="come_from"
+                        prop="come_from_alias"
                         :label="$t('ComeFrom')"
                 />
                 <el-table-column
@@ -53,7 +61,7 @@
                         :label="$t('VideoUri')"
                 />
                 <el-table-column
-                        width="240px"
+                        width="320px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
@@ -68,6 +76,13 @@
                                 icon="el-icon-edit"
                                 @click="onEdit(scope.row)">
                             {{$t('Edit')}}
+                        </el-button>
+                        <el-button
+                                size="mini"
+                                type="danger"
+                                icon="el-icon-delete"
+                                @click="onDelete(scope.row.id)">
+                            {{$t('Delete')}}
                         </el-button>
                     </template>
                 </el-table-column>
@@ -90,9 +105,21 @@
             >
 
                 <el-form-item
+                        :label="$t('ID')"
+                        prop="src_key">
+                    <el-input v-model="editForm.src_key"/>
+                </el-form-item>
+                <el-form-item
                         :label="$t('ComeFrom')"
                         prop="come_from">
-                    <el-input v-model="editForm.come_from"/>
+                    <el-select size="mini" v-model="editForm.come_from">
+                        <el-option
+                                v-for="item in source"
+                                :key="item.code"
+                                :label="item.name"
+                                :value="item.code">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
 
                 <el-form-item
@@ -179,9 +206,22 @@
                     label-width="100px"
             >
                 <el-form-item
+                        :label="$t('ID')"
+                        prop="src_key">
+                    <el-input v-model="addForm.src_key"/>
+                </el-form-item>
+                <el-form-item
                         :label="$t('ComeFrom')"
                         prop="come_from">
-                    <el-input v-model="addForm.come_from"/>
+                    <!--                    <el-input v-model="addForm.come_from"/>-->
+                    <el-select size="mini" v-model="addForm.come_from">
+                        <el-option
+                                v-for="item in source"
+                                :key="item.code"
+                                :label="item.name"
+                                :value="item.code">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
 
                 <el-form-item
@@ -269,10 +309,12 @@
           { 'title': 'cloud', 'vtype': 'cloud_disk' },
           { 'title': 'iframe', 'vtype': 'iframe_insert' }
         ],
+        source: [],
         queryForm: {
           vid: ''
         },
         addForm: {
+          src_key: '',
           vid: 0,
           v_type: '',
           v_uri: '',
@@ -281,6 +323,7 @@
         },
         editForm: {
           id: 0,
+          src_key: '',
           v_type: '',
           v_uri: '',
           come_from: '',
@@ -304,9 +347,43 @@
     created () {
     },
     mounted: function () {
-      this.refresh()
+      api.queryComeFrom({}, (res) => {
+        this.source = res
+        this.refresh()
+      }, (res) => {
+        console.debug(res)
+      })
     },
     methods: {
+      onDelete (id) {
+        this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+          confirmButtonText: this.$i18n.t('Confirm'),
+          cancelButtonText: this.$i18n.t('Cancel'),
+          type: 'warning',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true
+              instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+
+              api.delete({ 'id': id }, (res) => {
+                instance.confirmButtonLoading = false
+                this.refresh()
+                done()
+              }, (res) => {
+                console.debug(res)
+                done()
+                window.tools.alertError(res.msg)
+                instance.confirmButtonLoading = false
+              })
+            } else {
+              done()
+            }
+          }
+        }).then(() => {
+        }).catch(() => {
+        })
+
+      },
       onView (row) {
         let vtype = encodeURIComponent(row.v_type)
         let vuri = encodeURIComponent(row.v_uri)
@@ -342,6 +419,7 @@
       },
       onAdd () {
         this.addForm = {
+          src_key: '',
           vid: this.id,
           v_type: '',
           v_uri: '',
@@ -352,6 +430,7 @@
       },
       onEdit (row) {
         this.editForm.id = row.id
+        this.editForm.src_key = row.src_key
         this.editForm.v_type = row.v_type
         this.editForm.v_uri = row.v_uri
         this.editForm.sort = row.sort
