@@ -81,9 +81,9 @@ const routes = [
         component: VideoIndex,
         children: [
           { path: 'index', component: VideoIndex },
-          { path: 'cate', component: VideoCate }
         ]
       },
+      { path: 'video/cate', component: VideoCate, props: false },
 
       { path: 'video/source/:id', component: VideoSource, props: true },
       { path: 'video/source/play/:vtype/:vuri', component: VideoPlay, props: true },
