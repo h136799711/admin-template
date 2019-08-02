@@ -172,7 +172,7 @@
       },
       queryUploaded () {
         this.loadingUploadedImgs = true
-        let promise = fileApi.query(this.date, this.pageIndex, 6)
+        let promise = fileApi.query(this.date, this.pageIndex - 1 > 0 ? this.pageIndex - 1 : 0, 6)
         console.debug('promise', promise)
         promise.then(({ data }) => {
           console.log(data)
