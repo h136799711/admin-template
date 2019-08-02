@@ -115,7 +115,7 @@
         chooseImgId: 0,
         loadingUploadedImgs: false,
         date: '',
-        pageIndex: 1,
+        pageIndex: 0,
         count: 0,
         uploadedImgs: [],
         imageUrl: '',
