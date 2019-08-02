@@ -108,13 +108,29 @@
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
+                <el-table-column
+                        width="180px"
+                        label="精选|推荐">
+                    <template slot-scope="scope">
+                        {{scope.row.recommend}}
+                        <el-switch
+                                size="mini"
+                                style="display: block"
+                                :active-value="1"
+                                :inactive-value="0"
+                                v-model="scope.row.recommend"
+                                active-text="推荐"
+                                @change="onRecommend(scope.row.id, scope.row.recommend)"
+                        >
+                        </el-switch>
+                    </template>
+                </el-table-column>
 
                 <el-table-column
                         width="320px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
-
                         <el-button
                                 v-if="scope.row.show_status == 0"
                                 size="mini"
@@ -375,6 +391,24 @@
       // this.refresh();
     },
     methods: {
+      onRecommend (id, recommend) {
+        console.debug('recommend', recommend)
+        if (parseInt(recommend) === 0) {
+          api.unrecommend({ id: id }, (resp) => {
+            this.loading = false
+          }, (resp) => {
+            window.tools.alertError(resp.msg)
+            this.loading = false
+          })
+        } else {
+          api.recommend({ id: id }, (resp) => {
+            this.loading = false
+          }, (resp) => {
+            window.tools.alertError(resp.msg)
+            this.loading = false
+          })
+        }
+      },
       OnShelves (id) {
         api.onShelves({ id: id }, (resp) => {
           this.loading = false

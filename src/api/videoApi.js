@@ -24,6 +24,12 @@ const videoApi = {
   onShelves (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_online' }), suc, fail)
   },
+  recommend (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_recommend' }), suc, fail)
+  },
+  unrecommend (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_unrecommend' }), suc, fail)
+  }
 
 }
 
