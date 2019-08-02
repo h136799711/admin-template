@@ -40,6 +40,7 @@
     .by-img-uploader .uploadedimg {
         padding: 5px;
         border: 1px solid #666666;
+        text-align: center;
     }
 
     .by-img-uploader .uploadedimg .el-image.actived {
