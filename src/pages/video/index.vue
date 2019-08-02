@@ -214,7 +214,7 @@
                         :label="$t('Cover')"
                         prop="cover"
                 >
-                    <ImgUploader imgCls="videoCover" ref="editImgUploader" @onUploadSuccess="onUploadSuccess"
+                    <ImgUploader show="all" imgCls="videoCover" ref="editImgUploader" @onUploadSuccess="onUploadSuccess"
                                  :defaultImgUrl="editForm.cover" :clear="imgUploadClear" imgType="video_cover"/>
                 </el-form-item>
                 <el-form-item
@@ -326,7 +326,7 @@
   import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
   import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
   import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
-  import ImgUploader from '@/components/img-uploader.vue'
+  import ImgUploader from '@/components/img-uploader2online.vue'
 
   export default {
     components: {
