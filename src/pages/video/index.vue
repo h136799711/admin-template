@@ -194,6 +194,11 @@
                 </el-form-item>
 
                 <el-form-item
+                        :label="$t('Year')"
+                        prop="year">
+                    <el-input v-model="editForm.year"/>
+                </el-form-item>
+                <el-form-item
                         :label="$t('Category')"
                         prop="cate_id"
                 >
@@ -265,6 +270,11 @@
                         :label="$t('Title')"
                         prop="title">
                     <el-input v-model="addForm.title"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Year')"
+                        prop="year">
+                    <el-input v-model="addForm.year"/>
                 </el-form-item>
                 <el-form-item
                         :label="$t('Category')"
@@ -343,14 +353,16 @@
           title: '',
           description: '',
           cover: '',
-          cate_id: 1
+          cate_id: 1,
+          year: 0
         },
         editForm: {
           id: 0,
           title: '',
           description: '',
           cover: '',
-          cate_id: 1
+          cate_id: 1,
+          year: 0
         },
         rules: {
           title: [
@@ -496,7 +508,8 @@
           title: '',
           description: '',
           cover: '',
-          cate_id: 1
+          cate_id: 1,
+          year: 0
         }
         this.dialogAddVisible = true
       },
@@ -506,6 +519,7 @@
         this.editForm.title = row.title
         this.editForm.description = row.description
         this.editForm.cover = row.cover
+        this.editForm.year = row.year
         this.editForm.cate_id = parseInt(row.cate_id)
         this.dialogEditVisible = true
       },

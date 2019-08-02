@@ -166,6 +166,7 @@ exports.default = {
 	'ComeFrom': 'Come From',
 	'OffShelves': 'Off Shelves',
 	'OnShelves': 'On Shelves',
+  'Year': 'Year',
 
 	// 短语
 	'PropertyValue': 'Property Value',
