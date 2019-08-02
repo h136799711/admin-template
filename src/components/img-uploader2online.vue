@@ -71,7 +71,7 @@
             <div class="text-center">
                 <el-pagination
                         :current-page="pageIndex"
-                        :page-sizes="[10]"
+                        :page-sizes="[6]"
                         layout="total, prev, pager, next, jumper"
                         :total="count"
                         @current-change="byPagerCurrentChange"/>
