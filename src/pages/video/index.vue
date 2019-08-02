@@ -110,9 +110,8 @@
                 </el-table-column>
                 <el-table-column
                         width="180px"
-                        label="精选|推荐">
+                        label="推荐">
                     <template slot-scope="scope">
-                        {{scope.row.recommend}}
                         <el-switch
                                 size="mini"
                                 style="display: block"
