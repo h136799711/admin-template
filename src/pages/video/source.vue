@@ -314,6 +314,11 @@
           vid: ''
         },
         addForm: {
+          directors: '',
+          actors: '',
+          language: '',
+          area: '',
+          is_end: 0,
           title: '',
           vid: 0,
           v_type: '',
@@ -323,6 +328,11 @@
         },
         editForm: {
           id: 0,
+          directors: '',
+          actors: '',
+          language: '',
+          area: '',
+          is_end: 0,
           title: '',
           v_type: '',
           v_uri: '',
@@ -419,6 +429,11 @@
       },
       onAdd () {
         this.addForm = {
+          directors: '',
+          actors: '',
+          language: '',
+          area: '',
+          is_end: 0,
           title: '',
           vid: this.id,
           v_type: '',
@@ -430,6 +445,11 @@
       },
       onEdit (row) {
         this.editForm.id = row.id
+        this.editForm.is_end = row.is_end
+        this.editForm.directors = row.directors
+        this.editForm.actors = row.actors
+        this.editForm.language = row.language
+        this.editForm.area = row.area
         this.editForm.title = row.title
         this.editForm.v_type = row.v_type
         this.editForm.v_uri = row.v_uri

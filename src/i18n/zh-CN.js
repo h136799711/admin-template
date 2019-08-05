@@ -166,6 +166,11 @@ exports.default = {
 	'OffShelves': '下架',
 	'OnShelves': '上架',
 	'Year': '年份',
+	'Actor': '演员',
+	'Director': '导演',
+	'End': '完结',
+	'Language': '语言',
+	'Area': '地区',
 
 
 	// 短语

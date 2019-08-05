@@ -74,6 +74,7 @@
                         :label="$t('ID')"
                 />
                 <el-table-column
+                        width="100px"
                         prop="cover"
                         :label="$t('Cover')">
                     <template slot-scope="scope">
@@ -86,12 +87,22 @@
                         :label="$t('Title')"
                 />
                 <el-table-column
-                        width="160px"
-                        prop="description"
-                        :label="$t('Description')"
+                        width="120px"
+                        prop="actors"
+                        :label="$t('Actor')"
                 />
                 <el-table-column
-                        width="160px"
+                        width="120px"
+                        prop="directors"
+                        :label="$t('Director')"
+                />
+                <!--                <el-table-column-->
+                <!--                        width="160px"-->
+                <!--                        prop="description"-->
+                <!--                        :label="$t('Description')"-->
+                <!--                />-->
+                <el-table-column
+                        width="120px"
                         prop="tags"
                         :label="$t('Tag')"
                 />
@@ -107,14 +118,14 @@
                         prop="views"
                         :label="$t('View') + $t('Count')"/>
                 <el-table-column
-                        width="160px"
+                        width="140px"
                         :label="$t('CreateTime')">
                     <template slot-scope="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="180px"
+                        width="160px"
                         label="推荐">
                     <template slot-scope="scope">
                         <el-switch

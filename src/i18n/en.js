@@ -167,6 +167,11 @@ exports.default = {
 	'OffShelves': 'Off Shelves',
 	'OnShelves': 'On Shelves',
   'Year': 'Year',
+  'Actor': 'Actor',
+  'Director': 'Director',
+  'End': 'End',
+  'Language': 'Language',
+  'Area': 'Area',
 
 	// 短语
 	'PropertyValue': 'Property Value',
