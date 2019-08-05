@@ -82,30 +82,28 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="160px"
+                        width="140px"
                         prop="title"
                         :label="$t('Title')"
                 />
                 <el-table-column
-                        width="120px"
-                        prop="actors"
-                        :label="$t('Actor')"
-                />
-                <el-table-column
-                        width="120px"
-                        prop="directors"
-                        :label="$t('Director')"
-                />
+                        width="180px"
+                        :label="$t('Info')"
+                >
+                    <template slot-scope="scope">
+                        {{$t('Actor')}}:{{scope.row.actors}}<br/>
+                        {{$t('Director')}}::{{scope.row.directors}}<br/>
+                        {{$t('Year')}}::{{scope.row.year}}<br/>
+                        {{$t('Area')}}::{{scope.row.area}}<br/>
+                        {{$t('Language')}}::{{scope.row.language}}<br/>
+                        {{$t('Tag')}}::{{scope.row.tags}}<br/>
+                    </template>
+                </el-table-column>
                 <!--                <el-table-column-->
                 <!--                        width="160px"-->
                 <!--                        prop="description"-->
                 <!--                        :label="$t('Description')"-->
                 <!--                />-->
-                <el-table-column
-                        width="120px"
-                        prop="tags"
-                        :label="$t('Tag')"
-                />
                 <el-table-column
                         width="100px"
                         prop="cate_id"
