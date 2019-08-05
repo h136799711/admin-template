@@ -4,7 +4,10 @@ import http from '../assets/js/http.js'
 
 const videoApi = {
   create (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_create' }), suc, fail)
+    http.methods.defaultPost('', Object.assign(data, {
+      service_version: 101,
+      service_type: 'by_Video_create'
+    }), suc, fail)
   },
   info (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_info' }), suc, fail)

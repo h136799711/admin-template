@@ -91,6 +91,11 @@
                         :label="$t('Description')"
                 />
                 <el-table-column
+                        width="160px"
+                        prop="tags"
+                        :label="$t('Tag')"
+                />
+                <el-table-column
                         width="100px"
                         prop="cate_id"
                         :label="$t('Category')">
@@ -218,6 +223,31 @@
                                  :defaultImgUrl="editForm.cover" :clear="imgUploadClear" imgType="video_cover"/>
                 </el-form-item>
                 <el-form-item
+                        :label="$t('Tag')"
+                        prop="tag"
+                >
+                    <el-tag
+                            :key="t"
+                            v-for="t in editForm.tags"
+                            closable
+                            :disable-transitions="false"
+                            @close="handleClose(tag)">
+                        {{t}}
+                    </el-tag>
+                    <el-input
+                            class="input-new-tag"
+                            ref="refEditTag"
+                            v-if="inputVisible"
+                            v-model="inputValue"
+                            size="small"
+                            @keyup.enter.native="handleInputConfirm"
+                            @blur="handleInputConfirm"
+                    >
+                    </el-input>
+                    <el-button v-else class="button-new-tag" size="small" @click="showInput">{{$t('Add') + $t('Tag')}}
+                    </el-button>
+                </el-form-item>
+                <el-form-item
                         :label="$t('Description')"
                         prop="description"
                 >
@@ -297,6 +327,31 @@
                                  :defaultImgUrl="addForm.cover" :clear="imgUploadClear" imgType="video_cover"/>
                 </el-form-item>
                 <el-form-item
+                        :label="$t('Tag')"
+                        prop="tag"
+                >
+                    <el-tag
+                            :key="t"
+                            v-for="t in addForm.tags"
+                            closable
+                            :disable-transitions="false"
+                            @close="handleClose(tag)">
+                        {{t}}
+                    </el-tag>
+                    <el-input
+                            class="input-new-tag"
+                            ref="refAddTag"
+                            v-if="inputVisible"
+                            v-model="inputValue"
+                            size="small"
+                            @keyup.enter.native="handleInputConfirm"
+                            @blur="handleInputConfirm"
+                    >
+                    </el-input>
+                    <el-button v-else class="button-new-tag" size="small" @click="showInput">{{$t('Add') + $t('Tag')}}
+                    </el-button>
+                </el-form-item>
+                <el-form-item
                         :label="$t('Description')"
                         prop="description"
                 >
@@ -349,6 +404,7 @@
           page_size: 10
         },
         addForm: {
+          tags: [],
           title: '',
           description: '',
           cover: '',
@@ -361,7 +417,8 @@
           description: '',
           cover: '',
           cate_id: 1,
-          year: 0
+          year: 0,
+          tags: []
         },
         rules: {
           title: [
@@ -402,6 +459,46 @@
       // this.refresh();
     },
     methods: {
+      showInput () {
+        this.inputVisible = true
+        this.$nextTick(_ => {
+          if (this.dialogAddVisible) {
+            this.$refs.refAddTag.$refs.input.focus()
+          } else if (this.dialogEditVisible) {
+            this.$refs.refEditTag.$refs.input.focus()
+          }
+        })
+      },
+      handleInputConfirm () {
+        let inputValue = this.inputValue
+        if (inputValue) {
+          this.inputVisible = false
+          this.inputValue = ''
+          if (this.dialogAddVisible) {
+            for (let t in this.addForm.tags) {
+              if (this.addForm.tags[t] == inputValue) {
+                return
+              }
+            }
+            this.addForm.tags.push(inputValue)
+          } else if (this.dialogEditVisible) {
+            for (let t in this.editForm.tags) {
+              if (this.editForm.tags[t] == inputValue) {
+                return
+              }
+            }
+            this.editForm.tags.push(inputValue)
+          }
+        }
+
+      },
+      handleClose (tag) {
+        if (this.dialogAddVisible) {
+          this.addForm.tags.splice(this.addForm.tags.indexOf(tag), 1)
+        } else if (this.dialogEditVisible) {
+          this.editForm.tags.splice(this.editForm.tags.indexOf(tag), 1)
+        }
+      },
       onRecommend (id, recommend) {
         console.debug('recommend', recommend)
         if (parseInt(recommend) === 0) {
@@ -475,7 +572,9 @@
         return ''
       },
       submitEditForm () {
-        api.update(this.editForm, (resp) => {
+        let data = Object.assign({}, this.editForm)
+        data.tags = data.tags.join(',')
+        api.update(data, (resp) => {
           this.loading = false
           this.dialogEditVisible = false
           this.refresh()
@@ -488,7 +587,9 @@
       submitAddForm () {
         this.$refs.addForm.validate((valid) => {
           if (valid) {
-            api.create(this.addForm, (resp) => {
+            let data = Object.assign({}, this.addForm)
+            data.tags = data.tags.join(',')
+            api.create(data, (resp) => {
               this.loading = false
               this.dialogAddVisible = false
               window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
@@ -504,6 +605,7 @@
       },
       onAdd () {
         this.addForm = {
+          tags: [],
           title: '',
           description: '',
           cover: '',
@@ -513,7 +615,8 @@
         this.dialogAddVisible = true
       },
       onEdit (row) {
-        console.log('row', this.editForm)
+        console.log('row', row)
+        this.editForm.tags = row.tags.length > 0 ? row.tags.split(',') : []
         this.editForm.id = row.id
         this.editForm.title = row.title
         this.editForm.description = row.description

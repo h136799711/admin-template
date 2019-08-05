@@ -105,9 +105,9 @@
             >
 
                 <el-form-item
-                        :label="$t('ID')"
+                        :label="$t('Title')"
                         prop="src_key">
-                    <el-input v-model="editForm.src_key"/>
+                    <el-input v-model="editForm.title"/>
                 </el-form-item>
                 <el-form-item
                         :label="$t('ComeFrom')"
@@ -206,9 +206,9 @@
                     label-width="100px"
             >
                 <el-form-item
-                        :label="$t('ID')"
+                        :label="$t('Title')"
                         prop="src_key">
-                    <el-input v-model="addForm.src_key"/>
+                    <el-input v-model="addForm.title"/>
                 </el-form-item>
                 <el-form-item
                         :label="$t('ComeFrom')"
@@ -314,7 +314,7 @@
           vid: ''
         },
         addForm: {
-          src_key: '',
+          title: '',
           vid: 0,
           v_type: '',
           v_uri: '',
@@ -323,7 +323,7 @@
         },
         editForm: {
           id: 0,
-          src_key: '',
+          title: '',
           v_type: '',
           v_uri: '',
           come_from: '',
@@ -419,7 +419,7 @@
       },
       onAdd () {
         this.addForm = {
-          src_key: '',
+          title: '',
           vid: this.id,
           v_type: '',
           v_uri: '',
@@ -430,7 +430,7 @@
       },
       onEdit (row) {
         this.editForm.id = row.id
-        this.editForm.src_key = row.src_key
+        this.editForm.title = row.title
         this.editForm.v_type = row.v_type
         this.editForm.v_uri = row.v_uri
         this.editForm.sort = row.sort
