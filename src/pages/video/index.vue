@@ -227,6 +227,12 @@
                     <el-input v-model="editForm.actors"/>
                 </el-form-item>
                 <el-form-item
+                        :label="$t('End')"
+                        prop="end">
+                    <el-radio v-model="editForm.is_end" :label="1">{{$t('Yes')}}</el-radio>
+                    <el-radio v-model="editForm.is_end" :label="0">{{$t('No')}}</el-radio>
+                </el-form-item>
+                <el-form-item
                         :label="$t('Category')"
                         prop="cate_id"
                 >
@@ -328,6 +334,28 @@
                         :label="$t('Year')"
                         prop="year">
                     <el-input v-model="addForm.year"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Area')"
+                        prop="area">
+                    <el-input v-model="addForm.area"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Director')"
+                        prop="directors">
+                    <el-input v-model="addForm.directors"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Actor')"
+                        prop="actors">
+                    <el-input v-model="addForm.actors"/>
+                </el-form-item>
+
+                <el-form-item
+                        :label="$t('End')"
+                        prop="end">
+                    <el-radio v-model="addForm.is_end" :label="1">{{$t('Yes')}}</el-radio>
+                    <el-radio v-model="addForm.is_end" :label="0">{{$t('No')}}</el-radio>
                 </el-form-item>
                 <el-form-item
                         :label="$t('Category')"
@@ -638,12 +666,14 @@
           directors: '',
           actors: '',
           area: '',
-          language: ''
+          language: '',
+          is_end: 0
         }
         this.dialogAddVisible = true
       },
       onEdit (row) {
         console.log('row', row)
+        this.editForm.is_end = row.is_end
         this.editForm.directors = row.directors
         this.editForm.actors = row.actors
         this.editForm.area = row.area
