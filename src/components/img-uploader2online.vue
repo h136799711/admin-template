@@ -60,6 +60,21 @@
             线上图片
         </el-radio>
         <div class="uploadedimg" v-if="sourceType === '2' " :loading="loadingUploadedImgs">
+            <div>
+                <el-date-picker
+                        v-model="date"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        align="left"
+                        :editable="false"
+                        type="date"
+                        :placeholder="$t('Date')"
+                        :picker-options="pickerDateOption">
+                </el-date-picker>
+                <el-button @click="queryUploaded">
+                    {{$t('Search')}}
+                </el-button>
+            </div>
             <!-- 线上图片 -->
             <span v-for="img in uploadedImgs">
                     <el-image
@@ -174,6 +189,9 @@
       },
       queryUploaded () {
         this.loadingUploadedImgs = true
+        if (!this.date) {
+          this.date = ''
+        }
         let promise = fileApi.query(this.date, this.pageIndex - 1 > 0 ? this.pageIndex - 1 : 0, 6)
         console.debug('promise', promise)
         promise.then(({ data }) => {

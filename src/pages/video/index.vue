@@ -212,6 +212,21 @@
                     <el-input v-model="editForm.year"/>
                 </el-form-item>
                 <el-form-item
+                        :label="$t('Area')"
+                        prop="area">
+                    <el-input v-model="editForm.area"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Director')"
+                        prop="directors">
+                    <el-input v-model="editForm.directors"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Actor')"
+                        prop="actors">
+                    <el-input v-model="editForm.actors"/>
+                </el-form-item>
+                <el-form-item
                         :label="$t('Category')"
                         prop="cate_id"
                 >
@@ -619,12 +634,20 @@
           description: '',
           cover: '',
           cate_id: 1,
-          year: 0
+          year: 0,
+          directors: '',
+          actors: '',
+          area: '',
+          language: ''
         }
         this.dialogAddVisible = true
       },
       onEdit (row) {
         console.log('row', row)
+        this.editForm.directors = row.directors
+        this.editForm.actors = row.actors
+        this.editForm.area = row.area
+        this.editForm.language = row.language
         this.editForm.tags = row.tags.length > 0 ? row.tags.split(',') : []
         this.editForm.id = row.id
         this.editForm.title = row.title
