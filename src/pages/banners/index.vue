@@ -14,6 +14,11 @@
                 <el-form-item >
                     <el-select size="mini" v-model="queryForm.position" >
                         <el-option
+                                key=""
+                                :label="$t('All')"
+                                value="">
+                        </el-option>
+                        <el-option
                                 v-for="item in positionOptions"
                                 :key="item.code"
                                 :label="item.name"
@@ -469,7 +474,7 @@
                 console.debug(resp)
                 if (resp.length > 0) {
                     console.log(that)
-                    that.queryForm.position = resp[0].code
+                  // that.queryForm.position = resp[0].code
                     that.positionOptions = resp
                 }
                 that.refresh ();
