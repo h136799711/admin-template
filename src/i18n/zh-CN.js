@@ -171,6 +171,9 @@ exports.default = {
 	'End': '完结',
 	'Language': '语言',
 	'Area': '地区',
+	'Goods': '商品',
+	'SubTitle': '子标题',
+	'Price': '价格',
 
 
 	// 短语

@@ -63,6 +63,11 @@ const VideoSource = r => require.ensure([], () => r(require('./pages/video/sourc
 const VideoPlay = r => require.ensure([], () => r(require('./pages/video/play.vue')), 'VideoPlay')
 // Video END *******************
 
+// Goods ***********************
+const GoodsIndex = r => require.ensure([], () => r(require('./pages/goods/index.vue')), 'GoodsIndex')
+const GoodsCreate = r => require.ensure([], () => r(require('./pages/goods/create.vue')), 'GoodsCreate')
+// Goods END *******************
+
 const routes = [
   // 地址为空的时候跳转
   { path: '', redirect: '/admin' },
@@ -76,6 +81,14 @@ const routes = [
     path: '/admin',
     component: Admin,
     children: [
+      {
+        path: 'goods',
+        component: GoodsIndex,
+        children: [
+          { path: 'index', component: GoodsIndex },
+        ]
+      },
+      { path: 'goods/create', component: GoodsCreate, props: false },
       {
         path: 'video',
         component: VideoIndex,
