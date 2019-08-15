@@ -67,6 +67,18 @@
                     prop="show_price">
                 <el-input type="number" v-model="addForm.show_price"/>
             </el-form-item>
+            <el-form-item
+                    :label="$t('SaleOpenTime')"
+                    prop="sale_open_time">
+                <el-date-picker
+                        v-model="seTime"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                </el-date-picker>
+            </el-form-item>
+
             <el-form-item>
                 <el-button
 
@@ -97,6 +109,7 @@
     },
     data () {
       return {
+        seTime: [],
         active: 0,
         cateOptions: [],
         props: {
@@ -134,31 +147,6 @@
           town_code: '',
           town_name: ''
         },
-        editForm: {
-          id: 0,
-          prop_value_ids: '',
-          title: '',
-          sub_title: 0,
-          show_price: 0,
-          cover_img: '',
-          small_cover_img: '',
-          img_list: '',
-          sale_open_time: 0,
-          sale_end_time: 0,
-          cate_id: 0,
-          freight_type: 1,
-          freight_tpl_id: 0,
-          country_code: 1,
-          country_name: '中国',
-          province_code: '',
-          province_name: '',
-          city_code: '',
-          city_name: '',
-          area_code: '',
-          area_name: '',
-          town_code: '',
-          town_name: ''
-        },
         rules: {
           title: [
             { required: true, message: this.$i18n.t('Please Input Title'), trigger: 'blur' },
@@ -168,13 +156,16 @@
         count: 0,
         tableData: [],
         loading: false,
-        dialogAddVisible: false,
-        dialogEditVisible: false,
         cateId: 0
       }
     },
     computed: {},
-    watch: {},
+    watch: {
+      seTime (newVal, oldVal) {
+        this.addForm.sale_open_time = (newVal[0].getTime() / 1000)
+        this.addForm.sale_end_time = (newVal[1].getTime() / 1000)
+      }
+    },
     created () {
 
     },
@@ -204,58 +195,11 @@
         }
         this.active++
       },
-      onRelateBrand (row) {
-        this.$router.replace({ path: '/admin/spcate/relate_brand/' + row.id, params: { grandpa: this.grandpa } })
-      },
-      onRelateProp (row) {
-        this.$router.replace({ path: '/admin/spcate/relate_prop/' + row.id, params: { grandpa: this.grandpa } })
-      },
-      onDelete (id) {
-        this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
-          confirmButtonText: this.$i18n.t('Confirm'),
-          cancelButtonText: this.$i18n.t('Cancel'),
-          type: 'warning',
-          beforeClose: (action, instance, done) => {
-            if (action === 'confirm') {
-              instance.confirmButtonLoading = true
-              instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-
-              spCateApi.delete({ id: id }, (res) => {
-                instance.confirmButtonLoading = false
-                this.refresh()
-                done()
-              }, (res) => {
-                console.debug(res)
-                done()
-                window.tools.alertError(res.msg)
-                instance.confirmButtonLoading = false
-              })
-            } else {
-              done()
-            }
-          }
-        }).then(() => {
-        }).catch(() => {
-        })
-      },
-      submitEditForm () {
-        spCateApi.update(this.editForm, (resp) => {
-          this.loading = false
-          this.dialogEditVisible = false
-          this.refresh()
-        }, (resp) => {
-          window.tools.alertError(resp.msg)
-          this.loading = false
-          this.dialogEditVisible = false
-        })
-      },
-      submitAddForm () {
-        console.log(this.addForm)
+      submitForm () {
         this.$refs.addForm.validate((valid) => {
           if (valid) {
-            spCateApi.create(this.addForm, (resp) => {
+            goodsApi.create(this.addForm, (resp) => {
               this.loading = false
-              this.dialogAddVisible = false
               window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
               this.refresh()
             }, (resp) => {
@@ -266,24 +210,6 @@
             return false
           }
         })
-      },
-      onAdd () {
-        this.addForm = {
-          parent_id: this.queryForm.parent_id,
-          title: '',
-          leaf: 0,
-          sort: 0
-        }
-        this.dialogAddVisible = true
-      },
-      onEdit (row) {
-        this.editForm = {
-          sort: row.sort,
-          id: row.id,
-          title: row.title,
-          leaf: row.leaf
-        }
-        this.dialogEditVisible = true
       },
       removeEmptyChildren (child) {
         for (var i in child) {
