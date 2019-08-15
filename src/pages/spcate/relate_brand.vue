@@ -138,7 +138,6 @@
 		},
 		data() {
 			return {
-                grandpa: 0,
 				queryForm: {
                     title: '',
                     pageIndex: 0,
@@ -188,7 +187,7 @@
                 this.refresh ()
             },
 			back() {
-                this.$router.replace({path: '/admin/spcate/index/' + this.$route.params.grandpa})
+              this.$router.back()
             },
             onRemove(id) {
                 this.$confirm (this.$i18n.t('Action Confirm'), this.$t('Alert'), {

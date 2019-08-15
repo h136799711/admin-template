@@ -21,15 +21,6 @@
         <el-button
                 type="primary"
                 size="mini"
-                icon="el-icon-back"
-                v-if="grandpa !== -1"
-                :loading="loading"
-                @click="back()">
-            {{ $t('Back')}}
-        </el-button>
-        <el-button
-                type="primary"
-                size="mini"
                 icon="el-icon-plus"
                 :loading="loading"
                 @click="onAdd()">

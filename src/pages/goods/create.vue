@@ -15,17 +15,33 @@
             {{ $t('Back')}}
         </el-button>
 
-        <el-steps :active="active" finish-status="success">
-            <el-step title="选择类目"></el-step>
-            <el-step title="步骤 2"></el-step>
-            <el-step title="步骤 3"></el-step>
-        </el-steps>
+        <el-row type="flex" class="margin-md-top" justify="center">
+            <el-col :span="24">
+                <el-steps :active="active" finish-status="success">
+                    <el-step title="选择类目"></el-step>
+                    <el-step title="商品信息"></el-step>
+                    <el-step title="商品规格"></el-step>
+                </el-steps>
+            </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+            <el-col :span="24">
+                <el-button style="margin-top: 12px;" size="mini" @click="onPrev">上一步</el-button>
+                <el-button style="margin-top: 12px;" size="mini" @click="onNext">下一步</el-button>
+            </el-col>
+        </el-row>
 
-        <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
 
-        <el-cascader :props="props"></el-cascader>
-
+        <el-row v-if="active == 0" type="flex" justify="center">
+            <el-col :span="24" class="margin-md-top">
+                <div>一个商品只能关联一个类目, 选择后不能再变更，如果以下没有，请到类目中添加</div>
+                <el-cascader style="width: 320px;" v-model="cateId" :loading="loading" :options="cateOptions"
+                             placeholder="试试搜索：男装" filterable size="small" :props="props"></el-cascader>
+            </el-col>
+        </el-row>
         <el-form
+                class="margin-md-top"
+                v-if="active == 1"
                 :visible.sync="dialogAddVisible"
                 ref="addForm"
                 :model="addForm"
@@ -44,23 +60,25 @@
                     :label="$t('SubTitle')"
                     required
                     prop="sub_title">
-                <el-input v-model="addForm.sub_title"/>
+                <el-input :rows="5" v-model="addForm.sub_title"/>
             </el-form-item>
+            <el-form-item
+                    :label="$t('Price')"
+                    prop="show_price">
+                <el-input type="number" v-model="addForm.show_price"/>
+            </el-form-item>
+            <el-form-item>
+                <el-button
 
+                        :loading="loading"
+                        type="primary"
+                        @click="submitAddForm()"
+                >
+                    {{ $t('Confirm') }}
+                </el-button>
+            </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogAddVisible = false">
-                {{ $t('Cancel') }}
-            </el-button>
-            <el-button
 
-                    :loading="loading"
-                    type="primary"
-                    @click="submitAddForm()"
-            >
-                {{ $t('Confirm') }}
-            </el-button>
-        </div>
     </div>
 </template>
 
@@ -79,25 +97,13 @@
     },
     data () {
       return {
-        cateLevel1: [],
-        cateLevel2: [],
-        cateLevel3: [],
+        active: 0,
+        cateOptions: [],
         props: {
-          lazy: true,
-          lazyLoad (node, resolve) {
-            const { level } = node
-
-            setTimeout(() => {
-              const nodes = Array.from({ length: level + 1 })
-                .map(item => ({
-                  value: ++id,
-                  label: `选项${id}`,
-                  leaf: level >= 2
-                }))
-              // 通过调用resolve将子节点数据返回，通知组件数据加载完成
-              resolve(nodes)
-            }, 1000)
-          }
+          multiple: false,
+          value: 'id',
+          label: 'title',
+          children: 'children'
         },
         freightOptions: [
           { key: 1, title: '免运费' },
@@ -107,7 +113,7 @@
         addForm: {
           prop_value_ids: '',
           title: '',
-          sub_title: 0,
+          sub_title: '',
           show_price: 0,
           cover_img: '',
           small_cover_img: '',
@@ -163,7 +169,8 @@
         tableData: [],
         loading: false,
         dialogAddVisible: false,
-        dialogEditVisible: false
+        dialogEditVisible: false,
+        cateId: 0
       }
     },
     computed: {},
@@ -175,6 +182,28 @@
       this.refresh()
     },
     methods: {
+      onCateChange (el) {
+        console.debug('change', el)
+        if (el.length > 0) {
+          this.cateId = el[el.length - 1]
+        }
+      },
+      onPrev () {
+        if (this.active == 0) {
+          return
+        }
+        this.active--
+      },
+      onNext () {
+        if (this.active == 2) {
+          return
+        }
+        if (this.cateId == 0) {
+          window.tools.alertError('请选择类目')
+          return
+        }
+        this.active++
+      },
       onRelateBrand (row) {
         this.$router.replace({ path: '/admin/spcate/relate_brand/' + row.id, params: { grandpa: this.grandpa } })
       },
@@ -256,14 +285,30 @@
         }
         this.dialogEditVisible = true
       },
+      removeEmptyChildren (child) {
+        for (var i in child) {
+          if (!child[i].children) {
+            continue
+          }
+          if (child[i].children.length === 0) {
+            child[i].children = undefined
+          } else {
+            this.removeEmptyChildren(child[i].children)
+          }
+        }
+        return child
+      },
       refresh () {
         // 刷新当前
         this.tableData = []
         this.loading = true
         let that = this
-        spCateApi.info({}, (resp) => {
-
+        spCateApi.query3Level({}, (resp) => {
           that.loading = false
+          resp = this.removeEmptyChildren(resp)
+          console.debug('三级类目', resp)
+          this.cateOptions = resp
+
         }, (resp) => {
           window.tools.alertError(resp.msg)
           that.loading = false

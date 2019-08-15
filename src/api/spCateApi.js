@@ -15,6 +15,9 @@ const spCateApi = {
 	query (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_query'}), suc, fail);
 	},
+  query3Level (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_query3Level' }), suc, fail)
+  },
 	delete (data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpCate_delete'}), suc, fail);
 	},

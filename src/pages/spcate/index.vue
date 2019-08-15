@@ -293,11 +293,12 @@
 			}
 		},
 		computed: {
+          parentId () {
+            return parseInt(this.$route.params.id)
+          }
 		},
 		watch: {
             '$route' (to, from) {
-                console.debug("fullPath", this.$router.history.current.fullPath)
-                console.debug(to, from)
 				this.queryForm.parent_id = parseInt(to.params.id)
                 this.refresh()
 			}
@@ -306,14 +307,16 @@
 
 		},
         mounted() {
+          this.queryForm.parent_id = this.parentId
+          console.debug('ParentId = ', this.$route.params.id, this.parentId)
             this.refresh()
         },
 		methods: {
             onRelateBrand(row) {
-                this.$router.replace({path: '/admin/spcate/relate_brand/' + row.id, params: {grandpa: this.grandpa}})
+              this.$router.push({ path: '/admin/spcate/relate_brand/' + row.id })
             },
             onRelateProp(row) {
-                this.$router.replace({path: '/admin/spcate/relate_prop/' + row.id, params: {grandpa: this.grandpa}})
+              this.$router.push({ path: '/admin/spcate/relate_prop/' + row.id })
             },
 			back() {
 			    this.$router.replace({path: '/admin/spcate/index/' + this.grandpa})
@@ -398,10 +401,9 @@
 				this.tableData = []
 				this.loading = true
                 let that = this
-                spCateApi.info({id: this.queryForm.parent_id},  (resp) => {
+              spCateApi.info({ id: this.parentId }, (resp) => {
                     that.grandpa = resp.parent_id
                     that.grandpaTitle = resp.title;
-                    // that.loading = false
                     spCateApi.query(that.queryForm, (resp) => {
                         that.tableData = resp
                         that.loading = false
