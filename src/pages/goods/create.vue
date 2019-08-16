@@ -3,6 +3,11 @@
         color: blue;
     }
 
+    .img-uploader .coverImg {
+        width: 300px;
+        height: 300px;
+    }
+
 </style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
@@ -42,7 +47,6 @@
         <el-form
                 class="margin-md-top"
                 v-if="active == 1"
-                :visible.sync="dialogAddVisible"
                 ref="addForm"
                 :model="addForm"
                 label-position="right"
@@ -79,12 +83,17 @@
                 </el-date-picker>
             </el-form-item>
 
+            <el-form-item
+                    :label="$t('Cover')">
+                <ImgUploader2online show="all" imgCls="coverImg" ref="addImgUploader" @onUploadSuccess="onUploadSuccess"
+                                    :defaultImgUrl="addForm.cover_img" imgType="goods"/>
+            </el-form-item>
             <el-form-item>
                 <el-button
 
                         :loading="loading"
                         type="primary"
-                        @click="submitAddForm()"
+                        @click="submitForm()"
                 >
                     {{ $t('Confirm') }}
                 </el-button>
@@ -100,12 +109,14 @@
   import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
   import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
   import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+  import ImgUploader2online from '@/components/img-uploader2online.vue'
 
   export default {
     components: {
       ElForm,
       ElButtonGroup,
-      ElButton
+      ElButton,
+      ImgUploader2online
     },
     data () {
       return {
@@ -173,11 +184,9 @@
       this.refresh()
     },
     methods: {
-      onCateChange (el) {
-        console.debug('change', el)
-        if (el.length > 0) {
-          this.cateId = el[el.length - 1]
-        }
+      onUploadSuccess (data) {
+        console.debug('Upload Image', data)
+        this.addForm.cover_img = window.tools.getImgUrl(data.path)
       },
       onPrev () {
         if (this.active == 0) {
