@@ -419,7 +419,8 @@
                 inputVisible: false,
                 inputValue: '',
                 jumpTypeOptions: [
-                    {code: 'url', name: this.$i18n.t('Url') }
+                  { code: 'url', name: this.$i18n.t('Url') },
+                  { code: 'out_url', name: this.$i18n.t('Absolute') + this.$i18n.t('Url') }
                 ],
 				positionOptions: [
                 ],

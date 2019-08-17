@@ -174,6 +174,7 @@ exports.default = {
 	'Goods': '商品',
 	'SubTitle': '子标题',
 	'Price': '价格',
+	'Absolute': '绝对',
 
 
 	// 短语
