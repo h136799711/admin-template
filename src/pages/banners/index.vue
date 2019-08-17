@@ -581,6 +581,8 @@
                 this.editForm = {
                     position: row.position,
                     sort: row.sort,
+                  start_time: row.start_time,
+                  end_time: row.end_time,
                     date_range: [row.start_time * 1000, row.end_time * 1000],
                     img_url: tools.getImgUrl(row.img_url),
                     jump_url: row.jump_url,
