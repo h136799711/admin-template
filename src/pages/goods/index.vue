@@ -74,18 +74,10 @@
                         :label="$t('Action')">
                     <template slot-scope="scope">
                         <el-button
-                                v-if="scope.row.leaf"
                                 size="mini"
                                 icon="by-icon by-pinpai"
-                                @click="onRelateBrand(scope.row)">
+                                @click="onSku(scope.row)">
                             {{$t('Goods')}}{{$t('SKU')}}
-                        </el-button>
-                        <el-button
-                                v-if="scope.row.leaf"
-                                size="mini"
-                                icon="el-icon-edit-outline"
-                                @click="onRelateProp(scope.row)">
-                            {{$t('Goods')}}{{$t('Property')}}
                         </el-button>
                         <el-button
                                 size="mini"
@@ -133,64 +125,10 @@
     data () {
       return {
         inputVisible: false,
-        freightOptions: [
-          { key: 1, title: '免运费' },
-          { key: 2, title: '到付' },
-          { key: 3, title: '预付' }
-        ],
         queryForm: {
           title: '',
           page_index: 1,
           page_size: 10
-        },
-        addForm: {
-          prop_value_ids: '',
-          title: '',
-          sub_title: 0,
-          show_price: 0,
-          cover_img: '',
-          small_cover_img: '',
-          img_list: '',
-          sale_open_time: 0,
-          sale_end_time: 0,
-          cate_id: 0,
-          freight_type: 1,
-          freight_tpl_id: 0,
-          country_code: 1,
-          country_name: '中国',
-          province_code: '',
-          province_name: '',
-          city_code: '',
-          city_name: '',
-          area_code: '',
-          area_name: '',
-          town_code: '',
-          town_name: ''
-        },
-        editForm: {
-          id: 0,
-          prop_value_ids: '',
-          title: '',
-          sub_title: 0,
-          show_price: 0,
-          cover_img: '',
-          small_cover_img: '',
-          img_list: '',
-          sale_open_time: 0,
-          sale_end_time: 0,
-          cate_id: 0,
-          freight_type: 1,
-          freight_tpl_id: 0,
-          country_code: 1,
-          country_name: '中国',
-          province_code: '',
-          province_name: '',
-          city_code: '',
-          city_name: '',
-          area_code: '',
-          area_name: '',
-          town_code: '',
-          town_name: ''
         },
         rules: {
           title: [
@@ -200,9 +138,7 @@
         },
         count: 0,
         tableData: [],
-        loading: false,
-        dialogAddVisible: false,
-        dialogEditVisible: false
+        loading: false
       }
     },
     computed: {},
@@ -214,10 +150,6 @@
       this.refresh()
     },
     methods: {
-      onRelateBrand (row) {
-      },
-      onRelateProp (row) {
-      },
       onDelete (id) {
         this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
           confirmButtonText: this.$i18n.t('Confirm'),
@@ -245,35 +177,6 @@
         }).catch(() => {
         })
       },
-      submitEditForm () {
-        spCateApi.update(this.editForm, (resp) => {
-          this.loading = false
-          this.dialogEditVisible = false
-          this.refresh()
-        }, (resp) => {
-          window.tools.alertError(resp.msg)
-          this.loading = false
-          this.dialogEditVisible = false
-        })
-      },
-      submitAddForm () {
-        console.log(this.addForm)
-        this.$refs.addForm.validate((valid) => {
-          if (valid) {
-            spCateApi.create(this.addForm, (resp) => {
-              this.loading = false
-              this.dialogAddVisible = false
-              window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
-              this.refresh()
-            }, (resp) => {
-              this.loading = false
-              window.tools.alertError(resp.msg)
-            })
-          } else {
-            return false
-          }
-        })
-      },
       byPagerSizeChange (val) {
         this.queryForm.page_size = val
         this.refresh()
@@ -282,12 +185,14 @@
         this.queryForm.page_index = val
         this.refresh()
       },
-
       onAdd () {
         this.$router.push({ path: 'create' })
       },
       onEdit (row) {
-        this.$router.push({ path: 'edit' })
+        this.$router.push({ path: 'edit/' + row.id })
+      },
+      onSku (row) {
+        this.$router.push({ path: 'sku/' + row.id })
       },
       refresh () {
         // 刷新当前
