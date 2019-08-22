@@ -175,6 +175,12 @@ exports.default = {
 	'SubTitle': '子标题',
 	'Price': '价格',
 	'Absolute': '绝对',
+	'SaleTime': '销售时间',
+	'Prev': '上一个',
+	'Place': '发货地',
+	'Freight': '运费',
+	'SupportServices': '支持服务',
+	'SmallCover': '小尺寸封面',
 
 
 	// 短语

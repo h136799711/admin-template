@@ -32,14 +32,14 @@ const getClientId = () => {
 }
 // 设置会话id
 const setUID = (uid) => {
-  console.debug('set uid', uid)
+  // console.debug('set uid', uid)
 	window.cache.setValue ('BY_UID', uid, 3600)
 }
 
 // 获取会话id
 const getUID = () => {
 	var uid = window.cache.getValue ('BY_UID')
-  console.debug('getUID', uid)
+  // console.debug('getUID', uid)
 	if (typeof (uid) === 'undefined' || uid === '') {
 		uid = 0
       console.debug('generate uid', uid)
@@ -49,14 +49,14 @@ const getUID = () => {
 }
 // 设置头像地址
 const setAvatar = (avatar) => {
-  console.debug('set avatar', avatar)
+  // console.debug('set avatar', avatar)
 	window.cache.setValue ('BY_AVATAR', avatar, 3600)
 }
 
 // 获取会话id
 const getAvatar = () => {
 	var avatar = window.cache.getValue ('BY_AVATAR')
-  console.debug('getAvatar', avatar)
+  // console.debug('getAvatar', avatar)
 	if (typeof (avatar) === 'undefined' || avatar === '') {
 		avatar = 0
 	}
@@ -66,14 +66,14 @@ const getAvatar = () => {
 
 // 设置会话id
 const setSessionId = (sessionId) => {
-  console.debug('set session_id', sessionId)
+  // console.debug('set session_id', sessionId)
 	window.cache.setValue ('BY_SESSION_ID', sessionId, 3600)
 }
 
 // 获取会话id
 const getSessionId = () => {
 	let sessionId = window.cache.getValue ('BY_SESSION_ID')
-  console.debug('getSessionId', sessionId)
+  // console.debug('getSessionId', sessionId)
 	if (typeof (sessionId) === 'undefined' || sessionId === '') {
 		let UUID = require ('uuid')
 		sessionId = ('BY' + UUID.v4 ()).replace (/-/g, '')

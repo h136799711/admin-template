@@ -175,7 +175,13 @@ exports.default = {
 	'Goods': 'Goods',
 	'SubTitle': 'SubTitle',
 	'Price': 'Price',
-  'Absolute': 'Absolute',
+	'Absolute': 'Absolute',
+	'SaleTime': 'Sale Time',
+	'Prev': 'Prev',
+	'Place': 'Place',
+	'Freight': 'Freight',
+	'SupportServices': 'Support Services',
+	'SmallCover': 'Smaller Cover Image',
 
 	// 短语
 	'PropertyValue': 'Property Value',

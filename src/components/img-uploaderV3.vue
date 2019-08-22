@@ -35,6 +35,9 @@
         width: 178px;
         height: 178px;
         display: block;
+        float: left;
+        margin-right: 10px;
+        margin-top: 5px;
     }
 
     .by-img-uploader .uploadedimg {
@@ -77,7 +80,7 @@
             <!-- 线上图片 -->
             <span v-for="img in uploadedImgs">
                     <el-image
-                            :class="(chooseImgId == img.id) ? 'actived':''"
+                            :class="(chooseImgId.indexOf(img.id + ',') !== -1) ? 'actived':''"
                             @click="choose(img)"
                             style="cursor:pointer;width: 80px; height: 100px"
                             :src="img.url"
@@ -93,20 +96,26 @@
                         @current-change="byPagerCurrentChange"/>
             </div>
         </div>
-        <el-upload
-                v-if="sourceType === '1'"
-                class="img-uploader"
-                name="image"
-                :data="extraData"
-                :action="avatarUploadUrl"
-                :show-file-list="false"
-                :on-success="handleSuccess"
-                :before-upload="beforeUpload">
-            <img v-if="imageUrl" :src="imageUrl" :class="imgCls">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <el-input v-model="imageUrl" v-if="sourceType === '0' "/>
-        <img :src="imageUrl" @load="remoteUrlLoad" v-if="sourceType === '0' && imageUrl " class="preview-img"/>
+
+        <div v-if="sourceType === '1'" class="img-uploader-container">
+        <span v-for="src in imageUrlArr ">
+            <img :src="src" :class="imgCls">
+        </span>
+            <el-upload
+                    class="img-uploader"
+                    name="image"
+                    :data="extraData"
+                    :action="avatarUploadUrl"
+                    :show-file-list="false"
+                    :on-success="handleSuccess"
+                    :before-upload="beforeUpload">
+                <i v-if="this.choosedImgPaths.length < this.items" class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+        </div>
+        <el-input @change="inputRemoteImgs" v-model="imageUrl" v-if="sourceType === '0' "/>
+        <span v-for="src in imageUrlArr ">
+            <img :src="src" v-if="sourceType === '0'" class="preview-img"/>
+        </span>
     </div>
 </template>
 
@@ -115,6 +124,12 @@
 
   export default {
     props: {
+      items: {
+        type: Number,
+        default () {
+          return 1
+        }
+      },
       imgCls: {
         type: String,
         default () {
@@ -128,7 +143,7 @@
     },
     data () {
       return {
-        chooseImgId: 0,
+        chooseImgId: '',
         loadingUploadedImgs: false,
         date: '',
         pageIndex: 0,
@@ -140,17 +155,30 @@
         extraData: { 't': 'other' },
       }
     },
-    computed: {},
+    computed: {
+      imageUrlArr () {
+        return this.imageUrl.split(',').filter(function (item) {
+          return item && item.length > 0
+        })
+      },
+      choosedImgPaths () {
+        let imgArr = this.imageUrl.split(',').filter(function (item) {
+          return item && item.length > 0
+        })
+        return imgArr
+      }
+    },
     watch: {
       clear (newVal, oldVal) {
         if (newVal) {
-          this.imageUrl = ''
+          // this.imageUrl = ''
         }
       },
       defaultImgUrl (newVal) {
         this.imageUrl = this.defaultImgUrl
       },
       imageUrl (newVal) {
+        console.log('image url', newVal)
         if (newVal.length === '') {
           this.imageUrl = this.defaultImgUrl
         }
@@ -169,13 +197,39 @@
       this.imageUrl = this.defaultImgUrl
     },
     methods: {
+      inputRemoteImgs () {
+        this.$emit('onUploadSuccess', this.imageUrl)
+      },
+      appendImageUrl (url) {
+        if (this.imageUrl.indexOf(url + ',') !== -1) {
+          this.imageUrl.replace(url + ',', '')
+          return
+        }
+        this.imageUrl = this.imageUrl + url + ','
+      },
+      pushChooseImageId (img) {
+        console.debug(this.imageUrl, this.chooseImgId, img.id, this.chooseImgId.indexOf(img.id + ','))
+        if (this.chooseImgId.indexOf(img.id + ',') !== -1) {
+          this.chooseImgId = this.chooseImgId.replace(img.id + ',', '')
+          this.imageUrl = this.imageUrl.replace(img.url + ',', '')
+          return
+        }
+        if (this.choosedImgPaths.length >= this.items) {
+          // 限制数量
+          this.$message.error('最多选' + this.items + '张图片')
+          return
+        }
+        this.chooseImgId = this.chooseImgId + img.id + ','
+        this.imageUrl = this.imageUrl + img.url + ','
+        console.debug('url => ', this.imageUrl)
+      },
       choose (img) {
-        this.chooseImgId = img.id
-        this.$emit('onUploadSuccess', { h: img.h, w: img.w, path: img.url })
+        this.pushChooseImageId(img)
+        this.$emit('onUploadSuccess', this.imageUrl)
       },
       sourceTypeChange (val) {
         console.debug('source type', val)
-        if (val == 2) {
+        if (parseInt(val) === 2) {
           this.queryUploaded()
         }
       },
@@ -214,14 +268,10 @@
         }
         return uri
       },
-      remoteUrlLoad (res) {
-        console.debug(res)
-        this.$emit('onUploadSuccess', { h: 0, w: 0, path: getImage(this.imageUrl) })
-      },
       handleSuccess (res, file) {
         if (parseInt(res.code) === 0) {
-          this.$emit('onUploadSuccess', { h: res.data.h, w: res.data.w, path: res.data.relative_path })
-          this.imageUrl = URL.createObjectURL(file.raw)
+          this.appendImageUrl(res.data.relative_path)
+          this.$emit('onUploadSuccess', this.imageUrl)
         } else {
           this.$message.error(res.msg)
         }
@@ -229,7 +279,10 @@
       beforeUpload (file) {
         const isJPGOrPng = (file.type === 'image/jpeg' || file.type === 'image/png')
         const isLt2M = file.size / 1024 / 1024 < 2
-
+        if (this.choosedImgPaths.length >= this.items) {
+          this.$message.error('最多传' + this.items + '张图片')
+          return false
+        }
         if (!isJPGOrPng) {
           this.$message.error(this.$i18n.t('FileTypeLimitJpgPng'))
         }
@@ -239,7 +292,7 @@
         return isJPGOrPng && isLt2M
       },
     },
-    name: 'uploader2online'
+    name: 'uploaderV3'
   }
 </script>
 

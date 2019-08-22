@@ -177,7 +177,8 @@
                 </el-form-item>
                 <el-form-item :label="$t('Icon')"
                     prop="icon">
-                    <ImgUploader ref="editImgUploader" @onUploadSuccess="onUploadSuccess" :defaultImgUrl="editForm.icon" :clear="imgUploadClear" imgType="brand_icon"/>
+                    <ImgUploader2Online show="all" ref="editImgUploader" @onUploadSuccess="onUploadSuccess"
+                                        :defaultImgUrl="editForm.icon" :clear="imgUploadClear" imgType="brand_icon"/>
                 </el-form-item>
                 <el-form-item
                         :label="$t('Description')"
@@ -209,7 +210,7 @@
 	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
 	import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
 	import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
-	import ImgUploader from '@/components/img-uploader.vue'
+    import ImgUploader2Online from '@/components/img-uploader2online.vue'
 
 
 	export default {
@@ -217,7 +218,7 @@
 			ElForm,
 			ElButtonGroup,
 			ElButton,
-					ImgUploader
+          ImgUploader2Online
 		},
 		data() {
 			return {

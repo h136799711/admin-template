@@ -27,11 +27,11 @@ const apiMethods = {
         if (!data) data = {};
         data.app_version = window.tools.getVersion();
         data.app_type = 'vue-web';
-				data.client_id = window.tools.getAppId();
-				data.sid = window.tools.getSessionId();
-				data.uid = window.tools.getUID();
-				data.deviceType = window.tools.getDeviceType();
-				data.deviceToken = window.tools.getDeviceToken();
+        data.client_id = window.tools.getAppId()
+        data.sid = window.tools.getSessionId()
+        data.uid = window.tools.getUID()
+        data.deviceType = window.tools.getDeviceType()
+        data.deviceToken = window.tools.getDeviceToken()
 
         data = qs.stringify(data);
         axios.post(url, data, {

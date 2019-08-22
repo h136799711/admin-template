@@ -40,7 +40,7 @@ const messages = {
 }
 
 axios.defaults.baseURL = ''
-axios.defaults.timeout = 15000
+axios.defaults.timeout = 30000
 axios.defaults.headers['Content-Type'] = 'application/json'
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.withCredentials = false

@@ -227,8 +227,7 @@
             if (action === 'confirm') {
               instance.confirmButtonLoading = true
               instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-
-              spCateApi.delete({ id: id }, (res) => {
+              goodsApi.delete({ id: id }, (res) => {
                 instance.confirmButtonLoading = false
                 this.refresh()
                 done()

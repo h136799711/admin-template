@@ -228,7 +228,7 @@
 value="" @keydown.enter="login"
             >
             <span class="codeImg">
-              <template v-if="user.verifyImg == 'error'">
+              <template v-if="verifyImg == 'error'">
                 <span
                   class="code_retry"
                   @click="refresh_verify"
@@ -238,13 +238,13 @@ value="" @keydown.enter="login"
               </template>
               <template v-else>
                 <span
-                  v-if="user.verifyImg == ''"
-                  class="inf-rotate by-icon by-iconloading-copy"
+                        v-if="verifyImg == ''"
+                        class="inf-rotate by-icon by-iconloading-copy"
                 />
                 <img
-                  :src="user.verifyImg"
-                  class="verifyImg"
-                  @click="refresh_verify"
+                        :src="verifyImg"
+                        class="verifyImg"
+                        @click="refresh_verify"
                 >
               </template>
             </span>
@@ -281,8 +281,8 @@ value="" @keydown.enter="login"
     return {
       isLogging: false,
       isPswFocus: false,
+      verifyImg: '',
       user: {
-        verifyImg: '',
         mobile: '',
         password: '',
         verifyCode: '',
@@ -350,18 +350,17 @@ value="" @keydown.enter="login"
     login () {
       if (!this.checkLogin()) return
       this.isLogging = true
-      console.debug('dispatch')
       this.$store.dispatch('login', this.user)
     },
     refresh_verify () {
-      this.user.verifyImg = ''
+      this.verifyImg = ''
       securityCodeApi.image_create([], function (resData) {
         console.debug(resData)
         this.user.verifyId = resData.id
-        this.user.verifyImg = resData.code
+        this.verifyImg = resData.code
       }.bind(this), function (failMsg) {
         console.debug(failMsg)
-        this.user.verifyImg = 'error'
+        this.verifyImg = 'error'
       }.bind(this))
     },
     jump2Admin () {

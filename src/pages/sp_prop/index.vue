@@ -51,17 +51,17 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="120px"
+                        width="160px"
                         prop="is_sale"
-                        :label="$t('Is') + $t('SaleProperty')"
+                        :label="$t('Is') + ' '  + $t('SaleProperty')"
                 >
                     <template slot-scope="scope">
                         {{$t('' + scope.row.is_sale)}}
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="100px"
-                        :label="$t('Is') + $t('ColorProperty')">
+                        width="140px"
+                        :label="$t('Is') + ' ' + $t('ColorProperty')">
                     <template slot-scope="scope">
                         {{$t('' + scope.row.is_color)}}
                     </template>
@@ -75,7 +75,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="320px"
+                        width="360px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
