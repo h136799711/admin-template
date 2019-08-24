@@ -13,13 +13,13 @@
         height: 160px;
     }
 
-    .by-goods-create .cate-prop-item {
+    .by-goods-edit .cate-prop-item {
         width: 30%;
         float: left;
     }
 </style>
 <template>
-    <div class="main-content by-goods-create padding-md-bottom padding-md-top">
+    <div class="main-content by-goods-edit padding-md-bottom padding-md-top">
         <el-button
                 type="primary"
                 size="mini"

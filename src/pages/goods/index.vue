@@ -200,19 +200,22 @@
       onSku (row) {
         this.$router.push({ path: 'sku/' + row.id })
       },
-      refresh () {
+      async refresh () {
         // 刷新当前
         this.tableData = []
         this.loading = true
         let that = this
-        goodsApi.query(that.queryForm, (resp) => {
-          that.tableData = resp.list
-          that.count = parseInt(resp.count)
+        try {
+          let data = await goodsApi.query(that.queryForm)
+          that.tableData = data.list
+          that.count = parseInt(data.count)
           that.loading = false
-        }, (resp) => {
-          window.tools.alertError(resp.msg)
+        } catch (err) {
+
+          console.debug(err)
+          window.tools.alertError(err)
           that.loading = false
-        })
+        }
       }
     }
   }

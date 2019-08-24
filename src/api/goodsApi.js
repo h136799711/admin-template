@@ -11,8 +11,8 @@ const goodsApi = {
   update (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoods_update' }), suc, fail)
   },
-  query (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoods_query' }), suc, fail)
+  query (data) {
+    return http.methods.promisePost(Object.assign(data, { service_type: 'by_SpGoods_query' }))
   },
   delete (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoods_delete' }), suc, fail)

@@ -3,12 +3,12 @@
 const HtmlWebpackPlugin = require ('html-webpack-plugin')
 const CopyWebpackPlugin = require ('copy-webpack-plugin')
 const {VueLoaderPlugin} = require ('vue-loader')
+require('babel-polyfill')
 const utils = require ('./utils')
 
 
 module.exports = {
-	entry: './src/index.js',
-
+	entry: ['babel-polyfill', './src/index.js'],
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {
