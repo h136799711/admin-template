@@ -81,6 +81,12 @@
                         </el-button>
                         <el-button
                                 size="mini"
+                                icon="by-icon by-pinpai"
+                                @click="onSku(scope.row)">
+                            {{$t('Delivery')}}{{$t('Place')}}
+                        </el-button>
+                        <el-button
+                                size="mini"
                                 icon="el-icon-edit"
                                 @click="onEdit(scope.row)">
                             {{$t('Edit')}}

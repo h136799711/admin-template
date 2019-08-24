@@ -265,6 +265,9 @@
       this.refresh()
     },
     methods: {
+      back () {
+        this.$router.go(-1)
+      },
       classify (data) {
         for (var i = 0; i < data.length; i++) {
           if (data[i].is_sale) {

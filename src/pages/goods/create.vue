@@ -324,6 +324,9 @@
     },
     computed: {},
     watch: {
+      back () {
+        this.$router.go(-1)
+      },
       selectedPropValueIds (newVal) {
         // 商品属性
         this.addForm.prop_value_ids = newVal.filter(item => {

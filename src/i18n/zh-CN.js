@@ -177,11 +177,12 @@ exports.default = {
 	'Absolute': '绝对',
 	'SaleTime': '销售时间',
 	'Prev': '上一个',
-	'Place': '发货地',
+	'Place': '地址',
 	'Freight': '运费',
 	'SupportServices': '支持服务',
 	'SmallCover': '小尺寸封面',
 	'SKU': '库存规格',
+	'Delivery': '发货',
 
 
 	// 短语
