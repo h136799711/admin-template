@@ -181,6 +181,7 @@ exports.default = {
 	'Freight': '运费',
 	'SupportServices': '支持服务',
 	'SmallCover': '小尺寸封面',
+	'SKU': '库存规格',
 
 
 	// 短语

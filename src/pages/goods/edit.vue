@@ -32,7 +32,7 @@
         <el-row type="flex" class="margin-md-top" justify="center">
             <el-col :span="24">
                 <el-steps :active="active" finish-status="success">
-                    <el-step title="选择类目"></el-step>
+                    <el-step title="编辑属性"></el-step>
                     <el-step title="商品信息"></el-step>
                     <el-step title="商品图片"></el-step>
                 </el-steps>
@@ -41,16 +41,19 @@
         <el-row type="flex" justify="center">
             <el-col :span="24">
                 <el-button style="margin-top: 12px;" size="mini" @click="onPrev">{{ this.$t('Prev')}}</el-button>
-                <el-button style="margin-top: 12px;" size="mini" @click="onNext">{{ this.$t('Next')}}</el-button>
+                <el-button v-if="active == 2" style="margin-top: 12px;" size="mini" @click="onSave">
+                    {{ $t('Confirm') }}
+                </el-button>
+                <el-button v-else style="margin-top: 12px;" size="mini" @click="onNext">
+                    {{ this.$t('Next')}}
+                </el-button>
             </el-col>
         </el-row>
 
 
         <el-row v-if="active == 0" type="flex" justify="center">
             <el-col :span="24" class="margin-md-top">
-                <div>一个商品只能关联一个类目, 选择后不能再变更，如果以下没有，请到类目中添加</div>
-                <el-cascader style="width: 320px;" v-model="cateId" :loading="loading" :options="cateOptions"
-                             placeholder="试试搜索：男装" filterable size="small" :props="props"></el-cascader>
+                <div>一个商品只能关联一个类目, 选择后不能再编辑, 如果要更改请重新添加商品</div>
             </el-col>
         </el-row>
         <div v-if="active == 0">
@@ -122,12 +125,6 @@
             </el-form-item>
 
             <el-form-item
-                    :label="$t('Place')">
-                <el-cascader style="width: 320px;" v-model="place" :loading="loading"
-                             placeholder="" size="small" ref="placeCascader" :props="pcaProps"></el-cascader>
-            </el-form-item>
-
-            <el-form-item
                     :label="$t('SupportServices')">
                 <el-select v-model="supportService" multiple placeholder="可选">
                     <el-option
@@ -135,19 +132,6 @@
                             :key="item.code"
                             :label="item.name"
                             :value="item.code">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-
-
-            <el-form-item
-                    :label="$t('Freight')">
-                <el-select v-model="addForm.freight_type" placeholder="请选择">
-                    <el-option
-                            v-for="item in freightOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -174,17 +158,17 @@
             </el-form-item>
             <el-form-item
                     :label="$t('Image')">
-                <ImgUploaderV3 :items="3" show="all" imgCls="imgList" ref="imgListUploader"
+                <ImgUploaderV3 :editMode="true" :page-size="12" :items="3" show="all" imgCls="imgList"
+                               ref="imgListUploader"
                                @onUploadSuccess="onImgListUploadSuccess"
                                :defaultImgUrl="addForm.img_list" imgType="goods"/>
             </el-form-item>
 
             <el-form-item>
                 <el-button
-
                         :loading="loading"
                         type="primary"
-                        @click="onCreate()"
+                        @click="onSave()"
                 >
                     {{ $t('Confirm') }}
                 </el-button>
@@ -195,7 +179,6 @@
 </template>
 
 <script>
-  import pcaApi from '../../api/pcaApi'
   import spCateApi from '../../api/spCateApi'
   import goodsApi from '../../api/goodsApi'
   import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
@@ -206,6 +189,9 @@
   import datatreeApi from '../../api/datatreeApi'
 
   export default {
+    props: {
+      id: String
+    },
     components: {
       ElForm,
       ElButtonGroup,
@@ -223,67 +209,12 @@
         seTime: [],
         active: 0, // 当前步骤
         cateOptions: [],
-        pcaProps: {
-          lazy: true,
-          lazyLoad (node, resolve) {
-            const { value, level } = node
-            switch (parseInt(level)) {
-              case 0 :
-                pcaApi.query({}, function (resp) {
-                  let nodes = resp.map(item => ({
-                    value: item.code,
-                    label: item.name,
-                    leaf: false
-                  }))
-                  resolve(nodes)
-                })
-                break
-              case 1:
-                pcaApi.queryCity({ code: value }, function (resp) {
-                  let nodes = resp.map(item => ({
-                    value: item.code,
-                    label: item.name,
-                    leaf: false
-                  }))
-                  resolve(nodes)
-                })
-                break
-              case 2:
-                pcaApi.queryArea({ code: value }, function (resp) {
-                  let nodes = resp.map(item => ({
-                    value: item.code,
-                    label: item.name,
-                    leaf: false
-                  }))
-                  resolve(nodes)
-                })
-                break
-              case 3:
-                pcaApi.queryTown({ 'code': value }, function (resp) {
-                  let nodes = resp.map(item => ({
-                    value: item.code,
-                    label: item.name,
-                    leaf: true
-                  }))
-                  resolve(nodes)
-                })
-                break
-              default:
-                break
-            }
-          }
-        },
         props: {
           multiple: false,
           value: 'id',
           label: 'title',
           children: 'children'
         },
-        freightOptions: [
-          { value: 1, label: '免运费' },
-          { value: 2, label: '到付' },
-          { value: 3, label: '预付' }
-        ],
         supportService: [],
         addForm: {
           support_services: '',
@@ -296,19 +227,7 @@
           img_list: '',
           sale_open_time: 0,
           sale_end_time: 0,
-          cate_id: 0,
-          freight_type: 1,
-          freight_tpl_id: 0,
-          country_code: 1,
-          country_name: '中国',
-          province_code: '',
-          province_name: '',
-          city_code: '',
-          city_name: '',
-          area_code: '',
-          area_name: '',
-          town_code: '',
-          town_name: ''
+          cate_id: 0
         },
         rules: {
           title: [
@@ -330,10 +249,6 @@
           return parseInt(item) > 0
         }).join(',')
       },
-      cateId (newVal) {
-        this.addForm.cate_id = newVal[newVal.length - 1]
-        this.getRelateProp(this.addForm.cate_id)
-      },
       supportService (newVal) {
         this.addForm.support_services = newVal.join(',')
       },
@@ -341,21 +256,8 @@
         this.addForm.sale_open_time = (newVal[0].getTime() / 1000)
         this.addForm.sale_end_time = (newVal[1].getTime() / 1000)
       },
-      place (newVal, oldVal) {
-        let chkNode = this.$refs.placeCascader.getCheckedNodes()
-        this.addForm.province_name = chkNode[0].pathLabels[0]
-        this.addForm.city_name = chkNode[0].pathLabels[1]
-        this.addForm.area_name = chkNode[0].pathLabels[2]
-        this.addForm.town_name = chkNode[0].pathLabels[3]
-
-        this.addForm.province_code = newVal[0]
-        this.addForm.city_code = newVal[1]
-        this.addForm.area_code = newVal[2]
-        this.addForm.town_code = newVal[3]
-      }
     },
     created () {
-      this.addForm.show_price = 100
       let eTime = 10 * 365 * 24 * 3600 + ((new Date()).getTime() / 1000)
       this.seTime = [new Date(), new Date(eTime * 1000)]
     },
@@ -372,11 +274,22 @@
           }
         }
       },
-      getRelateProp (cateId) {
+      getRelateProp (cateId, propValues) {
+        let that = this
+
         spCateApi.getProp({ cate_id: cateId, is_sale: 0 }, (resp) => {
           this.classify(resp)
           this.selectedPropValueIds = null
           this.selectedPropValueIds = new Array(this.cateProperties.length)
+          for (let i = 0; i < that.cateProperties.length; i++) {
+            for (let k = 0; k < that.cateProperties[i].prop_values.length; k++) {
+              for (let j = 0; j < propValues.length; j++) {
+                if (parseInt(that.cateProperties[i].prop_values[k].id) === propValues[j]) {
+                  that.selectedPropValueIds[i] = propValues[j]
+                }
+              }
+            }
+          }
         }, (err) => {
           window.tools.alertError('获取类目属性失败')
         })
@@ -397,29 +310,13 @@
         this.active--
       },
       onNext () {
-        if (this.active == 3) {
-          return
-        }
-        console.debug(this.addForm)
-        // 测试注释掉
+        if (this.active == 2) {
+            return
+          }
 
-        if (this.active > 0) {
-          // 检测类目是否选择
-          if (parseInt(this.cateId) === 0) {
-            window.tools.alertError('请选择类目')
-            return
-          }
-        }
-        if (this.active > 1) {
-          // 检测发货地是否选择
-          if (this.addForm.town_code.length === 0) {
-            this.$message.error('请选择发货地')
-            return
-          }
-        }
         this.active++
       },
-      onCreate () {
+      onSave () {
 
         this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
           confirmButtonText: this.$i18n.t('Confirm'),
@@ -430,7 +327,8 @@
               instance.confirmButtonLoading = true
               this.addForm.show_price = 100 * this.addForm.show_price
               instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-              goodsApi.create(this.addForm, (resp) => {
+              this.addForm.id = this.id
+              goodsApi.update(this.addForm, (resp) => {
                 window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                 instance.confirmButtonLoading = false
                 done()
@@ -440,6 +338,8 @@
                 instance.confirmButtonLoading = false
                 window.tools.alertError(resp.msg)
               })
+            } else {
+              done()
             }
           }
         }).then(() => {
@@ -464,25 +364,34 @@
         this.tableData = []
         this.loading = true
         let that = this
-        spCateApi.query3Level({}, (resp) => {
-          that.loading = false
-          resp = this.removeEmptyChildren(resp)
-          console.debug('三级类目', resp)
-          this.cateOptions = resp
-
-        }, (resp) => {
-          window.tools.alertError(resp.msg)
-          that.loading = false
-        })
 
         datatreeApi.query({ parent_id: 65 }, (resp) => {
           this.supportServiceOptions = resp.list
+          this.loading = false
+        }, (resp) => {
+          window.tools.alertError(resp.msg)
+          this.loading = false
+        })
+        goodsApi.info({ id: this.id }, (resp) => {
+          that.addForm.title = resp.title
+          that.addForm.show_price = (resp.show_price / 100).toFixed(2)
+          that.addForm.sub_title = resp.sub_title
+          that.seTime = [new Date(resp.sale_open_time * 1000), new Date(resp.sale_end_time * 1000)]
+          that.addForm.small_cover_img = resp.small_cover_img
+          that.addForm.cover_img = resp.cover_img
+          that.support_services = resp.support_services
+          that.addForm.cate_id = resp.cate_id
+          that.addForm.img_list = resp.img_list
+          that.supportService = resp.support_service
+          that.getRelateProp(that.addForm.cate_id, resp.prop_values.map(item => {
+            return parseInt(item.id)
+          }))
+          this.loading = false
         }, (resp) => {
           window.tools.alertError(resp.msg)
           that.loading = false
         })
-
       }
-    }
+      }
   }
 </script>

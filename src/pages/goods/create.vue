@@ -440,6 +440,8 @@
                 instance.confirmButtonLoading = false
                 window.tools.alertError(resp.msg)
               })
+            } else {
+              done()
             }
           }
         }).then(() => {

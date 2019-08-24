@@ -54,6 +54,21 @@
         border: 1px solid #777777;
         margin-right: 5px;
     }
+
+    .by-img-uploader .img-uploader-container .img-item {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .by-img-uploader .img-uploader-container .remove {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 25px;
+        color: red;
+        background: #FFF;
+    }
 </style>
 <template>
     <div class="by-img-uploader ">
@@ -62,8 +77,11 @@
         <el-radio v-if="show === 'local' || show === 'all'" @change="sourceTypeChange" v-model="sourceType" label="2">
             线上图片
         </el-radio>
-        <div class="uploadedimg" v-if="sourceType === '2' " :loading="loadingUploadedImgs">
-            <div>
+
+        <!-- 线上图片 -->
+        <div class="uploadedimg" v-if="sourceType === '2' ">
+            <div class="margin-sm-bottom">
+                上传日期
                 <el-date-picker
                         v-model="date"
                         format="yyyy-MM-dd"
@@ -77,8 +95,15 @@
                     {{$t('Search')}}
                 </el-button>
             </div>
-            <!-- 线上图片 -->
-            <span v-for="img in uploadedImgs">
+            <el-alert v-if="editMode" class="margin-sm-bottom "
+                      type="info">
+                如果提示最多选n张图片, 请选择本地上传并移除掉已选择的图片, 再到线上图片进行选择即可
+            </el-alert>
+            <span class="el-icon-loading" v-if="loadingUploadedImgs"></span>
+            <span v-if="!loadingUploadedImgs && uploadedImgs.length === 0">
+                {{date}} 没有图片上传
+            </span>
+            <span v-else v-for="img in uploadedImgs">
                     <el-image
                             :class="(chooseImgId.indexOf(img.id + ',') !== -1) ? 'actived':''"
                             @click="choose(img)"
@@ -89,17 +114,20 @@
             <div class="text-center">
                 <el-pagination
                         :current-page="pageIndex"
-                        :page-sizes="[6]"
-                        :page-size="6"
+                        :page-sizes="[pageSize]"
+                        :page-size="pageSize"
                         layout="total, prev, pager, next, jumper"
                         :total="count"
                         @current-change="byPagerCurrentChange"/>
             </div>
         </div>
+        <!-- 线上图片 END -->
 
+        <!-- 本地上传图片 -->
         <div v-if="sourceType === '1'" class="img-uploader-container">
-        <span v-for="src in imageUrlArr ">
+        <span v-for="src in imageUrlArr " class="img-item">
             <img :src="src" :class="imgCls">
+            <span @click="removeUploadImg(src)" title="移除该图片" class="el-icon-delete remove"></span>
         </span>
             <el-upload
                     class="img-uploader"
@@ -112,10 +140,15 @@
                 <i v-if="this.choosedImgPaths.length < this.items" class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
         </div>
+        <!-- 本地上传图片 END-->
+
+        <!-- 互联网图片 图片地址,多个逗号隔开 START-->
         <el-input @change="inputRemoteImgs" v-model="imageUrl" v-if="sourceType === '0' "/>
         <span v-for="src in imageUrlArr ">
             <img :src="src" v-if="sourceType === '0'" class="preview-img"/>
         </span>
+
+        <!-- 互联网图片 END-->
     </div>
 </template>
 
@@ -124,6 +157,12 @@
 
   export default {
     props: {
+      pageSize: {
+        type: Number,
+        default () {
+          return 6
+        }
+      },
       items: {
         type: Number,
         default () {
@@ -136,10 +175,16 @@
           return 'avatar'
         }
       },
+      editMode: {
+        type: Boolean,
+        default () {
+          return false
+        }
+      },
       defaultImgUrl: String,
       show: String,// remote , local, uploaded, all
       imgType: String,
-      clear: Boolean
+      clear: Boolean,
     },
     data () {
       return {
@@ -197,18 +242,23 @@
       this.imageUrl = this.defaultImgUrl
     },
     methods: {
+      removeUploadImg (url) {
+        if (this.imageUrl.indexOf(url + ',') !== -1) {
+          this.imageUrl = this.imageUrl.replace(url + ',', '')
+        }
+        console.debug('remove', url, this.imageUrl)
+      },
       inputRemoteImgs () {
         this.$emit('onUploadSuccess', this.imageUrl)
       },
       appendImageUrl (url) {
         if (this.imageUrl.indexOf(url + ',') !== -1) {
-          this.imageUrl.replace(url + ',', '')
+          this.imageUrl = this.imageUrl.replace(url + ',', '')
           return
         }
         this.imageUrl = this.imageUrl + url + ','
       },
       pushChooseImageId (img) {
-        console.debug(this.imageUrl, this.chooseImgId, img.id, this.chooseImgId.indexOf(img.id + ','))
         if (this.chooseImgId.indexOf(img.id + ',') !== -1) {
           this.chooseImgId = this.chooseImgId.replace(img.id + ',', '')
           this.imageUrl = this.imageUrl.replace(img.url + ',', '')
@@ -245,21 +295,26 @@
         if (!this.date) {
           this.date = ''
         }
-        let promise = fileApi.query(this.date, this.pageIndex - 1 > 0 ? this.pageIndex - 1 : 0, 6)
-        console.debug('promise', promise)
-        promise.then(({ data }) => {
-          console.log(data)
-          if (data.code === 0) {
-            this.uploadedImgs = data.data.list
-            this.count = parseInt(data.data.count)
-          } else {
-            window.tools.alertError(data.msg)
-          }
-        }).catch((reason) => {
-          window.tools.alertError(reason)
-        }).finally(() => {
-          this.loadingUploadedImgs = false
-        })
+
+        let promise = fileApi.query(this.date, this.pageIndex - 1 > 0 ? this.pageIndex - 1 : 0, this.pageSize)
+        let that = this
+        setTimeout(function () {
+          promise.then(({ data }) => {
+            console.log(data)
+            if (data.code === 0) {
+              that.uploadedImgs = data.data.list
+              that.count = parseInt(data.data.count)
+            } else {
+              window.tools.alertError(data.msg)
+            }
+          }).catch((reason) => {
+            window.tools.alertError(reason)
+          }).finally(() => {
+            console.debug('finally')
+            that.loadingUploadedImgs = false
+          })
+        }, 3000)
+
       },
       getImage (uri) {
         if (uri.length === 0) return false

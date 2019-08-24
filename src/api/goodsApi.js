@@ -19,6 +19,9 @@ const goodsApi = {
   },
   setShelfStatus (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoods_setShelfStatus' }), suc, fail)
+  },
+  info (data, suc, fail) {
+    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoods_info' }), suc, fail)
   }
 
 }
