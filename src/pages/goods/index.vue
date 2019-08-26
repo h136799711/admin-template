@@ -68,6 +68,28 @@
                         {{(scope.row.show_price / 100).toFixed(2)}} {{$t('Unit.Yuan')}}
                     </template>
                 </el-table-column>
+                <el-table-column
+                        width="160px"
+                        :label="$t('SaleTime')">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.sale_open_time > 0">销售开始:<br/>
+                        {{(new Date(scope.row.sale_open_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                        </span>
+                        <span v-else>不限制</span>
+                        <br/>
+                        <span v-if="scope.row.sale_end_time > 0">销售截至:<br/>
+                        {{(new Date(scope.row.sale_end_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                        </span>
+                        <span v-else>不限制</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="160px"
+                        :label="$t('CreateTime')">
+                    <template slot-scope="scope">
+                        {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
+                    </template>
+                </el-table-column>
 
                 <el-table-column
                         fixed="right"
