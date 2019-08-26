@@ -183,6 +183,8 @@ exports.default = {
 	'SmallCover': '小尺寸封面',
 	'SKU': '库存规格',
 	'Delivery': '发货',
+	'Stock': '库存',
+	'Key': '关键',
 
 
 	// 短语

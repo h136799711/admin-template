@@ -184,6 +184,8 @@ exports.default = {
 	'SmallCover': 'Smaller Cover Image',
 	'SKU': ' Stock Keep Unit',
   'Delivery': 'Delivery',
+  'Stock': 'Stock',
+  'Key': 'Key',
 
 	// 短语
 	'PropertyValue': 'Property Value',

@@ -20,114 +20,101 @@
                 @click="onBack()">
             {{ $t('Back')}}
         </el-button>
-        <div class="sku-panel">
-            <div v-for="(prop, index) in saleProp" :key="prop.id" class="sku-item margin-md-right">
-                <div class="sku-title">
-                    {{ prop.title }}
-                </div>
-                <div>
-                    <el-select size="mini" clearable multiple v-model="selectedValues[index]">
-                        <el-option
-                                v-for="item in prop.prop_values"
-                                :key="item.id"
-                                :label="item.title"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
+        <div>
+            <el-alert class="margin-md-bottom">
+                单规格商品,用户就不用选规格(比如颜色、尺码、内存等),直接购买<br/>
+                多规格商品,用户需要选择规格(比如颜色 白色还是黑色，尺码 大还是小 )，不同规格可设置不同价格
+                多规格商品尽量不要选择过多参数
+            </el-alert>
+            <el-radio v-model="skuForm.is_single" :label="1">单规格</el-radio>
+            <el-radio v-model="skuForm.is_single" :label="0">多规格</el-radio>
+        </div>
+        <div v-if="skuForm.is_single">
+            单规格商品
+        </div>
+        <div v-else>
+            <div class="sku-panel">
+                <div v-for="(prop, index) in saleProp" :key="prop.id" class="sku-item margin-md-right">
+                    <div class="sku-title">
+                        {{ prop.title }}
+                    </div>
+                    <div>
+                        <el-select size="mini" clearable multiple v-model="selectedValues[index]">
+                            <el-option
+                                    v-for="item in prop.prop_values"
+                                    :key="item.id"
+                                    :label="item.title"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="margin-md-top">
-            <el-button size="mini" @click="formatSelectValues">生成</el-button>
-        </div>
+            <div class="margin-md-top">
+                <el-button size="mini" @click="formatSelectValues">生成表格</el-button>
+                <el-button size="mini" type="primary" @click="onSave">保存</el-button>
+            </div>
 
-        <div class="grid-content margin-md-top">
-            <el-table
-                    ref="table"
-                    v-loading="loading"
-                    :data="tableData"
-                    stripe
-                    :element-loading-text="$t('Loading')"
-                    style="width: 100%"
-            >
-                <el-table-column
-                        prop="id"
-                        width="40px"
-                        :label="$t('ID')"
-                />
-                <el-table-column
-                        width="160px"
-                        prop="title"
-                        :label="$t('Title')"
-                />
-                <el-table-column
-                        width="160px"
-                        prop="sub_title"
-                        :label="$t('SubTitle')"
-                />
-                <el-table-column
-                        width="160px"
-                        :label="$t('Price')"
+            <div v-if="tableData.length > 0" class="grid-content margin-md-top">
+                <el-table
+                        ref="table"
+                        v-loading="loading"
+                        :data="tableData"
+                        stripe
+                        :element-loading-text="$t('Loading')"
+                        style="width: 100%"
                 >
-                    <template slot-scope="scope">
-                        {{(scope.row.show_price / 100).toFixed(2)}} {{$t('Unit.Yuan')}}
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="160px"
-                        :label="$t('SaleTime')">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.sale_open_time > 0">销售开始:<br/>
-                        {{(new Date(scope.row.sale_open_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
-                        </span>
-                        <span v-else>不限制</span>
-                        <br/>
-                        <span v-if="scope.row.sale_end_time > 0">销售截至:<br/>
-                        {{(new Date(scope.row.sale_end_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
-                        </span>
-                        <span v-else>不限制</span>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="160px"
-                        :label="$t('CreateTime')">
-                    <template slot-scope="scope">
-                        {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
-                    </template>
-                </el-table-column>
+                    <el-table-column
+                            prop="key"
+                            width="40px"
+                            :label="$t('Key')"
+                    />
+                    <el-table-column
+                            width="200px"
+                            prop="title"
+                            :label="$t('Title')"
+                    />
+                    <el-table-column
+                            width="160px"
+                            :label="$t('Stock') + $t('Price')"
+                    >
+                        <template slot-scope="scope">
+                            <el-input v-model="skuForm.stock_price[scope.row.index]"/>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            width="160px"
+                            :label="$t('Stock')"
+                    >
+                        <template slot-scope="scope">
+                            <el-input v-model="skuForm.stock[scope.row.index]"/>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            width="160px"
+                            :label="$t('Price')"
+                    >
+                        <template slot-scope="scope">
+                            <el-input v-model="skuForm.price[scope.row.index]"/>
+                        </template>
+                    </el-table-column>
 
-                <el-table-column
-                        fixed="right"
-                        :label="$t('Action')">
-                    <template slot-scope="scope">
-                        <el-button
-                                size="mini"
-                                icon="by-icon by-pinpai"
-                                @click="onSku(scope.row)">
-                            {{$t('Goods')}}{{$t('SKU')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
-                                icon="by-icon by-pinpai"
-                                @click="onSku(scope.row)">
-                            {{$t('Delivery')}}{{$t('Place')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="onEdit(scope.row)">
-                            {{$t('Edit')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
-                                type="danger"
-                                icon="el-icon-delete"
-                                @click="onDelete(scope.row.id)">
-                            {{$t('Delete')}}
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+                    <el-table-column
+                            fixed="right"
+                            :label="$t('Action')">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    icon="el-icon-delete"
+                                    @click="onDelete(scope.row.id)">
+                                {{$t('Delete')}}
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+
         </div>
     </div>
 </template>
@@ -151,7 +138,17 @@
     data () {
       return {
         selectedValues: [],
-        inputVisible: false,
+        skuForm: {
+          price: [],
+          out_goods_no: [],
+          stock_price: [],
+          stock: [],
+          specs: [],
+          pic: [],
+          sku_index: [],
+          is_single: 0,
+          goods_id: 0
+        },
         rules: {
           title: [
             { required: true, message: this.$i18n.t('Please Input Title'), trigger: 'blur' },
@@ -166,12 +163,15 @@
     computed: {},
     watch: {},
     created () {
-
+      this.skuForm.goods_id = parseInt(this.id)
     },
     mounted () {
       this.refresh()
     },
     methods: {
+      onSave () {
+        console.debug(this.skuForm)
+      },
       getRelateProp (cateId) {
         spCateApi.getProp({ cate_id: cateId, is_sale: 1 }, (resp) => {
           console.debug('getSaleProp', resp)
@@ -236,6 +236,16 @@
         }
         return target
       },
+      initSkuForm () {
+        let size = this.tableData.length
+        this.skuForm.price = new Array(size)
+        this.skuForm.out_goods_no = new Array(size)
+        this.skuForm.stock_price = new Array(size)
+        this.skuForm.stock = new Array(size)
+        this.skuForm.specs = new Array(size)
+        this.skuForm.pic = new Array(size)
+        this.skuForm.sku_index = new Array(size)
+      },
       buildTableData (combInitial) {
         let formatComb = []
         for (let item in combInitial) {
@@ -290,6 +300,7 @@
 
         console.debug('foundResult', findResult)
         let formatResult = []
+        let index = 0
         for (let i = 0; i < findResult.length; i++) {
           let key = ''
           let tmp = []
@@ -303,14 +314,20 @@
             title += findResult[i][j][3] + ':' + findResult[i][j][1]
             tmp.push([findResult[i][j][0], findResult[i][j][1], findResult[i][j][2], findResult[i][j][3]])
           }
+          let specs = JSON.stringify(tmp)
           formatResult.push({
+            index: index++,
             key: key,
-            specs: JSON.stringify(tmp),
+            specs: specs,
             title: title
           })
+          this.skuForm.sku_index.push(key)
+          this.skuForm.specs.push(specs)
         }
 
         console.debug('formatResult', formatResult)
+        this.tableData = formatResult
+        this.initSkuForm()
       },
       sortAsc (a, b) {
         return a - b
