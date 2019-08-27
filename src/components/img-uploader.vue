@@ -56,12 +56,19 @@
 <script>
 	export default {
 		props: {
+            number: {
+                type: String,
+                default () {
+                    return 'id'
+                }
+            },
           imgCls: {
             type: String,
             default () {
               return 'avatar'
             }
           },
+
 			defaultImgUrl: String,
 			show: String,// remote , local, all
             imgType: String,
@@ -96,7 +103,7 @@
             console.debug('img uploader mounted')
         },
         created() {
-            console.debug('img uploader created')
+            console.debug('img uploader created', this.number)
 			this.extraData.t = this.imgType
             this.avatarUploadUrl = window.tools.getAvatarUploadUrl()
             this.extraData.uid = window.tools.getUID()
@@ -114,11 +121,17 @@
             },
             remoteUrlLoad(res) {
                 console.debug(res)
-                this.$emit('onUploadSuccess', { h: 0, w: 0, path: getImage(this.imageUrl)})
+                // this.refs
+                this.$emit('onUploadSuccess', { id: this.number, h: 0, w: 0, path: getImage(this.imageUrl) })
             },
             handleSuccess(res, file) {
                 if (parseInt(res.code) === 0) {
-                	this.$emit('onUploadSuccess', { h:res.data.h, w: res.data.w, path: res.data.relative_path})
+                    this.$emit('onUploadSuccess', {
+                        id: this.number,
+                        h: res.data.h,
+                        w: res.data.w,
+                        path: res.data.relative_path
+                    })
                     this.imageUrl = URL.createObjectURL(file.raw);
                 } else {
                     this.$message.error(res.msg);

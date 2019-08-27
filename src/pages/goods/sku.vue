@@ -9,9 +9,15 @@
     .sku-panel .sku-item {
         width: 160px;
     }
+
+    .by-goods-sku .goods-img {
+        border-radius: 0;
+        width: 80px;
+        height: 80px;
+    }
 </style>
 <template>
-    <div class="main-content by-banners padding-md-bottom padding-md-top">
+    <div class="main-content by-goods-sku padding-md-bottom padding-md-top">
         <el-button
                 type="primary"
                 size="mini"
@@ -20,17 +26,20 @@
                 @click="onBack()">
             {{ $t('Back')}}
         </el-button>
-        <div>
+        <div class="margin-md-bottom">
             <el-alert class="margin-md-bottom">
-                单规格商品,用户就不用选规格(比如颜色、尺码、内存等),直接购买<br/>
-                多规格商品,用户需要选择规格(比如颜色 白色还是黑色，尺码 大还是小 )，不同规格可设置不同价格
-                多规格商品尽量不要选择过多参数
+                1. 单库存商品,用户就不用选库存(比如颜色、尺码、内存等),直接购买<br/>
+                2. 多库存商品,用户需要选择库存(比如颜色 白色还是黑色，尺码 大还是小 )，不同库存可设置不同价格
+                3. 多库存商品尽量不要选择过多参数<br/>
+                4. 修改库存请先下架商品
             </el-alert>
-            <el-radio v-model="skuForm.is_single" :label="1">单规格</el-radio>
-            <el-radio v-model="skuForm.is_single" :label="0">多规格</el-radio>
+            <el-radio v-model="skuForm.single_sku" :label="1">单库存</el-radio>
+            <el-radio v-model="skuForm.single_sku" :label="0">多库存</el-radio>
         </div>
-        <div v-if="skuForm.is_single">
-            单规格商品
+        <div v-if="skuForm.single_sku">
+            <el-button size="mini" type="primary"
+                       :loading="loading" @click="onSave">保存
+            </el-button>
         </div>
         <div v-else>
             <div class="sku-panel">
@@ -51,10 +60,10 @@
                 </div>
             </div>
             <div class="margin-md-top">
-                <el-button size="mini" @click="formatSelectValues">生成表格</el-button>
-                <el-button size="mini" type="primary" @click="onSave">保存</el-button>
+                <el-button size="mini" :loading="loading" @click="initMutipleSku">生成表格</el-button>
+                <el-button size="mini" :loading="loading" type="primary" @click="onSave">保存</el-button>
             </div>
-
+        </div>
             <div v-if="tableData.length > 0" class="grid-content margin-md-top">
                 <el-table
                         ref="table"
@@ -66,7 +75,7 @@
                 >
                     <el-table-column
                             prop="key"
-                            width="40px"
+                            width="80px"
                             :label="$t('Key')"
                     />
                     <el-table-column
@@ -74,6 +83,17 @@
                             prop="title"
                             :label="$t('Title')"
                     />
+                    <el-table-column
+                            width="160px"
+                            prop="pic"
+                            :label="$t('Image')"
+                    >
+                        <template slot-scope="scope">
+                            <ImgUploader :number="'' + scope.row.index" img-cls="goods-img"
+                                         :ref="'imgUploader' + scope.row.index" @onUploadSuccess="onUploadSuccess"
+                                         :defaultImgUrl="skuForm.pic[scope.row.index]" imgType="goods"/>
+                        </template>
+                    </el-table-column>
                     <el-table-column
                             width="160px"
                             :label="$t('Goods') + $t('Number')"
@@ -92,38 +112,22 @@
                     </el-table-column>
                     <el-table-column
                             width="160px"
-                            :label="$t('Stock')"
-                    >
-                        <template slot-scope="scope">
-                            <el-input v-model="skuForm.stock[scope.row.index]"/>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                            width="160px"
                             :label="$t('Price')"
                     >
                         <template slot-scope="scope">
                             <el-input v-model="skuForm.price[scope.row.index]"/>
                         </template>
                     </el-table-column>
-
                     <el-table-column
-                            fixed="right"
-                            :label="$t('Action')">
+                            width="160px"
+                            :label="$t('Stock')"
+                    >
                         <template slot-scope="scope">
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    icon="el-icon-delete"
-                                    @click="onDelete(scope.row.id)">
-                                {{$t('Delete')}}
-                            </el-button>
+                            <el-input v-model="skuForm.stock[scope.row.index]"/>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
-
-        </div>
     </div>
 </template>
 
@@ -134,19 +138,24 @@
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
     import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+    import ImgUploader from '../../components/img-uploader'
 
     export default {
         props: {
             id: String
         },
         components: {
+            ImgUploader,
             ElForm,
             ElButtonGroup,
             ElButton
         },
         data () {
             return {
+                main_img: '',
                 selectedValues: [],
+                sku: [],
+                uniq_goods_no: [],
                 skuForm: {
                     price: [],
                     out_goods_no: [],
@@ -155,7 +164,8 @@
                     specs: [],
                     pic: [],
                     sku_index: [],
-                    is_single: 0,
+                    uniq_goods_no: [],
+                    single_sku: 0,
                     goods_id: 0
                 },
                 rules: {
@@ -170,7 +180,18 @@
             }
         },
         computed: {},
-        watch: {},
+        watch: {
+            'skuForm.single_sku' (newVal) {
+                if (newVal === 1) {
+                    this.tableData = null
+                    this.tableData = []
+                    this.initSingleSku()
+                } else {
+                    this.tableData = null
+                    this.tableData = []
+                }
+            }
+        },
         created () {
             this.skuForm.goods_id = parseInt(this.id)
         },
@@ -178,7 +199,30 @@
             this.refresh()
         },
         methods: {
+            initSingleSku () {
+                this.tableData = [{ key: '0_0_0', title: '单库存:单库存', index: 0 }]
+                this.skuForm.sku_index = null
+                this.skuForm.specs = null
+                this.skuForm.sku_index = ['0_0_0']
+                this.skuForm.specs = [JSON.stringify([0, '单库存', 0, '单库存'])]
+                this.initSkuForm()
+                this.fillData()
+            },
+            onUploadSuccess (data) {
+                console.debug('image upload success', this.skuForm, data)
+                this.skuForm.pic[parseInt(data.id)] = window.tools.getImgUrl(data.path)
+            },
+            fillUniqGoodsNo () {
+                // 设置 系统货号，如果有的话
+                // 用于更新数据用的
+                for (let i in this.skuForm.sku_index) {
+                    if (this.uniq_goods_no[this.skuForm.sku_index[i]]) {
+                        this.skuForm.uniq_goods_no[i] = this.uniq_goods_no[this.skuForm.sku_index[i]]
+                    }
+                }
+            },
             onSave () {
+                this.fillUniqGoodsNo()
                 console.debug(this.skuForm)
                 this.loading = true
                 goodsSkuApi.create(this.skuForm, (resp) => {
@@ -189,13 +233,55 @@
                     this.loading = false
                 })
             },
+            setExistsProps () {
+                let cnt = 0
+                let buildFlag = false
+                for (let i in this.sku) {
+                    for (let j in this.sku[i].specs) {
+                        for (let k in this.saleProp) {
+                            console.debug(this.sku[i].specs[j][2], this.saleProp[k].id)
+                            if (this.sku[i].specs[j][2] === this.saleProp[k].id) {
+                                if (!this.selectedValues[k]) {
+                                    this.selectedValues[k] = []
+                                }
+                                if (this.selectedValues[k].indexOf(this.sku[i].specs[j][0]) === -1) {
+                                    this.selectedValues[k].push(this.sku[i].specs[j][0])
+                                    buildFlag = true
+                                }
+                            }
+                        }
+                    }
+                    cnt++
+                }
+
+                if (buildFlag) {
+                    this.initMutipleSku()
+                }
+                this.fillData()
+            },
+            fillData () {
+                for (let i in this.sku) {
+                    for (let j in this.skuForm.sku_index) {
+                        if (this.skuForm.sku_index[j] === this.sku[i].specs_index) {
+                            this.skuForm.stock_price[j] = this.sku[i].stock_price
+                            this.skuForm.stock[j] = this.sku[i].stock
+                            this.skuForm.price[j] = this.sku[i].price
+                            this.skuForm.pic[j] = this.sku[i].pic
+                            this.skuForm.out_goods_no[j] = this.sku[i].goods_no
+                            this.skuForm.uniq_goods_no[j] = this.sku[i].uniq_goods_no
+                            this.uniq_goods_no[this.sku[i].specs_index] = this.sku[i].uniq_goods_no
+                        }
+                    }
+                }
+                console.debug(this.skuForm)
+            },
             getRelateProp (cateId) {
                 spCateApi.getProp({ cate_id: cateId, is_sale: 1 }, (resp) => {
-                    console.debug('getSaleProp', resp)
                     this.saleProp = resp
                     this.selectedValues = null
                     this.selectedValues = new Array(this.saleProp.length)
-
+                    // 设置已经选择的
+                    this.setExistsProps()
                 }, (err) => {
                     window.tools.alertError('获取类目属性失败')
                 })
@@ -203,7 +289,7 @@
             onBack (row) {
                 this.$router.go(-1)
             },
-            formatSelectValues () {
+            initMutipleSku () {
                 let combInitial = []
                 this.selectedValues = this.selectedValues.filter((item) => {
                     return item.length > 0
@@ -234,6 +320,8 @@
                 }
                 console.debug('选中的属性值', combInitial)
                 this.buildTableData(combInitial)
+                this.initSkuForm()
+                this.fillData()
             },
             isObject (obj) {
                 let type = typeof obj
@@ -259,9 +347,14 @@
                 this.skuForm.out_goods_no = new Array(size)
                 this.skuForm.stock_price = new Array(size)
                 this.skuForm.stock = new Array(size)
-                this.skuForm.specs = new Array(size)
+                // this.skuForm.specs = new Array(size)
                 this.skuForm.pic = new Array(size)
-                this.skuForm.sku_index = new Array(size)
+                this.skuForm.uniq_goods_no = new Array(size)
+                for (let i = 0; i < size; i++) {
+                    this.skuForm.pic[i] = this.main_img
+                    this.skuForm.uniq_goods_no[i] = ''
+                }
+                // this.skuForm.sku_index = new Array(size)
             },
             buildTableData (combInitial) {
                 let formatComb = []
@@ -276,7 +369,7 @@
                 for (let i = 0; i < stack.length; i++) {
                     stack[i] = 0
                 }
-                console.debug(stack, formatComb, maxLevel)
+
                 let cnt = 0
                 while (true) {
                     if (cnt++ > 50) break
@@ -296,28 +389,31 @@
                         continue
                     }
 
-                    console.debug('当前遍历次数', cnt, 'curLevel', curLevel, 'stack', stack)
-                    console.debug('formatComb[' + curLevel + ']', formatComb[curLevel])
-                    console.debug('formatComb[' + curLevel + '][2]', formatComb[curLevel][2][stack[curLevel]])
+                    // console.debug('当前遍历次数', cnt, 'curLevel', curLevel, 'stack', stack)
+                    // console.debug('formatComb[' + curLevel + ']', formatComb[curLevel])
+                    // console.debug('formatComb[' + curLevel + '][2]', formatComb[curLevel][2][stack[curLevel]])
 
                     let node = formatComb[curLevel][2][stack[curLevel]]
 
                     result.push([node.id, node.title, formatComb[curLevel][0], formatComb[curLevel][1]])
                     if (result.length < maxLevel) {
-                        console.debug('往下递归一层')
+                        // console.debug('往下递归一层')
                         curLevel++
                     } else {
                         console.debug('found result', result)
                         findResult.push(this.iterationCopy(result))
                         result.pop()
-                        console.debug('找到一个结果，继续递增 栈的索引')
+                        // console.debug('找到一个结果，继续递增 栈的索引')
                         stack[curLevel]++
                     }
                 }
 
-                console.debug('foundResult', findResult)
+                // console.debug('foundResult', findResult)
+                // 改变存储结构方便使用
                 let formatResult = []
                 let index = 0
+                this.skuForm.sku_index = []
+                this.skuForm.specs = []
                 for (let i = 0; i < findResult.length; i++) {
                     let key = ''
                     let tmp = []
@@ -344,7 +440,6 @@
 
                 console.debug('formatResult', formatResult)
                 this.tableData = formatResult
-                this.initSkuForm()
             },
             sortAsc (a, b) {
                 return a - b
@@ -356,6 +451,11 @@
                 let that = this
                 goodsApi.info({ id: this.id }, (resp) => {
                     this.getRelateProp(resp.cate_id)
+                    this.sku = resp.sku
+                    if (this.sku.length > 0) {
+                        this.skuForm.single_sku = this.sku[0].single_sku
+                    }
+                    this.main_img = resp.cover_img
                     this.loading = false
                 }, (err) => {
                     window.tools.alertError(err)
