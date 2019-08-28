@@ -70,6 +70,15 @@
                 </el-table-column>
                 <el-table-column
                         width="160px"
+                        :label="$t('Volume') + '/' + $t('Weight')"
+                >
+                    <template slot-scope="scope">
+                        {{scope.row.volume}} cm <sup style="font-size: 10px;">3</sup> <br/>
+                        {{scope.row.weight}} Kg
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="160px"
                         :label="$t('SaleTime')">
                     <template slot-scope="scope">
                         <span v-if="scope.row.sale_open_time > 0">销售开始:<br/>

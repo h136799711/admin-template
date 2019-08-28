@@ -68,6 +68,7 @@ const GoodsIndex = r => require.ensure([], () => r(require('./pages/goods/index.
 const GoodsCreate = r => require.ensure([], () => r(require('./pages/goods/create.vue')), 'GoodsCreate')
 const GoodsEdit = r => require.ensure([], () => r(require('./pages/goods/edit.vue')), 'GoodsEdit')
 const GoodsSku = r => require.ensure([], () => r(require('./pages/goods/sku.vue')), 'GoodsSku')
+const GoodsPlace = r => require.ensure([], () => r(require('./pages/goods/place.vue')), 'GoodsPlace')
 // Goods END *******************
 
 const routes = [
@@ -93,6 +94,7 @@ const routes = [
       { path: 'goods/create', component: GoodsCreate, props: false },
       { path: 'goods/edit/:id', component: GoodsEdit, props: true },
       { path: 'goods/sku/:id', component: GoodsSku, props: true },
+      { path: 'goods/place/:id', component: GoodsPlace, props: true },
       {
         path: 'video',
         component: VideoIndex,
