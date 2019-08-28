@@ -186,6 +186,8 @@ exports.default = {
   'Delivery': 'Delivery',
   'Stock': 'Stock',
   'Key': 'Key',
+    'Weight': 'Weight',
+    'Volume': 'Volume',
 
 	// 短语
 	'PropertyValue': 'Property Value',

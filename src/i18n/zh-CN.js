@@ -185,6 +185,8 @@ exports.default = {
 	'Delivery': '发货',
 	'Stock': '库存',
 	'Key': '关键',
+	'Weight': '重量',
+	'Volume': '体积',
 
 
 	// 短语

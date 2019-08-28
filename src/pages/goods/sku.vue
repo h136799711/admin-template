@@ -223,14 +223,31 @@
             },
             onSave () {
                 this.fillUniqGoodsNo()
-                console.debug(this.skuForm)
-                this.loading = true
-                goodsSkuApi.create(this.skuForm, (resp) => {
-                    console.log(resp)
-                    this.loading = false
-                }, (err) => {
-                    window.tools.alertError(err)
-                    this.loading = false
+                this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+                    confirmButtonText: this.$i18n.t('Confirm'),
+                    cancelButtonText: this.$i18n.t('Cancel'),
+                    type: 'warning',
+                    beforeClose: (action, instance, done) => {
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true
+                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            this.loading = true
+                            goodsSkuApi.create(this.skuForm, (resp) => {
+                                done()
+                                this.loading = false
+                            }, (err) => {
+                                done()
+                                window.tools.alertError(err)
+                                this.loading = false
+                            })
+                        } else {
+                            done()
+                        }
+                    }
+                }).then(() => {
+                    done()
+                }).catch(() => {
+                    done()
                 })
             },
             setExistsProps () {

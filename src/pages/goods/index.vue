@@ -116,19 +116,44 @@
                                 @click="onSku(scope.row)">
                             {{$t('Delivery')}}{{$t('Place')}}
                         </el-button>
-                        <el-button
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="onEdit(scope.row)">
-                            {{$t('Edit')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
-                                type="danger"
-                                icon="el-icon-delete"
-                                @click="onDelete(scope.row.id)">
-                            {{$t('Delete')}}
-                        </el-button>
+                        <el-dropdown size="mini" type="danger">
+                            <el-button size="mini" type="danger">
+                                {{$t('More')}}<i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>
+                                    <el-button
+                                            type="text"
+                                            size="mini"
+                                            icon="el-icon-edit"
+                                            @click="onEdit(scope.row)">
+                                        {{$t('Edit')}}
+                                    </el-button>
+                                </el-dropdown-item>
+                                <el-dropdown-item>
+                                    <el-button
+                                            type="text"
+                                            size="mini"
+                                            icon="el-icon-delete"
+                                            @click="onDelete(scope.row.id)">
+                                        {{$t('Delete')}}
+                                    </el-button>
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        <!--                        <el-button-->
+                        <!--                                size="mini"-->
+                        <!--                                icon="el-icon-edit"-->
+                        <!--                                @click="onEdit(scope.row)">-->
+                        <!--                            {{$t('Edit')}}-->
+                        <!--                        </el-button>-->
+                        <!--                        <el-button-->
+                        <!--                                size="mini"-->
+                        <!--                                type="danger"-->
+                        <!--                                icon="el-icon-delete"-->
+                        <!--                                @click="onDelete(scope.row.id)">-->
+                        <!--                            {{$t('Delete')}}-->
+                        <!--                        </el-button>-->
                     </template>
                 </el-table-column>
             </el-table>

@@ -170,6 +170,10 @@
   .color-gray-light{color:#e5e9f2}
   .color-gray-lighter{color:#eff2f7}
   .color-white-dark{color:#f9fafc}
+
+  .number-input, .number-input.el-input {
+    width: 120px;
+  }
 </style>
 <template>
   <div id="app">
