@@ -113,7 +113,7 @@
                         <el-button
                                 size="mini"
                                 icon="by-icon by-pinpai"
-                                @click="onSku(scope.row)">
+                                @click="onPlace(scope.row)">
                             {{$t('Delivery')}}{{$t('Place')}}
                         </el-button>
                         <el-dropdown size="mini" type="danger">
@@ -141,19 +141,6 @@
                                 </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <!--                        <el-button-->
-                        <!--                                size="mini"-->
-                        <!--                                icon="el-icon-edit"-->
-                        <!--                                @click="onEdit(scope.row)">-->
-                        <!--                            {{$t('Edit')}}-->
-                        <!--                        </el-button>-->
-                        <!--                        <el-button-->
-                        <!--                                size="mini"-->
-                        <!--                                type="danger"-->
-                        <!--                                icon="el-icon-delete"-->
-                        <!--                                @click="onDelete(scope.row.id)">-->
-                        <!--                            {{$t('Delete')}}-->
-                        <!--                        </el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -172,107 +159,110 @@
 </template>
 
 <script>
-  import spCateApi from '../../api/spCateApi'
-  import goodsApi from '../../api/goodsApi'
-  import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-  import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-  import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+    import spCateApi from '../../api/spCateApi'
+    import goodsApi from '../../api/goodsApi'
+    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
+    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
+    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
 
-  export default {
-    components: {
-      ElForm,
-      ElButtonGroup,
-      ElButton
-    },
-    data () {
-      return {
-        inputVisible: false,
-        queryForm: {
-          title: '',
-          page_index: 1,
-          page_size: 10
+    export default {
+        components: {
+            ElForm,
+            ElButtonGroup,
+            ElButton
         },
-        rules: {
-          title: [
-            { required: true, message: this.$i18n.t('Please Input Title'), trigger: 'blur' },
-            { min: 1, max: 50, message: this.$i18n.t('String Length Between', [1, 32]), trigger: 'blur' }
-          ]
-        },
-        count: 0,
-        tableData: [],
-        loading: false
-      }
-    },
-    computed: {},
-    watch: {},
-    created () {
-
-    },
-    mounted () {
-      this.refresh()
-    },
-    methods: {
-      onDelete (id) {
-        this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
-          confirmButtonText: this.$i18n.t('Confirm'),
-          cancelButtonText: this.$i18n.t('Cancel'),
-          type: 'warning',
-          beforeClose: (action, instance, done) => {
-            if (action === 'confirm') {
-              instance.confirmButtonLoading = true
-              instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-              goodsApi.delete({ id: id }, (res) => {
-                instance.confirmButtonLoading = false
-                this.refresh()
-                done()
-              }, (res) => {
-                console.debug(res)
-                done()
-                window.tools.alertError(res.msg)
-                instance.confirmButtonLoading = false
-              })
-            } else {
-              done()
+        data () {
+            return {
+                inputVisible: false,
+                queryForm: {
+                    title: '',
+                    page_index: 1,
+                    page_size: 10
+                },
+                rules: {
+                    title: [
+                        { required: true, message: this.$i18n.t('Please Input Title'), trigger: 'blur' },
+                        { min: 1, max: 50, message: this.$i18n.t('String Length Between', [1, 32]), trigger: 'blur' }
+                    ]
+                },
+                count: 0,
+                tableData: [],
+                loading: false
             }
-          }
-        }).then(() => {
-        }).catch(() => {
-        })
-      },
-      byPagerSizeChange (val) {
-        this.queryForm.page_size = val
-        this.refresh()
-      },
-      byPagerCurrentChange (val) {
-        this.queryForm.page_index = val
-        this.refresh()
-      },
-      onAdd () {
-        this.$router.push({ path: 'create' })
-      },
-      onEdit (row) {
-        this.$router.push({ path: 'edit/' + row.id })
-      },
-      onSku (row) {
-        this.$router.push({ path: 'sku/' + row.id })
-      },
-      async refresh () {
-        // 刷新当前
-        this.tableData = []
-        this.loading = true
-        let that = this
-        try {
-          let data = await goodsApi.query(that.queryForm)
-          that.tableData = data.list
-          that.count = parseInt(data.count)
-          that.loading = false
-        } catch (err) {
+        },
+        computed: {},
+        watch: {},
+        created () {
 
-          console.debug(err)
-          window.tools.alertError(err)
-          that.loading = false
+        },
+        mounted () {
+            this.refresh()
+        },
+        methods: {
+            onDelete (id) {
+                this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+                    confirmButtonText: this.$i18n.t('Confirm'),
+                    cancelButtonText: this.$i18n.t('Cancel'),
+                    type: 'warning',
+                    beforeClose: (action, instance, done) => {
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true
+                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            goodsApi.delete({ id: id }, (res) => {
+                                instance.confirmButtonLoading = false
+                                this.refresh()
+                                done()
+                            }, (res) => {
+                                console.debug(res)
+                                done()
+                                window.tools.alertError(res.msg)
+                                instance.confirmButtonLoading = false
+                            })
+                        } else {
+                            done()
+                        }
+                    }
+                }).then(() => {
+                }).catch(() => {
+                })
+            },
+            byPagerSizeChange (val) {
+                this.queryForm.page_size = val
+                this.refresh()
+            },
+            byPagerCurrentChange (val) {
+                this.queryForm.page_index = val
+                this.refresh()
+            },
+            onAdd () {
+                this.$router.push({ path: 'create' })
+            },
+            onEdit (row) {
+                this.$router.push({ path: 'edit/' + row.id })
+            },
+            onSku (row) {
+                this.$router.push({ path: 'sku/' + row.id })
+            },
+            onPlace (row) {
+                this.$router.push({ path: 'place/' + row.id })
+            },
+            async refresh () {
+                // 刷新当前
+                this.tableData = []
+                this.loading = true
+                let that = this
+                try {
+                    let data = await goodsApi.query(that.queryForm)
+                    that.tableData = data.list
+                    that.count = parseInt(data.count)
+                    that.loading = false
+                } catch (err) {
+
+                    console.debug(err)
+                    window.tools.alertError(err)
+                    that.loading = false
+                }
+            }
         }
-      }
     }
-  }
 </script>

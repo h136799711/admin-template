@@ -187,7 +187,10 @@ exports.default = {
 	'Key': '关键',
 	'Weight': '重量',
 	'Volume': '体积',
-
+	'More': '更多',
+	'Province': '省',
+	'City': '市',
+	'Town': '县/镇',
 
 	// 短语
 	'PropertyValue': '属性值',

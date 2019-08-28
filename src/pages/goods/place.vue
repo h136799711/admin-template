@@ -6,18 +6,6 @@
 </style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
-        <div>
-            <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-                <el-form-item>
-                    <el-input v-model="queryForm.title" size="mini"/>
-                </el-form-item>
-                <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="refresh()" size="mini" icon="el-icon-search">{{
-                        $t('Search') }}
-                    </el-button>
-                </el-form-item>
-            </el-form>
-        </div>
         <el-button
                 type="primary"
                 size="mini"
@@ -95,13 +83,20 @@
 </template>
 
 <script>
-    import spCateApi from '../../api/spCateApi'
-    import goodsApi from '../../api/goodsApi'
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
     import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+    import goodsPlaceApi from '../../api/goodsPlaceApi'
 
     export default {
+        props: {
+            id: {
+                type: Number,
+                default () {
+                    return 0
+                }
+            }
+        },
         components: {
             ElForm,
             ElButtonGroup,
@@ -123,7 +118,6 @@
         computed: {},
         watch: {},
         created () {
-
         },
         mounted () {
             this.refresh()
@@ -162,12 +156,19 @@
             onEdit (row) {
                 this.$router.push({ path: 'edit/' + row.id })
             },
-            refresh () {
+            async refresh () {
                 // 刷新当前
                 this.tableData = []
                 this.loading = true
-                let that = this
-
+                // try {
+                let resp = await goodsPlaceApi.query({ 'goods_id': this.id })
+                console.debug(resp)
+                this.loading = false
+                // } catch (err) {
+                //     console.debug(err)
+                //     this.loading = false
+                //     window.tools.alertError(err)
+                // }
             }
         }
     }

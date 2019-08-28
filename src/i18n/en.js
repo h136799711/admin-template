@@ -183,11 +183,15 @@ exports.default = {
 	'SupportServices': 'Support Services',
 	'SmallCover': 'Smaller Cover Image',
 	'SKU': ' Stock Keep Unit',
-  'Delivery': 'Delivery',
-  'Stock': 'Stock',
-  'Key': 'Key',
+	'Delivery': 'Delivery',
+	'Stock': 'Stock',
+	'Key': 'Key',
     'Weight': 'Weight',
     'Volume': 'Volume',
+	'More': 'More',
+	'Province': 'Province',
+	'City': 'City',
+	'Town': 'Town',
 
 	// 短语
 	'PropertyValue': 'Property Value',
