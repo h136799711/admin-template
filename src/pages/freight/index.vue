@@ -106,18 +106,14 @@
                     class="demo-ruleForm"
             >
 
-                <el-form-item
-                        :label="$t('Name')">
+                <el-form-item :label="$t('Name')">
                     <el-input size="mini" class="number-input" v-model="addForm.name"/>
                 </el-form-item>
-                <el-form-item
-                        :label="$t('Method')">
-
+                <el-form-item :label="$t('Method')">
                     <el-input size="mini" class="number-input" v-model="addForm.method"/>
                 </el-form-item>
 
-                <el-form-item
-                        :label="$t('Freight')">
+                <el-form-item :label="$t('Freight')">
                     <el-select size="mini" v-model="addForm.freight_type" placeholder="请选择">
                         <el-option
                                 v-for="item in freightOptions"
