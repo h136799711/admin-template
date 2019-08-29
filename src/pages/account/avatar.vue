@@ -88,9 +88,9 @@
             this.extraData.uid = window.tools.getUID()
             this.extraData.sid = window.tools.getSessionId()
             this.extraData.deviceType = window.tools.getDeviceType()
+            this.imageUrl = 'https://image.hebidu.cn/uploads/avatar/' + window.tools.getUID() + '/avatar.png'
 		},
 		mounted: function () {
-            this.imageUrl = window.tools.getAvatar()
 		},
 		methods: {
             handleAvatarSuccess(res, file) {

@@ -1,19 +1,7 @@
 <style>
-    .blue {
-        color: blue;
-    }
-
 </style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
-        <el-button
-                type="primary"
-                size="mini"
-                icon="el-icon-back"
-                :loading="loading"
-                @click="onBack()">
-            {{ $t('Back')}}
-        </el-button>
         <el-button
                 type="primary"
                 size="mini"
@@ -49,35 +37,38 @@
 
                 <el-table-column
                         width="120px"
-                        prop="freight"
-                        :label="$t('Freight')"
-                >
-                    <template slot-scope="scope">
-                        {{getFreightType(scope.row.freight_type)}}<br/>
-                        {{$t('Freight')}}{{$t('Template')}}: {{scope.row.freight_tpl_id}}
-                    </template>
-                </el-table-column>
+                        prop="name"
+                        :label="$t('Name')"
+                />
                 <el-table-column
                         width="160px"
-                        prop="province_name"
-                        :label="$t('Province')"
+                        prop="method"
+                        :label="$t('Method')"
                 />
 
                 <el-table-column
                         width="160px"
-                        prop="city_name"
-                        :label="$t('City')"
+                        prop="logistics_type"
+                        :label="$t('LogisticsType')"
                 />
                 <el-table-column
                         width="160px"
-                        prop="area_name"
-                        :label="$t('Area')"
+                        prop="logistics_type"
+                        :label="$t('LogisticsType')"
+                />
+                <el-table-column
+                        width="200px"
+                        prop="price_define"
+                        :label="$t('Freight')"
                 />
                 <el-table-column
                         width="160px"
-                        prop="town_name"
-                        :label="$t('Town')"
-                />
+                        :label="$t('UpdateTime')">
+                    <template slot-scope="scope">
+                        {{(new Date(scope.row.update_time * 1000)).format('yyyy-MM-dd')}}
+                    </template>
+                </el-table-column>
+
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
@@ -116,9 +107,13 @@
             >
 
                 <el-form-item
-                        :label="$t('Place')">
-                    <el-cascader style="width: 320px;" v-model="place" :loading="loading"
-                                 placeholder="" size="small" ref="addPlaceCascader" :props="pcaProps"></el-cascader>
+                        :label="$t('Name')">
+                    <el-input size="mini" class="number-input" v-model="addForm.name"/>
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Method')">
+
+                    <el-input size="mini" class="number-input" v-model="addForm.method"/>
                 </el-form-item>
 
                 <el-form-item
@@ -134,8 +129,9 @@
                 </el-form-item>
 
                 <el-form-item
-                        :label="$t('Freight') + $t('Template')">
-                    <el-input size="mini" class="number-input" v-model="addForm.freight_tpl_id"/>
+                        :label="$t('Place')">
+                    <el-cascader style="width: 320px;" v-model="place" :loading="loading"
+                                 placeholder="" size="small" ref="addPlaceCascader" :props="pcaProps"></el-cascader>
                 </el-form-item>
 
             </el-form>
@@ -188,20 +184,23 @@
                     { value: 2, label: '到付' },
                     { value: 3, label: '预付' }
                 ],
+                methodOptions: [
+                    { value: 'count', label: '件数' },
+                    { value: 'weight', label: '重量' },
+                    // 暂时屏蔽
+                    // { value: 'volume', label: '体积' }
+                ],
+                logisticsOptions: [
+                    { value: 'express', label: '快递' },
+                    { value: 'surface_mail', label: '平邮' },
+                    { value: 'ems', label: 'EMS' }
+                ],
                 addForm: {
-                    goods_id: 0,
-                    freight_type: 1,
-                    freight_tpl_id: 0,
-                    country_code: '1',
-                    country_name: '中国',
-                    province_code: '',
-                    province_name: '',
-                    city_code: '',
-                    city_name: '',
-                    area_code: '',
-                    area_name: '',
-                    town_code: '',
-                    town_name: ''
+                    name: 1,
+                    freight_type: '',
+                    method: 0,
+                    logistics_type: 'express',
+                    price_define: '',
                 },
                 pcaProps: {
                     lazy: true,
@@ -233,16 +232,6 @@
                                     let nodes = resp.map(item => ({
                                         value: item.code,
                                         label: item.name,
-                                        leaf: false
-                                    }))
-                                    resolve(nodes)
-                                })
-                                break
-                            case 3:
-                                pcaApi.queryTown({ 'code': value }, function (resp) {
-                                    let nodes = resp.map(item => ({
-                                        value: item.code,
-                                        label: item.name,
                                         leaf: true
                                     }))
                                     resolve(nodes)
@@ -269,14 +258,12 @@
         watch: {
             place (newVal, oldVal) {
                 let chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
-                this.addForm.province_name = chkNode[0].pathLabels[0]
-                this.addForm.city_name = chkNode[0].pathLabels[1]
-                this.addForm.area_name = chkNode[0].pathLabels[2]
-                this.addForm.town_name = chkNode[0].pathLabels[3]
-                this.addForm.province_code = newVal[0]
-                this.addForm.city_code = newVal[1]
-                this.addForm.area_code = newVal[2]
-                this.addForm.town_code = newVal[3]
+                // this.addForm.province_name = chkNode[0].pathLabels[0]
+                // this.addForm.city_name = chkNode[0].pathLabels[1]
+                // this.addForm.area_name = chkNode[0].pathLabels[2]
+                // this.addForm.province_code = newVal[0]
+                // this.addForm.city_code = newVal[1]
+                // this.addForm.area_code = newVal[2]
             }
         },
         created () {
@@ -285,9 +272,6 @@
             this.refresh()
         },
         methods: {
-            onBack () {
-                this.$router.go(-1)
-            },
             getFreightType (id) {
                 for (let i in this.freightOptions) {
                     if (parseInt(this.freightOptions[i].value) === parseInt(id)) {
