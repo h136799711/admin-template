@@ -155,7 +155,7 @@ exports.default = {
 	'History': '历史',
 	'Count': '次数',
 	'Last': '最近',
-	'Next': '下次',
+	'Next': '下一个',
 	'Detail': '详情',
 	'Scene': '场景',
 	'Video': '视频',
@@ -191,6 +191,7 @@ exports.default = {
 	'Province': '省',
 	'City': '市',
 	'Town': '县/镇',
+	'Template': '模板',
 
 	// 短语
 	'PropertyValue': '属性值',

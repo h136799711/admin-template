@@ -192,6 +192,7 @@ exports.default = {
 	'Province': 'Province',
 	'City': 'City',
 	'Town': 'Town',
+    'Template': 'Template',
 
 	// 短语
 	'PropertyValue': 'Property Value',
