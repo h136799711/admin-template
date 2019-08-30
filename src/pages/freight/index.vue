@@ -91,6 +91,7 @@
             </el-table>
         </div>
 
+        <!-- 添加 -->
         <div v-if="dialogAddVisible">
             <div class="margin-md-top">{{$t('Add')}}</div>
             <el-form
@@ -174,7 +175,6 @@
                                 <el-input v-model="placeTable[scope.row.index].continuous_price"/>
                             </template>
                         </el-table-column>
-
                     </el-table>
                     <div class="margin-md-top">
                         <el-button size="mini" @click="onAppend">为指定地区城市设置运费</el-button>
@@ -197,33 +197,25 @@
                 </el-button>
             </div>
         </div>
+        <!-- 添加 END-->
+
+
     </div>
 </template>
 
 <script>
+    import freightApi from '../../api/freightApi'
     import pcaApi from '../../api/pcaApi'
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
     import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
-    import goodsPlaceApi from '../../api/goodsPlaceApi'
 
     export default {
-        props: {
-            id: {
-                type: String,
-                default () {
-                    return '0'
-                }
-            }
-        },
         components: {
             ElForm,
-            ElButtonGroup,
             ElButton
         },
         data () {
             return {
-                place: [],
                 defaultFreight: [1, 0, 0, 0],
                 placeTable: [],
                 dialogEditVisible: false,
@@ -295,26 +287,10 @@
             }
         },
         computed: {},
-        watch: {
-            place (newVal, oldVal) {
-                let chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
-                console.debug(chkNode)
-                let place = {
-                    province_name: '',
-                }
-                place.province_name = chkNode[0].pathLabels[0]
-                place.city_name = chkNode[0].pathLabels[1]
-                place.area_name = chkNode[0].pathLabels[2]
-                place.province_code = newVal[0]
-                place.city_code = newVal[1]
-                place.area_code = newVal[2]
-
-            }
-        },
+        watch: {},
         created () {
         },
         mounted () {
-            this.onAppend()
             this.refresh()
         },
         methods: {
@@ -338,16 +314,25 @@
             },
             onSubmitAddForm () {
                 this.loading = true
-                console.debug(this.addForm)
-                // 添加
-                goodsPlaceApi.create(this.addForm, (resp) => {
-                    this.loading = false
-                    this.dialogAddVisible = false
-                    this.refresh()
-                }, (err) => {
-                    this.loading = false
-                    window.tools.alertError(err)
+
+                console.debug('AddForm: ', this.addForm, this.placeTable, this.defaultFreight)
+                this.placeTable.push({
+                    index: this.placeTable.length,
+                    place: [],
+                    first: 0,
+                    first_price: 0,
+                    continuous: 0,
+                    continuous_price: 0
                 })
+                // 添加
+                // goodsPlaceApi.create(this.addForm, (resp) => {
+                //     this.loading = false
+                //     this.dialogAddVisible = false
+                //     this.refresh()
+                // }, (err) => {
+                //     this.loading = false
+                //     window.tools.alertError(err)
+                // })
             },
             onSubmitEditForm () {
                 // 编辑
@@ -383,17 +368,15 @@
             onAdd () {
                 this.dialogAddVisible = true
                 this.addForm = {
+                    name: '',
                     logistics_type: 'express',
-                    goods_id: this.id,
                     freight_type: 1,
-                    freight_tpl_id: 0,
                     method: 'weight'
                 }
             },
             onEdit (row) {
                 this.dialogEditVisible = true
                 this.editForm = {
-                    goods_id: this.id,
                     freight_type: row.freight_type,
                     freight_tpl_id: row.freight_tpl_id,
                     method: row.method
@@ -404,7 +387,7 @@
                 this.tableData = []
                 this.loading = true
                 // try {
-                let resp = await goodsPlaceApi.query({ 'goods_id': this.id })
+                let resp = await freightApi.query({})
                 console.debug(resp)
                 this.tableData = resp
                 this.loading = false
