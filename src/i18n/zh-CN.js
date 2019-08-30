@@ -192,6 +192,9 @@ exports.default = {
 	'City': '市',
 	'Town': '县/镇',
 	'Template': '模板',
+	'LogisticsType': '运送方式',
+	'Method': '计算方式',
+	'UpdateTime': '更新时间',
 
 	// 短语
 	'PropertyValue': '属性值',

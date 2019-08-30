@@ -19,7 +19,7 @@
             {{ $t('Refresh')}}
         </el-button>
 
-        <div class="grid-content margin-md-top">
+        <div v-if="!dialogAddVisible && !dialogEditVisible" class="grid-content margin-md-top">
             <el-table
                     ref="table"
                     v-loading="loading"
@@ -91,12 +91,8 @@
             </el-table>
         </div>
 
-        <el-dialog
-                :show-close="false"
-                :modal-append-to-body="false"
-                :title="$t('Add')"
-                :visible.sync="dialogAddVisible"
-        >
+        <div v-if="dialogAddVisible">
+            <div class="margin-md-top">{{$t('Add')}}</div>
             <el-form
                     ref="ruleForm"
                     :model="addForm"
@@ -105,47 +101,102 @@
                     label-width="100px"
                     class="demo-ruleForm"
             >
-
                 <el-form-item :label="$t('Name')">
-                    <el-input size="mini" class="number-input" v-model="addForm.name"/>
+                    <el-input size="mini" placeholder="运费模板名称,例如: 江浙沪免邮" class="" v-model="addForm.name"/>
                 </el-form-item>
                 <el-form-item :label="$t('Method')">
-                    <el-input size="mini" class="number-input" v-model="addForm.method"/>
+                    <el-radio v-model="addForm.method" label="weight">按重量</el-radio>
+                    <el-radio v-model="addForm.method" label="count">按件数</el-radio>
                 </el-form-item>
-
                 <el-form-item :label="$t('Freight')">
-                    <el-select size="mini" v-model="addForm.freight_type" placeholder="请选择">
-                        <el-option
-                                v-for="item in freightOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-radio v-model="addForm.freight_type" :label="1">免运费</el-radio>
+                    <el-radio v-model="addForm.freight_type" :label="2">到付</el-radio>
+                    <el-radio v-model="addForm.freight_type" :label="3">预付</el-radio>
                 </el-form-item>
-
-                <el-form-item
-                        :label="$t('Place')">
-                    <el-cascader style="width: 320px;" v-model="place" :loading="loading"
-                                 placeholder="" size="small" ref="addPlaceCascader" :props="pcaProps"></el-cascader>
+                <el-form-item :label="$t('LogisticsType')">
+                    <el-radio v-model="addForm.logistics_type" label="express">快递</el-radio>
+                    <el-radio v-model="addForm.logistics_type" label="ems">EMS</el-radio>
+                    <el-radio v-model="addForm.logistics_type" label="surface_mail">平邮</el-radio>
                 </el-form-item>
+                <el-form-item :label="$t('Place')">
+                    <el-alert>除指定地区外,其余地区的运费采用"默认运费"</el-alert>
+                    <div>
+                        默认运费:
+                        <el-input size="mini" v-model="defaultFreight[0]" placeholder="" class="number-input"/>
+                        Kg内,
+                        <el-input size="mini" v-model="defaultFreight[1]" placeholder="" class="number-input"/>
+                        元,
+                        每增加
+                        <el-input size="mini" v-model="defaultFreight[2]" placeholder="" class="number-input"/>
+                        Kg,
+                        增加运费:
+                        <el-input size="mini" v-model="defaultFreight[3]" placeholder="" class="number-input"/>
+                        元
+                    </div>
+                    <el-table
+                            :data="placeTable"
+                            border
+                            style="width: 100%">
+                        <el-table-column
+                                label="送达地区"
+                                width="320">
+                            <template slot-scope="scope">
+                                <el-cascader style="width: 240px;" v-model="placeTable[scope.row.index].place"
+                                             :loading="loading"
+                                             placeholder="" size="small" :props="pcaProps"></el-cascader>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="首重kg/件"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-input v-model="placeTable[scope.row.index].first"/>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="首重/件价格:元"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-input v-model="placeTable[scope.row.index].first_price"/>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="续重kg/件"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-input v-model="placeTable[scope.row.index].continuous"/>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="续重/件价格:元"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-input v-model="placeTable[scope.row.index].continuous_price"/>
+                            </template>
+                        </el-table-column>
 
+                    </el-table>
+                    <div class="margin-md-top">
+                        <el-button size="mini" @click="onAppend">为指定地区城市设置运费</el-button>
+                    </div>
+                </el-form-item>
             </el-form>
             <div
                     slot="footer"
                     class="dialog-footer"
             >
-                <el-button @click="dialogAddVisible = false">
+                <el-button size="mini" @click="dialogAddVisible = false">
                     {{ $t('Cancel') }}
                 </el-button>
                 <el-button
+                        size="mini"
                         type="primary"
                         @click="onSubmitAddForm"
                 >
                     {{ $t('Confirm') }}
                 </el-button>
             </div>
-        </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -173,6 +224,8 @@
         data () {
             return {
                 place: [],
+                defaultFreight: [1, 0, 0, 0],
+                placeTable: [],
                 dialogEditVisible: false,
                 dialogAddVisible: false,
                 freightOptions: [
@@ -192,13 +245,14 @@
                     { value: 'ems', label: 'EMS' }
                 ],
                 addForm: {
-                    name: 1,
+                    name: '',
                     freight_type: '',
-                    method: 0,
+                    method: 'weight',
                     logistics_type: 'express',
                     price_define: '',
                 },
                 pcaProps: {
+                    multiple: true,
                     lazy: true,
                     lazyLoad (node, resolve) {
                         const { value, level } = node
@@ -215,16 +269,6 @@
                                 break
                             case 1:
                                 pcaApi.queryCity({ code: value }, function (resp) {
-                                    let nodes = resp.map(item => ({
-                                        value: item.code,
-                                        label: item.name,
-                                        leaf: false
-                                    }))
-                                    resolve(nodes)
-                                })
-                                break
-                            case 2:
-                                pcaApi.queryArea({ code: value }, function (resp) {
                                     let nodes = resp.map(item => ({
                                         value: item.code,
                                         label: item.name,
@@ -254,20 +298,37 @@
         watch: {
             place (newVal, oldVal) {
                 let chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
-                // this.addForm.province_name = chkNode[0].pathLabels[0]
-                // this.addForm.city_name = chkNode[0].pathLabels[1]
-                // this.addForm.area_name = chkNode[0].pathLabels[2]
-                // this.addForm.province_code = newVal[0]
-                // this.addForm.city_code = newVal[1]
-                // this.addForm.area_code = newVal[2]
+                console.debug(chkNode)
+                let place = {
+                    province_name: '',
+                }
+                place.province_name = chkNode[0].pathLabels[0]
+                place.city_name = chkNode[0].pathLabels[1]
+                place.area_name = chkNode[0].pathLabels[2]
+                place.province_code = newVal[0]
+                place.city_code = newVal[1]
+                place.area_code = newVal[2]
+
             }
         },
         created () {
         },
         mounted () {
+            this.onAppend()
             this.refresh()
         },
         methods: {
+            onAppend () {
+                // 新增一个地区
+                this.placeTable.push({
+                    index: this.placeTable.length,
+                    place: [],
+                    first: 0,
+                    first_price: 0,
+                    continuous: 0,
+                    continuous_price: 0
+                })
+            },
             getFreightType (id) {
                 for (let i in this.freightOptions) {
                     if (parseInt(this.freightOptions[i].value) === parseInt(id)) {
@@ -322,19 +383,11 @@
             onAdd () {
                 this.dialogAddVisible = true
                 this.addForm = {
+                    logistics_type: 'express',
                     goods_id: this.id,
                     freight_type: 1,
                     freight_tpl_id: 0,
-                    country_code: '1',
-                    country_name: '中国',
-                    province_code: '',
-                    province_name: '',
-                    city_code: '',
-                    city_name: '',
-                    area_code: '',
-                    area_name: '',
-                    town_code: '',
-                    town_name: ''
+                    method: 'weight'
                 }
             },
             onEdit (row) {
@@ -343,16 +396,7 @@
                     goods_id: this.id,
                     freight_type: row.freight_type,
                     freight_tpl_id: row.freight_tpl_id,
-                    country_code: row.country_code,
-                    country_name: row.country_name,
-                    province_code: row.province_code,
-                    province_name: row.province_name,
-                    city_code: row.city_code,
-                    city_name: row.city_name,
-                    area_code: row.area_code,
-                    area_name: row.area_name,
-                    town_code: row.town_code,
-                    town_name: row.town_name
+                    method: row.method
                 }
             },
             async refresh () {

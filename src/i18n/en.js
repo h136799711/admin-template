@@ -193,6 +193,9 @@ exports.default = {
 	'City': 'City',
 	'Town': 'Town',
     'Template': 'Template',
+    'LogisticsType': 'Logistics Type',
+    'Method': 'Method',
+    'UpdateTime': 'Update Time',
 
 	// 短语
 	'PropertyValue': 'Property Value',
