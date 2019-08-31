@@ -1,4 +1,7 @@
 <style>
+    .price-input {
+        width: 160px;
+    }
 </style>
 <template>
     <div class="main-content by-banners padding-md-bottom padding-md-top">
@@ -129,20 +132,6 @@
                 </el-form-item>
                 <el-form-item :label="$t('Place')">
                     <el-alert>除指定地区外,其余地区的运费采用"默认运费"</el-alert>
-                    <!--                    <div>-->
-                    <!--                        默认运费:-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>-->
-                    <!--                        Kg内,-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>-->
-                    <!--                        元,-->
-                    <!--                        每增加-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>-->
-                    <!--                        Kg,-->
-                    <!--                        增加运费:-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""-->
-                    <!--                                  class="number-input"/>-->
-                    <!--                        元-->
-                    <!--                    </div>-->
                     <el-table
                             :data="placeTable"
                             border
@@ -161,28 +150,28 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="首重kg/件"
+                                :label="addForm.method === 'weight' ? '首重kg' : '首件'"
                                 width="180">
                             <template slot-scope="scope">
                                 <el-input v-model="placeTable[scope.row.index].first"/>
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="首重/件价格:元"
+                                :label="addForm.method === 'weight' ? '首重价格' : '首件价格'"
                                 width="180">
                             <template slot-scope="scope">
                                 <el-input v-model="placeTable[scope.row.index].first_price"/>
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="续重kg/件"
+                                :label="addForm.method === 'weight' ? '续重kg' : '续件'"
                                 width="180">
                             <template slot-scope="scope">
                                 <el-input v-model="placeTable[scope.row.index].continuous"/>
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="续重/件价格:元"
+                                :label="addForm.method === 'weight' ? '续重kg价格:元' : '续件价格:元'"
                                 width="180">
                             <template slot-scope="scope">
                                 <el-input v-model="placeTable[scope.row.index].continuous_price"/>
@@ -191,6 +180,96 @@
                     </el-table>
                     <div class="margin-md-top">
                         <el-button size="mini" @click="onAppend">为指定地区城市设置运费</el-button>
+                    </div>
+                </el-form-item>
+
+                <el-form-item>
+                    <el-alert>指定条件包邮</el-alert>
+                    <el-table
+                            :data="freeTable"
+                            border
+                            style="width: 100%">
+                        <el-table-column
+                                label="送达地区">
+                            <template slot-scope="scope">
+                                <el-cascader style="width: 240px;"
+                                             v-model="freeTable[scope.row.index].place"
+                                             :loading="loading"
+                                             :options="pcaOptions"
+                                             filterable
+                                             placeholder="" size="small" :props="pcaProps"></el-cascader>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="选择运送方式"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-select size="mini" v-model="freeTable[scope.row.index].logistics_type">
+                                    <el-option
+                                            v-for="item in logisticsOptions"
+                                            :label="item.label"
+                                            :value="item.value"
+                                            :key="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="设置包邮条件"
+                                width="360">
+                            <template slot-scope="scope">
+                                <el-select size="mini" v-model="freeTable[scope.row.index].method">
+                                    <el-option
+                                            v-for="item in freeOptions"
+                                            :label="item.label"
+                                            :value="item.value"
+                                            :key="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+
+                                <div v-if="freeTable[scope.row.index].method === 1">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].count"
+                                              type="number" class="input-number price-input"/>
+                                    件包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 2">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].money"
+                                              type="number" class="input-number price-input"/>
+                                    元包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 3">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].count"
+                                              type="number" class="input-number price-input"/>
+                                    件 且满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].money"
+                                              type="number" class="input-number price-input"/>
+                                    元包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 4">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].weight"
+                                              type="number" class="input-number price-input"/>
+                                    Kg重包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 5">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].weight"
+                                              type="number" class="input-number price-input"/>
+                                    Kg重, 且满
+                                    <el-input size="mini" v-model="freeTable[scope.row.index].money" type="number"
+                                              class="input-number price-input"/>
+                                    元包邮
+                                </div>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="margin-md-top">
+                        <el-button size="mini" @click="onAppendFree">为指定地区设置包邮</el-button>
                     </div>
                 </el-form-item>
             </el-form>
@@ -213,7 +292,7 @@
         <!-- 添加 END-->
 
 
-        <!-- 添加 -->
+        <!-- 编辑 -->
         <div v-if="dialogEditVisible">
             <div class="margin-md-top">{{$t('Edit')}}</div>
             <el-form
@@ -243,20 +322,6 @@
                 </el-form-item>
                 <el-form-item :label="$t('Place')">
                     <el-alert>除指定地区外,其余地区的运费采用"默认运费"</el-alert>
-                    <!--                    <div>-->
-                    <!--                        默认运费:-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>-->
-                    <!--                        Kg内,-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>-->
-                    <!--                        元,-->
-                    <!--                        每增加-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>-->
-                    <!--                        Kg,-->
-                    <!--                        增加运费:-->
-                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""-->
-                    <!--                                  class="number-input"/>-->
-                    <!--                        元-->
-                    <!--                    </div>-->
                     <el-table
                             :data="placeTable"
                             border
@@ -273,33 +338,33 @@
                                 <span v-else>默认地区(除指定地区外的其余地区)</span>
                             </template>
                         </el-table-column>
+
                         <el-table-column
-                                label="首重kg/件"
+                                :label="editForm.method === 'weight' ? '首重kg' : '首件'"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].first"/>
+                                <el-input v-model="placeTable[scope.row.index].first"/>
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="首重/件价格:元"
+                                :label="editForm.method === 'weight' ? '首重价格' : '首件价格'"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].first_price"/>
+                                <el-input v-model="placeTable[scope.row.index].first_price"/>
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="续重kg/件"
+                                :label="editForm.method === 'weight' ? '续重kg' : '续件'"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].continuous"/>
+                                <el-input v-model="placeTable[scope.row.index].continuous"/>
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="续重/件价格:元"
+                                :label="editForm.method === 'weight' ? '续重kg价格:元' : '续件价格:元'"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0"
-                                          v-model="placeTable[scope.row.index].continuous_price"/>
+                                <el-input v-model="placeTable[scope.row.index].continuous_price"/>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -343,12 +408,18 @@
         },
         data () {
             return {
+                freeTable: [],
                 pcaMap: [],
                 pcaOptions: [],
                 defaultFreight: [1, 0, 0, 0],
                 placeTable: [],
                 dialogEditVisible: false,
                 dialogAddVisible: false,
+                freeOptions: [
+                    { value: 4, label: '重量' },
+                    { value: 5, label: '重量+金额' },
+                    { value: 2, label: '金额' }
+                ],
                 freightOptions: [
                     { value: 1, label: '包邮' },
                     { value: 2, label: '货到付款' },
@@ -400,7 +471,31 @@
             }
         },
         computed: {},
-        watch: {},
+        watch: {
+            'editForm.method' (newVal) {
+                this.freeOptions = []
+                this.freeOptions.push({ value: 2, label: '金额' })
+                if (newVal === 'count') {
+                    this.freeOptions.push({ value: 1, label: '件数' })
+                    this.freeOptions.push({ value: 3, label: '件数+金额' })
+                } else {
+                    this.freeOptions.push({ value: 4, label: '重量' })
+                    this.freeOptions.push({ value: 5, label: '重量+金额' })
+                }
+            },
+            'addForm.method' (newVal) {
+                console.debug('addForm.method => ', this.addForm.method)
+                this.freeOptions = []
+                this.freeOptions.push({ value: 2, label: '金额' })
+                if (newVal === 'count') {
+                    this.freeOptions.push({ value: 1, label: '件数' })
+                    this.freeOptions.push({ value: 3, label: '件数+金额' })
+                } else {
+                    this.freeOptions.push({ value: 4, label: '重量' })
+                    this.freeOptions.push({ value: 5, label: '重量+金额' })
+                }
+            }
+        },
         created () {
             this.queryPca()
         },
@@ -449,6 +544,18 @@
                     console.log(this.pcaMap)
                 }, (err) => {
                     window.tools.alertError(err)
+                })
+            },
+            onAppendFree () {
+                // 包邮表单数据
+                this.freeTable.push({
+                    index: this.freeTable.length,
+                    place: [],
+                    logistics_type: '',
+                    method: '',
+                    money: 0, // 满多少金额,
+                    weight: 0, // 多少重量kg内,
+                    count: 0, // 满多少件
                 })
             },
             onAppend () {
@@ -554,12 +661,10 @@
                 this.onAppend()
                 this.dialogEditVisible = false
                 this.dialogAddVisible = true
-                this.addForm = {
-                    name: '',
-                    logistics_type: 'express',
-                    freight_type: 1,
-                    method: 'weight'
-                }
+                this.addForm.name = ''
+                this.addForm.logistics_type = 'express'
+                this.addForm.freight_type = 1
+                this.addForm.method = 'weight'
             },
             restorePlaceTable (price_define) {
                 this.onAppend()
