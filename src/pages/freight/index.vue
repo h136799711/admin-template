@@ -515,7 +515,7 @@
                 this.loading = true
                 this.editForm.price_define = this.getPlaceTable()
                 // 编辑
-                freightApi.create(this.editForm, (resp) => {
+                freightApi.update(this.editForm, (resp) => {
                     this.loading = false
                     this.dialogEditVisible = false
                     this.refresh()
@@ -538,7 +538,6 @@
                                 this.refresh()
                                 done()
                             }, (res) => {
-                                console.debug(res)
                                 done()
                                 window.tools.alertError(res.msg)
                                 instance.confirmButtonLoading = false
@@ -554,7 +553,6 @@
             onAdd () {
                 this.placeTable = []
                 this.onAppend()
-
                 this.dialogAddVisible = true
                 this.addForm = {
                     name: '',
@@ -563,11 +561,9 @@
                     method: 'weight'
                 }
             },
-            onEdit (row) {
-                this.dialogEditVisible = true
-                this.placeTable = []
+            restorePlaceTable (priceDefine) {
                 this.onAppend()
-                let define = JSON.parse(row.price_define)
+                let define = JSON.parse(price_define)
                 // 设置默认运费
                 this.placeTable[0].first = define[0].first
                 this.placeTable[0].first_price = define[0].first_price
@@ -581,17 +577,24 @@
                         first_price: define[i].first_price,
                         continuous: define[i].continuous,
                         continuous_price: define[i].continuous_price,
-                        place: [], //define[i].f_place.city
+                        place: []
                     })
                     for (let j = 0; j < define[i].f_place.prov.length; j++) {
                         this.placeTable[i].place.push([define[i].f_place.prov[j]])
                     }
                     for (let j = 0; j < define[i].f_place.city.length; j++) {
-                        this.placeTable[i].place.push(['', define[i].f_place.city[j]])
+                        let tmpProv = define[i].f_place.city[j]
+                        tmpProv = tmpProv.substr(0, 2).padEnd(tmpProv.length, '0')
+                        this.placeTable[i].place.push([tmpProv, define[i].f_place.city[j]])
                     }
                 }
-                console.debug('PlaceTable => ', this.placeTable)
+            },
+            onEdit (row) {
+                this.dialogEditVisible = true
+                this.placeTable = []
+                this.restorePlaceTable(row.price_define)
                 this.editForm = {
+                    id: row.id,
                     name: row.name,
                     logistics_type: row.logistics_type,
                     freight_type: row.freight_type,
@@ -602,11 +605,14 @@
                 // 刷新当前
                 this.tableData = []
                 this.loading = true
-                // try {
-                let resp = await freightApi.query({})
-                console.debug(resp)
-                this.tableData = resp
-                this.loading = false
+                try {
+                    let resp = await freightApi.query({})
+                    this.tableData = resp
+                    this.loading = false
+                } catch (e) {
+                    window.tools.alertError(e)
+                    this.loading = false
+                }
             }
         }
     }
