@@ -53,7 +53,6 @@
                         :label="$t('Freight')"
                 >
                     <template slot-scope="scope">
-                        {{getFreightType(scope.row.freight_type)}}<br/>
                         {{$t('Freight')}}{{$t('Template')}}: {{scope.row.freight_tpl_id}}
                     </template>
                 </el-table-column>
@@ -122,20 +121,16 @@
                 </el-form-item>
 
                 <el-form-item
-                        :label="$t('Freight')">
-                    <el-select size="mini" v-model="addForm.freight_type" placeholder="请选择">
+                        :label="$t('Freight') + $t('Template')">
+
+                    <el-select size="mini" v-model="addForm.freight_tpl_id" placeholder="请选择">
                         <el-option
-                                v-for="item in freightOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                v-for="item in freightTplList"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
                         </el-option>
                     </el-select>
-                </el-form-item>
-
-                <el-form-item
-                        :label="$t('Freight') + $t('Template')">
-                    <el-input size="mini" class="number-input" v-model="addForm.freight_tpl_id"/>
                 </el-form-item>
 
             </el-form>
@@ -154,10 +149,63 @@
                 </el-button>
             </div>
         </el-dialog>
+
+
+        <el-dialog
+                :show-close="false"
+                :modal-append-to-body="false"
+                :title="$t('Edit')"
+                :visible.sync="dialogEditVisible"
+        >
+            <el-form
+                    ref="ruleForm"
+                    :model="editForm"
+                    label-position="right"
+                    :rules="rules"
+                    label-width="100px"
+                    class="demo-ruleForm"
+            >
+
+                <el-form-item
+                        :label="$t('Place')">
+                    <el-cascader style="width: 320px;" v-model="place" :loading="loading"
+                                 placeholder="" size="small" ref="editPlaceCascader" :props="pcaProps"></el-cascader>
+                </el-form-item>
+
+                <el-form-item
+                        :label="$t('Freight') + $t('Template')">
+
+                    <el-select size="mini" v-model="editForm.freight_tpl_id" placeholder="请选择">
+                        <el-option
+                                v-for="item in freightTplList"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+            </el-form>
+            <div
+                    slot="footer"
+                    class="dialog-footer"
+            >
+                <el-button @click="dialogEditVisible = false">
+                    {{ $t('Cancel') }}
+                </el-button>
+                <el-button
+                        type="primary"
+                        @click="onSubmitEditForm"
+                >
+                    {{ $t('Confirm') }}
+                </el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+    import freightApi from '../../api/freightApi'
     import pcaApi from '../../api/pcaApi'
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
@@ -188,6 +236,21 @@
                     { value: 2, label: '到付' },
                     { value: 3, label: '预付' }
                 ],
+                editForm: {
+                    id: 0,
+                    freight_type: 1,
+                    freight_tpl_id: 0,
+                    country_code: '1',
+                    country_name: '中国',
+                    province_code: '',
+                    province_name: '',
+                    city_code: '',
+                    city_name: '',
+                    area_code: '',
+                    area_name: '',
+                    town_code: '',
+                    town_name: ''
+                },
                 addForm: {
                     goods_id: 0,
                     freight_type: 1,
@@ -262,13 +325,17 @@
                 count: 0,
                 tableData: [],
                 loading: false,
-
+                freightTplList: []
             }
         },
         computed: {},
         watch: {
             place (newVal, oldVal) {
-                let chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
+                if (this.dialogAddVisible) {
+                    let chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
+                } else {
+                    let chkNode = this.$ref.editPlaceCascader.getCheckedNodes()
+                }
                 this.addForm.province_name = chkNode[0].pathLabels[0]
                 this.addForm.city_name = chkNode[0].pathLabels[1]
                 this.addForm.area_name = chkNode[0].pathLabels[2]
@@ -310,6 +377,17 @@
             },
             onSubmitEditForm () {
                 // 编辑
+                this.loading = true
+                console.debug(this.editForm)
+                // 添加
+                goodsPlaceApi.update(this.editForm, (resp) => {
+                    this.loading = false
+                    this.dialogEditVisible = false
+                    this.refresh()
+                }, (err) => {
+                    this.loading = false
+                    window.tools.alertError(err)
+                })
 
             },
             onDelete (id) {
@@ -341,6 +419,9 @@
             },
             onAdd () {
                 this.dialogAddVisible = true
+                if (this.freightTplList.length === 0) {
+                    this.getFreightTemplate()
+                }
                 this.addForm = {
                     goods_id: this.id,
                     freight_type: 1,
@@ -358,11 +439,13 @@
                 }
             },
             onEdit (row) {
+                if (this.freightTplList.length === 0) {
+                    this.getFreightTemplate()
+                }
                 this.dialogEditVisible = true
                 this.editForm = {
-                    goods_id: this.id,
-                    freight_type: row.freight_type,
-                    freight_tpl_id: row.freight_tpl_id,
+                    id: row.id,
+                    freight_tpl_id: parseInt(row.freight_tpl_id),
                     country_code: row.country_code,
                     country_name: row.country_name,
                     province_code: row.province_code,
@@ -384,6 +467,11 @@
                 console.debug(resp)
                 this.tableData = resp
                 this.loading = false
+            },
+            async getFreightTemplate () {
+                let resp = await freightApi.query({})
+                console.debug(resp)
+                this.freightTplList = resp
             }
         }
     }

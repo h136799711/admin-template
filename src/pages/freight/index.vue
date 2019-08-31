@@ -52,14 +52,18 @@
                         :label="$t('LogisticsType')"
                 />
                 <el-table-column
-                        width="160px"
-                        prop="logistics_type"
-                        :label="$t('LogisticsType')"
-                />
+                        width="200px"
+                        prop="freight_type"
+                        :label="$t('Freight')"
+                >
+                    <template slot-scope="scope">
+                        {{getFreightType(scope.row.freight_type)}}
+                    </template>
+                </el-table-column>
                 <el-table-column
                         width="200px"
                         prop="price_define"
-                        :label="$t('Freight')"
+                        :label="$t('Place')"
                 />
                 <el-table-column
                         width="160px"
@@ -99,11 +103,11 @@
                     :model="addForm"
                     label-position="right"
                     :rules="rules"
-                    label-width="100px"
+                    label-width="160px"
                     class="demo-ruleForm"
             >
                 <el-form-item :label="$t('Name')">
-                    <el-input size="mini" placeholder="运费模板名称,例如: 江浙沪免邮" class="" v-model="addForm.name"/>
+                    <el-input size="mini" required placeholder="运费模板名称,例如: 江浙沪免邮" class="" v-model="addForm.name"/>
                 </el-form-item>
                 <el-form-item :label="$t('Method')">
                     <el-radio v-model="addForm.method" label="weight">按重量</el-radio>
@@ -123,15 +127,16 @@
                     <el-alert>除指定地区外,其余地区的运费采用"默认运费"</el-alert>
                     <div>
                         默认运费:
-                        <el-input size="mini" v-model="defaultFreight[0]" placeholder="" class="number-input"/>
+                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>
                         Kg内,
-                        <el-input size="mini" v-model="defaultFreight[1]" placeholder="" class="number-input"/>
+                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>
                         元,
                         每增加
-                        <el-input size="mini" v-model="defaultFreight[2]" placeholder="" class="number-input"/>
+                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>
                         Kg,
                         增加运费:
-                        <el-input size="mini" v-model="defaultFreight[3]" placeholder="" class="number-input"/>
+                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""
+                                  class="number-input"/>
                         元
                     </div>
                     <el-table
@@ -139,10 +144,12 @@
                             border
                             style="width: 100%">
                         <el-table-column
+
                                 label="送达地区"
                                 width="320">
                             <template slot-scope="scope">
-                                <el-cascader style="width: 240px;" v-model="placeTable[scope.row.index].place"
+                                <el-cascader v-if="scope.row.index > 0" style="width: 240px;"
+                                             v-model="placeTable[scope.row.index].place"
                                              :loading="loading"
                                              placeholder="" size="small" :props="pcaProps"></el-cascader>
                             </template>
@@ -151,28 +158,29 @@
                                 label="首重kg/件"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-model="placeTable[scope.row.index].first"/>
+                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].first"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="首重/件价格:元"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-model="placeTable[scope.row.index].first_price"/>
+                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].first_price"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="续重kg/件"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-model="placeTable[scope.row.index].continuous"/>
+                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].continuous"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="续重/件价格:元"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-model="placeTable[scope.row.index].continuous_price"/>
+                                <el-input v-if="scope.row.index > 0"
+                                          v-model="placeTable[scope.row.index].continuous_price"/>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -314,25 +322,39 @@
             },
             onSubmitAddForm () {
                 this.loading = true
+                for (let i in this.placeTable) {
+                    this.placeTable[i].f_place = {
+                        prov: [],
+                        city: []
+                    }
+                    for (let j in this.placeTable[i].place) {
+                        if (this.placeTable[i].place[j].length > 0) {
+                            let city = this.placeTable[i].place[j][1]
+                            let prov = this.placeTable[i].place[j][0]
+                            if (this.placeTable[i].f_place.prov.indexOf(prov) === -1) {
+                                this.placeTable[i].f_place.prov.push(prov)
+                            }
+                            if (this.placeTable[i].f_place.prov.indexOf(city) === -1) {
+                                this.placeTable[i].f_place.city.push(city)
+                            }
+                        }
+                    }
+                    this.placeTable[i].place = null
+                    delete this.placeTable[i].place
+                }
+                console.log('FormatTable=>', this.placeTable)
 
-                console.debug('AddForm: ', this.addForm, this.placeTable, this.defaultFreight)
-                this.placeTable.push({
-                    index: this.placeTable.length,
-                    place: [],
-                    first: 0,
-                    first_price: 0,
-                    continuous: 0,
-                    continuous_price: 0
-                })
+                this.addForm.price_define = JSON.stringify(this.placeTable)
+                console.debug('AddForm: ', this.addForm, this.placeTable)
                 // 添加
-                // goodsPlaceApi.create(this.addForm, (resp) => {
-                //     this.loading = false
-                //     this.dialogAddVisible = false
-                //     this.refresh()
-                // }, (err) => {
-                //     this.loading = false
-                //     window.tools.alertError(err)
-                // })
+                freightApi.create(this.addForm, (resp) => {
+                    this.loading = false
+                    this.dialogAddVisible = false
+                    this.refresh()
+                }, (err) => {
+                    this.loading = false
+                    window.tools.alertError(err)
+                })
             },
             onSubmitEditForm () {
                 // 编辑
@@ -347,7 +369,7 @@
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-                            goodsPlaceApi.delete({ id: id }, (res) => {
+                            freightApi.delete({ id: id }, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.refresh()
                                 done()
@@ -366,6 +388,9 @@
                 })
             },
             onAdd () {
+                this.placeTable = []
+                this.onAppend()
+
                 this.dialogAddVisible = true
                 this.addForm = {
                     name: '',
