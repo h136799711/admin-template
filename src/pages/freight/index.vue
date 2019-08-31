@@ -1,6 +1,6 @@
 <style>
     .price-input {
-        width: 160px;
+        width: 65px;
     }
 </style>
 <template>
@@ -217,9 +217,10 @@
                         </el-table-column>
                         <el-table-column
                                 label="设置包邮条件"
-                                width="360">
+                                width="540">
                             <template slot-scope="scope">
-                                <el-select size="mini" v-model="freeTable[scope.row.index].method">
+                                <el-select class="margin-md-bottom" size="mini"
+                                           v-model="freeTable[scope.row.index].method">
                                     <el-option
                                             v-for="item in freeOptions"
                                             :label="item.label"
@@ -261,7 +262,8 @@
                                     <el-input size="mini" min="0" v-model="freeTable[scope.row.index].weight"
                                               type="number" class="input-number price-input"/>
                                     Kg重, 且满
-                                    <el-input size="mini" v-model="freeTable[scope.row.index].money" type="number"
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].money"
+                                              type="number"
                                               class="input-number price-input"/>
                                     元包邮
                                 </div>
@@ -269,7 +271,7 @@
                         </el-table-column>
                     </el-table>
                     <div class="margin-md-top">
-                        <el-button size="mini" @click="onAppendFree">为指定地区设置包邮</el-button>
+                        <el-button size="mini" @click="onAppendFree">为指定地区设置包邮(最多设置3条记录)</el-button>
                     </div>
                 </el-form-item>
             </el-form>
@@ -547,6 +549,10 @@
                 })
             },
             onAppendFree () {
+                if (this.freeTable.length === 3) {
+                    window.tools.alertError('最多3条记录')
+                    return
+                }
                 // 包邮表单数据
                 this.freeTable.push({
                     index: this.freeTable.length,
