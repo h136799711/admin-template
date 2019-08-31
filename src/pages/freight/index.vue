@@ -119,7 +119,7 @@
                 </el-form-item>
                 <el-form-item :label="$t('Freight')">
                     <el-radio v-model="addForm.freight_type" :label="1">免运费</el-radio>
-                    <el-radio v-model="addForm.freight_type" :label="2">到付</el-radio>
+                    <el-radio v-model="addForm.freight_type" :label="2">货到付款</el-radio>
                     <el-radio v-model="addForm.freight_type" :label="3">预付</el-radio>
                 </el-form-item>
                 <el-form-item :label="$t('LogisticsType')">
@@ -129,28 +129,26 @@
                 </el-form-item>
                 <el-form-item :label="$t('Place')">
                     <el-alert>除指定地区外,其余地区的运费采用"默认运费"</el-alert>
-                    <div>
-                        默认运费:
-                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>
-                        Kg内,
-                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>
-                        元,
-                        每增加
-                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>
-                        Kg,
-                        增加运费:
-                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""
-                                  class="number-input"/>
-                        元
-                    </div>
+                    <!--                    <div>-->
+                    <!--                        默认运费:-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>-->
+                    <!--                        Kg内,-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>-->
+                    <!--                        元,-->
+                    <!--                        每增加-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>-->
+                    <!--                        Kg,-->
+                    <!--                        增加运费:-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""-->
+                    <!--                                  class="number-input"/>-->
+                    <!--                        元-->
+                    <!--                    </div>-->
                     <el-table
                             :data="placeTable"
                             border
                             style="width: 100%">
                         <el-table-column
-
-                                label="送达地区"
-                                width="320">
+                                label="送达地区">
                             <template slot-scope="scope">
                                 <el-cascader v-if="scope.row.index > 0" style="width: 240px;"
                                              v-model="placeTable[scope.row.index].place"
@@ -158,35 +156,36 @@
                                              :options="pcaOptions"
                                              filterable
                                              placeholder="" size="small" :props="pcaProps"></el-cascader>
+
+                                <span v-else>默认地区(除指定地区外的其余地区)</span>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="首重kg/件"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].first"/>
+                                <el-input v-model="placeTable[scope.row.index].first"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="首重/件价格:元"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].first_price"/>
+                                <el-input v-model="placeTable[scope.row.index].first_price"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="续重kg/件"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0" v-model="placeTable[scope.row.index].continuous"/>
+                                <el-input v-model="placeTable[scope.row.index].continuous"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 label="续重/件价格:元"
                                 width="180">
                             <template slot-scope="scope">
-                                <el-input v-if="scope.row.index > 0"
-                                          v-model="placeTable[scope.row.index].continuous_price"/>
+                                <el-input v-model="placeTable[scope.row.index].continuous_price"/>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -233,8 +232,8 @@
                     <el-radio v-model="editForm.method" label="count">按件数</el-radio>
                 </el-form-item>
                 <el-form-item :label="$t('Freight')">
-                    <el-radio v-model="editForm.freight_type" :label="1">免运费</el-radio>
-                    <el-radio v-model="editForm.freight_type" :label="2">到付</el-radio>
+                    <el-radio v-model="editForm.freight_type" :label="1">包邮</el-radio>
+                    <el-radio v-model="editForm.freight_type" :label="2">货到付款</el-radio>
                     <el-radio v-model="editForm.freight_type" :label="3">预付</el-radio>
                 </el-form-item>
                 <el-form-item :label="$t('LogisticsType')">
@@ -244,27 +243,26 @@
                 </el-form-item>
                 <el-form-item :label="$t('Place')">
                     <el-alert>除指定地区外,其余地区的运费采用"默认运费"</el-alert>
-                    <div>
-                        默认运费:
-                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>
-                        Kg内,
-                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>
-                        元,
-                        每增加
-                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>
-                        Kg,
-                        增加运费:
-                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""
-                                  class="number-input"/>
-                        元
-                    </div>
+                    <!--                    <div>-->
+                    <!--                        默认运费:-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].first" placeholder="" class="number-input"/>-->
+                    <!--                        Kg内,-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].first_price" placeholder="" class="number-input"/>-->
+                    <!--                        元,-->
+                    <!--                        每增加-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous" placeholder="" class="number-input"/>-->
+                    <!--                        Kg,-->
+                    <!--                        增加运费:-->
+                    <!--                        <el-input size="mini" v-model="placeTable[0].continuous_price" placeholder=""-->
+                    <!--                                  class="number-input"/>-->
+                    <!--                        元-->
+                    <!--                    </div>-->
                     <el-table
                             :data="placeTable"
                             border
                             style="width: 100%">
                         <el-table-column
-                                label="送达地区"
-                                width="320">
+                                label="送达地区">
                             <template slot-scope="scope">
                                 <el-cascader v-if="scope.row.index > 0" style="width: 240px;"
                                              v-model="placeTable[scope.row.index].place"
@@ -272,6 +270,7 @@
                                              :options="pcaOptions"
                                              filterable
                                              placeholder="" size="small" :props="pcaProps"></el-cascader>
+                                <span v-else>默认地区(除指定地区外的其余地区)</span>
                             </template>
                         </el-table-column>
                         <el-table-column
@@ -351,8 +350,8 @@
                 dialogEditVisible: false,
                 dialogAddVisible: false,
                 freightOptions: [
-                    { value: 1, label: '免运费' },
-                    { value: 2, label: '到付' },
+                    { value: 1, label: '包邮' },
+                    { value: 2, label: '货到付款' },
                     { value: 3, label: '预付' }
                 ],
                 methodOptions: [
@@ -553,6 +552,7 @@
             onAdd () {
                 this.placeTable = []
                 this.onAppend()
+                this.dialogEditVisible = false
                 this.dialogAddVisible = true
                 this.addForm = {
                     name: '',
@@ -561,7 +561,7 @@
                     method: 'weight'
                 }
             },
-            restorePlaceTable (priceDefine) {
+            restorePlaceTable (price_define) {
                 this.onAppend()
                 let define = JSON.parse(price_define)
                 // 设置默认运费
@@ -590,6 +590,7 @@
                 }
             },
             onEdit (row) {
+                this.dialogAddVisible = false
                 this.dialogEditVisible = true
                 this.placeTable = []
                 this.restorePlaceTable(row.price_define)
@@ -597,7 +598,7 @@
                     id: row.id,
                     name: row.name,
                     logistics_type: row.logistics_type,
-                    freight_type: row.freight_type,
+                    freight_type: parseInt(row.freight_type),
                     method: row.method
                 }
             },
