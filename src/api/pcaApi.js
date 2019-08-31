@@ -18,7 +18,11 @@ const pcaApi = {
   queryTown (data, suc, fail) {
     data.service_type = 'by_Pca_queryTown'
     http.methods.defaultPost('', data, suc, fail)
-  }
+  },
+    query3Level (data, suc, fail) {
+        data.service_type = 'by_Pca_query3Level'
+        http.methods.defaultPost('', data, suc, fail)
+    }
 }
 
 export default pcaApi

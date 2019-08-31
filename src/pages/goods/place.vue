@@ -331,10 +331,11 @@
         computed: {},
         watch: {
             place (newVal, oldVal) {
+                let chkNode = []
                 if (this.dialogAddVisible) {
-                    let chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
-                } else {
-                    let chkNode = this.$ref.editPlaceCascader.getCheckedNodes()
+                    chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
+                } else if (this.dialogEditVisible) {
+                    chkNode = this.$ref.editPlaceCascader.getCheckedNodes()
                 }
                 this.addForm.province_name = chkNode[0].pathLabels[0]
                 this.addForm.city_name = chkNode[0].pathLabels[1]
