@@ -71,7 +71,7 @@ Vue.use(ElementUI, {
 Vue.use(VueRouter)
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-	locale: 'en', // set locale
+    locale: 'zh', // set locale
 	messages, // set locale messages
 })
 window.itboye = window.itboye || {}
