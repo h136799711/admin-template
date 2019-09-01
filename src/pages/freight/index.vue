@@ -1,6 +1,6 @@
 <style>
     .price-input {
-        width: 65px;
+        width: 80px;
     }
 </style>
 <template>
@@ -44,18 +44,23 @@
                         :label="$t('Name')"
                 />
                 <el-table-column
-                        width="160px"
-                        prop="method"
+                        width="120px"
                         :label="$t('Method')"
-                />
-
+                >
+                    <template slot-scope="scope">
+                        {{getMethodType(scope.row.method)}}
+                    </template>
+                </el-table-column>
                 <el-table-column
-                        width="160px"
-                        prop="logistics_type"
+                        width="120px"
                         :label="$t('LogisticsType')"
-                />
+                >
+                    <template slot-scope="scope">
+                        {{getLogisticType(scope.row.logistics_type)}}
+                    </template>
+                </el-table-column>
                 <el-table-column
-                        width="200px"
+                        width="120px"
                         prop="freight_type"
                         :label="$t('Freight')"
                 >
@@ -70,6 +75,14 @@
                 >
                     <template slot-scope="scope">
                         <span v-html="parsePlace(scope.row.price_define)"></span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="400px"
+                        :label="$t('FreeShipping')"
+                >
+                    <template slot-scope="scope">
+                        <span v-html="parseFreeCondition(scope.row.free_condition)"></span>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -184,8 +197,9 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-alert>指定条件包邮</el-alert>
+                    <el-checkbox v-model="addForm.enable_free_cond">指定条件包邮(可选)</el-checkbox>
                     <el-table
+                            v-if="addForm.enable_free_cond"
                             :data="freeTable"
                             border
                             style="width: 100%">
@@ -270,7 +284,7 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    <div class="margin-md-top">
+                    <div class="margin-md-top" v-if="addForm.enable_free_cond">
                         <el-button size="mini" @click="onAppendFree">为指定地区设置包邮(最多设置3条记录)</el-button>
                     </div>
                 </el-form-item>
@@ -374,6 +388,98 @@
                         <el-button size="mini" @click="onAppend">为指定地区城市设置运费</el-button>
                     </div>
                 </el-form-item>
+                <el-form-item>
+                    <el-checkbox v-model="editForm.enable_free_cond">指定条件包邮(可选)</el-checkbox>
+                    <el-table
+                            v-if="editForm.enable_free_cond"
+                            :data="freeTable"
+                            border
+                            style="width: 100%">
+                        <el-table-column
+                                label="送达地区">
+                            <template slot-scope="scope">
+                                <el-cascader style="width: 240px;"
+                                             v-model="freeTable[scope.row.index].place"
+                                             :loading="loading"
+                                             :options="pcaOptions"
+                                             filterable
+                                             placeholder="" size="small" :props="pcaProps"></el-cascader>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="选择运送方式"
+                                width="180">
+                            <template slot-scope="scope">
+                                <el-select size="mini" v-model="freeTable[scope.row.index].logistics_type">
+                                    <el-option
+                                            v-for="item in logisticsOptions"
+                                            :label="item.label"
+                                            :value="item.value"
+                                            :key="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="设置包邮条件"
+                                width="540">
+                            <template slot-scope="scope">
+                                <el-select class="margin-md-bottom" size="mini"
+                                           v-model="freeTable[scope.row.index].method">
+                                    <el-option
+                                            v-for="item in freeOptions"
+                                            :label="item.label"
+                                            :value="item.value"
+                                            :key="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+
+                                <div v-if="freeTable[scope.row.index].method === 1">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].count"
+                                              type="number" class="input-number price-input"/>
+                                    件包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 2">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].money"
+                                              type="number" class="input-number price-input"/>
+                                    元包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 3">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].count"
+                                              type="number" class="input-number price-input"/>
+                                    件 且满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].money"
+                                              type="number" class="input-number price-input"/>
+                                    元包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 4">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].weight"
+                                              type="number" class="input-number price-input"/>
+                                    Kg重包邮
+                                </div>
+                                <div v-else-if="freeTable[scope.row.index].method === 5">
+                                    满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].weight"
+                                              type="number" class="input-number price-input"/>
+                                    Kg重, 且满
+                                    <el-input size="mini" min="0" v-model="freeTable[scope.row.index].money"
+                                              type="number"
+                                              class="input-number price-input"/>
+                                    元包邮
+                                </div>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="margin-md-top" v-if="editForm.enable_free_cond">
+                        <el-button size="mini" @click="onAppendFree">为指定地区设置包邮(最多设置3条记录)</el-button>
+                    </div>
+                </el-form-item>
             </el-form>
             <div
                     slot="footer"
@@ -417,6 +523,13 @@
                 placeTable: [],
                 dialogEditVisible: false,
                 dialogAddVisible: false,
+                allFreeOptions: {
+                    1: '件数',
+                    2: '金额',
+                    3: '件数+金额',
+                    4: '重量',
+                    5: '重量+金额',
+                },
                 freeOptions: [
                     { value: 4, label: '重量' },
                     { value: 5, label: '重量+金额' },
@@ -444,6 +557,8 @@
                     method: 'weight',
                     logistics_type: 'express',
                     price_define: '',
+                    free_condition: '',
+                    enable_free_cond: 0
                 },
                 editForm: {
                     name: '',
@@ -505,9 +620,45 @@
             this.refresh()
         },
         methods: {
+            parseFreeCondition (condition) {
+                condition = JSON.parse(condition)
+                let desc = ''
+                if (condition.length > 0) {
+                    for (let i = 0; i < condition.length; i++) {
+                        let provDesc = ''
+                        for (let k = 0; k < condition[i].f_place.prov.length; k++) {
+                            provDesc += this.pcaMap[condition[i].f_place.prov[k]] + ','
+                        }
+                        let cityDesc = ''
+                        for (let k = 0; k < condition[i].f_place.city.length; k++) {
+                            cityDesc += this.pcaMap[condition[i].f_place.city[k]] + ','
+                        }
+                        desc += '<br/>地区: ' + provDesc + cityDesc
+                        // desc += '<br/>运送方式: ' + this.allFreeOptions[condition[i].method]
+                        desc += '<br/>运送方式: ' + condition[i].logistics_type
+                        if (condition[i].method == 1) {
+                            desc += '<br/>条件: 满' + condition[i].count + '件包邮'
+                            // 1: '件数',
+                            //     2: '金额',
+                            //     3: '件数+金额',
+                            //     4: '重量',
+                            //     5: '重量+金额',
+                            // desc += '<br/>条件: 满' + condition[i].weight + ' kg以内, 满' + condition[i].count + '件, 满' + condition[i].money + ' 元包邮'
+                        } else if (condition[i].method == 2) {
+                            desc += '<br/>条件: 满' + condition[i].money + ' 元包邮'
+                        } else if (condition[i].method == 3) {
+                            desc += '<br/>条件: 满' + condition[i].count + '件, 满' + condition[i].money + ' 元包邮'
+                        } else if (condition[i].method == 4) {
+                            desc += '<br/>条件: 满' + condition[i].weight + ' kg以内包邮'
+                        } else if (condition[i].method == 5) {
+                            desc += '<br/>条件: 满' + condition[i].weight + ' kg以内, 满' + condition[i].money + ' 元包邮'
+                        }
+                    }
+                }
+                return desc
+            },
             parsePlace (place) {
                 place = JSON.parse(place)
-                console.debug(place)
                 let desc = ''
                 if (place.length > 0) {
                     desc = '默认运费: ' + place[0].first + ' kg以内, ' + place[0].first_price + '元 每增加' + place[0].continuous + ' kg, 多' + place[0].continuous_price + '元'
@@ -575,6 +726,20 @@
                     continuous_price: 0
                 })
             },
+            getMethodType (id) {
+                for (let i in this.methodOptions) {
+                    if ((this.methodOptions[i].value) === (id)) {
+                        return this.methodOptions[i].label
+                    }
+                }
+            },
+            getLogisticType (id) {
+                for (let i in this.logisticsOptions) {
+                    if ((this.logisticsOptions[i].value) === (id)) {
+                        return this.logisticsOptions[i].label
+                    }
+                }
+            },
             getFreightType (id) {
                 for (let i in this.freightOptions) {
                     if (parseInt(this.freightOptions[i].value) === parseInt(id)) {
@@ -582,36 +747,11 @@
                     }
                 }
             },
-            getPlaceTable () {
-                for (let i in this.placeTable) {
-                    this.placeTable[i].f_place = {
-                        prov: [],
-                        city: []
-                    }
-                    for (let j in this.placeTable[i].place) {
-                        let tmp = this.placeTable[i].place[j]
-                        if (tmp.length > 0) {
-                            if (tmp.length > 1) {
-                                let city = tmp[1]
-                                if (this.placeTable[i].f_place.city.indexOf(city) === -1) {
-                                    this.placeTable[i].f_place.city.push(city)
-                                }
-                            } else {
-                                let prov = tmp[0]
-                                if (this.placeTable[i].f_place.prov.indexOf(prov) === -1) {
-                                    this.placeTable[i].f_place.prov.push(prov)
-                                }
-                            }
-                        }
-                    }
-                    this.placeTable[i].place = null
-                    delete this.placeTable[i].place
-                }
-                return JSON.stringify(this.placeTable)
-            },
             onSubmitAddForm () {
                 this.loading = true
+                this.addForm.enable_free_cond = this.addForm.enable_free_cond ? 1 : 0
                 this.addForm.price_define = this.getPlaceTable()
+                this.addForm.free_condition = this.getFreeTable()
                 // 添加
                 freightApi.create(this.addForm, (resp) => {
                     this.loading = false
@@ -625,7 +765,9 @@
             onSubmitEditForm () {
                 // 编辑
                 this.loading = true
+                this.editForm.enable_free_cond = this.editForm.enable_free_cond ? 1 : 0
                 this.editForm.price_define = this.getPlaceTable()
+                this.editForm.free_condition = this.getFreeTable()
                 // 编辑
                 freightApi.update(this.editForm, (resp) => {
                     this.loading = false
@@ -672,6 +814,83 @@
                 this.addForm.freight_type = 1
                 this.addForm.method = 'weight'
             },
+            getFreeTable () {
+                for (let i in this.freeTable) {
+                    this.freeTable[i].f_place = {
+                        prov: [],
+                        city: []
+                    }
+                    for (let j in this.freeTable[i].place) {
+                        let tmp = this.freeTable[i].place[j]
+                        if (tmp.length > 0) {
+                            if (tmp.length > 1) {
+                                let city = tmp[1]
+                                if (this.freeTable[i].f_place.city.indexOf(city) === -1) {
+                                    this.freeTable[i].f_place.city.push(city)
+                                }
+                            } else {
+                                let prov = tmp[0]
+                                if (this.freeTable[i].f_place.prov.indexOf(prov) === -1) {
+                                    this.freeTable[i].f_place.prov.push(prov)
+                                }
+                            }
+                        }
+                    }
+                    this.freeTable[i].place = null
+                    delete this.freeTable[i].place
+                }
+                return JSON.stringify(this.freeTable)
+            },
+            restoreFreeTable (freeCondition) {
+                freeCondition = JSON.parse(freeCondition)
+                // 设置其它运费
+                for (let i = 0; i < freeCondition.length; i++) {
+                    this.freeTable.push({
+                        index: i,
+                        logistics_type: freeCondition[i].logistics_type,
+                        method: freeCondition[i].method,
+                        weight: freeCondition[i].weight,
+                        money: freeCondition[i].money,
+                        count: freeCondition[i].count,
+                        place: []
+                    })
+                    for (let j = 0; j < freeCondition[i].f_place.prov.length; j++) {
+                        this.freeTable[i].place.push([freeCondition[i].f_place.prov[j]])
+                    }
+                    for (let j = 0; j < freeCondition[i].f_place.city.length; j++) {
+                        let tmpProv = freeCondition[i].f_place.city[j]
+                        tmpProv = tmpProv.substr(0, 2).padEnd(tmpProv.length, '0')
+                        this.freeTable[i].place.push([tmpProv, freeCondition[i].f_place.city[j]])
+                    }
+                }
+            },
+            getPlaceTable () {
+                for (let i in this.placeTable) {
+                    this.placeTable[i].f_place = {
+                        prov: [],
+                        city: []
+                    }
+                    for (let j in this.placeTable[i].place) {
+                        let tmp = this.placeTable[i].place[j]
+                        if (tmp.length > 0) {
+                            if (tmp.length > 1) {
+                                let city = tmp[1]
+                                if (this.placeTable[i].f_place.city.indexOf(city) === -1) {
+                                    this.placeTable[i].f_place.city.push(city)
+                                }
+                            } else {
+                                let prov = tmp[0]
+                                if (this.placeTable[i].f_place.prov.indexOf(prov) === -1) {
+                                    this.placeTable[i].f_place.prov.push(prov)
+                                }
+                            }
+                        }
+                    }
+                    this.placeTable[i].place = null
+                    delete this.placeTable[i].place
+                }
+                return JSON.stringify(this.placeTable)
+            },
             restorePlaceTable (price_define) {
                 this.onAppend()
                 let define = JSON.parse(price_define)
@@ -704,10 +923,13 @@
                 this.dialogAddVisible = false
                 this.dialogEditVisible = true
                 this.placeTable = []
+                this.freeTable = []
                 this.restorePlaceTable(row.price_define)
+                this.restoreFreeTable(row.free_condition)
                 this.editForm = {
                     id: row.id,
                     name: row.name,
+                    enable_free_cond: parseInt(row.enable_free_cond) === 1 ? true : false,
                     logistics_type: row.logistics_type,
                     freight_type: parseInt(row.freight_type),
                     method: row.method

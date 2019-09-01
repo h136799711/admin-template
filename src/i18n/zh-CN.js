@@ -195,6 +195,7 @@ exports.default = {
 	'LogisticsType': '运送方式',
 	'Method': '计算方式',
 	'UpdateTime': '更新时间',
+	'FreeShipping': '包邮',
 
 	// 短语
 	'PropertyValue': '属性值',

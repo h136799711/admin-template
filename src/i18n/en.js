@@ -196,6 +196,7 @@ exports.default = {
     'LogisticsType': 'Logistics Type',
     'Method': 'Method',
     'UpdateTime': 'Update Time',
+    'FreeShipping': 'FreeShipping',
 
 	// 短语
 	'PropertyValue': 'Property Value',
