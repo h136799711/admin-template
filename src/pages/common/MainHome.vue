@@ -895,7 +895,7 @@
             'name': 'English', method: 'changeLanguages', 'value': 'en'
         },
         {
-            'name': '中文简体', method: 'changeLanguages', 'value': 'zh-cn'
+            'name': '中文简体', method: 'changeLanguages', 'value': 'zh'
         }
       ]
     }
