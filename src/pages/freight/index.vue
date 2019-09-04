@@ -805,6 +805,7 @@
                 })
             },
             onAdd () {
+                this.freeTable = []
                 this.placeTable = []
                 this.onAppend()
                 this.dialogEditVisible = false
