@@ -160,7 +160,7 @@
                         :label="$t('Sort')"
                         prop="sort"
                 >
-                    <el-input-number v-model="editForm.sort" :min="0" :max="10000000000" ></el-input-number>
+                    <el-input-number class="input-number" v-model="editForm.sort" :min="0"></el-input-number>
                 </el-form-item>
                 <el-form-item
                         label=""
