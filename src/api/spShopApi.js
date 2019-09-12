@@ -13,7 +13,7 @@ const spShopApi = {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_create' }), suc, fail)
     },
     queryGoods (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_removeGoods' }), suc, fail)
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_queryGoods' }), suc, fail)
     },
     addGoods (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_addGoods' }), suc, fail)

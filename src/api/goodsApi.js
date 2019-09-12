@@ -14,6 +14,9 @@ const goodsApi = {
   query (data) {
     return http.methods.promisePost(Object.assign(data, { service_type: 'by_SpGoods_query' }))
   },
+    queryGoodsId (data) {
+        return http.methods.promisePost(Object.assign(data, { service_type: 'by_SpGoods_queryGoodsId' }))
+    },
   delete (data, suc, fail) {
     http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoods_delete' }), suc, fail)
   },

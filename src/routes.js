@@ -71,6 +71,7 @@ const GoodsSku = r => require.ensure([], () => r(require('./pages/goods/sku.vue'
 const GoodsPlace = r => require.ensure([], () => r(require('./pages/goods/place.vue')), 'GoodsPlace')
 const FreightIndex = r => require.ensure([], () => r(require('./pages/freight/index.vue')), 'FreightIndex')
 const ShopIndex = r => require.ensure([], () => r(require('./pages/sp_shop/index.vue')), 'ShopIndex')
+const ShopGoods = r => require.ensure([], () => r(require('./pages/sp_shop/goods.vue')), 'ShopGoods')
 // Goods END *******************
 
 const routes = [
@@ -93,6 +94,7 @@ const routes = [
               { path: 'index', component: ShopIndex }
           ]
       },
+      { path: 'shop/goods/:id', component: ShopGoods, props: true },
         {
             path: 'freight',
             component: FreightIndex,

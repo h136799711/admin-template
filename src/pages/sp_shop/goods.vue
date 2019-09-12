@@ -3,6 +3,13 @@
         <el-button
                 type="primary"
                 size="mini"
+                icon="el-icon-back"
+                @click="onBack()">
+            {{ $t('Back')}}
+        </el-button>
+        <el-button
+                type="primary"
+                size="mini"
                 icon="el-icon-plus"
                 :loading="loading"
                 @click="onAdd()">
@@ -42,26 +49,44 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        :label="$t('Description')">
+                        width="160px"
+                        prop="sub_title"
+                        :label="$t('SubTitle')"
+                />
+                <el-table-column
+                        width="160px"
+                        :label="$t('Price')"
+                >
                     <template slot-scope="scope">
-                        {{scope.row.description}}
+                        {{(scope.row.show_price / 100).toFixed(2)}} {{$t('Unit.Yuan')}}
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="200px"
-                        :label="$t('Status')">
+                        width="160px"
+                        :label="$t('Volume') + '/' + $t('Weight')"
+                >
                     <template slot-scope="scope">
-
-                        <el-tag type="info">{{scope.row.closed === 0 ? '营业': '休息'}}</el-tag>
-                        <el-button
-                                size="mini"
-                                @click="onCloseOrOpen(scope.row.id, scope.row.closed)">
-                            {{scope.row.closed === 1 ? '改为营业': '改为休息'}}
-                        </el-button>
+                        {{scope.row.volume}} cm <sup style="font-size: 10px;">3</sup> <br/>
+                        {{scope.row.weight}} Kg
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="100px"
+                        width="160px"
+                        :label="$t('SaleTime')">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.sale_open_time > 0">销售开始:<br/>
+                        {{(new Date(scope.row.sale_open_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                        </span>
+                        <span v-else>不限制</span>
+                        <br/>
+                        <span v-if="scope.row.sale_end_time > 0">销售截至:<br/>
+                        {{(new Date(scope.row.sale_end_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                        </span>
+                        <span v-else>不限制</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="160px"
                         :label="$t('CreateTime')">
                     <template slot-scope="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
@@ -75,26 +100,26 @@
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
-                                @click="onAddGoods(scope.row.id)">
-                            {{$t('Goods')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="onEdit(scope.row)">
-                            {{$t('Edit')}}
-                        </el-button>
-                        <el-button
-                                size="mini"
                                 type="danger"
                                 icon="el-icon-delete"
-                                @click="onDelete(scope.row.id)">
-                            {{$t('Delete')}}
+                                @click="onRemove(scope.row.id)">
+                            {{$t('Remove')}}
                         </el-button>
                     </template>
                 </el-table-column>
             </el-table>
+            <div class="text-center">
+                <el-pagination
+                        :current-page="queryForm.page_index"
+                        :page-sizes="[10, 20, 30, 50]"
+                        :page-size="queryForm.page_size"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="count"
+                        @size-change="byPagerSizeChange"
+                        @current-change="byPagerCurrentChange"/>
+            </div>
         </div>
+
 
         <el-dialog
                 :show-close="false"
@@ -109,18 +134,24 @@
                     :rules="rules"
                     label-width="100px"
             >
-
                 <el-form-item
-                        :label="$t('Title')"
-                        required
-                        prop="title">
-                    <el-input v-model="addForm.title"/>
-                </el-form-item>
-
-                <el-form-item
-                        :label="$t('Description')"
-                        prop="description">
-                    <el-input type="textarea" :rows="6" v-model="addForm.description"/>
+                        :label="$t('Goods')"
+                        prop="goods_id">
+                    <el-select
+                            v-model="addForm.goods_id"
+                            filterable
+                            remote
+                            reserve-keyword
+                            placeholder="请输入关键词"
+                            :remote-method="queryGoods"
+                            :loading="goodsIdLoading">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.id"
+                                :label="'[' + item.id + ']' + item.title"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -138,56 +169,25 @@
             </div>
         </el-dialog>
 
-        <el-dialog
-                :show-close="false"
-                :modal-append-to-body="false"
-                :title="$t('Edit')"
-                :visible.sync="dialogEditVisible"
-        >
-            <el-form
-                    ref="editForm"
-                    :model="editForm"
-                    label-position="right"
-                    :rules="rules"
-                    label-width="100px"
-            >
-
-                <el-form-item
-                        :label="$t('Title')"
-                        required
-                        prop="title">
-                    <el-input v-model="editForm.title"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Description')"
-                        prop="description">
-                    <el-input type="textarea" :rows="6" v-model="editForm.description"/>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogEditVisible = false">
-                    {{ $t('Cancel') }}
-                </el-button>
-                <el-button
-
-                        :loading="loading"
-                        type="primary"
-                        @click="submitEditForm()"
-                >
-                    {{ $t('Confirm') }}
-                </el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
 <script>
     import spShopApi from '../../api/spShopApi'
+    import goodsApi from '../../api/goodsApi'
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
     import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
 
     export default {
+        props: {
+            id: {
+                type: String,
+                default () {
+                    return '0'
+                }
+            }
+        },
         components: {
             ElForm,
             ElButtonGroup,
@@ -195,15 +195,16 @@
         },
         data () {
             return {
-                queryForm: {},
-                addForm: {
+                options: [],
+                queryForm: {
                     title: '',
-                    description: '',
+                    shop_id: 0,
+                    page_index: 1,
+                    page_size: 10,
                 },
-                editForm: {
-                    id: 0,
-                    title: '',
-                    description: ''
+                addForm: {
+                    id: '',
+                    goods_id: '',
                 },
                 rules: {
                     title: [
@@ -212,7 +213,9 @@
                     ]
                 },
                 tableData: [],
+                count: 0,
                 loading: false,
+                goodsIdLoading: false,
                 dialogAddVisible: false,
                 dialogEditVisible: false
             }
@@ -226,30 +229,32 @@
             this.refresh()
         },
         methods: {
-            onCloseOrOpen (id, status) {
-                this.loading = true
-                if (status === 0) {
-                    spShopApi.close({ id: id }, (res) => {
-                        this.loading = false
-                        this.refresh()
-                    }, (res) => {
-                        this.loading = false
-                        window.tools.alertError(res.msg)
-                    })
+            async queryGoods (q) {
+                if (q !== '') {
+                    this.goodsIdLoading = true
+                    try {
+                        this.options = await goodsApi.queryGoodsId({ title: q })
+                    } catch (e) {
+
+                    } finally {
+                        this.goodsIdLoading = false
+                    }
                 } else {
-                    spShopApi.opening({ id: id }, (res) => {
-                        this.loading = false
-                        this.refresh()
-                    }, (res) => {
-                        this.loading = false
-                        window.tools.alertError(res.msg)
-                    })
+                    this.options = []
                 }
             },
-            onAddGoods (id) {
-                this.$router.replace({ path: '/admin/shop/goods/' + id })
+            byPagerSizeChange (val) {
+                this.queryForm.page_size = val
+                this.refresh()
             },
-            onDelete (id) {
+            byPagerCurrentChange (val) {
+                this.queryForm.page_index = val
+                this.refresh()
+            },
+            onBack () {
+                this.$router.replace('/admin/shop/index')
+            },
+            onRemove (id) {
                 this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
                     confirmButtonText: this.$i18n.t('Confirm'),
                     cancelButtonText: this.$i18n.t('Cancel'),
@@ -259,7 +264,7 @@
                             instance.confirmButtonLoading = true
                             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
 
-                            spShopApi.delete({ id: id }, (res) => {
+                            spShopApi.removeGoods({ id: this.id, goods_id: id }, (res) => {
                                 instance.confirmButtonLoading = false
                                 this.refresh()
                                 done()
@@ -277,21 +282,10 @@
                 }).catch(() => {
                 })
             },
-            submitEditForm () {
-                spShopApi.update(this.editForm, (resp) => {
-                    this.loading = false
-                    this.dialogEditVisible = false
-                    this.refresh()
-                }, (resp) => {
-                    window.tools.alertError(resp.msg)
-                    this.loading = false
-                    this.dialogEditVisible = false
-                })
-            },
             submitAddForm () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
-                        spShopApi.create(this.addForm, (resp) => {
+                        spShopApi.addGoods(this.addForm, (resp) => {
                             this.loading = false
                             this.dialogAddVisible = false
                             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
@@ -306,25 +300,19 @@
                 })
             },
             onAdd () {
-                this.addForm.title = ''
-                this.addForm.description = ''
+                this.addForm.id = this.id
+                this.addForm.goods_id = ''
                 this.dialogAddVisible = true
-            },
-            onEdit (row) {
-                this.editForm = {
-                    id: row.id,
-                    title: row.title,
-                    description: row.description
-                }
-                this.dialogEditVisible = true
             },
             refresh () {
                 // 刷新当前
                 this.tableData = []
                 this.loading = true
                 let that = this
-                spShopApi.query(that.queryForm, (resp) => {
-                    that.tableData = resp
+                this.queryForm.shop_id = this.id
+                spShopApi.queryGoods(this.queryForm, (resp) => {
+                    that.tableData = resp.list
+                    that.count = parseInt(resp.count)
                     that.loading = false
                 }, (resp) => {
                     window.tools.alertError(resp.msg)
