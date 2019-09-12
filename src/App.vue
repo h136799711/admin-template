@@ -193,7 +193,7 @@ export default {
 </script>
 
 <style>
-  @import url(//at.alicdn.com/t/font_326734_x7ljn74mblf.css);
+    @import url(//at.alicdn.com/t/font_326734_qvw7smr0r.css);
 
   span.by-icon,i.by-icon{
     font-family: 'boyefont';

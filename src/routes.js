@@ -70,6 +70,7 @@ const GoodsEdit = r => require.ensure([], () => r(require('./pages/goods/edit.vu
 const GoodsSku = r => require.ensure([], () => r(require('./pages/goods/sku.vue')), 'GoodsSku')
 const GoodsPlace = r => require.ensure([], () => r(require('./pages/goods/place.vue')), 'GoodsPlace')
 const FreightIndex = r => require.ensure([], () => r(require('./pages/freight/index.vue')), 'FreightIndex')
+const ShopIndex = r => require.ensure([], () => r(require('./pages/sp_shop/index.vue')), 'ShopIndex')
 // Goods END *******************
 
 const routes = [
@@ -86,12 +87,19 @@ const routes = [
     component: Admin,
     children: [
       {
-        path: 'freight',
-        component: FreightIndex,
-        children: [
-          { path: 'index', component: FreightIndex }
-        ]
+          path: 'shop',
+          component: ShopIndex,
+          children: [
+              { path: 'index', component: ShopIndex }
+          ]
       },
+        {
+            path: 'freight',
+            component: FreightIndex,
+            children: [
+                { path: 'index', component: FreightIndex }
+            ]
+        },
       {
         path: 'goods',
         component: GoodsIndex,
