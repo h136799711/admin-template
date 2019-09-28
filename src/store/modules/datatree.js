@@ -1,6 +1,5 @@
 /**
  * 数据字典 v1.0
- * @author hebidu 346551990@qq.com
  * @datetime 20170724
  **/
 import datatreeApi from '../../api/datatreeApi'

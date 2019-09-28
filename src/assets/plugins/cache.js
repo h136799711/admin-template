@@ -3,7 +3,7 @@
 
 // 设置cookie , 过期时间 单位秒
 const setCookie = (name, value, expireTime) => {
-  // name = tools.md5Utils.hex_hmac_md5('hebidu', name);
+    // name = tools.md5Utils.hex_hmac_md5('asasi', name);
 	if (expireTime) {
 		var date = new Date();
 		date.setTime(date.getTime()+(expireTime * 1000));
@@ -19,7 +19,7 @@ const setCookie = (name, value, expireTime) => {
 };
 // 获取cookie
 const getCookie = (name) => {
-	// var nameEQ = tools.md5Utils.hex_hmac_md5('hebidu', name) + '=';
+    // var nameEQ = tools.md5Utils.hex_hmac_md5('asasi', name) + '=';
 	var nameEQ = name + '=';
 	var ca = document.cookie.split(';');
 	for(var i=0;i < ca.length;i++) {
@@ -41,7 +41,7 @@ const clearCookie = () => {
 
 // 缓存设置
 const getBigDataValue = (key) => {
-  key = tools.md5Utils.hex_hmac_md5('hebidu', key);
+    key = tools.md5Utils.hex_hmac_md5('asasi', key)
   var expireDateTime = Lockr.get(key + '_time');
   if (expireDateTime < (new Date()).getTime()) {
     return '';
@@ -49,7 +49,7 @@ const getBigDataValue = (key) => {
   return Lockr.get(key);
 };
 const setBigDataValue = (key, value, expireSeconds) => {
-  key = tools.md5Utils.hex_hmac_md5('hebidu', key);
+    key = tools.md5Utils.hex_hmac_md5('asasi', key)
   Lockr.set(key, value);
   var expireDateTime = ((new Date()).getTime() + expireSeconds * 1000);
   Lockr.set(key + '_time', expireDateTime);
