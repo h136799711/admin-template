@@ -326,6 +326,10 @@ value="" @keydown.enter="login"
   },
   created () {
     this.refresh_verify()
+      // 刷新验证码后清除本地保留的以下缓存
+      window.tools.setUID('')
+      window.tools.setClientId('')
+      window.tools.setSessionId('')
   },
   mounted () {
     console.debug('mounted', process.env)
