@@ -2,6 +2,21 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Set': '设置',
+	'Book': '书籍',
+	'BookIndex': '书籍管理',
+	'Info': '信息',
+	'BookSource': '书籍来源',
+	'WritingEnd': '完结',
+	'Writing': '连载',
+	'Recommend': 'Recommend',
+	'State': 'State',
+	'NextCrawlingTime': 'NextCrawlingTime',
+	'source_type_name': 'source_type_name',
+	'StartUrl': 'Start Url',
+	'CurrentUrl': 'Current Url',
+	'Chapter': 'Chapter',
+
 	'Is': 'Is',
 	'0': 'No',
 	'1': 'Yes',

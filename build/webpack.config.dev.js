@@ -13,7 +13,7 @@ module.exports = merge(baseConfig, {
 		clientLogLevel: 'warning',
 		hot: true,
 		contentBase: 'dist',
-		compress: true,
+        compress: false, //
       host: 'localhost',
 		port: '8082',
 		open: true,

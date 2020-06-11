@@ -17,7 +17,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "dotenv-webpack": "^1.7.0",
-    "element-ui": "^2.11.0",
+    "element-ui": "2.13.2",
     "fingerprintjs2": "^1.8.6",
     "js-base64": "^2.5.1",
     "lockr": "^0.8.5",

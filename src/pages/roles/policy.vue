@@ -47,7 +47,7 @@
                 default-expand-all
                 :check-strictly="true"
                 :data="list"
-                show-checkbox
+                :show-checkbox="true"
                 node-key="id"
                 :props="defaultProps">
         </el-tree>

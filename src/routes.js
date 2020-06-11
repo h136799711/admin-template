@@ -74,188 +74,202 @@ const ShopIndex = r => require.ensure([], () => r(require('./pages/sp_shop/index
 const ShopGoods = r => require.ensure([], () => r(require('./pages/sp_shop/goods.vue')), 'ShopGoods')
 // Goods END *******************
 
-const routes = [
-  // 地址为空的时候跳转
-  { path: '', redirect: '/admin' },
-  { path: '/', redirect: '/admin' },
-  // 登录
-  { path: '/login', component: Login },
-  // 退出
-  { path: '/logout', component: Logout },
-  // 登录后管理首页
-  {
-    path: '/admin',
-    component: Admin,
-    children: [
-      {
-          path: 'shop',
-          component: ShopIndex,
-          children: [
-              { path: 'index', component: ShopIndex }
-          ]
-      },
-      { path: 'shop/goods/:id', component: ShopGoods, props: true },
-        {
-            path: 'freight',
-            component: FreightIndex,
-            children: [
-                { path: 'index', component: FreightIndex }
-            ]
-        },
-      {
-        path: 'goods',
-        component: GoodsIndex,
-        children: [
-          { path: 'index', component: GoodsIndex },
-        ]
-      },
-      { path: 'goods/create', component: GoodsCreate, props: false },
-      { path: 'goods/edit/:id', component: GoodsEdit, props: true },
-      { path: 'goods/sku/:id', component: GoodsSku, props: true },
-      { path: 'goods/place/:id', component: GoodsPlace, props: true },
-      {
-        path: 'video',
-        component: VideoIndex,
-        children: [
-          { path: 'index', component: VideoIndex },
-        ]
-      },
-      { path: 'video/cate', component: VideoCate, props: false },
+// Book Start *******************
+const BookIndex = r => require.ensure([], () => r(require('./pages/book/index.vue')), 'BookIndex')
+const BookSource = r => require.ensure([], () => r(require('./pages/book/source.vue')), 'BookSource')
+// Book END *******************
 
-      { path: 'video/source/:id', component: VideoSource, props: true },
-      { path: 'video/source/play/:vtype/:vuri', component: VideoPlay, props: true },
-      {
-        path: 'pay_order',
-        component: PayOrder,
+const routes = [
+    // 地址为空的时候跳转
+    { path: '', redirect: '/admin' },
+    { path: '/', redirect: '/admin' },
+    // 登录
+    { path: '/login', component: Login },
+    // 退出
+    { path: '/logout', component: Logout },
+    // 登录后管理首页
+    {
+        path: '/admin',
+        component: Admin,
         children: [
-          { path: 'index', component: PayOrder }
+            { path: 'book/source/:id', component: BookSource, props: true },
+            {
+                path: 'book',
+                component: BookIndex,
+                children: [
+                    { path: 'index', component: BookIndex },
+                    // { path: 'source', component: BookSource },
+                ]
+            },
+            {
+                path: 'shop',
+                component: ShopIndex,
+                children: [
+                    { path: 'index', component: ShopIndex }
+                ]
+            },
+            { path: 'shop/goods/:id', component: ShopGoods, props: true },
+            {
+                path: 'freight',
+                component: FreightIndex,
+                children: [
+                    { path: 'index', component: FreightIndex }
+                ]
+            },
+            {
+                path: 'goods',
+                component: GoodsIndex,
+                children: [
+                    { path: 'index', component: GoodsIndex },
+                ]
+            },
+            { path: 'goods/create', component: GoodsCreate, props: false },
+            { path: 'goods/edit/:id', component: GoodsEdit, props: true },
+            { path: 'goods/sku/:id', component: GoodsSku, props: true },
+            { path: 'goods/place/:id', component: GoodsPlace, props: true },
+            {
+                path: 'video',
+                component: VideoIndex,
+                children: [
+                    { path: 'index', component: VideoIndex },
+                ]
+            },
+            { path: 'video/cate', component: VideoCate, props: false },
+
+            { path: 'video/source/:id', component: VideoSource, props: true },
+            { path: 'video/source/play/:vtype/:vuri', component: VideoPlay, props: true },
+            {
+                path: 'pay_order',
+                component: PayOrder,
+                children: [
+                    { path: 'index', component: PayOrder }
+                ]
+            },
+            {
+                path: 'sp_brand',
+                component: SpBrand,
+                children: [
+                    { path: 'index', component: SpBrand, props: true }
+                ]
+            },
+            {
+                path: 'spcate',
+                component: SpCate,
+                children: [
+                    { path: 'index/:id?', component: SpCate, props: true }
+                ]
+            },
+            { path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
+            { path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
+            {
+                path: 'sp_prop',
+                component: SpProp,
+                children: [
+                    { path: 'index', component: SpProp }
+                ]
+            },
+            { path: 'sp_prop/value/:id', component: SpPropValue, props: true },
+            {
+                path: 'cms_article',
+                component: CmsArticle,
+                children: [
+                    { path: 'index', component: CmsArticle }
+                ]
+            },
+            {
+                path: 'banners',
+                component: BannersIndex,
+                children: [
+                    { path: 'index', component: BannersIndex }
+                ]
+            },
+            {
+                path: 'datatree',
+                component: Datatree,
+                children: [
+                    { name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
+                ]
+            },
+            {
+                path: 'api',
+                component: ApiRequestLog,
+                children: [
+                    { name: 'apiRequestLog', path: 'log', component: ApiRequestLog }
+                ]
+            },
+            {
+                path: 'clients',
+                component: ClientsIndex,
+                children: [
+                    { name: 'ClientsIndex', path: 'index', component: ClientsIndex }
+                ]
+            },
+            {
+                path: 'roles',
+                component: RolesIndex,
+                children: [
+                    { path: 'index', component: RolesIndex }
+                ]
+            },
+            { path: 'roles/menu/:id', component: RolesMenu, props: true },
+            { path: 'roles/policy/:id', component: RolesPolicy, props: true },
+            { path: 'roles/user/:id', component: RolesUser, props: true },
+            {
+                path: 'policy',
+                component: PolicyIndex,
+                children: [
+                    { path: 'index', component: PolicyIndex }
+                ]
+            },
+            {
+                path: 'message',
+                component: MessageIndex,
+                children: [
+                    { path: 'index', component: MessageIndex }
+                ]
+            },
+            {
+                path: 'album',
+                component: AlbumIndex,
+                children: [
+                    { path: 'index', component: AlbumIndex }
+                ]
+            },
+            {
+                path: 'album',
+                component: AlbumCategory,
+                children: [
+                    { path: 'category', component: AlbumCategory }
+                ]
+            },
+            { path: 'album/photo/:id', component: AlbumPhoto, props: true },
+            {
+                path: 'config',
+                component: ConfigIndex,
+                children: [
+                    { path: 'index', component: ConfigIndex }
+                ]
+            },
+            {
+                path: 'menu',
+                component: MenuIndex,
+                children: [
+                    { path: 'index', component: MenuIndex }
+                ]
+            },
+            { path: 'account/password', component: Password },
+            { path: 'account/avatar', component: Avatar },
+            {
+                path: 'index',
+                component: AdminIndex,
+                children: [
+                    { path: 'index', component: AdminIndex }
+                ]
+            },
+            { path: '*', component: NotFound }
         ]
-      },
-      {
-        path: 'sp_brand',
-        component: SpBrand,
-        children: [
-          { path: 'index', component: SpBrand, props: true }
-        ]
-      },
-      {
-        path: 'spcate',
-        component: SpCate,
-        children: [
-          { path: 'index/:id?', component: SpCate, props: true }
-        ]
-      },
-      { path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
-      { path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
-      {
-        path: 'sp_prop',
-        component: SpProp,
-        children: [
-          { path: 'index', component: SpProp }
-        ]
-      },
-      { path: 'sp_prop/value/:id', component: SpPropValue, props: true },
-      {
-        path: 'cms_article',
-        component: CmsArticle,
-        children: [
-          { path: 'index', component: CmsArticle }
-        ]
-      },
-      {
-        path: 'banners',
-        component: BannersIndex,
-        children: [
-          { path: 'index', component: BannersIndex }
-        ]
-      },
-      {
-        path: 'datatree',
-        component: Datatree,
-        children: [
-          { name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
-        ]
-      },
-      {
-        path: 'api',
-        component: ApiRequestLog,
-        children: [
-          { name: 'apiRequestLog', path: 'log', component: ApiRequestLog }
-        ]
-      },
-      {
-        path: 'clients',
-        component: ClientsIndex,
-        children: [
-          { name: 'ClientsIndex', path: 'index', component: ClientsIndex }
-        ]
-      },
-      {
-        path: 'roles',
-        component: RolesIndex,
-        children: [
-          { path: 'index', component: RolesIndex }
-        ]
-      },
-      { path: 'roles/menu/:id', component: RolesMenu, props: true },
-      { path: 'roles/policy/:id', component: RolesPolicy, props: true },
-      { path: 'roles/user/:id', component: RolesUser, props: true },
-      {
-        path: 'policy',
-        component: PolicyIndex,
-        children: [
-          { path: 'index', component: PolicyIndex }
-        ]
-      },
-      {
-        path: 'message',
-        component: MessageIndex,
-        children: [
-          { path: 'index', component: MessageIndex }
-        ]
-      },
-      {
-        path: 'album',
-        component: AlbumIndex,
-        children: [
-          { path: 'index', component: AlbumIndex }
-        ]
-      },
-      {
-        path: 'album',
-        component: AlbumCategory,
-        children: [
-          { path: 'category', component: AlbumCategory }
-        ]
-      },
-      { path: 'album/photo/:id', component: AlbumPhoto, props: true },
-      {
-        path: 'config',
-        component: ConfigIndex,
-        children: [
-          { path: 'index', component: ConfigIndex }
-        ]
-      },
-      {
-        path: 'menu',
-        component: MenuIndex,
-        children: [
-          { path: 'index', component: MenuIndex }
-        ]
-      },
-      { path: 'account/password', component: Password },
-      { path: 'account/avatar', component: Avatar },
-      {
-        path: 'index',
-        component: AdminIndex,
-        children: [
-          { path: 'index', component: AdminIndex }
-        ]
-      },
-      { path: '*', component: NotFound }
-    ]
-  },
-  { path: '*', component: NotFound }
+    },
+    { path: '*', component: NotFound }
 ]
 
 export default routes
