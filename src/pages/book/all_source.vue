@@ -22,6 +22,7 @@
                 @click="refresh()">
             {{ $t('Refresh')}}
         </el-button>
+        <label> 已收录书籍总数: {{statics.books}} 本</label>
 
 
         <div class="grid-content margin-md-top">
@@ -233,6 +234,10 @@
                     ]
                 },
                 count: 0,
+                statics: {
+                    pages: 0,
+                    books: 0
+                },
                 tableData: [],
                 loading: false,
                 dialogAddVisible: false,
@@ -242,11 +247,22 @@
         computed: {},
         watch: {},
         created () {
+            this.queryStatics()
         },
         mounted: function () {
             this.refresh()
         },
         methods: {
+            queryStatics () {
+                // 刷新当前
+                api.statics({}, (resp) => {
+                    console.debug('resp ', resp)
+                    this.statics.books = resp.books
+                    this.statics.pages = resp.pages
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                })
+            },
             onViewChapter (row) {
                 this.$router.push({ path: 'pages/' + row.source_type_id + '/' + row.book_id })
             },

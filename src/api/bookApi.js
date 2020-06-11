@@ -34,6 +34,9 @@ const bookApi = {
     setSourceState (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBookSource_setState' }), suc, fail)
     },
+    statics (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign({ book_id: 0 }, { service_type: 'by_BsBook_statics' }), suc, fail)
+    },
 
 }
 
