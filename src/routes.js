@@ -77,6 +77,8 @@ const ShopGoods = r => require.ensure([], () => r(require('./pages/sp_shop/goods
 // Book Start *******************
 const BookIndex = r => require.ensure([], () => r(require('./pages/book/index.vue')), 'BookIndex')
 const BookSource = r => require.ensure([], () => r(require('./pages/book/source.vue')), 'BookSource')
+const BookAllSource = r => require.ensure([], () => r(require('./pages/book/all_source.vue')), 'BookAllSource')
+const BookSourcePages = r => require.ensure([], () => r(require('./pages/book/pages.vue')), 'BookSourcePages')
 // Book END *******************
 
 const routes = [
@@ -93,12 +95,13 @@ const routes = [
         component: Admin,
         children: [
             { path: 'book/source/:id', component: BookSource, props: true },
+            { path: 'book/all_source', component: BookAllSource },
+            { path: 'book/pages/:id/:book_id', component: BookSourcePages, props: true },
             {
                 path: 'book',
                 component: BookIndex,
                 children: [
                     { path: 'index', component: BookIndex },
-                    // { path: 'source', component: BookSource },
                 ]
             },
             {

@@ -25,6 +25,12 @@ const bookApi = {
     querySource (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBookSource_query' }), suc, fail)
     },
+    queryAllSource (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBookSource_queryAll' }), suc, fail)
+    },
+    updateSource (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBookSource_update' }), suc, fail)
+    },
     setSourceState (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBookSource_setState' }), suc, fail)
     },
