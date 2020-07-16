@@ -21,7 +21,7 @@
     "fingerprintjs2": "^1.8.6",
     "js-base64": "^2.5.1",
     "lockr": "^0.8.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mavon-editor": "^2.6.17",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
