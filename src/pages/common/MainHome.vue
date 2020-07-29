@@ -72,7 +72,7 @@
         width: 100%;
         height: 50px;
         background: #373d41;
-        z-index: 101;
+      z-index: 50;
     }
     .main-topbar .topbar-wrap{
         height: 100%;
@@ -268,7 +268,7 @@
         top: 50px;
         bottom: 0px;
         background-color: #000;
-        z-index: 100;
+      z-index: 50;
     }
     .main-sidebar span, .main-sidebar a, .main-sidebar p, .main-sidebar li {
         text-rendering: optimizeLegibility;
@@ -293,7 +293,7 @@
         top: 50px;
         bottom: 0;
         background-color: #333744;
-        z-index: 102;
+      z-index: 2;
     }
     .main-sidebar .sidebar-trans {
         -o-transition: all 0.12s ease, 0.12s ease;

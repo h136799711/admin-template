@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+    'NoCover': 'No Image',
 	'Set': '设置',
 	'Book': '书籍',
 	'BookIndex': '书籍管理',

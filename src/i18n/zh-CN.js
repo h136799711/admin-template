@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'NoCover': '无封面',
 	'Index': '首页',
 	'Set': '设置',
 	'State': '状态',

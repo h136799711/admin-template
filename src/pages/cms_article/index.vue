@@ -104,7 +104,9 @@
                             :label="$t('Cover')"
                     >
                         <template slot-scope="scope">
-                            <img alt="cover" :src="scope.row.cover" style="width:120px;height: auto;"/>
+                            <img v-if="scope.row.cover" alt="cover" :src="scope.row.cover"
+                                 style="width:120px;height: auto;"/>
+                            <span v-else>{{ $t('NoCover') }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -113,7 +115,10 @@
                             :label="$t('Source')"
                     >
                         <template slot-scope="scope">
-                            {{scope.row.come_from}}
+                            <div v-if="scope.row.source_url">
+                                <a :href="scope.row.source_url" target="_blank">{{scope.row.come_from}}</a>
+                            </div>
+                            <div v-else>{{scope.row.come_from}}</div>
                         </template>
                     </el-table-column>
 
@@ -231,6 +236,10 @@
                     <el-input v-model="editForm.come_from" />
                 </el-form-item>
                 <el-form-item
+                        :label="$t('Source') + 'Url'">
+                    <el-input v-model="editForm.source_url"/>
+                </el-form-item>
+                <el-form-item
                         required
                         :label="$t('Summary')"
                         prop="summary">
@@ -323,6 +332,10 @@
                         :label="$t('Source')"
                         prop="come_from">
                     <el-input v-model="addForm.come_from" />
+                </el-form-item>
+                <el-form-item
+                        :label="$t('Source') + 'Url'">
+                    <el-input v-model="addForm.source_url"/>
                 </el-form-item>
                 <el-form-item
                         required
@@ -432,6 +445,7 @@
                     title: '',
                     summary: '',
                     cover: '',
+                    source_url: '',
                     category_id: '',
                     tags: [],
                     content: '',
@@ -441,6 +455,7 @@
 					id: 0,
                     title: '',
                     summary: '',
+                    source_url: '',
                     cover: '',
                     category_id: '',
                     tags: [],
@@ -644,6 +659,7 @@
                     uid: window.tools.getUID(),
                     title: '',
                     summary: '',
+                    source_url: '',
                     cover: '',
                     category_id: '',
                     tags: [],
@@ -659,6 +675,7 @@
 				this.editForm.summary = row.summary
                 this.editForm.content = row.content
 				this.editForm.cover = row.cover
+                this.editForm.source_url = row.source_url
                 this.editForm.category_id = row.category_id
                 this.editForm.tags = row.tags.length > 0 ? row.tags.split(',') : []
                 this.dialogEditVisible = true;
