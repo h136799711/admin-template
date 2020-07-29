@@ -2,28 +2,35 @@
 </style>
 <template>
     <div class="main-content by-album padding-md-bottom padding-md-top">
-        <label>{{ $t('State')}}</label>:
-        <el-select size="mini" v-model="queryForm.state" :placeholder="$t('All')">
-            <el-option :key="10" :value="10" :label="$t('All')">
-            </el-option>
-            <el-option
-                    v-for="item in states"
-                    :key="item.code"
-                    :label="item.name"
-                    :value="item.code">
-            </el-option>
-        </el-select>
-
-        <el-button
-                type="primary"
-                size="mini"
-                icon="by-icon by-shuaxin"
-                :loading="loading"
-                @click="refresh()">
-            {{ $t('Refresh')}}
-        </el-button>
-        <label> 已收录书籍总数: {{statics.books}} 本</label>
-
+        <el-form :inline="true" :model="queryForm" class="demo-form-inline">
+            <el-form-item label="书籍ID">
+                <el-input size="mini" v-model="queryForm.id" placeholder="本站书籍ID"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('State')">
+                <!--                    :placeholder="$t('All')"-->
+                <el-select size="mini" v-model="queryForm.state">
+                    <el-option :key="10" :value="10" :label="$t('All')">
+                    </el-option>
+                    <el-option
+                            v-for="item in states"
+                            :key="item.code"
+                            :label="item.name"
+                            :value="item.code">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button
+                        type="primary"
+                        size="mini"
+                        icon="by-icon by-shuaxin"
+                        :loading="loading"
+                        @click="refresh()">
+                    {{ $t('Refresh')}}
+                </el-button>
+                <label> 已收录书籍总数: {{statics.books}} 本</label>
+            </el-form-item>
+        </el-form>
 
         <div class="grid-content margin-md-top">
             <el-table
@@ -36,9 +43,9 @@
                     style="width: 100%"
             >
                 <el-table-column
-                        prop="id"
+                        prop="book_id"
                         width="80px"
-                        :label="$t('ID')"
+                        :label="$t('Book') + $t('ID')"
                 />
                 <el-table-column
                         width="120px"
@@ -89,11 +96,13 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="100px"
+                        width="220px"
                         :label="$t('State')"
                 >
                     <template slot-scope="scope">
                         {{getState(scope.row)}}
+                        <br/>
+                        最近新章节更新时间: {{(new Date(scope.row.last_suc_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -137,6 +146,19 @@
                     class="edit-form"
             >
 
+                <el-form-item
+                        :label="$t('State')"
+                        prop="state">
+                    <el-select size="mini" v-model="editForm.state" :placeholder="$t('All')">
+                        <el-option
+                                v-for="item in states"
+                                :key="item.code"
+                                :label="item.name"
+                                :value="item.code">
+                        </el-option>
+                    </el-select>
+
+                </el-form-item>
                 <el-form-item
                         :label="$t('StartUrl')"
                         prop="start_url">
@@ -219,10 +241,12 @@
                 queryForm: {
                     page_index: 1,
                     page_size: 10,
+                    id: '',
                     state: 10
                 },
                 editForm: {
                     id: 0,
+                    state: '0',
                     start_url: '',
                     current_url: '',
                     next_crawling_time: new Date()
@@ -289,7 +313,7 @@
                 this.editForm.start_url = row.start_url
                 this.editForm.current_url = row.current_url
                 this.editForm.next_crawling_time = new Date(row.next_crawling_time * 1000)
-
+                this.editForm.state = row.crawling_state.toString()
                 this.dialogEditVisible = true
             },
             getState (state) {
