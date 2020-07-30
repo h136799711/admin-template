@@ -268,7 +268,7 @@
         top: 50px;
         bottom: 0px;
         background-color: #000;
-      z-index: 50;
+      z-index: 40;
     }
     .main-sidebar span, .main-sidebar a, .main-sidebar p, .main-sidebar li {
         text-rendering: optimizeLegibility;
@@ -704,6 +704,16 @@
       border: 0px;
       top: 15px;
       right: 2px;
+    }
+
+    .alert-small {
+      padding: 0 5px;
+    }
+
+    .alert-small .el-alert__title {
+      font-size: 12px;
+      line-height: 14px;
+
     }
 
 </style>

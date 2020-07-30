@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'RegTime': '注册时间',
+	'RegIp': '注册IP',
+	'LastLoginIp': '最近登录IP',
+	'LastLoginTime': '最近登录时间',
 	'NoCover': '无封面',
 	'Index': '首页',
 	'Set': '设置',

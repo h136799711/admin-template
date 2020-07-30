@@ -3,6 +3,14 @@
 import http from '../assets/js/http.js';
 
 const userApi = {
+    disable: (data, suc, fail) => {
+        data.service_type = 'by_UserAccount_disable'
+        http.methods.defaultPost('', data, suc, fail)
+    },
+    enable: (data, suc, fail) => {
+        data.service_type = 'by_UserAccount_enable'
+        http.methods.defaultPost('', data, suc, fail)
+    },
   updatePassword(data, suc, fail) {
 		data.service_type = 'by_UserLoginSession_updatePassword';
 		http.methods.defaultPost('', data, suc, fail);

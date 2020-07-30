@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'RegTime': 'Register Time',
+	'RegIp': 'Register IP',
+	'LastLoginIp': 'Last Login IP',
+	'LastLoginTime': 'Last Login Time',
     'NoCover': 'No Image',
 	'Set': '设置',
 	'Book': '书籍',

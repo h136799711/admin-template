@@ -81,6 +81,10 @@ const BookAllSource = r => require.ensure([], () => r(require('./pages/book/all_
 const BookSourcePages = r => require.ensure([], () => r(require('./pages/book/pages.vue')), 'BookSourcePages')
 // Book END *******************
 
+// User Start *******************
+const UserIndex = r => require.ensure([], () => r(require('./pages/user/index.vue')), 'UserIndex')
+// Book END *******************
+
 const routes = [
     // 地址为空的时候跳转
     { path: '', redirect: '/admin' },
@@ -94,6 +98,7 @@ const routes = [
         path: '/admin',
         component: Admin,
         children: [
+            { path: 'user/index', component: UserIndex },
             { path: 'book/source/:id', component: BookSource, props: true },
             { path: 'book/all_source', component: BookAllSource },
             { path: 'book/pages/:id/:book_id', component: BookSourcePages, props: true },
