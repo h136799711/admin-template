@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Nickname': '昵称',
+	'RePassword': '重复密码',
+	'Email': 'Email',
+	'Ip': 'IP',
 	'RegTime': '注册时间',
 	'RegIp': '注册IP',
 	'LastLoginIp': '最近登录IP',

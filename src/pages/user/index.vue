@@ -26,14 +26,6 @@
                 @click="onAdd()">
             {{ $t('Add')}}
         </el-button>
-        <el-button
-                type="primary"
-                size="mini"
-                icon="by-icon by-shuaxin"
-                :loading="loading"
-                @click="refresh()">
-            {{ $t('Refresh')}}
-        </el-button>
 
         <div class="grid-content margin-md-top">
             <el-table
@@ -96,15 +88,10 @@
                                     type="success">
                             </el-alert>
                         </div>
-                        <div v-else>
-                            <el-alert
-                                    class="alert-small tip"
-                                    show-icon
-                                    :closable="false"
-                                    effect="dark"
-                                    title="未验证"
-                                    type="warning">
-                            </el-alert>
+                        <div v-else-if="scope.row.email">
+                            <el-button :loading="sendEmail" size="mini" @click="sendAuthEmail(scope.row.id)"
+                                       type="info">发送验证邮件
+                            </el-button>
                         </div>
                     </template>
                 </el-table-column>
@@ -147,8 +134,8 @@
                                 :inactive-value="0"
                         >
                         </el-switch>
-                        <span v-if="scope.row.status == 1">{{$t('Enable')}}</span>
-                        <span v-else>{{$t('Disable')}}</span>
+                        <span v-if="scope.row.status==1">{{$t('Enable')}}</span>
+                        <span v-else-if="scope.row.status==0">{{$t('Disable')}}</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -175,90 +162,31 @@
                     :model="addForm"
                     label-position="right"
                     :rules="rules"
-                    label-width="100px"
+                    label-width="160px"
             >
+                <el-form-item
+                        :label="$t('Mobile')"
+                        required
+                        prop="mobile">
+                    <el-input v-model="addForm.mobile"/>
+                </el-form-item>
 
                 <el-form-item
-                        :label="$t('Title')"
+                        :label="$t('Password')"
                         required
-                        prop="title">
-                    <el-input v-model="addForm.title"/>
+                        prop="password"
+                >
+                    <el-input v-model="addForm.password"/>
                 </el-form-item>
-
                 <el-form-item
+                        :label="$t('RePassword')"
                         required
-                        :label="$t('Position')"
-                        prop="position"
+                        prop="repassword"
                 >
-                    <el-select v-model="addForm.position">
-                        <el-option
-                                v-for="item in positionOptions"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
+                    <el-input v-model="addForm.repassword"/>
                 </el-form-item>
-                <el-form-item
-                        :label="$t('Image')"
-                        prop="image"
-                >
-                    <ImgUploader @onUploadSuccess="onUploadSuccess" :clear="imgUploadClear" imgType="banner"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Width') + '&' +$t('Height') "
-                        prop="w"
-                >
-                    <el-col :span="11">
-                        <el-form-item prop="w">
-                            <el-input v-model="addForm.w"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col class="text-center" :span="2">X</el-col>
-                    <el-col :span="11">
-                        <el-form-item prop="h">
-                            <el-input v-model="addForm.h"/>
-                        </el-form-item>
-                    </el-col>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('DateRange')"
-                        prop="start_time"
-                >
-                    <el-date-picker
-                            v-model="addForm.date_range"
-                            type="daterange"
-                            :picker-options="pickerOptions2"
-                            range-separator="-"
-                            value-format="timestamp"
-                            :start-placeholder="$t('StartDate')"
-                            :end-placeholder="$t('EndDate')">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('JumpUrl')"
-                        prop="jumpUrl"
-                >
-                    <el-input v-model="addForm.jump_url"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('JumpType')"
-                        prop="jumpType"
-                >
-                    <el-select v-model="addForm.jump_type">
-                        <el-option
-                                v-for="item in jumpTypeOptions"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Sort')"
-                        prop="sort"
-                >
-                    <el-input-number v-model="addForm.sort" :min="0" :max="100000"></el-input-number>
+                <el-form-item>
+                    除了英文大小写字母数字之外<br/>密码可含特殊字符 (_!@#$%^&*()_+-=[]{}|;:,.<>)
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -266,7 +194,6 @@
                     {{ $t('Cancel') }}
                 </el-button>
                 <el-button
-
                         :loading="loading"
                         type="primary"
                         @click="submitAddForm()"
@@ -292,87 +219,10 @@
             >
 
                 <el-form-item
-                        :label="$t('Title')"
+                        :label="$t('Email')"
                         required
-                        prop="title">
-                    <el-input v-model="editForm.title"/>
-                </el-form-item>
-
-                <el-form-item
-                        required
-                        :label="$t('Position')"
-                        prop="position"
-                >
-                    <el-select v-model="editForm.position">
-                        <el-option
-                                v-for="item in positionOptions"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Image')"
-                        prop="image"
-                >
-                    <ImgUploader ref="editImgUploader" @onUploadSuccess="onUploadSuccess"
-                                 :defaultImgUrl="editForm.img_url" :clear="imgUploadClear" imgType="banner"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Width') + '&' +$t('Height') "
-                        prop="w"
-                >
-                    <el-col :span="11">
-                        <el-form-item prop="w">
-                            <el-input v-model="editForm.w"/>
-                        </el-form-item>
-                    </el-col>
-                    <el-col class="text-center" :span="2">X</el-col>
-                    <el-col :span="11">
-                        <el-form-item prop="h">
-                            <el-input v-model="editForm.h"/>
-                        </el-form-item>
-                    </el-col>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('DateRange')"
-                        prop="start_time"
-                >
-                    <el-date-picker
-                            v-model="editForm.date_range"
-                            type="daterange"
-                            :picker-options="pickerOptions2"
-                            range-separator="-"
-                            value-format="timestamp"
-                            :start-placeholder="$t('StartDate')"
-                            :end-placeholder="$t('EndDate')">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('JumpUrl')"
-                        prop="jumpUrl"
-                >
-                    <el-input v-model="editForm.jump_url"/>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('JumpType')"
-                        prop="jumpType"
-                >
-                    <el-select v-model="editForm.jump_type">
-                        <el-option
-                                v-for="item in jumpTypeOptions"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item
-                        :label="$t('Sort')"
-                        prop="sort"
-                >
-                    <el-input-number v-model="editForm.sort" :min="0" :max="100000"></el-input-number>
+                        prop="email">
+                    <el-input v-model="editForm.email"/>
                 </el-form-item>
 
                 <el-form-item
@@ -392,7 +242,6 @@
                     {{ $t('Cancel') }}
                 </el-button>
                 <el-button
-
                         :loading="loading"
                         type="primary"
                         @click="submitEditForm()"
@@ -409,55 +258,58 @@
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
     import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
-    import ImgUploader from '@/components/img-uploader.vue'
 
     export default {
         components: {
             ElForm,
             ElButtonGroup,
             ElButton,
-            ImgUploader
         },
         data () {
+            var validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'))
+                } else {
+                    if (value && value.length < 8) {
+                        callback(new Error('密码至少8位'))
+                        return
+                    }
+                    if (this.addForm.repassword !== '') {
+                        this.$refs.addForm.validateField('repassword')
+                    }
+                    callback()
+                }
+            }
+            var validatePass2 = (rule, value, callback) => {
+                if (value && value.length < 8) {
+                    callback(new Error('密码至少8位'))
+                    return
+                }
+                if (value === '') {
+                    callback(new Error('请再次输入密码'))
+                } else if (value !== this.addForm.password) {
+                    callback(new Error('两次输入密码不一致!'))
+                } else {
+                    callback()
+                }
+            }
+
             return {
-                imgUploadClear: false,
-                pickerOptions2: {
-                    shortcuts: [{
-                        text: this.$i18n.t('OneYear'),
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            end.setTime(end.getTime() + 3600 * 1000 * 24 * 365)
-                            picker.$emit('pick', [start, end])
-                        }
-                    },
-                        {
-                            text: this.$i18n.t('ThreeYear'),
-                            onClick (picker) {
-                                const end = new Date()
-                                const start = new Date()
-                                end.setTime(end.getTime() + 3600 * 1000 * 24 * 365 * 3)
-                                picker.$emit('pick', [start, end])
-                            }
-                        }
-                    ]
-                },
-                inputVisible: false,
-                inputValue: '',
-                jumpTypeOptions: [
-                    { code: 'url', name: this.$i18n.t('Url') },
-                    { code: 'out_url', name: this.$i18n.t('Absolute') + this.$i18n.t('Url') }
-                ],
-                positionOptions: [],
                 queryForm: {
                     mobile: '',
                     page_index: 1,
                     page_size: 10
                 },
-                addForm: {},
-                editForm: {},
+                addForm: { mobile: '', countryNo: '86', password: '', repassword: '' },
+                editForm: { id: 0, nickname: '' },
                 rules: {
-                    title: [
+                    password: [
+                        { validator: validatePass, trigger: 'blur' }
+                    ],
+                    repassword: [
+                        { validator: validatePass2, trigger: 'blur' }
+                    ],
+                    nickname: [
                         { required: true, message: this.$i18n.t('Please Input Title'), trigger: 'blur' },
                         { min: 1, max: 32, message: this.$i18n.t('String Length Between', [1, 32]), trigger: 'blur' }
                     ]
@@ -465,6 +317,7 @@
                 count: 0,
                 tableData: [],
                 loading: false,
+                sendEmail: false,
                 dialogAddVisible: false,
                 dialogEditVisible: false
             }
@@ -489,6 +342,16 @@
             console.debug('index mounted')
         },
         methods: {
+            sendAuthEmail (id) {
+                this.sendEmail = true
+                api.sendAuthEmail({ id: id }, (resp) => {
+                    this.sendEmail = false
+                    window.tools.alertSuc('已发送')
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.sendEmail = false
+                })
+            },
             numberToIp (number) {
                 return (Math.floor(number / (256 * 256 * 256))) + '.' +
                     (Math.floor(number % (256 * 256 * 256) / (256 * 256))) + '.' +
@@ -527,7 +390,8 @@
                 })
             },
             onDisableEnable (row) {
-                if (row.status == 0) {
+                console.log('状态', row.status)
+                if (row.status == 1) {
                     this.onEnable(row.id)
                 } else {
                     this.onDisable(row.id)
@@ -561,40 +425,24 @@
                 }).catch(() => {
                 })
             },
-            onUploadSuccess (data) {
-                if (this.dialogAddVisible) {
-                    this.addForm.img_url = this.getImgUrl(data.path)
-                    this.addForm.w = data.w
-                    this.addForm.h = data.h
-                } else if (this.dialogEditVisible) {
-                    this.editForm.img_url = this.getImgUrl(data.path)
-                    this.editForm.w = data.w
-                    this.editForm.h = data.h
-                }
-                console.debug('image upload success', data)
-            }
-            ,
             ifLoginUser (uid) {
                 return uid === window.tools.getUID() ? 'You' : 'Other'
-            }
-            ,
+            },
             submitEditForm () {
-                api.update(this.editForm, (resp) => {
+                api.updateInfo(this.editForm, (resp) => {
                     this.loading = false
                     this.dialogEditVisible = false
                     this.refresh()
                 }, (resp) => {
                     window.tools.alertError(resp.msg)
                     this.loading = false
-                    this.dialogEditVisible = false
                 })
-            }
-            ,
+            },
             submitAddForm () {
                 console.log(this.addForm)
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
-                        api.create(this.addForm, (resp) => {
+                        api.registerByMobileCode(this.addForm, (resp) => {
                             this.loading = false
                             this.dialogAddVisible = false
                             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
@@ -607,60 +455,31 @@
                         return false
                     }
                 })
-            }
-            ,
+            },
             onAdd () {
                 this.addForm = {
-                    title: '',
-                    position: '',
-                    sort: 0,
-                    date_range: '',
-                    img_url: '',
-                    jump_url: '',
-                    jump_type: 'url',
-                    user_id: 0
+                    mobile: '', countryNo: '86', password: ''
                 }
-                this.addForm.user_id = window.tools.getUID()
                 this.dialogAddVisible = true
-            }
-            ,
+            },
             onEdit (row) {
 
                 this.editForm = {
-                    position: row.position,
-                    sort: row.sort,
-                    start_time: row.start_time,
-                    end_time: row.end_time,
-                    date_range: [row.start_time * 1000, row.end_time * 1000],
-                    img_url: tools.getImgUrl(row.img_url),
-                    jump_url: row.jump_url,
-                    jump_type: row.jump_type,
-                    user_id: window.tools.getUID(),
-                    w: row.w,
-                    h: row.h
+                    email: row.email
                 }
-                if (this.$refs.editImgUploader) {
-                    this.$refs.editImgUploader.imageUrl = this.editForm.img_url
-                } else {
-                    // this.$nextTick(function () {
-                    // this.$refs.editImgUploader.imageUrl = this.editForm.img_url
-                    // })
-                }
+
                 this.editForm.id = row.id
-                this.editForm.title = row.title
+
                 this.dialogEditVisible = true
-            }
-            ,
+            },
             byPagerSizeChange (val) {
                 this.queryForm.page_size = val
                 this.refresh()
-            }
-            ,
+            },
             byPagerCurrentChange (val) {
                 this.queryForm.page_index = val
                 this.refresh()
-            }
-            ,
+            },
             refresh () {
                 // 刷新当前
                 this.tableData = []

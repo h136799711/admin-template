@@ -2,6 +2,11 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Nickname': 'Nickname',
+	'RePassword': 'Repeat Password',
+	'Email': 'Email',
+	'Ip': 'IP',
+	'Index': 'Index',
 	'RegTime': 'Register Time',
 	'RegIp': 'Register IP',
 	'LastLoginIp': 'Last Login IP',

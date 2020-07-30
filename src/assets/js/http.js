@@ -8,12 +8,14 @@ const apiMethods = {
         var qs = require('qs')
         if (!data) data = {}
         data.app_version = window.tools.getVersion()
-        data.app_type = 'vue-web'
+        data.app_type = 'pc'
         data.client_id = window.tools.getAppId()
         data.sid = window.tools.getSessionId()
         data.uid = window.tools.getUID()
         data.deviceType = window.tools.getDeviceType()
         data.deviceToken = window.tools.getDeviceToken()
+        data.device_type = window.tools.getDeviceType()
+        data.device_token = window.tools.getDeviceToken()
 
         data = qs.stringify(data)
         axios.post(url, data, {
@@ -75,12 +77,14 @@ const apiMethods = {
         var qs = require('qs')
         if (!data) data = {}
         data.app_version = window.tools.getVersion()
-        data.app_type = 'vue-web'
+        data.app_type = 'pc'
         data.client_id = window.tools.getAppId()
         data.sid = window.tools.getSessionId()
         data.uid = window.tools.getUID()
         data.deviceType = window.tools.getDeviceType()
         data.deviceToken = window.tools.getDeviceToken()
+        data.device_type = window.tools.getDeviceType()
+        data.device_token = window.tools.getDeviceToken()
 
         data = qs.stringify(data)
         axios.post(url, data, {
