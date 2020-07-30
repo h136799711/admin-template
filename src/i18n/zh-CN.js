@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'2StepVerify': '2步验证',
 	'Nickname': '昵称',
 	'RePassword': '重复密码',
 	'Email': 'Email',

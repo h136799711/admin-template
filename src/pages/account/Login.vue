@@ -40,12 +40,20 @@
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
     }
     .c_icon{
-        padding: 1px 12px;
-        position: absolute;
-        top: 0px;
-        left: 25px;
-        font-size: 20px;
-        color: #a6a9ac;
+      padding: 1px 12px;
+      position: absolute;
+      top: 0px;
+      left: 25px;
+      font-size: 20px;
+      color: #a6a9ac;
+    }
+    .c_icon_token{
+      padding: 9px 12px;
+      position: absolute;
+      top: 0px;
+      left: 25px;
+      font-size: 16px;
+      color: #a6a9ac;
     }
     .u_logo{
         padding: 10px 10px;
@@ -178,7 +186,7 @@
       class="loginForm form clearfix validate-form"
       method="post"
     >
-      <div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 250px; text-align: center;">
+      <div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 290px; text-align: center;">
         <div style="width: 165px; height: 96px; position: absolute;">
           <div class="tou" />
           <div :class="[isPswFocus ? 'left_hand': 'initial_left_hand']" />
@@ -250,6 +258,21 @@ value="" @keydown.enter="login"
             </span>
           </span>
         </p>
+
+        <div style="position: relative;">
+          <span class="by-iconfontlock by-icon c_icon_token" />
+          <input
+                  style="font-size: 12px;"
+                  id="google"
+                  v-model="user.token"
+                  class="ipt"
+                  type="text"
+                  name="token"
+                  placeholder="开启2步验证后需要填写"
+                  value=""
+                  tabindex="4" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
+          >
+        </div>
         <div style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
           <p style="margin: 0 35px 20px 45px;">
             <span style="float: right;">
@@ -284,6 +307,7 @@ value="" @keydown.enter="login"
       verifyImg: '',
       user: {
         mobile: '',
+        token: '',
         password: '',
         verifyCode: '',
         verifyId: 0

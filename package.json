@@ -25,6 +25,7 @@
     "mavon-editor": "^2.6.17",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
+    "qrcode.vue": "^1.7.0",
     "video.js": "^7.6.0",
     "videojs-brand": "0.0.4",
     "videojs-contextmenu-ui": "^5.1.1",

@@ -100,10 +100,8 @@
                         width="200px"
                         :label="$t('Time')">
                     <template slot-scope="scope">
-                        {{ $t('RegTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd
-                        hh:mm:ss')}}<br/>
-                        {{$t('LastLoginTime')}}:{{(new Date(scope.row.last_login_time * 1000)).format('yyyy-MM-dd
-                        hh:mm:ss')}}
+                        {{ $t('RegTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}<br/>
+                        {{$t('LastLoginTime')}}:{{(new Date(scope.row.last_login_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -112,6 +110,34 @@
                     <template slot-scope="scope">
                         {{ $t('RegIp')}}: {{ numberToIp(scope.row.reg_ip) }}<br/>
                         {{ $t('LastLoginIp')}}: {{ numberToIp(scope.row.last_login_ip) }}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="160px"
+                        :label="$t('2StepVerify')">
+                    <template slot-scope="scope">
+                        <el-switch
+                                @change="changeGoogleSecret(scope.row)"
+                                v-model="scope.row.google_secret_switch"
+                                :active-value="1"
+                                :inactive-value="0"
+                        >
+                        </el-switch>
+
+                        <span v-if="scope.row.google_secret">
+                            <el-popover
+                                    placement="right"
+                                    width="120"
+                                    trigger="hover">
+                            <qrcode-vue :value="getQrcontent(scope.row)" :size="100" level="H"></qrcode-vue>
+                            <el-button size="mini" slot="reference">二维码</el-button>
+                            </el-popover>
+                        </span>
+                        <span v-else>
+                        </span>
+
+
+
                     </template>
                 </el-table-column>
 
@@ -254,6 +280,8 @@
 </template>
 
 <script>
+
+    import QrcodeVue from 'qrcode.vue'
     import api from '../../api/userApi'
     import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
@@ -261,6 +289,7 @@
 
     export default {
         components: {
+            QrcodeVue,
             ElForm,
             ElButtonGroup,
             ElButton,
@@ -342,6 +371,9 @@
             console.debug('index mounted')
         },
         methods: {
+            getQrcontent (row) {
+                return 'otpauth://totp/user-'+row.mobile+'?secret=' + row.google_secret + '&issuer=greater-china';
+            },
             sendAuthEmail (id) {
                 this.sendEmail = true
                 api.sendAuthEmail({ id: id }, (resp) => {
@@ -389,6 +421,67 @@
                 }).catch(() => {
                 })
             },
+            onTurnOn (id) {
+                this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+                    confirmButtonText: this.$i18n.t('Confirm'),
+                    cancelButtonText: this.$i18n.t('Cancel'),
+                    type: 'warning',
+                    beforeClose: (action, instance, done) => {
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true
+                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            api.turnOn2StepVerify({ id: id }, (res) => {
+                                instance.confirmButtonLoading = false
+                                this.refresh()
+                                done()
+                            }, (res) => {
+                                console.debug(res)
+                                done()
+                                window.tools.alertError(res.msg)
+                                instance.confirmButtonLoading = false
+                            })
+                        } else {
+                            done()
+                        }
+                    }
+                }).then(() => {
+                }).catch(() => {
+                })
+            },
+            onTurnOff (id) {
+                this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+                    confirmButtonText: this.$i18n.t('Confirm'),
+                    cancelButtonText: this.$i18n.t('Cancel'),
+                    type: 'warning',
+                    beforeClose: (action, instance, done) => {
+                        if (action === 'confirm') {
+                            instance.confirmButtonLoading = true
+                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            api.turnOff2StepVerify({ id: id }, (res) => {
+                                instance.confirmButtonLoading = false
+                                this.refresh()
+                                done()
+                            }, (res) => {
+                                console.debug(res)
+                                done()
+                                window.tools.alertError(res.msg)
+                                instance.confirmButtonLoading = false
+                            })
+                        } else {
+                            done()
+                        }
+                    }
+                }).then(() => {
+                }).catch(() => {
+                })
+            },
+            changeGoogleSecret(row) {
+                if (row.google_secret_switch == 1) {
+                    this.onTurnOn(row.id);
+                } else {
+                    this.onTurnOff(row.id);
+                }
+            },
             onDisableEnable (row) {
                 console.log('状态', row.status)
                 if (row.status == 1) {
@@ -429,6 +522,7 @@
                 return uid === window.tools.getUID() ? 'You' : 'Other'
             },
             submitEditForm () {
+                this.loading = true
                 api.updateInfo(this.editForm, (resp) => {
                     this.loading = false
                     this.dialogEditVisible = false
@@ -488,6 +582,9 @@
                     this.loading = false
                     this.count = parseInt(resp.count)
                     this.tableData = resp.list
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        this.tableData[i].google_secret_switch = this.tableData[i].google_secret.length > 0 ? 1 : 0
+                    }
                 }, (resp) => {
                     window.tools.alertError(resp.msg)
                     this.loading = false

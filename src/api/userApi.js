@@ -3,6 +3,14 @@
 import http from '../assets/js/http.js'
 
 const userApi = {
+    turnOn2StepVerify: (data, suc, fail) => {
+        data.service_type = 'by_UserAccount_turnOn2StepVerify'
+        http.methods.defaultPost('', data, suc, fail)
+    },
+    turnOff2StepVerify: (data, suc, fail) => {
+        data.service_type = 'by_UserAccount_turnOff2StepVerify'
+        http.methods.defaultPost('', data, suc, fail)
+    },
     sendAuthEmail: (data, suc, fail) => {
         data.service_type = 'by_UserAccount_sendAuthEmail'
         http.methods.defaultPost('', data, suc, fail)
