@@ -147,8 +147,8 @@
                                 :inactive-value="0"
                         >
                         </el-switch>
-                        <span v-if="scope.row.status==1">{{$t('Enable')}}</span>
-                        <span v-else-if="scope.row.status==0">{{$t('Disable')}}</span>
+                        <span v-if="scope.row.status == 1">{{$t('Enable')}}</span>
+                        <span v-else>{{$t('Disable')}}</span>
                     </template>
                 </el-table-column>
             </el-table>
