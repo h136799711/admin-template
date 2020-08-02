@@ -2,6 +2,8 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Client': 'Client',
+	'Project': 'Project',
 	'Log': 'Log',
 	'Send': 'Send',
 	'Session':'Session',

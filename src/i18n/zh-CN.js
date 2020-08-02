@@ -2,6 +2,8 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Client': '应用',
+	'Project': '项目',
 	'Send': '发送',
 	'Log': '日志',
 	'Session': '会话',

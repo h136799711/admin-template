@@ -90,6 +90,7 @@
 		},
 		methods: {
             submitForm() {
+                this.loading = true;
                 this.$refs.editForm.validate((valid) => {
                     if (valid) {
                         api.updatePassword (this.editForm, (resp) => {

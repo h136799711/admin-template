@@ -1,5 +1,7 @@
 # admin-template
 
+> 配置 
+> 
 > admin template base vue
 
 ## Build Setup

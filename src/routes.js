@@ -86,6 +86,7 @@ const UserIndex = r => require.ensure([], () => r(require('./pages/user/index.vu
 const UserSession = r => require.ensure([], () => r(require('./pages/user/session.vue')), 'UserSession')
 const UserProfile = r => require.ensure([], () => r(require('./pages/user/profile.vue')), 'UserProfile')
 const UserLog = r => require.ensure([], () => r(require('./pages/user/log.vue')), 'UserLog')
+const UserClient = r => require.ensure([], () => r(require('./pages/user/client.vue')), 'UserClient')
 // Book END *******************
 
 const routes = [
@@ -104,6 +105,7 @@ const routes = [
             { path: 'user/index', component: UserIndex },
             { path: 'user/session/:id/:limit', component: UserSession, props: true },
             { path: 'user/log/:id', component: UserLog, props: true },
+            { path: 'user/client/:id', component: UserClient, props: true },
             { path: 'user/profile/:id', component: UserProfile, props: true },
             { path: 'book/source/:id', component: BookSource, props: true },
             { path: 'book/all_source', component: BookAllSource },

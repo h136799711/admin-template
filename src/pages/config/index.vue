@@ -65,6 +65,9 @@
                         prop="remark"
                         :label="$t('Remark')"/>
                 <el-table-column
+                        prop="sort"
+                        :label="$t('Sort')"/>
+                <el-table-column
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">

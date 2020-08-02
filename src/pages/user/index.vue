@@ -108,7 +108,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="160px"
+                        width="100px"
                         :label="$t('2StepVerify')">
                     <template slot-scope="scope">
                         <el-switch
@@ -133,7 +133,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="180px"
+                        width="100px"
                         :label="$t('Session')">
                     <template slot-scope="scope">
                         <el-button
@@ -143,6 +143,18 @@
                         </el-button>
                     </template>
                 </el-table-column>
+                <el-table-column
+                        width="100px"
+                        :label="$t('Client')">
+                    <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                @click="goClient(scope.row)">
+                            {{$t('Client')}}
+                        </el-button>
+                    </template>
+                </el-table-column>
+
                 <el-table-column
                         width="360px"
                         fixed="right"
@@ -262,6 +274,16 @@
                         required
                         prop="email">
                     <el-input v-model="editForm.email"/>
+                </el-form-item>
+                <el-form-item :label="$t('Password')">
+                    <el-button
+                            size="mini"
+                            icon="el-icon-refresh-left"
+                            :loading="loading"
+                            @click="resetPwd(editForm.id)" >
+                        重置密码
+                    </el-button>
+                    <div>默认为: {{ getYear }}654321</div>
                 </el-form-item>
 
                 <el-form-item
@@ -418,7 +440,15 @@
                 },
             }
         },
-        computed: {},
+        computed: {
+            getYear() {
+                let date = (new Date());
+                let m = (1 + date.getMonth());
+                if (m < 10) m = '0' + m;
+
+                return date.getFullYear() + m.toString();
+            }
+        },
         watch: {
             dialogAddVisible (newVal) {
                 if (!newVal) {
@@ -444,6 +474,9 @@
             goLog (row) {
                 this.$router.push({ path: 'log/' + row.id })
             },
+            goClient (row) {
+                this.$router.push({ path: 'client/' + row.id })
+            },
             goProfile (row) {
                 this.$router.push({ path: 'profile/' + row.id })
             },
@@ -459,6 +492,16 @@
 
                 this.sendCodeForm.accepter = row.mobile
                 this.sendCodeForm.country_no = row.country_no
+            },
+            resetPwd(id) {
+                this.loading = true
+                api.resetPwd({user_id: id}, (resp) => {
+                    this.loading = false
+                    window.tools.alertSuc('密码已重置')
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
             },
             onBindPhone () {
                 this.sendCode = true
@@ -687,7 +730,7 @@
                 // 刷新当前
                 this.tableData = []
                 this.loading = true
-                api.queryByPagingNoCount(this.queryForm, (resp) => {
+                api.queryByPaging(this.queryForm, (resp) => {
                     this.loading = false
                     this.count = parseInt(resp.count)
                     this.tableData = resp.list

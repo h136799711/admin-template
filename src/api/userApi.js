@@ -3,6 +3,10 @@
 import http from '../assets/js/http.js'
 
 const userApi = {
+    resetPwd: (data, suc, fail) => {
+        data.service_type = 'by_UserAccount_resetPwd'
+        http.methods.defaultPost('', data, suc, fail)
+    },
     detail: (data, suc, fail) => {
         data.service_type = 'by_UserAccount_detail'
         http.methods.defaultPost('', data, suc, fail)
@@ -74,6 +78,10 @@ const userApi = {
     }
     ,
     queryByPagingNoCount: (data, suc, fail) => {
+        data.service_type = 'by_UserAccount_queryForAjax'
+        http.methods.defaultPost('', data, suc, fail)
+    },
+    queryByPaging: (data, suc, fail) => {
         data.service_type = 'by_UserAccount_query'
         http.methods.defaultPost('', data, suc, fail)
     },
