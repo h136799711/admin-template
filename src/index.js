@@ -129,13 +129,13 @@ window.tools.alertInfo = (msg) => {
     duration: 3000
   })
 }
-window.tools.alertSuc = (msg) => {
+window.tools.alertSuc = (msg, duration) => {
   if (bus._byAlert) bus._byAlert.close()
   bus._byAlert = bus.$message({
     message: msg,
     type: 'success',
     showClose: true,
-    duration: 1500
+    duration: duration || 1500
   })
 }
 window.tools.alertWarn = (msg) => {

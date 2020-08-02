@@ -2,6 +2,13 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Log': 'Log',
+	'Send': 'Send',
+	'Session':'Session',
+	'Device': 'Device',
+	'DeviceType': 'Device Type',
+	'ExpireTime': 'Expire Time',
+	'Profile': 'Profile',
 	'2StepVerify': '2 Step Verify',
 	'Nickname': 'Nickname',
 	'RePassword': 'Repeat Password',

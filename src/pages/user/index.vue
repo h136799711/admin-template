@@ -59,15 +59,10 @@
                                     type="success">
                             </el-alert>
                         </div>
-                        <div v-else>
-                            <el-alert
-                                    class="alert-small tip"
-                                    show-icon
-                                    :closable="false"
-                                    effect="dark"
-                                    title="未验证"
-                                    type="warning">
-                            </el-alert>
+                        <div v-else-if="scope.row.mobile">
+                            <el-button size="mini" @click="showBindPhone(scope.row)"
+                                       type="info">发送验证短信
+                            </el-button>
                         </div>
                     </template>
                 </el-table-column>
@@ -135,18 +130,36 @@
                         </span>
                         <span v-else>
                         </span>
-
-
-
                     </template>
                 </el-table-column>
-
-
                 <el-table-column
-                        width="200px"
+                        width="180px"
+                        :label="$t('Session')">
+                    <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                @click="goSession(scope.row)">
+                            {{$t('View')}}
+                        </el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        width="360px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                icon="el-icon-tickets"
+                                @click="goLog(scope.row)">
+                            {{$t('Log')}}
+                        </el-button>
+                        <el-button
+                                size="mini"
+                                icon="el-icon-folder"
+                                @click="goProfile(scope.row)">
+                            {{$t('Detail')}}
+                        </el-button>
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"
@@ -276,6 +289,46 @@
                 </el-button>
             </div>
         </el-dialog>
+
+        <el-dialog
+                :show-close="false"
+                :modal-append-to-body="false"
+                :title="'验证手机号' + bindPhoneForm.country_no + bindPhoneForm.mobile"
+                :visible.sync="dialogBindPhoneVisible"
+        >
+            <el-form
+                    ref="editForm"
+                    :model="bindPhoneForm"
+                    label-position="right"
+                    label-width="100px"
+            >
+                <el-form-item
+                        :label="$t('Code')"
+                        required
+                        prop="code">
+                    <el-input style="width: 120px;" v-model="bindPhoneForm.code"/>
+                    <el-button
+                            :loading="sendCode"
+                            type="primary"
+                            @click="sendAuthCode()"
+                    >
+                        {{ $t('Send') }}
+                    </el-button>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogBindPhoneVisible = false">
+                    {{ $t('Cancel') }}
+                </el-button>
+                <el-button
+                        :loading="sendCode"
+                        type="primary"
+                        @click="onBindPhone()"
+                >
+                    {{ $t('Confirm') }}
+                </el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -324,6 +377,7 @@
             }
 
             return {
+                dialogBindPhoneVisible: false,
                 queryForm: {
                     mobile: '',
                     page_index: 1,
@@ -347,8 +401,21 @@
                 tableData: [],
                 loading: false,
                 sendEmail: false,
+                sendCode: false,
                 dialogAddVisible: false,
-                dialogEditVisible: false
+                dialogEditVisible: false,
+                sendCodeForm: {
+                    accepter: '',
+                    code_type: 3,
+                    code_length: 6,
+                    country_no: 86
+                },
+                bindPhoneForm: {
+                    user_id: 0,
+                    mobile: '',
+                    country_no:'',
+                    code: ''
+                },
             }
         },
         computed: {},
@@ -371,8 +438,50 @@
             console.debug('index mounted')
         },
         methods: {
+            goSession (row) {
+                this.$router.push({ path: 'session/' + row.id + '/' + row.login_device_cnt })
+            },
+            goLog (row) {
+                this.$router.push({ path: 'log/' + row.id })
+            },
+            goProfile (row) {
+                this.$router.push({ path: 'profile/' + row.id })
+            },
             getQrcontent (row) {
-                return 'otpauth://totp/user-'+row.mobile+'?secret=' + row.google_secret + '&issuer=greater-china';
+                return 'otpauth://totp/user-' + row.mobile + '?secret=' + row.google_secret + '&issuer=greater-china'
+            },
+            showBindPhone (row) {
+                this.dialogBindPhoneVisible = true
+                this.bindPhoneForm.code = ''
+                this.bindPhoneForm.user_id = row.id
+                this.bindPhoneForm.mobile = row.mobile
+                this.bindPhoneForm.country_no = row.country_no
+
+                this.sendCodeForm.accepter = row.mobile
+                this.sendCodeForm.country_no = row.country_no
+            },
+            onBindPhone () {
+                this.sendCode = true
+                api.bindPhone(this.bindPhoneForm, (resp) => {
+                    this.sendCode = false
+                    this.dialogBindPhoneVisible = false
+                    console.log(resp)
+                    this.refresh()
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.sendCode = false
+                })
+            },
+            sendAuthCode () {
+                this.sendCode = true
+                api.sendAuthCode(this.sendCodeForm, (resp) => {
+                    this.sendCode = false
+                    console.log(resp)
+                    window.tools.alertSuc(resp, 3000)
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.sendCode = false
+                })
             },
             sendAuthEmail (id) {
                 this.sendEmail = true
@@ -475,11 +584,11 @@
                 }).catch(() => {
                 })
             },
-            changeGoogleSecret(row) {
+            changeGoogleSecret (row) {
                 if (row.google_secret_switch == 1) {
-                    this.onTurnOn(row.id);
+                    this.onTurnOn(row.id)
                 } else {
-                    this.onTurnOff(row.id);
+                    this.onTurnOff(row.id)
                 }
             },
             onDisableEnable (row) {

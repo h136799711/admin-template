@@ -83,6 +83,9 @@ const BookSourcePages = r => require.ensure([], () => r(require('./pages/book/pa
 
 // User Start *******************
 const UserIndex = r => require.ensure([], () => r(require('./pages/user/index.vue')), 'UserIndex')
+const UserSession = r => require.ensure([], () => r(require('./pages/user/session.vue')), 'UserSession')
+const UserProfile = r => require.ensure([], () => r(require('./pages/user/profile.vue')), 'UserProfile')
+const UserLog = r => require.ensure([], () => r(require('./pages/user/log.vue')), 'UserLog')
 // Book END *******************
 
 const routes = [
@@ -99,6 +102,9 @@ const routes = [
         component: Admin,
         children: [
             { path: 'user/index', component: UserIndex },
+            { path: 'user/session/:id/:limit', component: UserSession, props: true },
+            { path: 'user/log/:id', component: UserLog, props: true },
+            { path: 'user/profile/:id', component: UserProfile, props: true },
             { path: 'book/source/:id', component: BookSource, props: true },
             { path: 'book/all_source', component: BookAllSource },
             { path: 'book/pages/:id/:book_id', component: BookSourcePages, props: true },

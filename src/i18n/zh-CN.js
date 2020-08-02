@@ -2,6 +2,13 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Send': '发送',
+	'Log': '日志',
+	'Session': '会话',
+	'Device': '设备',
+	'DeviceType': '设备类型',
+	'ExpireTime': '过期时间',
+	'Profile':'个人信息',
 	'2StepVerify': '2步验证',
 	'Nickname': '昵称',
 	'RePassword': '重复密码',
