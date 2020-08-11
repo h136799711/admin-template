@@ -93,6 +93,16 @@
 
                 <el-table-column
                         width="200px"
+                        label="第三方登录">
+                    <template slot-scope="scope">
+                        QQ: {{ scope.row.qq_openid}}<br/>
+                        GITHUB: {{ scope.row.github_openid}}<br/>
+                        WEIBO: {{ scope.row.weibo_openid}}<br/>
+                    </template>
+                </el-table-column>
+
+                <el-table-column
+                        width="200px"
                         :label="$t('Time')">
                     <template slot-scope="scope">
                         {{ $t('RegTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}<br/>

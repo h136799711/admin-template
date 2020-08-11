@@ -2,35 +2,24 @@
 </style>
 <template>
     <div class="main-content by-album padding-md-bottom padding-md-top">
-        <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-            <el-form-item label="书籍ID">
-                <el-input size="mini" v-model="queryForm.id" placeholder="本站书籍ID"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('State')">
-                <!--                    :placeholder="$t('All')"-->
-                <el-select size="mini" v-model="queryForm.state">
-                    <el-option :key="10" :value="10" :label="$t('All')">
-                    </el-option>
-                    <el-option
-                            v-for="item in states"
-                            :key="item.code"
-                            :label="item.name"
-                            :value="item.code">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-button
-                        type="primary"
-                        size="mini"
-                        icon="by-icon by-shuaxin"
-                        :loading="loading"
-                        @click="refresh()">
-                    {{ $t('Refresh')}}
-                </el-button>
-                <label> 已收录书籍总数: {{statics.books}} 本</label>
-            </el-form-item>
-        </el-form>
+
+        <el-button
+                type="primary"
+                size="mini"
+                icon="el-icon-back"
+                @click="$router.replace('/admin/book/index')"
+        >
+            {{$t('Back')}}
+        </el-button>
+
+        <el-button
+                type="primary"
+                size="mini"
+                icon="by-icon by-shuaxin"
+                :loading="loading"
+                @click="refresh()">
+            {{ $t('Refresh')}}
+        </el-button>
 
         <div class="grid-content margin-md-top">
             <el-table
@@ -43,79 +32,50 @@
                     style="width: 100%"
             >
                 <el-table-column
-                        prop="book_id"
+                        prop="id"
                         width="80px"
-                        :label="$t('Book') + $t('ID')"
+                        :label="$t('ID')"
                 />
                 <el-table-column
-                        width="120px"
-                        prop="source_type_name"
-                        :label="$t('source_type_name')"
-                />
-                <el-table-column
-                        width="160px"
-                        prop="start_url"
-                        :label="$t('StartUrl')"
-                >
-                    <template slot-scope="scope">
-                        <a :href="scope.row.start_url" target="_blank">{{scope.row.start_url}}</a>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="180px"
-                        prop="current_url"
-                        :label="$t('CurrentUrl')"
-                >
-                    <template slot-scope="scope">
-                        <a :href="scope.row.current_url" target="_blank">{{scope.row.current_url}}</a>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        width="180px"
+                        width="80px"
                         prop="page_no"
-                        :label="$t('Chapter') + $t('Total')"
-                >
-                    <template slot-scope="scope">
-                        {{scope.row.page_no}} <br/>
-                        <el-button
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="onViewChapter(scope.row)">
-                            查看已更新章节
-                        </el-button>
-                    </template>
-                </el-table-column>
+                        :label="$t('No')"
+                />
+                <el-table-column
+                        width="180px"
+                        prop="title"
+                        :label="$t('Title')"
+                />
                 <el-table-column
                         width="120px"
-                        prop="next_crawling_time"
-                        :label="$t('NextCrawlingTime')"
-                >
-                    <template slot-scope="scope">
-                        {{(new Date(scope.row.next_crawling_time * 1000)).format('yyyy-MM-dd')}}
-                    </template>
-                </el-table-column>
-
+                        prop="source_type"
+                        :label="$t('SourceTypeName')"
+                />
                 <el-table-column
-                        width="220px"
-                        :label="$t('State')"
+                        width="200px"
+                        :label="$t('Time')"
                 >
                     <template slot-scope="scope">
-                        {{getState(scope.row)}}
+                        {{$t('CreateTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                         <br/>
-                        最近新章节更新时间: {{(new Date(scope.row.last_suc_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+                        {{$t('UpdateTime')}}: {{(new Date(scope.row.update_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="320px"
+                        width="300px"
+                        :label="$t('Url')"
+                >
+                    <template slot-scope="scope">
+                        <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
-                        <el-button
-                                size="mini"
-                                icon="el-icon-edit"
-                                @click="onEdit(scope.row)">
-                            {{$t('Edit')}}
-                        </el-button>
+                        <a :href="getPageContent(scope.row)" target="_blank">
+                            查看内容页
+                        </a>
                     </template>
                 </el-table-column>
             </el-table>
@@ -146,19 +106,6 @@
                     class="edit-form"
             >
 
-                <el-form-item
-                        :label="$t('State')"
-                        prop="state">
-                    <el-select size="mini" v-model="editForm.state" :placeholder="$t('All')">
-                        <el-option
-                                v-for="item in states"
-                                :key="item.code"
-                                :label="item.name"
-                                :value="item.code">
-                        </el-option>
-                    </el-select>
-
-                </el-form-item>
                 <el-form-item
                         :label="$t('StartUrl')"
                         prop="start_url">
@@ -228,6 +175,19 @@
             ElButtonGroup,
             ElButton
         },
+        props: {
+            id: {
+                type: String,
+                default () {
+                    return '0'
+                }
+            }, book_id: {
+                type: String,
+                default () {
+                    return '0'
+                }
+            }
+        },
         data () {
             return {
                 states: [
@@ -239,17 +199,15 @@
                 inputVisible: false,
                 inputValue: '',
                 queryForm: {
+                    no: '',
                     page_index: 1,
                     page_size: 10,
-                    id: '',
-                    state: 10
                 },
                 editForm: {
                     id: 0,
-                    state: '0',
                     start_url: '',
                     current_url: '',
-                    next_crawling_time: 0
+                    next_crawling_time: new Date()
                 },
                 rules: {
                     title: [
@@ -258,10 +216,6 @@
                     ]
                 },
                 count: 0,
-                statics: {
-                    pages: 0,
-                    books: 0
-                },
                 tableData: [],
                 loading: false,
                 dialogAddVisible: false,
@@ -271,31 +225,18 @@
         computed: {},
         watch: {},
         created () {
-            this.queryStatics()
         },
         mounted: function () {
             this.refresh()
         },
         methods: {
-            queryStatics () {
-                // 刷新当前
-                api.statics({}, (resp) => {
-                    console.debug('resp ', resp)
-                    this.statics.books = resp.books
-                    this.statics.pages = resp.pages
-                }, (resp) => {
-                    window.tools.alertError(resp.msg)
-                })
-            },
-            onViewChapter (row) {
-                this.$router.push({ path: 'pages/' + row.source_type_id + '/' + row.book_id })
+            getPageContent (row) {
+                var url = new URL(window.tools.getApiUrl())
+                return url.origin + '/book/' + row.source_type_id + '/' + row.book_id + '/' + row.id
             },
             submitEditForm () {
                 this.$refs.editForm.validate((valid) => {
                     if (valid) {
-                        if (this.editForm.next_crawling_time instanceof Date) {
-                            this.editForm.next_crawling_time = this.editForm.next_crawling_time.getTime();
-                        }
                         api.updateSource(this.editForm, (resp) => {
                             this.loading = false
                             this.dialogEditVisible = false
@@ -316,22 +257,8 @@
                 this.editForm.start_url = row.start_url
                 this.editForm.current_url = row.current_url
                 this.editForm.next_crawling_time = new Date(row.next_crawling_time * 1000)
-                this.editForm.state = row.crawling_state.toString()
+
                 this.dialogEditVisible = true
-            },
-            getState (state) {
-                switch (state.crawling_state) {
-                    case 1:
-                        return '更新中'
-                    case 0:
-                        return '等待更新'
-                    case -1:
-                        return '更新出错:' + state.crawling_error
-                    case 2:
-                        return '更新完毕'
-                    default:
-                        return '未知'
-                }
             },
             byPagerSizeChange (val) {
                 this.queryForm.page_size = val
@@ -345,7 +272,9 @@
                 // 刷新当前
                 this.tableData = []
                 this.loading = true
-                api.queryAllSource(this.queryForm, (resp) => {
+                this.queryForm.source_type_id = this.id
+                this.queryForm.book_id = this.book_id
+                api.queryBookPages(this.queryForm, (resp) => {
                     console.debug('resp ', resp)
                     this.loading = false
                     this.count = parseInt(resp.count)

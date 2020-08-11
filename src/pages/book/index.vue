@@ -3,13 +3,37 @@
         width: 144px;
         height: 240px;
     }
+    .summary {
+        height: 5rem;
+        line-height: 1rem;
+        width: 100%;
+        text-overflow: ellipsis;
+        word-break: break-word;
+    }
+    .text-center {
+        text-align: center;
+    }
 </style>
 <template>
     <div class="main-content by-album padding-md-bottom padding-md-top">
 
         <div>
             <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-
+                <el-form-item >
+                    <el-select size="mini" v-model="queryForm.cate_id" placeholder="请选择">
+                        <el-option
+                                :key="0"
+                                label="全部"
+                                :value="0">
+                        </el-option>
+                        <el-option
+                                v-for="item in category"
+                                :key="item.id"
+                                :label="item.cate_name"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item>
                     <el-input size="mini" :placeholder="$t('Title')" v-model="queryForm.book_name"/>
                 </el-form-item>
@@ -49,16 +73,16 @@
             >
                 <el-table-column
                         prop="id"
-                        width="80px"
+                        width="60px"
+                        class="text-center"
                         :label="$t('ID')"
                 />
                 <el-table-column
-                        width="100px"
+                        width="80px"
                         prop="thumbnail"
                         :label="$t('Cover')">
                     <template slot-scope="scope">
-                        <img :src="scope.row.thumbnail" class="margin-sm" style="width: 72px;height: 120px;"
-                             alt="cover"/>
+                        <img :src="scope.row.thumbnail" class="margin-sm" style="width: 60px;height: 90px;" alt="cover"/>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -71,7 +95,11 @@
                         width="160px"
                         prop="summary"
                         :label="$t('Description')"
-                />
+                >
+                <template slot-scope="scope">
+                    <div class="summary">{{scope.row.summary}}</div>
+                </template>
+                </el-table-column>
                 <el-table-column
                         width="100px"
                         prop="cate_name"
@@ -87,22 +115,22 @@
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
-                <el-table-column
-                        width="160px"
-                        :label="$t('Recommend')">
-                    <template slot-scope="scope">
-                        <el-switch
-                                size="mini"
-                                style="display: block"
-                                :active-value="1"
-                                :inactive-value="0"
-                                v-model="scope.row.recommend"
-                                :active-text="$t('Recommend')"
-                                @change="onRecommend(scope.row.id, scope.row.recommend)"
-                        >
-                        </el-switch>
-                    </template>
-                </el-table-column>
+<!--                <el-table-column-->
+<!--                        width="160px"-->
+<!--                        :label="$t('Recommend')">-->
+<!--                    <template slot-scope="scope">-->
+<!--                        <el-switch-->
+<!--                                size="mini"-->
+<!--                                style="display: block"-->
+<!--                                :active-value="1"-->
+<!--                                :inactive-value="0"-->
+<!--                                v-model="scope.row.recommend"-->
+<!--                                :active-text="$t('Recommend')"-->
+<!--                                @change="onRecommend(scope.row.id, scope.row.recommend)"-->
+<!--                        >-->
+<!--                        </el-switch>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
                 <el-table-column
                         width="160px"
                         :label="$t('State')">
@@ -125,10 +153,15 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="320px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                icon="el-icon-edit"
+                                @click="onViewChapter(scope.row)">
+                            查看章节(默认来源)
+                        </el-button>
                         <el-button
                                 size="mini"
                                 icon="el-icon-s-data"
@@ -230,6 +263,7 @@
                 inputValue: '',
                 category: [],
                 queryForm: {
+                    cate_id: 0,
                     book_name: '',
                     page_index: 1,
                     page_size: 10
@@ -266,6 +300,7 @@
             }
         },
         created () {
+            this.loading = true
             api.category({ gender: -1 }, (resp) => {
                 this.category = resp
                 this.refresh()
@@ -278,6 +313,9 @@
             // this.refresh();
         },
         methods: {
+            onViewChapter (row) {
+                this.$router.push({ path: 'pages2/' + row.def_source_type_id + '/' + row.id })
+            },
             showInput () {
                 this.inputVisible = true
                 this.$nextTick(_ => {

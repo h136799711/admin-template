@@ -87,10 +87,15 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                        width="320px"
                         fixed="right"
                         :label="$t('Action')">
                     <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                icon="el-icon-top"
+                                @click="SetDefault(scope.row)">
+                            设置为默认来源
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -120,7 +125,9 @@
                 inputValue: '',
                 source: [],
                 queryForm: {
-                    source_type_id: 2
+                    source_type_id: 2,
+                    page_index: 1,
+                    page_size: 10
                 },
                 rules: {
                     title: [
@@ -164,6 +171,15 @@
             byPagerCurrentChange (val) {
                 this.queryForm.page_index = val
                 this.refresh()
+            },
+            SetDefault(row) {
+                this.loading = true
+                api.setDefaultSource({id: this.id, source_type_id: row.source_type_id}, (resp) => {
+                    this.loading = false
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
             },
             refresh () {
                 // 刷新当前
