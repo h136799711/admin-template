@@ -88,7 +88,13 @@ const UserSession = r => require.ensure([], () => r(require('./pages/user/sessio
 const UserProfile = r => require.ensure([], () => r(require('./pages/user/profile.vue')), 'UserProfile')
 const UserLog = r => require.ensure([], () => r(require('./pages/user/log.vue')), 'UserLog')
 const UserClient = r => require.ensure([], () => r(require('./pages/user/client.vue')), 'UserClient')
-// Book END *******************
+// User END *******************
+
+
+// FriendShip Start *******************
+const FriendShipIndex = r => require.ensure([], () => r(require('./pages/friendship_links/index.vue')), 'FriendShipIndex')
+// FriendShip END *******************
+
 
 const routes = [
     // 地址为空的时候跳转
@@ -103,6 +109,7 @@ const routes = [
         path: '/admin',
         component: Admin,
         children: [
+            { path: 'friendship_links/index', component: FriendShipIndex},
             { path: 'user/index', component: UserIndex },
             { path: 'user/session/:id/:limit', component: UserSession, props: true },
             { path: 'user/log/:id', component: UserLog, props: true },
