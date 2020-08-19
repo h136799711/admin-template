@@ -338,7 +338,7 @@
 </script>
 
 <style>
-    @import url(//at.alicdn.com/t/font_326734_xenje8mize.css);
+    @import url(//at.alicdn.com/t/font_326734_z5jopasoeuf.css);
 
     span.by-icon, i.by-icon {
         font-family: 'boyefont';
