@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Operator': '操作',
+	'Reply': '回复',
+	'FriendshipLinks': '友情链接',
+	'Suggest': '意见反馈',
 	'Client': '应用',
 	'Project': '项目',
 	'Send': '发送',

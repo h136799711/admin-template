@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Operator': 'Operator',
+	'Reply': 'Reply',
+	'FriendshipLinks': 'FriendshipLinks',
+	'Suggest': 'Suggest',
 	'Client': 'Client',
 	'Project': 'Project',
 	'Log': 'Log',

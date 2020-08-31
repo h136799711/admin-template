@@ -95,6 +95,10 @@ const UserClient = r => require.ensure([], () => r(require('./pages/user/client.
 const FriendShipIndex = r => require.ensure([], () => r(require('./pages/friendship_links/index.vue')), 'FriendShipIndex')
 // FriendShip END *******************
 
+// Suggest Start *******************
+const SuggestIndex = r => require.ensure([], () => r(require('./pages/suggest/index.vue')), 'SuggestIndex')
+// Suggest END *******************
+
 
 const routes = [
     // 地址为空的时候跳转
@@ -109,6 +113,7 @@ const routes = [
         path: '/admin',
         component: Admin,
         children: [
+            { path: 'suggest/index', component: SuggestIndex },
             { path: 'friendship_links/index', component: FriendShipIndex},
             { path: 'user/index', component: UserIndex },
             { path: 'user/session/:id/:limit', component: UserSession, props: true },
