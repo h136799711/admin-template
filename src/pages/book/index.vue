@@ -44,22 +44,13 @@
                 </el-form-item>
             </el-form>
         </div>
-        <!--        <el-button-->
-        <!--                type="primary"-->
-        <!--                size="mini"-->
-        <!--                icon="el-icon-plus"-->
-        <!--                :loading="loading"-->
-        <!--                @click="onAdd()">-->
-        <!--            {{ $t('Add')}}-->
-        <!--        </el-button>-->
-        <el-button
-                type="primary"
-                size="mini"
-                icon="by-icon by-shuaxin"
-                :loading="loading"
-                @click="refresh()">
-            {{ $t('Refresh')}}
-        </el-button>
+                <el-button
+                        type="primary"
+                        size="mini"
+                        @click="onManage()">
+                    书籍状态管理
+                </el-button>
+
 
         <div class="grid-content margin-md-top">
             <el-table
@@ -313,6 +304,9 @@
             // this.refresh();
         },
         methods: {
+            onManage() {
+                this.$router.push({ path: 'manage' })
+            },
             onViewChapter (row) {
                 this.$router.push({ path: 'pages2/' + row.def_source_type_id + '/' + row.id })
             },

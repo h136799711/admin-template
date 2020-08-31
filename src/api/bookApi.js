@@ -9,7 +9,9 @@ const bookApi = {
     info (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_info' }), suc, fail)
     },
-
+    setEnd (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_setEnd' }), suc, fail)
+    },
     setState (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_setState' }), suc, fail)
     },
@@ -18,6 +20,9 @@ const bookApi = {
     },
     search (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_search' }), suc, fail)
+    },
+    queryChapters (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_queryChapters' }), suc, fail)
     },
     queryBookPages (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_queryBookPages' }), suc, fail)

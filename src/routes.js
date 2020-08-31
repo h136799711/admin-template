@@ -78,6 +78,7 @@ const ShopGoods = r => require.ensure([], () => r(require('./pages/sp_shop/goods
 const BookIndex = r => require.ensure([], () => r(require('./pages/book/index.vue')), 'BookIndex')
 const BookSource = r => require.ensure([], () => r(require('./pages/book/source.vue')), 'BookSource')
 const BookAllSource = r => require.ensure([], () => r(require('./pages/book/all_source.vue')), 'BookAllSource')
+const BookManage = r => require.ensure([], () => r(require('./pages/book/manage.vue')), 'BookManage')
 const BookSourcePages = r => require.ensure([], () => r(require('./pages/book/pages.vue')), 'BookSourcePages')
 const BookSourcePages2 = r => require.ensure([], () => r(require('./pages/book/index_pages.vue')), 'BookSourcePages2')
 // Book END *******************
@@ -122,6 +123,7 @@ const routes = [
             { path: 'user/profile/:id', component: UserProfile, props: true },
             { path: 'book/source/:id', component: BookSource, props: true },
             { path: 'book/all_source', component: BookAllSource },
+            { path: 'book/manage', component: BookManage },
             { path: 'book/pages/:id/:book_id', component: BookSourcePages, props: true },
             { path: 'book/pages2/:id/:book_id', component: BookSourcePages2, props: true },
             {
