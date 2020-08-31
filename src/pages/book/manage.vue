@@ -2,8 +2,14 @@
     <div class="main-content padding-md-bottom padding-md-top">
         <div>
             <el-form :inline="true" :model="queryForm" class="demo-form-inline">
+                <el-form-item label="不大于章节数">
+                    <el-input size="mini" v-model="queryForm.chapters"/>
+                </el-form-item>
                 <el-form-item>
                     <el-input size="mini" :placeholder="$t('Title')" v-model="queryForm.book_name"/>
+                </el-form-item>
+                <el-form-item label="最新章节标题(可以查含大结局,感言等)">
+                    <el-input size="mini" :placeholder="$t('Title')" v-model="queryForm.chapter_title"/>
                 </el-form-item>
                 <el-form-item>
                     <el-button :loading="loading" type="primary" @click="refresh()" size="mini" icon="el-icon-search">{{
@@ -104,6 +110,7 @@
         data () {
             return {
                 queryForm: {
+                    chapter_title: '',
                     chapters: 6000,
                     book_name: '',
                     page_index: 1,
