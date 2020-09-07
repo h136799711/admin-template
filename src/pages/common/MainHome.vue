@@ -730,13 +730,14 @@
           <a
             class="topbar-btn topbar-logo topbar-left"
             href="javascript:void(0);"
+            @click="jump2AdminIndex()"
           >
             <span class="by-icon icon-logo by-SaaSguanlikongzhitai" />
           </a>
           <a
             href="javascript:void(0);"
             class="topbar-home-link topbar-btn topbar-left"
-            @click="userLinkClick('/admin/index')"
+            @click="jump2AdminIndex()"
           >
             <span>{{ platformInfo.all }}</span>
           </a>
@@ -960,6 +961,9 @@
   },
   mounted () {},
   methods: {
+    jump2AdminIndex() {
+      this.$router.push('/admin/index');
+    },
   	getUnreadMsg() {
   	  	api.getUnreadCount({'uid': window.tools.getUID()}, (resp) => {
   	  		this.unreadMsgCnt = resp
@@ -1013,7 +1017,7 @@
     // 链接点击
     userLinkClick (link) {
       window.tools.returnTop()
-      setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link)) }, 1)
+      // setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link)) }, 1)
     },
     queryChildMenu (data = [], action) {
       if (typeof action !== 'function') return

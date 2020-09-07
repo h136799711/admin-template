@@ -19,6 +19,9 @@
     .hidden {
         display: none !important;
     }
+    .pull-left {
+        float:left;
+    }
 
     .main-content .el-breadcrumb {
         margin-bottom: 15px;

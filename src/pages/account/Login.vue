@@ -392,7 +392,7 @@ value="" @keydown.enter="login"
       }.bind(this))
     },
     jump2Admin () {
-      this.$router.push({ path: '/admin' })
+      this.$router.push({ path: '/admin/index' })
     }
   }
 }
