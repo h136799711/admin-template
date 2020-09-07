@@ -103,8 +103,8 @@ const SuggestIndex = r => require.ensure([], () => r(require('./pages/suggest/in
 
 const routes = [
     // 地址为空的时候跳转
-    { path: '', redirect: '/admin/index' },
-    { path: '/', redirect: '/admin/index' },
+    { path: '', redirect: '/admin' },
+    { path: '/', redirect: '/admin' },
     // 登录
     { path: '/login', component: Login },
     // 退出
@@ -291,13 +291,7 @@ const routes = [
             },
             { path: 'account/password', component: Password },
             { path: 'account/avatar', component: Avatar },
-            {
-                path: 'index',
-                component: AdminIndex,
-                children: [
-                    { path: 'index', component: AdminIndex }
-                ]
-            },
+            { path: 'index', component: AdminIndex },
             { path: '*', component: NotFound }
         ]
     },

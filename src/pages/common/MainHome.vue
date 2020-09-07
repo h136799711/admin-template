@@ -941,6 +941,7 @@
         this.loadUserInfo(data.userInfo)
         this.loadPlatformInfo(data.platformInfo)
         window.tools.alertClose()
+        this.$router.push('/admin/index')
       } else if (newValue.msg) {
         console.debug('登录失败', newValue)
         window.tools.alertWarn(newValue.msg)

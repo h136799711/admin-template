@@ -339,9 +339,10 @@ value="" @keydown.enter="login"
       if (oldVal === types.ByUserLoginSuc && this.loginUser) {
         this.isLogging = false
         let msg = this.loginUser.nickname + ', Login Success'
-        window.tools.alertSuc(msg)
+        console.debug(this.loginUser)
         window.tools.setSessionId(this.loginUser.sid)
         window.tools.setUID(this.loginUser.id)
+        window.tools.alertSuc(msg)
         setTimeout(() => {
           this.jump2Admin()
         }, 1000)
@@ -392,7 +393,7 @@ value="" @keydown.enter="login"
       }.bind(this))
     },
     jump2Admin () {
-      this.$router.push({ path: '/admin/index' })
+      this.$router.push({ path: '/admin' })
     }
   }
 }
