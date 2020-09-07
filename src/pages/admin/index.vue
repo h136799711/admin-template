@@ -89,7 +89,6 @@
                     that.drawVideos(data)
                     that.setYesterdayValue(data)
                 }, function (err) {
-                    that.$tools.alertWarn(err)
                     that.requestSiteUpdateData = false
                 })
             },
