@@ -12,8 +12,8 @@
                     <el-input size="mini" :placeholder="$t('Title')" v-model="queryForm.chapter_title"/>
                 </el-form-item>
                 <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="refresh()" size="mini" icon="el-icon-search">{{
-                        $t('Search') }}
+                    <el-button :loading="loading" type="primary" @click="search()" size="mini" icon="el-icon-search">
+                        {{ $t('Search') }}
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -77,6 +77,11 @@
                                 @click="onEnd(scope.row.id)">
                             {{$t('End')}}
                         </el-button>
+                        <el-button
+                                size="mini"
+                                @click="onCrawlingFirst(scope.row.id)">
+                            {{$t('CrawlingFirst')}}
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -127,6 +132,15 @@
             this.refresh();
         },
         methods: {
+            onCrawlingFirst(id) {
+                api.setSort({book_id: id, crawler_sort: 111}, (resp) => {
+                    this.loading = false
+                    this.refresh()
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            },
             onEnd (id) {
                 api.setEnd({ id: id}, (resp) => {
                     this.loading = false
@@ -143,6 +157,10 @@
             byPagerCurrentChange (val) {
                 this.queryForm.page_index = val
                 this.refresh()
+            },
+            search() {
+                this.queryForm.page_index = 1;
+                this.refresh();
             },
             refresh () {
                 // 刷新当前

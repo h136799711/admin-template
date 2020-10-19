@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'CrawlingFirst': '优先爬取',
 	'Operator': '操作',
 	'Reply': '回复',
 	'FriendshipLinks': '友情链接',

@@ -15,6 +15,9 @@ const bookApi = {
     setState (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_setState' }), suc, fail)
     },
+    setSort (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBookSource_setSort' }), suc, fail)
+    },
     update (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_update' }), suc, fail)
     },
