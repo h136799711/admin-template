@@ -11,6 +11,9 @@ const payOrderApi = {
 	},
 	notifyHistory(data, suc, fail) {
 		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_PayOrder_notifyHistory'}), suc, fail);
+	},
+	notify(data, suc, fail) {
+		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_PayOrder_notify'}), suc, fail);
 	}
 };
 

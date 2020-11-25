@@ -288,4 +288,5 @@ exports.default = {
 
 	// PayType
 	'PcAliPay': 'AliPay PC',
+	'WapAliPay': 'AliPay WAP',
 };

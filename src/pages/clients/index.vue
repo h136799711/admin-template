@@ -295,8 +295,9 @@
           },
           refresh () {
             // 刷新当前
-				this.loading = true
+            this.loading = true
             this.queryForm.uid = window.tools.getUID()
+            this.queryForm.user_id = window.tools.getUID()
             api.query(this.queryForm, (resp) => {
 					console.debug ('resp ', resp)
 					this.loading = false
