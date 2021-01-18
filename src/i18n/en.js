@@ -2,6 +2,11 @@
 
 exports.__esModule = true;
 exports.default = {
+	'AliPublicKey': 'System Public Key',
+	'UserPublicKey': 'User Private Key',
+	'Mode': 'Mode',
+	'ReturnUrl': 'ReturnUrl',
+	'NotifyUrl': 'NotifyUrl',
 	'CrawlingFirst': 'Crawling First',
 	'Operator': 'Operator',
 	'Reply': 'Reply',

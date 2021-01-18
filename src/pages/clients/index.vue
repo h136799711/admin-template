@@ -1,6 +1,7 @@
 <style>
     .edit-form {
     }
+
     .edit-form .el-input {
         width: 320px;
     }
@@ -39,19 +40,19 @@
             >
                 <el-table-column
                         prop="id"
-                        width="60px"
+                        width="40px"
                         :label="$t('ID')"
                 />
                 <el-table-column
-                        prop="project_id"
-                        width="100px"
-                        :label="$t('Project') + $t('ID')"
-                />
-                <el-table-column
-                        prop="client_name"
+                        prop="client_secret"
                         width="120px"
                         :label="$t('ClientName')"
-                />
+                >
+                    <template slot-scope="scope">
+                        ({{scope.row.project_id}}){{scope.row.client_name}}
+                    </el-button>
+                    </template>
+                </el-table-column>
                 <el-table-column
                         prop="client_id"
                         width="120px"
@@ -64,8 +65,8 @@
                 >
                     <template slot-scope="scope">
                         {{scope.row.client_secret}}&nbsp;&nbsp;&nbsp;<el-button size="mini" :loading="loading"
-                                                                                @click.prevent="reset(scope.row.id)"> {{
-                        $t('Reset') }}
+                                                                                @click.prevent="reset(scope.row.id)">
+                        {{ $t('Reset') }}
                     </el-button>
                     </template>
                 </el-table-column>
@@ -75,15 +76,25 @@
                         :label="$t('ClientAlg')"
                 />
                 <el-table-column
-                        width="160px"
+                        width="120px"
                         :label="$t('CreateTime')">
                     <template slot-scope="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
+
                 <el-table-column
-                        fixed="right"
-                        width="200px"
+                        width="120px"
+                        :label="$t('Pay')">
+                    <template slot-scope="scope">
+                        <el-button class=""
+                                   @click="onPayConfig(scope.row)"
+                                   size="mini">
+                            {{ $t('Config') }}
+                        </el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         :label="$t('Action')">
                     <template slot-scope="scope">
                         <el-button class=""
@@ -111,7 +122,7 @@
                     <el-input v-model="editForm.projectId"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('ClientAlg')">
-                    <el-select v-model="editForm.clientAlg" >
+                    <el-select v-model="editForm.clientAlg">
                         <el-option
                                 v-for="item in algList"
                                 :key="item.id"
@@ -125,7 +136,8 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="onSave" icon="by-icon by-Icon-baocun"> {{ $t('Save') }}
+                    <el-button :loading="loading" type="primary" @click="onSave" icon="by-icon by-Icon-baocun"> {{
+                        $t('Save') }}
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -163,50 +175,94 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+
+
+        <el-dialog
+                :show-close="false"
+                :modal-append-to-body="false"
+                :title="$t('Config')"
+                :visible.sync="dialogPayConfigVisible"
+        >
+            <el-form label-position="left" label-width="160px" :model="payConfigForm" size="mini" class="edit-form">
+                <el-form-item :label="$t('AppId')">
+                    <el-input v-model="payConfigForm.app_id"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('Mode')">
+                    <el-input v-model="payConfigForm.mode"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('NotifyUrl')">
+                    <el-input v-model="payConfigForm.notify_url"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('ReturnUrl')">
+                    <el-input v-model="payConfigForm.return_url"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('AliPublicKey')">
+                    <el-input :rows="8" type="textarea" v-model="payConfigForm.ali_public_key"></el-input>
+                </el-form-item>
+                <el-form-item :label="$t('UserPrivateKey')">
+                    <el-input :rows="8" type="textarea" v-model="payConfigForm.private_key"></el-input>
+                </el-form-item>
+
+                <el-form-item>
+                    <el-button :loading="loading" type="primary" @click="onPayConfigSave" icon="by-icon by-Icon-baocun">
+                        {{ $t('Save') }}
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 
 </template>
 
 <script>
-  import api from '../../api/clientsApi'
-  import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-  import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-  import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+    import api from '../../api/clientsApi'
+    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
+    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
+    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
 
-  export default {
-		components: {
-			ElForm,
-			ElButtonGroup,
-			ElButton
-		},
-		data() {
-			return {
-              dialogEditVisible: false,
-              dialogAddVisible: false,
+    export default {
+        components: {
+            ElForm,
+            ElButtonGroup,
+            ElButton
+        },
+        data () {
+            return {
+                dialogEditVisible: false,
+                dialogAddVisible: false,
+                dialogPayConfigVisible: false,
                 algList: [
-                    {id: 'nothing', label: 'None'},
-                  { id: 'md5_v4', label: 'MD5 Version 4' }
+                    { id: 'nothing', label: 'None' },
+                    { id: 'md5_v4', label: 'MD5 Version 4' }
                 ],
-              addForm: {
-                clientName: '',
-                apiAlg: 'nothing',
-                dailyLimit: 500,
-                projectId: ''
-              },
-				editForm: {
-					clientName: '',
-					apiAlg: 'nothing',
-                  dailyLimit: 500,
-                  projectId: ''
-				},
-              queryForm: {},
-              list: [],
-              count: 0,
-				loading: false
-			}
-		},
-		computed: {
-			dailyLimitDesc: {
+                payConfigForm: {
+                    app_id: '',
+                    mode: '',
+                    notify_url: '',
+                    return_url: '',
+                    ali_public_key: '',
+                    private_key: ''
+                },
+                addForm: {
+                    clientName: '',
+                    apiAlg: 'nothing',
+                    dailyLimit: 500,
+                    projectId: ''
+                },
+                editForm: {
+                    clientName: '',
+                    apiAlg: 'nothing',
+                    dailyLimit: 500,
+                    projectId: ''
+                },
+                queryForm: {},
+                list: [],
+                count: 0,
+                loading: false
+            }
+        },
+        computed: {
+            dailyLimitDesc: {
                 get: function () {
                     if (this.editForm.dailyLimit === 0) {
                         return 'No Limit'
@@ -216,104 +272,144 @@
                 // setter
                 set: function (newValue) {
                     if (window._.isInteger(parseInt(newValue))) {
-                        this.editForm.dailyLimit = newValue;
+                        this.editForm.dailyLimit = newValue
                     }
                 }
             }
-		},
-		watch: {},
-		created() {
-            this.refresh ();
-		},
-		mounted: function () {
-		},
-		methods: {
-          reset (id) {
-				this.loading = true
-            api.reset({ 'id': id }, (resp) => {
-					console.debug ('resp ', resp)
-					this.loading = false
-              this.refresh()
-				}, (resp) => {
-					window.tools.alertError (resp.msg)
-					this.loading = false
-				})
-			},
-			onSave() {
-				this.loading = true
-				api.update ({
-                  'm_client_id': this.editForm.clientId,
-                  'm_project_id': this.editForm.projectId,
-                  'm_alg': this.editForm.clientAlg,
-					'day_limit': this.editForm.dailyLimit,
-					'client_name': this.editForm.clientName
-				}, (resp) => {
-                  this.dialogEditVisible = false
-                  this.loading = false
-                  this.refresh()
-				}, (resp) => {
-					window.tools.alertError (resp.msg)
-					this.loading = false
-				})
-			},
-          onAddSave () {
-            api.create({
-              'm_project_id': this.addForm.projectId,
-              'm_alg': this.addForm.clientAlg,
-              // 'day_limit': this.addForm.dailyLimit,
-              'client_name': this.addForm.clientName
-            }, (resp) => {
-              this.dialogAddVisible = false
-              this.loading = false
-              this.refresh()
-            }, (resp) => {
-              window.tools.alertError(resp.msg)
-              this.loading = false
-            })
-          },
-          onAdd () {
-            this.addForm = {
-              clientName: '',
-              clientAlg: 'nothing',
-              dailyLimit: 500,
-              projectId: ''
+        },
+        watch: {},
+        created () {
+            this.refresh()
+        },
+        mounted: function () {
+        },
+        methods: {
+            onPayConfigSave () {
+
+                var that = this;
+                this.loading = true
+                api.updatePayConfig(this.payConfigForm, (resp) => {
+                    that.loading = false
+                    that.dialogPayConfigVisible = false
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    that.loading = false
+                    that.dialogPayConfigVisible = false
+                });
+            },
+            onPayConfig (row) {
+                this.dialogPayConfigVisible = true
+                this.loading = true
+                this.payConfigForm = {
+                    m_project_id: row.project_id,
+                    m_client_id: row.client_id,
+                    app_id: '',
+                    mode: 'dev',
+                    notify_url: '',
+                    return_url: '',
+                    ali_public_key: '',
+                    private_key: ''
+                }
+                var that = this;
+                api.payConfig({m_project_id: row.project_id, m_client_id: row.client_id},  (resp) => {
+                    that.loading = false
+                    that.payConfigForm.app_id = resp.app_id;
+                    that.payConfigForm.mode = resp.mode;
+                    that.payConfigForm.notify_url = resp.notify_url;
+                    that.payConfigForm.return_url = resp.return_url;
+                    that.payConfigForm.ali_public_key = resp.ali_public_key;
+                    that.payConfigForm.private_key = resp.private_key;
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            },
+            reset (id) {
+                this.loading = true
+                api.reset({ 'id': id }, (resp) => {
+                    console.debug('resp ', resp)
+                    this.loading = false
+                    this.refresh()
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            },
+            onSave () {
+                this.loading = true
+                api.update({
+                    'm_client_id': this.editForm.clientId,
+                    'm_project_id': this.editForm.projectId,
+                    'm_alg': this.editForm.clientAlg,
+                    'day_limit': this.editForm.dailyLimit,
+                    'client_name': this.editForm.clientName
+                }, (resp) => {
+                    this.dialogEditVisible = false
+                    this.loading = false
+                    this.refresh()
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            },
+            onAddSave () {
+                api.create({
+                    'm_project_id': this.addForm.projectId,
+                    'm_alg': this.addForm.clientAlg,
+                    // 'day_limit': this.addForm.dailyLimit,
+                    'client_name': this.addForm.clientName
+                }, (resp) => {
+                    this.dialogAddVisible = false
+                    this.loading = false
+                    this.refresh()
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            },
+            onAdd () {
+                this.addForm = {
+                    clientName: '',
+                    clientAlg: 'nothing',
+                    dailyLimit: 500,
+                    projectId: ''
+                }
+                this.dialogAddVisible = true
+            },
+            onEdit (row) {
+                console.debug(row)
+                this.editForm = Object.assign({
+                    clientId: row.client_id,
+                    clientName: row.client_name,
+                    clientSecret: row.client_secret,
+                    clientAlg: row.api_alg,
+                    totalLimit: parseInt(row.total_limit),
+                    dailyLimit: parseInt(row.day_limit),
+                    projectId: row.project_id
+                })
+                this.dialogEditVisible = true
+            },
+            refresh () {
+                // 刷新当前
+                this.loading = true
+                this.queryForm.uid = window.tools.getUID()
+                this.queryForm.user_id = window.tools.getUID()
+                api.query(this.queryForm, (resp) => {
+                    console.debug('resp ', resp)
+                    this.loading = false
+                    this.list = resp
+                    // this.editForm.apiAlg = resp.api_alg
+                    // this.editForm.clientSecret = resp.client_secret
+                    // this.editForm.clientId = resp.client_id
+                    // this.editForm.clientName = resp.client_name
+                    // this.editForm.clientAlg = resp.api_alg
+                    // this.editForm.dailyLimit = resp.day_limit
+                    // this.editForm.projectId = resp.project_id
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
             }
-            this.dialogAddVisible = true
-          },
-          onEdit (row) {
-            console.debug(row)
-            this.editForm = Object.assign({
-              clientId: row.client_id,
-              clientName: row.client_name,
-              clientSecret: row.client_secret,
-              clientAlg: row.api_alg,
-              totalLimit: parseInt(row.total_limit),
-              dailyLimit: parseInt(row.day_limit),
-              projectId: row.project_id
-            })
-            this.dialogEditVisible = true
-          },
-          refresh () {
-            // 刷新当前
-            this.loading = true
-            this.queryForm.uid = window.tools.getUID()
-            this.queryForm.user_id = window.tools.getUID()
-            api.query(this.queryForm, (resp) => {
-					console.debug ('resp ', resp)
-					this.loading = false
-              this.list = resp
-              // this.editForm.apiAlg = resp.api_alg
-              // this.editForm.clientSecret = resp.client_secret
-              // this.editForm.clientId = resp.client_id
-              // this.editForm.clientName = resp.client_name
-              // this.editForm.clientAlg = resp.api_alg
-              // this.editForm.dailyLimit = resp.day_limit
-              // this.editForm.projectId = resp.project_id
-				}, (resp) => {
-					window.tools.alertError (resp.msg)
-					this.loading = false
-				})
-			}
-		}
-	}
+        }
+    }
 </script>

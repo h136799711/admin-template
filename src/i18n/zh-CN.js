@@ -2,6 +2,11 @@
 
 exports.__esModule = true;
 exports.default = {
+	'AliPublicKey': '系统公钥',
+	'UserPublicKey': '用户私钥',
+	'Mode': '模式',
+	'ReturnUrl': '跳转地址',
+	'NotifyUrl': '异步通知地址',
 	'CrawlingFirst': '优先爬取',
 	'Operator': '操作',
 	'Reply': '回复',
