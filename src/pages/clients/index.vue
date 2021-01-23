@@ -88,7 +88,7 @@
 
                 <el-table-column
                         width="200px"
-                        :label="$t('Pay')">
+                        :label="$t('Config')">
                     <template slot-scope="scope">
                         <el-button class=""
                                    @click="onPayment(scope.row)"
