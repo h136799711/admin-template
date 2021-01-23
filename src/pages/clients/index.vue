@@ -5,6 +5,9 @@
     .edit-form .el-input {
         width: 320px;
     }
+    .el-checkbox+.el-checkbox {
+        margin-left: 0;
+    }
 </style>
 <template>
     <div class="main-content by-clients padding-md-bottom padding-md-top">
@@ -84,13 +87,18 @@
                 </el-table-column>
 
                 <el-table-column
-                        width="120px"
+                        width="200px"
                         :label="$t('Pay')">
                     <template slot-scope="scope">
                         <el-button class=""
+                                   @click="onPayment(scope.row)"
+                                   size="mini">
+                            {{ $t('Payment') }}
+                        </el-button>
+                        <el-button class=""
                                    @click="onPayConfig(scope.row)"
                                    size="mini">
-                            {{ $t('Config') }}
+                            {{ $t('AliPay') }}
                         </el-button>
                     </template>
                 </el-table-column>
@@ -169,14 +177,17 @@
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="onAddSave" icon="by-icon by-Icon-baocun"> {{
-                        $t('Save') }}
+                    <el-button :loading="loading" type="primary" @click="onAddSave" icon="by-icon by-Icon-baocun"> {{ $t('Save') }}
+                    </el-button>
+                    <el-button @click="dialogAddVisible = false">
+                        {{ $t('Cancel') }}
                     </el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
 
 
+        <!-- 支付宝配置 -->
         <el-dialog
                 :show-close="false"
                 :modal-append-to-body="false"
@@ -207,6 +218,36 @@
                     <el-button :loading="loading" type="primary" @click="onPayConfigSave" icon="by-icon by-Icon-baocun">
                         {{ $t('Save') }}
                     </el-button>
+                    <el-button @click="dialogPayConfigVisible = false">
+                        {{ $t('Cancel') }}
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
+        <!-- 支付通道配置 -->
+
+        <el-dialog
+                :show-close="false"
+                :modal-append-to-body="false"
+                :title="$t('PaymentChannel')"
+                :visible.sync="dialogPaymentVisible"
+        >
+            <el-form  :model="paymentForm" size="mini" class="edit-form">
+                <el-form-item>
+                    <div style="width: 200px;">
+                        <el-checkbox-group v-model="checkPayment" size="small"  @change="handleChange">
+                        <el-checkbox v-for="p in supportPayment" :label="p.code" :key="p.code">{{p.title}}({{p.desc}})</el-checkbox>
+                        </el-checkbox-group>
+                    </div>
+                </el-form-item>
+                <el-form-item>
+                    <el-button :loading="loading" type="primary" @click="onPaymentSave" icon="by-icon by-Icon-baocun">
+                        {{ $t('Save') }}
+                    </el-button>
+                    <el-button @click="dialogPaymentVisible = false">
+                        {{ $t('Cancel') }}
+                    </el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -231,10 +272,17 @@
                 dialogEditVisible: false,
                 dialogAddVisible: false,
                 dialogPayConfigVisible: false,
+                dialogPaymentVisible: false,
                 algList: [
                     { id: 'nothing', label: 'None' },
                     { id: 'md5_v4', label: 'MD5 Version 4' }
                 ],
+                supportPayment: [],
+                checkPayment: [],
+                paymentForm: {
+                    m_client_id: '',
+                    value: ''
+                },
                 payConfigForm: {
                     app_id: '',
                     mode: '',
@@ -284,6 +332,45 @@
         mounted: function () {
         },
         methods: {
+            handleChange(value) {
+                console.debug(value);
+            },
+            onPaymentSave() {
+                var that = this;
+                this.paymentForm.value = this.checkPayment.join(",");
+                this.loading = true
+                api.updatePayment(this.paymentForm, (resp) => {
+                    that.loading = false
+                    that.dialogPaymentVisible = false
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    that.loading = false
+                    that.dialogPaymentVisible = false
+                });
+            },
+            onPayment(row) {
+                this.dialogPaymentVisible = true
+                this.loading = true
+                this.paymentForm = {
+                    m_client_id: row.client_id,
+                    value: '',
+                }
+                var that = this;
+                that.checkPayment = [];
+                api.paymentList({m_client_id: row.client_id},  (resp) => {
+                    console.debug(resp);
+                    that.loading = false
+                    that.supportPayment = resp;
+                    that.supportPayment.forEach(e => {
+                        if (e.enable == 1) {
+                            that.checkPayment.push(e.code);
+                        }
+                    })
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            },
             onPayConfigSave () {
 
                 var that = this;
@@ -301,7 +388,6 @@
                 this.dialogPayConfigVisible = true
                 this.loading = true
                 this.payConfigForm = {
-                    m_project_id: row.project_id,
                     m_client_id: row.client_id,
                     app_id: '',
                     mode: 'dev',

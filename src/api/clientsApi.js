@@ -70,13 +70,21 @@ const clientsApi = {
         http.methods.defaultPost('', data, suc, fail)
     },
     payConfig (data, suc, fail) {
-        data.service_type = 'by_Clients_payConfig'
+        data.service_type = 'by_ClientsConfig_payConfig'
         http.methods.defaultPost('', data, suc, fail)
     },
     updatePayConfig (data, suc, fail) {
-        data.service_type = 'by_Clients_updatePayConfig'
+        data.service_type = 'by_ClientsConfig_updatePayConfig'
         http.methods.defaultPost('', data, suc, fail)
     },
+    paymentList(data, suc, fail) {
+        data.service_type = 'by_ClientsConfig_paymentList'
+        http.methods.defaultPost('', data, suc, fail)
+    },
+    updatePayment(data, suc, fail) {
+        data.service_type = 'by_ClientsConfig_updatePayment'
+        http.methods.defaultPost('', data, suc, fail)
+    }
 }
 
 export default clientsApi

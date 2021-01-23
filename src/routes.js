@@ -89,6 +89,7 @@ const UserSession = r => require.ensure([], () => r(require('./pages/user/sessio
 const UserProfile = r => require.ensure([], () => r(require('./pages/user/profile.vue')), 'UserProfile')
 const UserLog = r => require.ensure([], () => r(require('./pages/user/log.vue')), 'UserLog')
 const UserClient = r => require.ensure([], () => r(require('./pages/user/client.vue')), 'UserClient')
+const UserWithdraw = r => require.ensure([], () => r(require('./pages/withdrawals/index.vue')), 'UserWithdraw')
 // User END *******************
 
 
@@ -98,6 +99,12 @@ const FriendShipIndex = r => require.ensure([], () => r(require('./pages/friends
 
 // Suggest Start *******************
 const SuggestIndex = r => require.ensure([], () => r(require('./pages/suggest/index.vue')), 'SuggestIndex')
+// Suggest END *******************
+
+
+// Suggest Start *******************
+const RechargeIndex = r => require.ensure([], () => r(require('./pages/recharge/index.vue')), 'RechargeIndex')
+const RechargeProfile = r => require.ensure([], () => r(require('./pages/recharge/profile.vue')), 'RechargeProfile')
 // Suggest END *******************
 
 
@@ -117,6 +124,9 @@ const routes = [
             { path: 'suggest/index', component: SuggestIndex },
             { path: 'friendship_links/index', component: FriendShipIndex},
             { path: 'user/index', component: UserIndex },
+            { path: 'withdrawal/index', component: UserWithdraw },
+            { path: 'recharge/index', component: RechargeIndex },
+            { path: 'recharge/profile/:id', component: RechargeProfile, props: true },
             { path: 'user/session/:id/:limit', component: UserSession, props: true },
             { path: 'user/log/:id', component: UserLog, props: true },
             { path: 'user/client/:id', component: UserClient, props: true },

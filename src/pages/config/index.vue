@@ -465,7 +465,7 @@
                 		this.queryForm.cate = a
                         break;
                     }
-                    this.queryConfig()
+//                    this.queryConfig()
                 }, (resp) => {
                 	this.loading = false
                 })
