@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Subregion': '子级区域',
+	'Pinyin': '拼音',
+	'Telephone': '电话区号',
+	'Region': '区域',
 	'PaymentChannel': '支付通道',
 	'Pay': '支付',
 	'Config': '配置',

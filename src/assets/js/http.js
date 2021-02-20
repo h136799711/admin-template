@@ -53,9 +53,9 @@ const apiMethods = {
         })
       })
     },
-    defaultPost: function (url, data, suc, fail) {
-      url = window.tools.getApiUrl(url)
-      this.apiPost(url, data).then((res) => {
+    defaultPost: function (servicePath, data, suc, fail) {
+      var url = window.tools.getApiUrl('')
+      this.apiPost(url + servicePath, data).then((res) => {
         if (res.code === 0) {
           if (typeof suc === 'function') {
             suc(res.data)

@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Subregion': 'Subregion',
+	'Pinyin': 'Pinyin',
+	'Telephone': 'Telephone',
+	'Region': 'Region',
 	'PaymentChannel': 'PaymentChannel',
 	'Pay': 'Pay',
 	'Config': 'Config',

@@ -108,6 +108,15 @@ const RechargeProfile = r => require.ensure([], () => r(require('./pages/recharg
 // Suggest END *******************
 
 
+// Region Start *******************
+const RegionIndex = r => require.ensure([], () => r(require('./pages/region/index.vue')), 'RegionIndex')
+const RegionProvince  = r => require.ensure([], () => r(require('./pages/region/province.vue')), 'RegionProvince')
+const RegionCity  = r => require.ensure([], () => r(require('./pages/region/city.vue')), 'RegionCity')
+const RegionCityArea  = r => require.ensure([], () => r(require('./pages/region/cityArea.vue')), 'RegionCityArea')
+const RegionTown  = r => require.ensure([], () => r(require('./pages/region/town.vue')), 'RegionTown')
+// Region END *******************
+
+
 const routes = [
     // 地址为空的时候跳转
     { path: '', redirect: '/admin' },
@@ -121,6 +130,11 @@ const routes = [
         path: '/admin',
         component: Admin,
         children: [
+            { path: 'region/index', component: RegionIndex },
+            { path: 'region/province/:id', component: RegionProvince, props: true },
+            { path: 'region/city/:code', component: RegionCity, props: true },
+            { path: 'region/city_area/:code', component: RegionCityArea, props: true },
+            { path: 'region/town/:code', component: RegionTown, props: true },
             { path: 'suggest/index', component: SuggestIndex },
             { path: 'friendship_links/index', component: FriendShipIndex},
             { path: 'user/index', component: UserIndex },
