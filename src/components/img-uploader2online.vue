@@ -57,7 +57,7 @@
         <el-radio v-if="show === 'remote' || show === 'all'" v-model="sourceType" label="0">网络图片</el-radio>
         <el-radio v-if="show === 'local' || show === 'all'" v-model="sourceType" label="1">本地上传</el-radio>
         <el-radio v-if="show === 'local' || show === 'all'" @change="sourceTypeChange" v-model="sourceType" label="2">
-            线上图片
+            已传图片
         </el-radio>
         <div class="uploadedimg" v-if="sourceType === '2' " :loading="loadingUploadedImgs">
             <div>
@@ -74,15 +74,17 @@
                     {{$t('Search')}}
                 </el-button>
             </div>
-            <!-- 线上图片 -->
-            <span v-for="img in uploadedImgs">
+            <div class="margin-md-top">
+                <!-- 已传图片 -->
+                <span v-for="img in uploadedImgs">
                     <el-image
                             :class="(chooseImgId == img.id) ? 'actived':''"
                             @click="choose(img)"
-                            style="cursor:pointer;width: 80px; height: 100px"
+                            style="cursor:pointer;width: 120px; height: 90px"
                             :src="img.url"
                             fit="fill" lazy></el-image>
-                </span>
+            </span>
+            </div>
             <div class="text-center">
                 <el-pagination
                         :current-page="pageIndex"
