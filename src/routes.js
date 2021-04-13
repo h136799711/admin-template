@@ -90,6 +90,7 @@ const UserProfile = r => require.ensure([], () => r(require('./pages/user/profil
 const UserLog = r => require.ensure([], () => r(require('./pages/user/log.vue')), 'UserLog')
 const UserClient = r => require.ensure([], () => r(require('./pages/user/client.vue')), 'UserClient')
 const UserWithdraw = r => require.ensure([], () => r(require('./pages/withdrawals/index.vue')), 'UserWithdraw')
+const UserCoupon = r => require.ensure([], () => r(require('./pages/user/coupon.vue')), 'UserCoupon')
 // User END *******************
 
 
@@ -116,6 +117,18 @@ const RegionCityArea  = r => require.ensure([], () => r(require('./pages/region/
 const RegionTown  = r => require.ensure([], () => r(require('./pages/region/town.vue')), 'RegionTown')
 // Region END *******************
 
+// Diet Start *******************
+const DtGoodsIndex = r => require.ensure([], () => r(require('./pages/dt_goods/index.vue')), 'DtGoodsIndex')
+const DtGoodsCreate = r => require.ensure([], () => r(require('./pages/dt_goods/create.vue')), 'DtGoodsCreate')
+const DtGoodsEdit = r => require.ensure([], () => r(require('./pages/dt_goods/edit.vue')), 'DtGoodsEdit')
+const DtGoodsSku = r => require.ensure([], () => r(require('./pages/dt_goods/sku.vue')), 'DtGoodsSku')
+
+const DtCouponIndex = r => require.ensure([], () => r(require('./pages/dt_coupon/index.vue')), 'DtCouponIndex')
+const DtOrderIndex = r => require.ensure([], () => r(require('./pages/dt_order/index.vue')), 'DtOrderIndex')
+const PickupPlaceIndex = r => require.ensure([], () => r(require('./pages/pickup_place/index.vue')), 'PickupPlaceIndex')
+const OrderComplaintsIndex = r => require.ensure([], () => r(require('./pages/order_complaints/index.vue')), 'OrderComplaintsIndex')
+
+// Diet END *******************
 
 const routes = [
     // 地址为空的时候跳转
@@ -194,6 +207,46 @@ const routes = [
 
             { path: 'video/source/:id', component: VideoSource, props: true },
             { path: 'video/source/play/:vtype/:vuri', component: VideoPlay, props: true },
+
+            { path: 'user/coupon/:id', component: UserCoupon, props: true },
+            {
+                path: 'dt_goods',
+                component: DtGoodsIndex,
+                children: [
+                    { path: 'index', component: DtGoodsIndex },
+                ]
+            },
+            { path: 'dt_goods/create', component: DtGoodsCreate },
+            { path: 'dt_goods/edit/:id', component: DtGoodsEdit, props: true },
+            { path: 'dt_goods/sku/:id', component: DtGoodsSku, props: true },
+            {
+                path: 'dt_coupon',
+                component: DtCouponIndex,
+                children: [
+                    { path: 'index', component: DtCouponIndex },
+                ]
+            },
+            {
+                path: 'dt_order',
+                component: DtOrderIndex,
+                children: [
+                    { path: 'index', component: DtOrderIndex },
+                ]
+            },
+            {
+                path: 'pickup_place',
+                component: PickupPlaceIndex,
+                children: [
+                    { path: 'index', component: PickupPlaceIndex },
+                ]
+            },
+            {
+                path: 'order_complaints',
+                component: OrderComplaintsIndex,
+                children: [
+                    { path: 'index', component: OrderComplaintsIndex },
+                ]
+            },
             {
                 path: 'pay_order',
                 component: PayOrder,
