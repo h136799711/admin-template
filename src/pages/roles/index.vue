@@ -84,9 +84,9 @@
         </div>
         <div class="text-center">
             <el-pagination
-                    :current-page="currentPage"
+                    :current-page="this.queryForm.page_index"
                     :page-sizes="[10, 20, 30, 50]"
-                    :page-size="pageSize"
+                    :page-size="this.queryForm.page_size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="count"
                     @size-change="byPagerSizeChange"
@@ -194,10 +194,13 @@
 		},
 		data() {
 			return {
+			    queryForm: {
+			        name: '',
+			        page_index: 1,
+                    page_size: 20,
+                },
 				addForm: {},
                 editForm: {},
-				currentPage: 1, // 当前页码
-				pageSize: 10,
 				count: 0,
 				tableData: [],
 				loading: false,
@@ -287,11 +290,11 @@
 				})
 			},
 			byPagerSizeChange(val) {
-				this.pageSize = val
+				this.queryForm.page_size = val
 				this.refresh ()
 			},
 			byPagerCurrentChange(val) {
-				this.currentPage = val
+				this.queryForm.page_index = val
 				this.refresh ()
 			},
 			refresh() {
@@ -299,7 +302,7 @@
 				this.count = 0
 				this.tableData = []
 				this.loading = true
-				api.query ({'name': ''}, (resp) => {
+				api.query (this.queryForm, (resp) => {
 					console.debug ('resp ', resp)
 					this.loading = false
 					this.count = parseInt (resp.count)

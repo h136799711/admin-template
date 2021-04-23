@@ -3,11 +3,13 @@
 
         <div>
             <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-                <el-form-item >
-                    <el-input size="mini" v-model="queryForm.name" />
+                <el-form-item>
+                    <el-input size="mini" v-model="queryForm.name"/>
                 </el-form-item>
                 <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="refresh()"  size="mini" icon="el-icon-search">{{ $t('Search') }}</el-button>
+                    <el-button :loading="loading" type="primary" @click="refresh()" size="mini" icon="el-icon-search">{{
+                        $t('Search') }}
+                    </el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -61,7 +63,7 @@
                                     :path="'res'"
                                     :deep="8"
                                     :data="JSON.parse(scope.row.statements)"
-                                    >
+                            >
                             </vue-json-pretty>
                             <div slot="reference" class="name-wrapper">
                                 <el-tag size="medium">{{ $t('Policy') }}</el-tag>
@@ -86,13 +88,13 @@
         </div>
         <div class="text-center">
             <el-pagination
-                    :current-page="currentPage"
+                    :current-page="this.queryForm.page_index"
                     :page-sizes="[10, 20, 30, 50]"
-                    :page-size="pageSize"
+                    :page-size="this.queryForm.page_size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="count"
                     @size-change="byPagerSizeChange"
-                    @current-change="byPagerCurrentChange" />
+                    @current-change="byPagerCurrentChange"/>
         </div>
 
         <el-dialog
@@ -112,7 +114,7 @@
 
                 <el-form-item
                         :label="$t('Name')"
-                        prop="name" >
+                        prop="name">
                     <el-input v-model="editForm.name"/>
                 </el-form-item>
                 <el-form-item
@@ -125,7 +127,7 @@
                         :label="$t('Note')"
                         prop="note"
                 >
-                    <el-input v-model="editForm.note" type="textarea" />
+                    <el-input v-model="editForm.note" type="textarea"/>
                 </el-form-item>
                 <el-form-item
                         label=""
@@ -139,7 +141,7 @@
                     />
                 </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer" >
+            <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogEditVisible = false">
                     {{ $t('Cancel') }}
                 </el-button>
@@ -172,7 +174,7 @@
                 <el-form-item
                         required
                         :label="$t('Name')"
-                        prop="name" >
+                        prop="name">
                     <el-input v-model="addForm.name"/>
                 </el-form-item>
                 <el-form-item
@@ -186,10 +188,10 @@
                         :label="$t('Note')"
                         prop="note"
                 >
-                    <el-input v-model="addForm.note" type="textarea" />
+                    <el-input v-model="addForm.note" type="textarea"/>
                 </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer" >
+            <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogAddVisible = false">
                     {{ $t('Cancel') }}
                 </el-button>
@@ -206,72 +208,72 @@
 </template>
 
 <script>
-	import api from '../../api/policyApi'
-	import VueJsonPretty from 'vue-json-pretty'
-	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-	import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-	import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+    import api from '../../api/policyApi'
+    import VueJsonPretty from 'vue-json-pretty'
+    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
+    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
+    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
 
-	export default {
-		components: {
-			ElForm,
-			ElButtonGroup,
-			ElButton,
+    export default {
+        components: {
+            ElForm,
+            ElButtonGroup,
+            ElButton,
             VueJsonPretty
-		},
-		data() {
+        },
+        data () {
             var validateStatements = (rule, value, callback) => {
                 if (!this.isJsonString(value)) {
-                    callback(new Error(this.$i18n.t('JsonFormatString')));
+                    callback(new Error(this.$i18n.t('JsonFormatString')))
                 } else {
-                    callback();
+                    callback()
                 }
-            };
-			return {
-				queryForm: {
-				    name: ''
+            }
+            return {
+                queryForm: {
+                    name: '',
+                    page_index: 1,
+                    page_size: 10
                 },
                 addForm: {
                     note: '',
                     statements: '',
                     name: ''
                 },
-				editForm: {
-					note: '',
-					statements: '',
-					id: 0,
-					name: ''
-				},
+                editForm: {
+                    note: '',
+                    statements: '',
+                    id: 0,
+                    name: ''
+                },
                 rules: {
                     name: [
-                        {required: true, message: this.$i18n.t ('Please Input Name'), trigger: 'blur'},
-                        {min: 1, max: 32, message: this.$i18n.t ('String Length Between', [1, 32]), trigger: 'blur'}
+                        { required: true, message: this.$i18n.t('Please Input Name'), trigger: 'blur' },
+                        { min: 1, max: 32, message: this.$i18n.t('String Length Between', [1, 32]), trigger: 'blur' }
                     ],
                     statements: [
-                        {validator: validateStatements, trigger: 'blur' },
-                        {required: true, message: this.$i18n.t ('Please Input Statements'), trigger: 'change'}
+                        { validator: validateStatements, trigger: 'blur' },
+                        { required: true, message: this.$i18n.t('Please Input Statements'), trigger: 'change' }
                     ],
                     notes: [
-                        {min: 0, max: 250, message: this.$i18n.t ('String Length Between', [0, 250]), trigger: 'blur'}
+                        { min: 0, max: 250, message: this.$i18n.t('String Length Between', [0, 250]), trigger: 'blur' }
                     ]
                 },
-				currentPage: 1, // 当前页码
-				pageSize: 10,
-				count: 0,
-				tableData: [],
-				loading: false,
-				dialogAddVisible: false,
-				dialogEditVisible: false,
-				selectTableRowId: '' // 选中的表格行id
-			}
-		},
-		computed: {
-			formattedStatements: {
-				get: function() {
-					if (this.isJsonString(this.editForm.statements)) {
+                count: 0,
+                tableData: [],
+                loading: false,
+                dialogAddVisible: false,
+                dialogEditVisible: false,
+                selectTableRowId: '' // 选中的表格行id
+            }
+        },
+        computed: {
+            formattedStatements: {
+                get: function () {
+                    if (this.isJsonString(this.editForm.statements)) {
                         return JSON.stringify(JSON.parse(this.editForm.statements), null, 4)
                     } else {
-						return this.editForm.statements
+                        return this.editForm.statements
                     }
                 },
                 set: function (newValue) {
@@ -279,52 +281,52 @@
                 }
             }
         },
-		watch: {},
-		created() {
-			this.refresh ();
-		},
-		mounted: function () {
-		},
-		methods: {
-            isJsonString(str) {
+        watch: {},
+        created () {
+            this.refresh()
+        },
+        mounted: function () {
+        },
+        methods: {
+            isJsonString (str) {
                 try {
-                    if (typeof JSON.parse (str) === "object") {
-                        return true;
+                    if (typeof JSON.parse(str) === 'object') {
+                        return true
                     }
                 } catch (e) {
                 }
-                return false;
+                return false
             },
-			onSave() {
-                api.update (this.editForm, (resp) => {
-                 	this.loading = false
-                    this.dialogEditVisible = false;
-                    window.tools.alertSuc (this.$i18n.t('Action') + this.$i18n.t('Success'))
+            onSave () {
+                api.update(this.editForm, (resp) => {
+                    this.loading = false
+                    this.dialogEditVisible = false
+                    window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                 }, (resp) => {
-                 	window.tools.alertError (resp.msg)
-                 	this.loading = false
-                    this.dialogEditVisible = false;
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                    this.dialogEditVisible = false
                 })
-			},
-            submitAddForm() {
+            },
+            submitAddForm () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
                         this.addForm.statements = JSON.stringify(JSON.parse(this.addForm.statements))
-                        api.create (this.addForm, (resp) => {
+                        api.create(this.addForm, (resp) => {
                             this.loading = false
                             this.dialogAddVisible = false
-                            window.tools.alertSuc (this.$i18n.t('Action') + this.$i18n.t('Success'))
+                            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                             this.refresh()
                         }, (resp) => {
-                            window.tools.alertError (resp.msg)
+                            window.tools.alertError(resp.msg)
                             this.loading = false
                         })
                     } else {
-                        return false;
+                        return false
                     }
-                });
+                })
             },
-            onAdd() {
+            onAdd () {
                 this.addForm = {
                     note: '',
                     statements: '',
@@ -332,36 +334,32 @@
                 }
                 this.dialogAddVisible = true
             },
-			onEdit(row) {
-				this.editForm = row
-                this.dialogEditVisible = true;
-			},
-			byPagerSizeChange(val) {
-				this.pageSize = val
-				this.refresh ()
-			},
-			byPagerCurrentChange(val) {
-				this.currentPage = val
-				this.refresh ()
-			},
-			refresh() {
-				// 刷新当前
-				this.tableData = []
-				this.loading = true
-              api.query({
-                'name': this.queryForm.name,
-                page_index: this.currentPage,
-                page_size: this.pageSize
-              }, (resp) => {
-					console.debug ('resp ', resp)
-					this.loading = false
-					this.count = parseInt (resp.count)
-					this.tableData = resp.list
-				}, (resp) => {
-					window.tools.alertError (resp.msg)
-					this.loading = false
-				})
-			}
-		}
-	}
+            onEdit (row) {
+                this.editForm = row
+                this.dialogEditVisible = true
+            },
+            byPagerSizeChange (val) {
+                this.queryForm.page_size = val
+                this.refresh()
+            },
+            byPagerCurrentChange (val) {
+                this.queryForm.page_index = val
+                this.refresh()
+            },
+            refresh () {
+                // 刷新当前
+                this.tableData = []
+                this.loading = true
+                api.query(this.queryForm, (resp) => {
+                    console.debug('resp ', resp)
+                    this.loading = false
+                    this.count = parseInt(resp.count)
+                    this.tableData = resp.list
+                }, (resp) => {
+                    window.tools.alertError(resp.msg)
+                    this.loading = false
+                })
+            }
+        }
+    }
 </script>

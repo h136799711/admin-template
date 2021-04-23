@@ -88,9 +88,9 @@
         </div>
         <div class="text-center">
             <el-pagination
-                    :current-page="currentPage"
+                    :current-page="this.queryForm.page_index"
                     :page-sizes="[10, 20, 30, 50]"
-                    :page-size="pageSize"
+                    :page-size="this.queryForm.page_size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="count"
                     @size-change="byPagerSizeChange"
@@ -156,7 +156,9 @@
 		data() {
 			return {
 				queryForm: {
-					mobile: ''
+					mobile: '',
+                    page_index: 1,
+                    page_size: 10,
                 },
                 addForm: {
 				    user_id: 0
@@ -165,8 +167,6 @@
 				    mobile: ''
                 },
                 dialogAddVisible: false,
-				currentPage: 0,
-                pageSize: 10,
 				loading: false,
                 count: 0,
                 list: [],
@@ -228,11 +228,11 @@
         		this.dialogAddVisible = true;
             },
             byPagerSizeChange(val) {
-                this.pageSize = val
+                this.queryForm.page_size = val
                 this.refresh ()
             },
             byPagerCurrentChange(val) {
-                this.currentPage = val
+                this.queryForm.page_index = val
                 this.refresh ()
             },
             onRemove(uid) {
@@ -272,7 +272,8 @@
 				console.debug(this.id)
 				// 刷新当前
                 this.loading = true
-                api.user ({'role_id': this.id, 'mobile': this.queryForm.mobile}, (resp) => {
+                this.queryForm.role_id = this.id
+                api.user (this.queryForm, (resp) => {
                     this.loading = false
                     this.list = resp.list
                     this.count = resp.count

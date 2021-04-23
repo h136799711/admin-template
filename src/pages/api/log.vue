@@ -77,9 +77,9 @@
                 <div class="text-center">
                     <el-pagination
                             background
-                            :current-page="currentPage"
+                            :current-page="this.queryForm.page_index"
                             :page-sizes="[10, 20, 30, 50]"
-                            :page-size="pageSize"
+                            :page-size="this.queryForm.page_size"
                             layout="total, sizes, prev, pager, next, jumper"
                             :total="count"
                             @prev-click="byPagerCurrentChange"
@@ -126,11 +126,11 @@
                         }
                     }]
                 },
-				currentPage: 1, // 当前页码
                 queryForm: {
-					ymd: ''
+					ymd: '',
+                    page_index: 1,
+                    page_size: 10,
 				},
-				pageSize: 10,
 				filterText: '',
 				list: [],
 				count: 0,
@@ -169,12 +169,12 @@
 			},
 			byPagerSizeChange(val) {
 				console.debug (`每页 ${val} 条`)
-				this.pageSize = val
+                this.queryForm.page_size = val
                 this.refresh()
 			},
 			byPagerCurrentChange(val) {
 				console.debug (`当前页: ${val}`)
-				this.currentPage = val
+				this.queryForm.page_index = val
                 this.refresh()
 			},
 			query(suc) {
@@ -183,10 +183,9 @@
 				// 刷新当前
                 this.tableData = []
                 this.loading = true
-                apiLogApi.query ({'order': this.order, 'ymd': this.queryForm.ymd, 'page_index': this.currentPage, 'page_size': this.pageSize}, (resp) => {
+                apiLogApi.query ({'order': this.order, 'ymd': this.queryForm.ymd, 'page_index': this.queryForm.page_index, 'page_size': this.queryForm.page_size}, (resp) => {
                     console.debug ('resp ', resp)
                     this.loading = false
-                    console.debug('currentPage', this.currentPage)
                     this.count = parseInt (resp.count)
                     this.tableData = resp.list
                 }, (resp) => {

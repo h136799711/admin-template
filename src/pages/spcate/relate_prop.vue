@@ -112,9 +112,9 @@
         </div>
         <div class="text-center">
             <el-pagination
-                    :current-page="queryForm.pageIndex"
+                    :current-page="queryForm.page_index"
                     :page-sizes="[10, 20, 30, 50]"
-                    :page-size="queryForm.pageSize"
+                    :page-size="queryForm.page_size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="count"
                     @size-change="byPagerSizeChange"
@@ -141,8 +141,8 @@
 			return {
 				queryForm: {
                     title: '',
-                    pageIndex: 0,
-                    pageSize: 10,
+                    page_index: 0,
+                    page_size: 10,
 				},
 				count: 0,
 				tableData: [],
@@ -180,11 +180,11 @@
                 return false
             },
             byPagerSizeChange(val) {
-                this.queryForm.pageSize = val
+                this.queryForm.page_size = val
                 this.refresh ()
             },
             byPagerCurrentChange(val) {
-                this.queryForm.pageIndex = val
+                this.queryForm.page_index = val
                 this.refresh ()
             },
 			back() {

@@ -88,7 +88,7 @@
             <el-pagination
                     :current-page="queryForm.page_index"
                     :page-sizes="[10, 20, 30, 50]"
-                    :page-size="queryForm.pageSize"
+                    :page-size="queryForm.page_size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="count"
                     @size-change="byPagerSizeChange"
@@ -231,11 +231,11 @@
         },
 		methods: {
             byPagerSizeChange(val) {
-                this.queryForm.pageSize = val
+                this.queryForm.page_size = val
                 this.refresh ()
             },
             byPagerCurrentChange(val) {
-                this.queryForm.currentPage = val
+                this.queryForm.page_index = val
                 this.refresh ()
             },
 			back() {

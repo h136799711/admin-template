@@ -144,9 +144,9 @@
                 </div>
                 <div class="text-center">
                     <el-pagination
-                            :current-page="currentPage"
+                            :current-page="this.queryForm.page_index"
                             :page-sizes="[10, 20, 30, 50]"
-                            :page-size="pageSize"
+                            :page-size="this.queryForm.page_size"
                             layout="total, sizes, prev, pager, next, jumper"
                             :total="count"
                             @size-change="byPagerSizeChange"
@@ -372,8 +372,6 @@
 						{min: 0, max: 250, message: this.$i18n.t ('String Length Between', [0, 250]), trigger: 'blur'}
 					]
 				},
-				currentPage: 1, // 当前页码
-				pageSize: 10,
 				filterText: '',
 				list: [],
 				count: 0,
@@ -388,7 +386,11 @@
 				selectTableRowId: '', // 选中的表格行id
 				currentParentId: 0, // 当前的父级id
 				treeExpandKeys: [],
-				currentNode: null // 当前数据节点
+				currentNode: null, // 当前数据节点
+                queryForm: {
+				    page_index: 1,
+                    page_size: 10
+                }
 			}
 		},
 		computed: {},
@@ -507,12 +509,12 @@
 			},
 			byPagerSizeChange(val) {
 				console.debug (`每页 ${val} 条`)
-				this.pageSize = val
+				this.queryForm.page_size = val
 				this.loadRightTable (this.currentDtId)
 			},
 			byPagerCurrentChange(val) {
 				console.debug (`当前页: ${val}`)
-				this.currentPage = val
+				this.queryForm.page_index = val
 				this.loadRightTable (this.currentDtId)
 			},
 			submitDatatreeForm(formName) {
@@ -596,7 +598,7 @@
 				// 载入右侧表格数据
 				this.loading = true
 				this.currentDtId = parentId
-                datatreeApi.query({'parent_id': parentId, 'page_size': this.pageSize, 'page_index': this.currentPage},
+                datatreeApi.query({'parent_id': parentId, 'page_size': this.queryForm.page_size, 'page_index': this.queryForm.page_index},
                   (resp) => {
                 	this.loading = false
                     this.tableData = resp.list

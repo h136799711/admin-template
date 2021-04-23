@@ -81,9 +81,9 @@
                 <div class="text-center">
                     <el-pagination
                             background
-                            :current-page="queryForm.currentPage"
+                            :current-page="this.queryForm.page_index"
                             :page-sizes="[10, 20, 30, 50]"
-                            :page-size="queryForm.pageSize"
+                            :page-size="this.queryForm.page_size"
                             layout="total, sizes, prev, pager, next, jumper"
                             :total="count"
                             @prev-click="byPagerCurrentChange"
@@ -157,8 +157,8 @@
                 queryForm: {
                     email: '',
                     proc_status: 2,
-                    currentPage: 1, // 当前页码
-                    pageSize: 10,
+                    page_index: 1, // 当前页码
+                    page_size: 10,
 				},
                 replyForm: {
                     id: 0,
@@ -206,13 +206,11 @@
               this.refresh();
             },
 			byPagerSizeChange(val) {
-				console.debug (`每页 ${val} 条`)
-                this.queryForm.pageSize = val
+                this.queryForm.page_size = val
                 this.refresh()
 			},
 			byPagerCurrentChange(val) {
-				console.debug (`当前页: ${val}`)
-                this.queryForm.currentPage = val
+				this.queryForm.page_index = val
                 this.refresh()
 			},
 			query(suc) {
