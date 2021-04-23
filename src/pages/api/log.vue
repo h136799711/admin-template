@@ -184,7 +184,6 @@
                 this.tableData = []
                 this.loading = true
                 apiLogApi.query ({'order': this.order, 'ymd': this.queryForm.ymd, 'page_index': this.queryForm.page_index, 'page_size': this.queryForm.page_size}, (resp) => {
-                    console.debug ('resp ', resp)
                     this.loading = false
                     this.count = parseInt (resp.count)
                     this.tableData = resp.list
