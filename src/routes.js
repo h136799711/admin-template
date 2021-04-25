@@ -31,8 +31,7 @@ const MessageIndex = () => import('./pages/message/index.vue')
 // 配置
 const ConfigIndex = () => import('./pages/config/index.vue')
 // 菜单
-//const MenuIndex = () => import('./pages/menu/index.vue')
-import MenuIndex from 'pages/menu/index'
+const MenuIndex = () => import('./pages/menu/index.vue')
 // 轮播
 const BannersIndex = () => import('./pages/banners/index.vue')
 
@@ -130,8 +129,8 @@ const OrderComplaintsIndex = () => import('./pages/order_complaints/index.vue')
 
 const routes = [
     // 地址为空的时候跳转
-    // { path: '', redirect: '/admin' },
-    // { path: '/', redirect: '/admin' },
+    { path: '', redirect: '/admin' },
+    { path: '/', redirect: '/admin' },
     // 登录
     { path: '/login', component: Login },
     // 退出
@@ -213,7 +212,6 @@ const routes = [
             { path: '*', component: NotFound }
         ]
     },
-    // { path: '/admin/account/password', component: Password },
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
