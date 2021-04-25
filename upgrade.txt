@@ -1,5 +1,6 @@
 http://localhost:8082/#/admin/clients/index
 
+slot大变化
 
 table组件
 slot-scope替换成#default
