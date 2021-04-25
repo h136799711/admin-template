@@ -202,8 +202,6 @@
 
 	export default {
 		components: {
-			ElForm,
-			ElButton,
 		},
 		data() {
 			return {

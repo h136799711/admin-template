@@ -51,7 +51,7 @@
                         width="120px"
                         :label="$t('ClientName')"
                 >
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         ({{scope.row.project_id}}){{scope.row.client_name}}
                     </template>
                 </el-table-column>
@@ -65,7 +65,7 @@
                         width="300px"
                         :label="$t('ClientSecret')"
                 >
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.client_secret}}&nbsp;&nbsp;&nbsp;<el-button size="mini" :loading="loading"
                                                                                 @click.prevent="reset(scope.row.id)">
                         {{ $t('Reset') }}
@@ -80,7 +80,7 @@
                 <el-table-column
                         width="120px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
@@ -88,7 +88,7 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Config')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button class=""
                                    @click="onPayment(scope.row)"
                                    size="mini">
@@ -103,7 +103,7 @@
                 </el-table-column>
                 <el-table-column
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button class=""
                                    @click="onEdit(scope.row)"
                                    icon="el-icon-edit"
@@ -117,45 +117,46 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
                 :title="$t('Edit')"
-                :visible.sync="dialogEditVisible"
+                v-model="dialogEditVisible"
         >
             <el-form label-position="left" label-width="160px" :model="editForm" size="mini" class="edit-form">
                 <el-form-item :label="$t('ClientName')">
                     <el-input v-model="editForm.clientName"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('Project') + $t('ID')">
-                    <el-input v-model="editForm.projectId"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('ClientAlg')">
-                    <el-select v-model="editForm.clientAlg">
-                        <el-option
-                                v-for="item in algList"
-                                :key="item.id"
-                                :label="item.label"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('ClientDayLimit')">
-                    <el-input v-model="dailyLimitDesc"></el-input>
-                </el-form-item>
+<!--                <el-form-item :label="$t('Project') + $t('ID')">-->
+<!--                    <el-input v-model="editForm.projectId"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('ClientAlg')">-->
+<!--                    <el-select v-model="editForm.clientAlg">-->
+<!--                        <el-option-->
+<!--                                v-for="item in algList"-->
+<!--                                :key="item.id"-->
+<!--                                :label="item.label"-->
+<!--                                :value="item.id">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('ClientDayLimit')">-->
+<!--                    <el-input v-model="dailyLimitDesc"></el-input>-->
+<!--                </el-form-item>-->
 
-                <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="onSave" icon="by-icon by-Icon-baocun"> {{
-                        $t('Save') }}
-                    </el-button>
-                </el-form-item>
             </el-form>
+
+            <template #footer>
+                <span class="dialog-footer">
+                <el-button :loading="loading" type="primary" @click="onSave" icon="by-icon by-Icon-baocun"> {{$t('Save') }}
+                </el-button>
+                </span>
+            </template>
         </el-dialog>
 
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Add')"
-                :visible.sync="dialogAddVisible"
+                v-model="dialogAddVisible"
         >
             <el-form label-position="left" label-width="160px" :model="addForm" size="mini" class="edit-form">
                 <el-form-item :label="$t('ClientName')">
@@ -187,78 +188,75 @@
 
 
         <!-- 支付宝配置 -->
-        <el-dialog
-                :show-close="false"
-                :modal-append-to-body="false"
-                :title="$t('Config')"
-                :visible.sync="dialogPayConfigVisible"
-        >
-            <el-form label-position="left" label-width="160px" :model="payConfigForm" size="mini" class="edit-form">
-                <el-form-item :label="$t('AppId')">
-                    <el-input v-model="payConfigForm.app_id"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('Mode')">
-                    <el-input v-model="payConfigForm.mode"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('NotifyUrl')">
-                    <el-input v-model="payConfigForm.notify_url"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('ReturnUrl')">
-                    <el-input v-model="payConfigForm.return_url"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('AliPublicKey')">
-                    <el-input :rows="8" type="textarea" v-model="payConfigForm.ali_public_key"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('UserPrivateKey')">
-                    <el-input :rows="8" type="textarea" v-model="payConfigForm.private_key"></el-input>
-                </el-form-item>
+<!--        <el-dialog-->
+<!--                :show-close="false"-->
+<!--                :modal-append-to-body="false"-->
+<!--                :title="$t('Config')"-->
+<!--                :visible.sync="dialogPayConfigVisible"-->
+<!--        >-->
+<!--            <el-form label-position="left" label-width="160px" :model="payConfigForm" size="mini" class="edit-form">-->
+<!--                <el-form-item :label="$t('AppId')">-->
+<!--                    <el-input v-model="payConfigForm.app_id"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('Mode')">-->
+<!--                    <el-input v-model="payConfigForm.mode"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('NotifyUrl')">-->
+<!--                    <el-input v-model="payConfigForm.notify_url"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('ReturnUrl')">-->
+<!--                    <el-input v-model="payConfigForm.return_url"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('AliPublicKey')">-->
+<!--                    <el-input :rows="8" type="textarea" v-model="payConfigForm.ali_public_key"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item :label="$t('UserPrivateKey')">-->
+<!--                    <el-input :rows="8" type="textarea" v-model="payConfigForm.private_key"></el-input>-->
+<!--                </el-form-item>-->
 
-                <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="onPayConfigSave" icon="by-icon by-Icon-baocun">
-                        {{ $t('Save') }}
-                    </el-button>
-                    <el-button @click="dialogPayConfigVisible = false">
-                        {{ $t('Cancel') }}
-                    </el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
+<!--                <el-form-item>-->
+<!--                    <el-button :loading="loading" type="primary" @click="onPayConfigSave" icon="by-icon by-Icon-baocun">-->
+<!--                        {{ $t('Save') }}-->
+<!--                    </el-button>-->
+<!--                    <el-button @click="dialogPayConfigVisible = false">-->
+<!--                        {{ $t('Cancel') }}-->
+<!--                    </el-button>-->
+<!--                </el-form-item>-->
+<!--            </el-form>-->
+<!--        </el-dialog>-->
 
         <!-- 支付通道配置 -->
 
-        <el-dialog
-                :show-close="false"
-                :modal-append-to-body="false"
-                :title="$t('PaymentChannel')"
-                :visible.sync="dialogPaymentVisible"
-        >
-            <el-form  :model="paymentForm" size="mini" class="edit-form">
-                <el-form-item>
-                    <div style="width: 200px;">
-                        <el-checkbox-group v-model="checkPayment" size="small"  @change="handleChange">
-                        <el-checkbox v-for="p in supportPayment" :label="p.code" :key="p.code">{{p.title}}({{p.desc}})</el-checkbox>
-                        </el-checkbox-group>
-                    </div>
-                </el-form-item>
-                <el-form-item>
-                    <el-button :loading="loading" type="primary" @click="onPaymentSave" icon="by-icon by-Icon-baocun">
-                        {{ $t('Save') }}
-                    </el-button>
-                    <el-button @click="dialogPaymentVisible = false">
-                        {{ $t('Cancel') }}
-                    </el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
+<!--        <el-dialog-->
+<!--                :show-close="false"-->
+<!--                :modal-append-to-body="false"-->
+<!--                :title="$t('PaymentChannel')"-->
+<!--                :visible.sync="dialogPaymentVisible"-->
+<!--        >-->
+<!--            <el-form  :model="paymentForm" size="mini" class="edit-form">-->
+<!--                <el-form-item>-->
+<!--                    <div style="width: 200px;">-->
+<!--                        <el-checkbox-group v-model="checkPayment" size="small"  @change="handleChange">-->
+<!--                        <el-checkbox v-for="p in supportPayment" :label="p.code" :key="p.code">{{p.title}}({{p.desc}})</el-checkbox>-->
+<!--                        </el-checkbox-group>-->
+<!--                    </div>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item>-->
+<!--                    <el-button :loading="loading" type="primary" @click="onPaymentSave" icon="by-icon by-Icon-baocun">-->
+<!--                        {{ $t('Save') }}-->
+<!--                    </el-button>-->
+<!--                    <el-button @click="dialogPaymentVisible = false">-->
+<!--                        {{ $t('Cancel') }}-->
+<!--                    </el-button>-->
+<!--                </el-form-item>-->
+<!--            </el-form>-->
+<!--        </el-dialog>-->
     </div>
 
 </template>
 
 <script>
     import api from '../../api/clientsApi'
-
-
-
 
     export default {
         components: {
@@ -459,6 +457,7 @@
                 this.dialogAddVisible = true
             },
             onEdit (row) {
+                this.dialogEditVisible = true
                 console.debug(row)
                 this.editForm = Object.assign({
                     clientId: row.client_id,
@@ -469,7 +468,6 @@
                     dailyLimit: parseInt(row.day_limit),
                     projectId: row.project_id
                 })
-                this.dialogEditVisible = true
             },
             refresh () {
                 // 刷新当前

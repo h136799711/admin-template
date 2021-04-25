@@ -1,0 +1,8 @@
+http://localhost:8082/#/admin/clients/index
+
+
+table组件
+slot-scope替换成#default
+
+el-dialog组件
+:visible.sync 替换成 v-model

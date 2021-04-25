@@ -128,8 +128,9 @@
 				}, 1)
 			},
 			routerJump(UrlAddress, index) {
+			    console.log('RouterJump')
 				window.tools.returnTop ()
-//      console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
+                console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
 				window.location.href = this.$router.resolve (UrlAddress, '#', false).href
 			},
 			menuUrl(UrlAddress) {

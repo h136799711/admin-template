@@ -972,12 +972,13 @@
                         class="content-wrapper"
                         :style="{left: isShowSecondMenu ? 180 + 'px' : '0'}"
                 >
-                    <transition
-                            name="custom-classes-transition"
-                            enter-active-class="animated fadeIn"
-                    >
-                        <slot name="main-content"/>
-                    </transition>
+<!--                    <transition-->
+<!--                            name="custom-classes-transition"-->
+<!--                            enter-active-class="animated fadeIn"-->
+<!--                    >-->
+                    <router-view/>
+<!--                        <slot name="main-content"/>-->
+<!--                    </transition>-->
                 </div>
             </div>
         </div>
@@ -1081,7 +1082,7 @@
         },
         mounted () {
           this.getUserData()
-          // this.getUnreadMsg()
+          this.getUnreadMsg()
         },
         methods: {
             jump2AdminIndex () {

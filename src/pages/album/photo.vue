@@ -260,8 +260,6 @@
             require: true
         },
 		components: {
-			ElForm,
-			ElButton
 		},
 		data() {
 			return {

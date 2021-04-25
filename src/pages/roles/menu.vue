@@ -64,7 +64,6 @@
             id: String
         },
 		components: {
-			ElButton
 		},
 		data() {
 			return {

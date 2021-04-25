@@ -228,8 +228,6 @@
   import api from '../../api/menuApi'
 
   export default {
-    components: {
-    },
     data () {
       return {
         urlTypeList: [

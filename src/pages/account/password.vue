@@ -33,8 +33,6 @@
 
 	export default {
 		components: {
-			ElForm,
-			ElButton
 		},
 		data() {
             var validatePass = (rule, value, callback) => {

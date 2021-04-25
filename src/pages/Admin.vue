@@ -1,6 +1,6 @@
 <template>
   <main-home>
-    <router-view slot="main-content" />
+    <router-view  />
   </main-home>
 </template>
 

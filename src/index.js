@@ -5,7 +5,6 @@ import _ from 'lodash' //
 import Lockr from 'lockr' // 用于缓存较大的数据
 import moment from 'moment' // 日期处理
 import '../static/reset.css' // elementui theme
-// import '../theme/index.css' // elementui theme
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -51,17 +50,17 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach((to, from, next) => {
-//     NProgress.start()
-//     next()
-// })
+router.beforeEach((to, from, next) => {
+    NProgress.start()
+    next()
+})
 
-// router.afterEach(transition => {
-//     NProgress.done()
-// })
+router.afterEach(transition => {
+    NProgress.done()
+})
 // Create VueI18n instance with options
 const i18n = createI18n({
-    locale: 'zh', // set locale
+    locale: 'en', // set locale
     messages, // set locale messages
 })
 
@@ -101,18 +100,18 @@ window.tools.getDeviceToken = function () {
 i18n.locale = tools.getBrowseLanguage()
 console.log('locale= ', i18n.locale)
 
-
 const app = createApp(App)
 
 // use
 app.use(mavonEditor)
 app.use(i18n)
-app.use(ElementPlus, {
-    i18n: (key, value) => i18n.t(key, value)
-})
-// app.use(VueRouter)
+app.use(ElementPlus)
 app.use(router)
 app.use(store)
+
+router.isReady().then(() => {
+    console.debug('路由已准备完成');
+})
 
 window.bus = window.itboye.vue_instance = app.mount('#app')
 window.tools.alertError = (msg) => {

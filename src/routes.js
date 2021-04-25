@@ -1,5 +1,5 @@
 // 公用组件
-const NotFound = () => import('./pages/404/NotFound.vue')
+const NotFound =  () => import('./pages/404/NotFound.vue')
 const Login = () => import('./pages/account/Login.vue')
 const Logout = () => import('./pages/account/Logout.vue')
 const Password = () => import('./pages/account/password.vue')
@@ -18,7 +18,8 @@ const ClientsIndex = () => import('./pages/clients/index.vue')
 // 角色管理
 const RolesIndex = () => import('./pages/roles/index.vue')
 // 角色菜单
-const RolesMenu = () => import('./pages/roles/menu.vue')
+const RolesMenu = () => import('pages/roles/menu.vue')
+
 // 角色策略
 const RolesPolicy = () => import('./pages/roles/policy.vue')
 // 角色用户
@@ -30,7 +31,8 @@ const MessageIndex = () => import('./pages/message/index.vue')
 // 配置
 const ConfigIndex = () => import('./pages/config/index.vue')
 // 菜单
-const MenuIndex = () => import('./pages/menu/index.vue')
+//const MenuIndex = () => import('./pages/menu/index.vue')
+import MenuIndex from 'pages/menu/index'
 // 轮播
 const BannersIndex = () => import('./pages/banners/index.vue')
 
@@ -128,16 +130,16 @@ const OrderComplaintsIndex = () => import('./pages/order_complaints/index.vue')
 
 const routes = [
     // 地址为空的时候跳转
-    { path: '', redirect: '/admin' },
-    { path: '/', redirect: '/admin' },
+    // { path: '', redirect: '/admin' },
+    // { path: '/', redirect: '/admin' },
     // 登录
     { path: '/login', component: Login },
     // 退出
     { path: '/logout', component: Logout },
+
     // 登录后管理首页
     {
         path: '/admin',
-        name: 'adminIndex',
         component: Admin,
         children: [
             { path: 'region/index', component: RegionIndex },
@@ -204,13 +206,14 @@ const routes = [
             { path: 'album/category', component: AlbumCategory },
             { path: 'album/photo/:id', component: AlbumPhoto, props: true },
             { path: 'config/index', component: ConfigIndex },
-            { path: 'menu/index', component: MenuIndex },
             { path: 'account/password', component: Password },
+            { path: 'menu/index', component: MenuIndex },
             { path: 'account/avatar', component: Avatar },
             { path: 'index', component: AdminIndex },
             { path: '*', component: NotFound }
         ]
     },
+    // { path: '/admin/account/password', component: Password },
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',

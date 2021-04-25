@@ -110,13 +110,7 @@
                 if (this.$route.path === UrlAddress) {
                     return
                 }
-                console.debug(this.$router,  UrlAddress)
-                this.$router.push({ path: UrlAddress }).catch((err) => {
-                  console.debug('跳转路由报错: ', err);
-                })
-            },
-            routerUrl (UrlAddress) {
-                return this.$router.resolve(`${UrlAddress}`).href
+                this.$router.push({ path:  UrlAddress });
             },
             navOnMouseHover (text, $event) {
                 // mimi状态才显示tooltip
