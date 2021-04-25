@@ -84,15 +84,9 @@
 
 <script>
 import api from "../../api/rechargeApi";
-import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
-import ElButtonGroup from "../../../node_modules/element-ui/packages/button/src/button-group.vue";
-import ElForm from "../../../node_modules/element-ui/packages/form/src/form.vue";
 
 export default {
   components: {
-    ElForm,
-    ElButtonGroup,
-    ElButton
   },
   props: {
     id: 0

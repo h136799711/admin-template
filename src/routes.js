@@ -1,132 +1,128 @@
 // 公用组件
-const NotFound = r => require.ensure([], () => r(require('./pages/404/NotFound.vue')), 'notFound')
-const Login = r => require.ensure([], () => r(require('./pages/account/Login.vue')), 'login')
-const Logout = r => require.ensure([], () => r(require('./pages/account/Logout.vue')), 'logout')
-const Password = r => require.ensure([], () => r(require('./pages/account/password.vue')), 'password')
-const Avatar = r => require.ensure([], () => r(require('./pages/account/avatar.vue')), 'avatar')
+const NotFound = () => import('./pages/404/NotFound.vue')
+const Login = () => import('./pages/account/Login.vue')
+const Logout = () => import('./pages/account/Logout.vue')
+const Password = () => import('./pages/account/password.vue')
+const Avatar = () => import('./pages/account/avatar.vue')
 // admin组件，管理后台首页部分
-const Admin = r => require.ensure([], () => r(require('./pages/Admin.vue')), 'admin')
-const AdminIndex = r => require.ensure([], () => r(require('./pages/admin/index.vue')), 'adminIndex')
+const Admin = () => import('./pages/Admin.vue')
+const AdminIndex = () => import('./pages/admin/index.vue')
 
 // 数据字典
-const Datatree = r => require.ensure([], () => r(require('./pages/datatree/index.vue')), 'datatree')
-const DatatreeIndex = r => require.ensure([], () => r(require('./pages/datatree/index.vue')), 'datatreeIndex')
+const DatatreeIndex = () => import('./pages/datatree/index.vue')
 
 // 接口日志
-const ApiRequestLog = r => require.ensure([], () => r(require('./pages/api/log.vue')), 'apiRequestLog')
+const ApiRequestLog = () => import('./pages/api/log.vue')
 // 应用管理
-const ClientsIndex = r => require.ensure([], () => r(require('./pages/clients/index.vue')), 'clientsIndex')
+const ClientsIndex = () => import('./pages/clients/index.vue')
 // 角色管理
-const RolesIndex = r => require.ensure([], () => r(require('./pages/roles/index.vue')), 'rolesIndex')
+const RolesIndex = () => import('./pages/roles/index.vue')
 // 角色菜单
-const RolesMenu = r => require.ensure([], () => r(require('./pages/roles/menu.vue')), 'rolesMenu')
+const RolesMenu = () => import('./pages/roles/menu.vue')
 // 角色策略
-const RolesPolicy = r => require.ensure([], () => r(require('./pages/roles/policy.vue')), 'rolesPolicy')
+const RolesPolicy = () => import('./pages/roles/policy.vue')
 // 角色用户
-const RolesUser = r => require.ensure([], () => r(require('./pages/roles/user.vue')), 'rolesUser')
+const RolesUser = () => import('./pages/roles/user.vue')
 // 策略管理
-const PolicyIndex = r => require.ensure([], () => r(require('./pages/policy/index.vue')), 'policyIndex')
+const PolicyIndex = () => import('./pages/policy/index.vue')
 // 消息
-const MessageIndex = r => require.ensure([], () => r(require('./pages/message/index.vue')), 'messageIndex')
+const MessageIndex = () => import('./pages/message/index.vue')
 // 配置
-const ConfigIndex = r => require.ensure([], () => r(require('./pages/config/index.vue')), 'ConfigIndex')
+const ConfigIndex = () => import('./pages/config/index.vue')
 // 菜单
-const MenuIndex = r => require.ensure([], () => r(require('./pages/menu/index.vue')), 'MenuIndex')
+const MenuIndex = () => import('./pages/menu/index.vue')
 // 轮播
-const BannersIndex = r => require.ensure([], () => r(require('./pages/banners/index.vue')), 'bannersIndex')
+const BannersIndex = () => import('./pages/banners/index.vue')
 
 // 相册
-const AlbumIndex = r => require.ensure([], () => r(require('./pages/album/index.vue')), 'albumIndex')
+const AlbumIndex = () => import('./pages/album/index.vue')
 // 相册分类
-const AlbumCategory = r => require.ensure([], () => r(require('./pages/album/category.vue')), 'AlbumCategory')
+const AlbumCategory = () => import('./pages/album/category.vue')
 // 相册照片
-const AlbumPhoto = r => require.ensure([], () => r(require('./pages/album/photo.vue')), 'AlbumPhoto')
+const AlbumPhoto = () => import('./pages/album/photo.vue')
 // 文章
-const CmsArticle = r => require.ensure([], () => r(require('./pages/cms_article/index.vue')), 'CmsArticle')
+const CmsArticle = () => import('./pages/cms_article/index.vue')
 
 // Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
-const SpCate = r => require.ensure([], () => r(require('./pages/spcate/index.vue')), 'SpCate')
-const SpBrand = r => require.ensure([], () => r(require('./pages/sp_brand/index.vue')), 'SpBrand')
-const SpBrandRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_brand.vue')), 'SpBrandRelate')
-const SpProp = r => require.ensure([], () => r(require('./pages/sp_prop/index.vue')), 'SpProp')
-const SpPropValue = r => require.ensure([], () => r(require('./pages/sp_prop/value.vue')), 'SpPropValue')
-const SpPropRelate = r => require.ensure([], () => r(require('./pages/spcate/relate_prop.vue')), 'SpPropRelate')
+const SpCate = () => import('./pages/spcate/index.vue')
+const SpBrand = () => import('./pages/sp_brand/index.vue')
+const SpBrandRelate = () => import('./pages/spcate/relate_brand.vue')
+const SpProp = () => import('./pages/sp_prop/index.vue')
+const SpPropValue = () => import('./pages/sp_prop/value.vue')
+const SpPropRelate = () => import('./pages/spcate/relate_prop.vue')
 // Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 // Pay ***********************
-const PayOrder = r => require.ensure([], () => r(require('./pages/pay_order/index.vue')), 'PayOrder')
+const PayOrder = () => import('./pages/pay_order/index.vue')
 // Pay END *******************
 
 // Video ***********************
-const VideoIndex = r => require.ensure([], () => r(require('./pages/video/index.vue')), 'VideoIndex')
-const VideoCate = r => require.ensure([], () => r(require('./pages/video/cate.vue')), 'VideoCate')
-const VideoSource = r => require.ensure([], () => r(require('./pages/video/source.vue')), 'VideoSource')
-const VideoPlay = r => require.ensure([], () => r(require('./pages/video/play.vue')), 'VideoPlay')
+const VideoIndex = () => import('./pages/video/index.vue')
+const VideoCate = () => import('./pages/video/cate.vue')
+const VideoSource = () => import('./pages/video/source.vue')
+const VideoPlay = () => import('./pages/video/play.vue')
 // Video END *******************
 
 // Goods ***********************
-const GoodsIndex = r => require.ensure([], () => r(require('./pages/goods/index.vue')), 'GoodsIndex')
-const GoodsCreate = r => require.ensure([], () => r(require('./pages/goods/create.vue')), 'GoodsCreate')
-const GoodsEdit = r => require.ensure([], () => r(require('./pages/goods/edit.vue')), 'GoodsEdit')
-const GoodsSku = r => require.ensure([], () => r(require('./pages/goods/sku.vue')), 'GoodsSku')
-const GoodsPlace = r => require.ensure([], () => r(require('./pages/goods/place.vue')), 'GoodsPlace')
-const FreightIndex = r => require.ensure([], () => r(require('./pages/freight/index.vue')), 'FreightIndex')
-const ShopIndex = r => require.ensure([], () => r(require('./pages/sp_shop/index.vue')), 'ShopIndex')
-const ShopGoods = r => require.ensure([], () => r(require('./pages/sp_shop/goods.vue')), 'ShopGoods')
+const GoodsIndex = () => import('./pages/goods/index.vue')
+const GoodsCreate = () => import('./pages/goods/create.vue')
+const GoodsEdit = () => import('./pages/goods/edit.vue')
+const GoodsSku = () => import('./pages/goods/sku.vue')
+const GoodsPlace = () => import('./pages/goods/place.vue')
+const FreightIndex = () => import('./pages/freight/index.vue')
+const ShopIndex = () => import('./pages/sp_shop/index.vue')
+const ShopGoods = () => import('./pages/sp_shop/goods.vue')
 // Goods END *******************
 
 // Book Start *******************
-const BookIndex = r => require.ensure([], () => r(require('./pages/book/index.vue')), 'BookIndex')
-const BookSource = r => require.ensure([], () => r(require('./pages/book/source.vue')), 'BookSource')
-const BookAllSource = r => require.ensure([], () => r(require('./pages/book/all_source.vue')), 'BookAllSource')
-const BookManage = r => require.ensure([], () => r(require('./pages/book/manage.vue')), 'BookManage')
-const BookSourcePages = r => require.ensure([], () => r(require('./pages/book/pages.vue')), 'BookSourcePages')
-const BookSourcePages2 = r => require.ensure([], () => r(require('./pages/book/index_pages.vue')), 'BookSourcePages2')
+const BookIndex = () => import('./pages/book/index.vue')
+const BookSource = () => import('./pages/book/source.vue')
+const BookAllSource = () => import('./pages/book/all_source.vue')
+const BookManage = () => import('./pages/book/manage.vue')
+const BookSourcePages = () => import('./pages/book/pages.vue')
+const BookSourcePages2 = () => import('./pages/book/index_pages.vue')
 // Book END *******************
 
 // User Start *******************
-const UserIndex = r => require.ensure([], () => r(require('./pages/user/index.vue')), 'UserIndex')
-const UserSession = r => require.ensure([], () => r(require('./pages/user/session.vue')), 'UserSession')
-const UserProfile = r => require.ensure([], () => r(require('./pages/user/profile.vue')), 'UserProfile')
-const UserLog = r => require.ensure([], () => r(require('./pages/user/log.vue')), 'UserLog')
-const UserClient = r => require.ensure([], () => r(require('./pages/user/client.vue')), 'UserClient')
-const UserWithdraw = r => require.ensure([], () => r(require('./pages/withdrawals/index.vue')), 'UserWithdraw')
-const UserCoupon = r => require.ensure([], () => r(require('./pages/user/coupon.vue')), 'UserCoupon')
+const UserIndex = () => import('./pages/user/index.vue')
+const UserSession = () => import('./pages/user/session.vue')
+const UserProfile = () => import('./pages/user/profile.vue')
+const UserLog = () => import('./pages/user/log.vue')
+const UserClient = () => import('./pages/user/client.vue')
+const UserWithdraw = () => import('./pages/withdrawals/index.vue')
+const UserCoupon = () => import('./pages/user/coupon.vue')
 // User END *******************
 
-
 // FriendShip Start *******************
-const FriendShipIndex = r => require.ensure([], () => r(require('./pages/friendship_links/index.vue')), 'FriendShipIndex')
+const FriendShipIndex = () => import('./pages/friendship_links/index.vue')
 // FriendShip END *******************
 
 // Suggest Start *******************
-const SuggestIndex = r => require.ensure([], () => r(require('./pages/suggest/index.vue')), 'SuggestIndex')
+const SuggestIndex = () => import('./pages/suggest/index.vue')
 // Suggest END *******************
-
 
 // Suggest Start *******************
-const RechargeIndex = r => require.ensure([], () => r(require('./pages/recharge/index.vue')), 'RechargeIndex')
-const RechargeProfile = r => require.ensure([], () => r(require('./pages/recharge/profile.vue')), 'RechargeProfile')
+const RechargeIndex = () => import('./pages/recharge/index.vue')
+const RechargeProfile = () => import('./pages/recharge/profile.vue')
 // Suggest END *******************
 
-
 // Region Start *******************
-const RegionIndex = r => require.ensure([], () => r(require('./pages/region/index.vue')), 'RegionIndex')
-const RegionProvince  = r => require.ensure([], () => r(require('./pages/region/province.vue')), 'RegionProvince')
-const RegionCity  = r => require.ensure([], () => r(require('./pages/region/city.vue')), 'RegionCity')
-const RegionCityArea  = r => require.ensure([], () => r(require('./pages/region/cityArea.vue')), 'RegionCityArea')
-const RegionTown  = r => require.ensure([], () => r(require('./pages/region/town.vue')), 'RegionTown')
+const RegionIndex = () => import('./pages/region/index.vue')
+const RegionProvince = () => import('./pages/region/province.vue')
+const RegionCity = () => import('./pages/region/city.vue')
+const RegionCityArea = () => import('./pages/region/cityArea.vue')
+const RegionTown = () => import('./pages/region/town.vue')
 // Region END *******************
 
 // Diet Start *******************
-const DtGoodsIndex = r => require.ensure([], () => r(require('./pages/dt_goods/index.vue')), 'DtGoodsIndex')
-const DtGoodsCreate = r => require.ensure([], () => r(require('./pages/dt_goods/create.vue')), 'DtGoodsCreate')
-const DtGoodsEdit = r => require.ensure([], () => r(require('./pages/dt_goods/edit.vue')), 'DtGoodsEdit')
-const DtGoodsSku = r => require.ensure([], () => r(require('./pages/dt_goods/sku.vue')), 'DtGoodsSku')
+const DtGoodsIndex = () => import('./pages/dt_goods/index.vue')
+const DtGoodsCreate = () => import('./pages/dt_goods/create.vue')
+const DtGoodsEdit = () => import('./pages/dt_goods/edit.vue')
+const DtGoodsSku = () => import('./pages/dt_goods/sku.vue')
 
-const DtCouponIndex = r => require.ensure([], () => r(require('./pages/dt_coupon/index.vue')), 'DtCouponIndex')
-const DtOrderIndex = r => require.ensure([], () => r(require('./pages/dt_order/index.vue')), 'DtOrderIndex')
-const PickupPlaceIndex = r => require.ensure([], () => r(require('./pages/pickup_place/index.vue')), 'PickupPlaceIndex')
-const OrderComplaintsIndex = r => require.ensure([], () => r(require('./pages/order_complaints/index.vue')), 'OrderComplaintsIndex')
+const DtCouponIndex = () => import('./pages/dt_coupon/index.vue')
+const DtOrderIndex = () => import('./pages/dt_order/index.vue')
+const PickupPlaceIndex = () => import('./pages/pickup_place/index.vue')
+const OrderComplaintsIndex = () => import('./pages/order_complaints/index.vue')
 
 // Diet END *******************
 
@@ -141,6 +137,7 @@ const routes = [
     // 登录后管理首页
     {
         path: '/admin',
+        name: 'adminIndex',
         component: Admin,
         children: [
             { path: 'region/index', component: RegionIndex },
@@ -149,7 +146,7 @@ const routes = [
             { path: 'region/city_area/:code', component: RegionCityArea, props: true },
             { path: 'region/town/:code', component: RegionTown, props: true },
             { path: 'suggest/index', component: SuggestIndex },
-            { path: 'friendship_links/index', component: FriendShipIndex},
+            { path: 'friendship_links/index', component: FriendShipIndex },
             { path: 'user/index', component: UserIndex },
             { path: 'withdrawal/index', component: UserWithdraw },
             { path: 'recharge/index', component: RechargeIndex },
@@ -163,216 +160,62 @@ const routes = [
             { path: 'book/manage', component: BookManage },
             { path: 'book/pages/:id/:book_id', component: BookSourcePages, props: true },
             { path: 'book/pages2/:id/:book_id', component: BookSourcePages2, props: true },
-            {
-                path: 'book',
-                component: BookIndex,
-                children: [
-                    { path: 'index', component: BookIndex },
-                ]
-            },
-            {
-                path: 'shop',
-                component: ShopIndex,
-                children: [
-                    { path: 'index', component: ShopIndex }
-                ]
-            },
+            { path: 'book/index', component: BookIndex },
+            { path: 'shop/index', component: ShopIndex, },
             { path: 'shop/goods/:id', component: ShopGoods, props: true },
-            {
-                path: 'freight',
-                component: FreightIndex,
-                children: [
-                    { path: 'index', component: FreightIndex }
-                ]
-            },
-            {
-                path: 'goods',
-                component: GoodsIndex,
-                children: [
-                    { path: 'index', component: GoodsIndex },
-                ]
-            },
+            { path: 'freight/index', component: FreightIndex },
+            { path: 'goods/index', component: GoodsIndex },
             { path: 'goods/create', component: GoodsCreate, props: false },
             { path: 'goods/edit/:id', component: GoodsEdit, props: true },
             { path: 'goods/sku/:id', component: GoodsSku, props: true },
             { path: 'goods/place/:id', component: GoodsPlace, props: true },
-            {
-                path: 'video',
-                component: VideoIndex,
-                children: [
-                    { path: 'index', component: VideoIndex },
-                ]
-            },
+            { path: 'video/index', component: VideoIndex },
             { path: 'video/cate', component: VideoCate, props: false },
-
             { path: 'video/source/:id', component: VideoSource, props: true },
             { path: 'video/source/play/:vtype/:vuri', component: VideoPlay, props: true },
-
             { path: 'user/coupon/:id', component: UserCoupon, props: true },
-            {
-                path: 'dt_goods',
-                component: DtGoodsIndex,
-                children: [
-                    { path: 'index', component: DtGoodsIndex },
-                ]
-            },
+            { path: 'dt_goods/index', component: DtGoodsIndex },
             { path: 'dt_goods/create', component: DtGoodsCreate },
             { path: 'dt_goods/edit/:id', component: DtGoodsEdit, props: true },
             { path: 'dt_goods/sku/:id', component: DtGoodsSku, props: true },
-            {
-                path: 'dt_coupon',
-                component: DtCouponIndex,
-                children: [
-                    { path: 'index', component: DtCouponIndex },
-                ]
-            },
-            {
-                path: 'dt_order',
-                component: DtOrderIndex,
-                children: [
-                    { path: 'index', component: DtOrderIndex },
-                ]
-            },
-            {
-                path: 'pickup_place',
-                component: PickupPlaceIndex,
-                children: [
-                    { path: 'index', component: PickupPlaceIndex },
-                ]
-            },
-            {
-                path: 'order_complaints',
-                component: OrderComplaintsIndex,
-                children: [
-                    { path: 'index', component: OrderComplaintsIndex },
-                ]
-            },
-            {
-                path: 'pay_order',
-                component: PayOrder,
-                children: [
-                    { path: 'index', component: PayOrder }
-                ]
-            },
-            {
-                path: 'sp_brand',
-                component: SpBrand,
-                children: [
-                    { path: 'index', component: SpBrand, props: true }
-                ]
-            },
-            {
-                path: 'spcate',
-                component: SpCate,
-                children: [
-                    { path: 'index/:id?', component: SpCate, props: true }
-                ]
-            },
+            { path: 'dt_coupon/index', component: DtCouponIndex, },
+            { path: 'dt_order/index', component: DtOrderIndex },
+            { path: 'pickup_place/index', component: PickupPlaceIndex, },
+            { path: 'order_complaints/index', component: OrderComplaintsIndex },
+            { path: 'pay_order/index', component: PayOrder },
+            { path: 'sp_brand/index',component: SpBrand, props: true },
+            { path: 'spcate/index/:id?', component: SpCate, props: true },
             { path: 'spcate/relate_prop/:id', component: SpPropRelate, props: true },
             { path: 'spcate/relate_brand/:id', component: SpBrandRelate, props: true },
-            {
-                path: 'sp_prop',
-                component: SpProp,
-                children: [
-                    { path: 'index', component: SpProp }
-                ]
-            },
+            { path: 'sp_prop/index', component: SpProp },
             { path: 'sp_prop/value/:id', component: SpPropValue, props: true },
-            {
-                path: 'cms_article',
-                component: CmsArticle,
-                children: [
-                    { path: 'index', component: CmsArticle }
-                ]
-            },
-            {
-                path: 'banners',
-                component: BannersIndex,
-                children: [
-                    { path: 'index', component: BannersIndex }
-                ]
-            },
-            {
-                path: 'datatree',
-                component: Datatree,
-                children: [
-                    { name: 'datatreeIndex', path: 'index', component: DatatreeIndex }
-                ]
-            },
-            {
-                path: 'api',
-                component: ApiRequestLog,
-                children: [
-                    { name: 'apiRequestLog', path: 'log', component: ApiRequestLog }
-                ]
-            },
-            {
-                path: 'clients',
-                component: ClientsIndex,
-                children: [
-                    { name: 'ClientsIndex', path: 'index', component: ClientsIndex }
-                ]
-            },
-            {
-                path: 'roles',
-                component: RolesIndex,
-                children: [
-                    { path: 'index', component: RolesIndex }
-                ]
-            },
+            { path: 'cms_article/index', component: CmsArticle, },
+            { path: 'banners/index', component: BannersIndex },
+            { path: 'datatree/index', component: DatatreeIndex },
+            { path: 'api/log', component: ApiRequestLog, },
+            { path: 'clients/index', component: ClientsIndex },
+            { path: 'roles/index', component: RolesIndex },
             { path: 'roles/menu/:id', component: RolesMenu, props: true },
             { path: 'roles/policy/:id', component: RolesPolicy, props: true },
             { path: 'roles/user/:id', component: RolesUser, props: true },
-            {
-                path: 'policy',
-                component: PolicyIndex,
-                children: [
-                    { path: 'index', component: PolicyIndex }
-                ]
-            },
-            {
-                path: 'message',
-                component: MessageIndex,
-                children: [
-                    { path: 'index', component: MessageIndex }
-                ]
-            },
-            {
-                path: 'album',
-                component: AlbumIndex,
-                children: [
-                    { path: 'index', component: AlbumIndex }
-                ]
-            },
-            {
-                path: 'album',
-                component: AlbumCategory,
-                children: [
-                    { path: 'category', component: AlbumCategory }
-                ]
-            },
+            { path: 'policy/index', component: PolicyIndex },
+            { path: 'message/index', component: MessageIndex },
+            { path: 'album/index', component: AlbumIndex, },
+            { path: 'album/category', component: AlbumCategory },
             { path: 'album/photo/:id', component: AlbumPhoto, props: true },
-            {
-                path: 'config',
-                component: ConfigIndex,
-                children: [
-                    { path: 'index', component: ConfigIndex }
-                ]
-            },
-            {
-                path: 'menu',
-                component: MenuIndex,
-                children: [
-                    { path: 'index', component: MenuIndex }
-                ]
-            },
+            { path: 'config/index', component: ConfigIndex },
+            { path: 'menu/index', component: MenuIndex },
             { path: 'account/password', component: Password },
             { path: 'account/avatar', component: Avatar },
             { path: 'index', component: AdminIndex },
             { path: '*', component: NotFound }
         ]
     },
-    { path: '*', component: NotFound }
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound,
+    }
 ]
 
 export default routes

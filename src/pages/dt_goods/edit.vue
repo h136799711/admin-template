@@ -82,9 +82,9 @@
 
 <script>
     import goodsApi from '../../api/dtGoodsApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
     import ImgUploader2online from '@/components/img-uploader2online.vue'
 
     export default {
@@ -92,9 +92,6 @@
             id: String
         },
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton,
             ImgUploader2online
         },
         data () {

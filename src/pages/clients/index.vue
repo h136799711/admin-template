@@ -53,7 +53,6 @@
                 >
                     <template slot-scope="scope">
                         ({{scope.row.project_id}}){{scope.row.client_name}}
-                    </el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -257,15 +256,12 @@
 
 <script>
     import api from '../../api/clientsApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
 
     export default {
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton
         },
         data () {
             return {

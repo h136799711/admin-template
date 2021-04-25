@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-            
+
         <!-- Edit Form -->
         <div class="edit-form" v-if="this.dialogEditVisible">
             <div class=""><h2>{{$t('Edit')}}</h2></div>
@@ -279,16 +279,13 @@
 <script>
 	import fileApi from '../../api/fileApi'
     import pickupPlaceApi from '../../api/pickupPlaceApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
 	import ImgUploader from '@/components/img-uploader.vue'
 
     export default {
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton,
             ImgUploader
         },
         data () {

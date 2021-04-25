@@ -161,15 +161,12 @@
 <script>
     import spCateApi from '../../api/spCateApi'
     import goodsApi from '../../api/goodsApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
 
     export default {
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton
         },
         data () {
             return {

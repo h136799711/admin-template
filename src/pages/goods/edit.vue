@@ -194,9 +194,9 @@
 <script>
     import spCateApi from '../../api/spCateApi'
     import goodsApi from '../../api/goodsApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
     import ImgUploader2online from '@/components/img-uploader2online.vue'
     import ImgUploaderV3 from '../../../src/components/img-uploaderV3'
     import datatreeApi from '../../api/datatreeApi'
@@ -206,9 +206,6 @@
             id: String
         },
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton,
             ImgUploaderV3,
             ImgUploader2online
         },

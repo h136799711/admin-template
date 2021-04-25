@@ -207,18 +207,15 @@
 <script>
 	import fileApi from '../../api/fileApi'
 	import spBrand from '../../api/spBrandApi'
-	import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-	import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-	import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
     import ImgUploader2Online from '@/components/img-uploader2online.vue'
 
 
 	export default {
 		components: {
-			ElForm,
-			ElButtonGroup,
-			ElButton,
-          ImgUploader2Online
+			ImgUploader2Online
 		},
 		data() {
 			return {

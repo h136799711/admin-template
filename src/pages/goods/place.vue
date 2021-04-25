@@ -207,9 +207,9 @@
 <script>
     import freightApi from '../../api/freightApi'
     import pcaApi from '../../api/pcaApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
     import goodsPlaceApi from '../../api/goodsPlaceApi'
 
     export default {
@@ -222,9 +222,6 @@
             }
         },
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton
         },
         data () {
             return {

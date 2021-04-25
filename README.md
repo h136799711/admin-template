@@ -1,5 +1,8 @@
 # admin-template
 
+
+    "vue-json-pretty": "^1.6.0",
+
 > 配置 
 > 
 > admin template base vue

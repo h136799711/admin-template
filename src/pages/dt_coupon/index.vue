@@ -143,7 +143,7 @@
             </div>
         </div>
 
-        
+
         <!-- Give Form -->
         <div class="edit-form" v-if="this.dialogGiveVisible">
             <div class=""><h2>{{$t('Give')}}</h2></div>
@@ -156,12 +156,12 @@
                 :rules="rules"
                 label-width="100px"
             >
-            
+
                 <el-form-item
                         :label="$t('User')"
                         required
                         prop="mobile">
-                        
+
                     <el-autocomplete
                         :clearable="true"
                         class="inline-input"
@@ -186,7 +186,7 @@
                 </el-button>
             </div>
         </div>
-            
+
         <!-- Edit Form -->
         <div class="edit-form" v-if="this.dialogEditVisible">
             <div class=""><h2>{{$t('Edit')}}</h2></div>
@@ -380,15 +380,12 @@
     import dtCouponApi from '../../api/dtCouponApi'
     import dtGoodsApi from '../../api/dtGoodsApi'
 	import userApi from '../../api/userApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
 
     export default {
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton
         },
         data () {
             return {

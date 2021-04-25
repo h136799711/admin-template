@@ -201,7 +201,6 @@
                 type="text"
                 name="username"
                 placeholder="mobile(only can log in by mobile)"
-                value=""
                 tabindex="1"
                 @keydown.enter="login"
           >
@@ -217,7 +216,6 @@
                   type="password"
                   name="password"
                   placeholder="password"
-                  value=""
                   tabindex="2" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
           >
         </p>
@@ -233,7 +231,7 @@
               maxlength="6"
               type="text"
               placeholder="verify code"
-value="" @keydown.enter="login"
+             @keydown.enter="login"
             >
             <span class="codeImg">
               <template v-if="verifyImg == 'error'">
@@ -269,24 +267,23 @@ value="" @keydown.enter="login"
                   type="text"
                   name="token"
                   placeholder="开启2步验证后需要填写"
-                  value=""
                   tabindex="4" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
           >
         </div>
-        <div style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
-          <p style="margin: 0 35px 20px 45px;">
-            <span style="float: right;">
-              <a
-                style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
-                href="javascript:void(0);"
-                class="ajax-post"
-                @click="login"
-                @keyup.enter="login"
-              >
+        <div class="clearfix" style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
+            <div style="float: right;margin: 0 35px 20px 45px;">
+              <el-button  type="primary" @click="login" @keyup.enter="login">
                 {{ isLogging ? 'Log in...' : 'Log In' }}
-              </a>
-            </span>
-          </p>
+              </el-button>
+<!--              <a-->
+<!--                style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"-->
+<!--                href="javascript:void(0);"-->
+<!--                class="ajax-post"-->
+<!--                @click="login"-->
+<!--                @keyup.enter="login"-->
+<!--              >-->
+<!--              </a>-->
+            </div>
         </div>
       </div>
     </form>

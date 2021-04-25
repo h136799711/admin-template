@@ -247,7 +247,7 @@
                     <el-input v-model="addForm.repassword"/>
                 </el-form-item>
                 <el-form-item>
-                    除了英文大小写字母数字之外<br/>密码可含特殊字符 (_!@#$%^&*()_+-=[]{}|;:,.<>)
+                    除了英文大小写字母数字之外<br/>密码可含特殊字符 (_!@#$%^&*()_+-=[]{}|;:,.&lt;&gt;)
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -368,16 +368,13 @@
 
     import QrcodeVue from 'qrcode.vue'
     import api from '../../api/userApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
 
     export default {
         components: {
             QrcodeVue,
-            ElForm,
-            ElButtonGroup,
-            ElButton,
         },
         data () {
             var validatePass = (rule, value, callback) => {

@@ -59,12 +59,13 @@
                         :label="$t('Statements')">
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="top">
-                            <vue-json-pretty
-                                    :path="'res'"
-                                    :deep="8"
-                                    :data="JSON.parse(scope.row.statements)"
-                            >
-                            </vue-json-pretty>
+                            {{scope.row.statements}}
+<!--                            <vue-json-pretty-->
+<!--                                    :path="'res'"-->
+<!--                                    :deep="8"-->
+<!--                                    :data="JSON.parse(scope.row.statements)"-->
+<!--                            >-->
+<!--                            </vue-json-pretty>-->
                             <div slot="reference" class="name-wrapper">
                                 <el-tag size="medium">{{ $t('Policy') }}</el-tag>
                             </div>
@@ -209,17 +210,14 @@
 
 <script>
     import api from '../../api/policyApi'
-    import VueJsonPretty from 'vue-json-pretty'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+    // import VueJsonPretty from 'vue-json-pretty'
+
+
+
 
     export default {
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton,
-            VueJsonPretty
+            // VueJsonPretty
         },
         data () {
             var validateStatements = (rule, value, callback) => {

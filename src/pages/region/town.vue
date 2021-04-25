@@ -196,18 +196,15 @@
 
 <script>
     import regionApi from '../../api/regionApi'
-    import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-    import ElButtonGroup from '../../../node_modules/element-ui/packages/button/src/button-group.vue'
-    import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+
+
+
 
     export default {
         props:{
             code: ''
         },
         components: {
-            ElForm,
-            ElButtonGroup,
-            ElButton
         },
         data () {
             return {
