@@ -157,9 +157,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Delivery')"
-                :visible.sync="dialogGiveVisible"
+                v-model="dialogGiveVisible"
         >
             <el-form label-position="right"
                     label-width="100px"

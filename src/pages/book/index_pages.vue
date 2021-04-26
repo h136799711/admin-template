@@ -93,9 +93,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Edit')"
-                :visible.sync="dialogEditVisible"
+                v-model="dialogEditVisible"
         >
             <el-form
                     ref="editForm"

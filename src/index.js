@@ -50,14 +50,14 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
-    NProgress.start()
-    next()
-})
-
-router.afterEach(transition => {
-    NProgress.done()
-})
+// router.beforeEach((to, from, next) => {
+//     NProgress.start()
+//     next()
+// })
+//
+// router.afterEach(transition => {
+//     NProgress.done()
+// })
 // Create VueI18n instance with options
 const i18n = createI18n({
     locale: 'en', // set locale
@@ -108,10 +108,6 @@ app.use(i18n)
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
-
-router.isReady().then(() => {
-    console.debug('路由已准备完成');
-})
 
 window.bus = window.itboye.vue_instance = app.mount('#app')
 window.tools.alertError = (msg) => {

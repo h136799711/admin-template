@@ -104,9 +104,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Edit')"
-                :visible.sync="dialogEditVisible"
+                v-model="dialogEditVisible"
         >
             <el-form label-position="left" label-width="160px" :model="editForm" size="mini" class="edit-form">
                 <el-form-item :label="$t('ClientName')">
@@ -139,9 +139,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Add')"
-                :visible.sync="dialogAddVisible"
+                v-model="dialogAddVisible"
         >
             <el-form label-position="left" label-width="160px" :model="addForm" size="mini" class="edit-form">
                 <el-form-item :label="$t('ClientName')">

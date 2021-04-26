@@ -98,9 +98,9 @@
         <!-- Reply Form -->
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Reply')"
-                :visible.sync="dialogReplyVisible"
+                v-model="dialogReplyVisible"
         >
             <el-form
                     status-icon

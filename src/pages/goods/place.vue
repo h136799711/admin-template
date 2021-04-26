@@ -101,9 +101,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Add')"
-                :visible.sync="dialogAddVisible"
+                v-model="dialogAddVisible"
         >
             <el-form
                     ref="ruleForm"
@@ -153,9 +153,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Edit')"
-                :visible.sync="dialogEditVisible"
+                v-model="dialogEditVisible"
         >
             <el-form
                     ref="ruleForm"

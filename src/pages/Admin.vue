@@ -1,7 +1,10 @@
 <template>
-  <main-home>
-    <router-view  />
-  </main-home>
+<!--  <main-home>-->
+<!--    -->
+<!--  </main-home>-->
+  <MainHome>
+    <router-view />
+  </MainHome>
 </template>
 
 <script>

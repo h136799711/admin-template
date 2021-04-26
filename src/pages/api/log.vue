@@ -1,6 +1,3 @@
-<style>
-
-</style>
 <template>
     <div class="main-content by-datatree padding-md-bottom padding-md-top">
         <el-button-group>
@@ -19,24 +16,27 @@
             <el-col :span="24">
                 <div class="grid-content margin-md-top">
                     <div class="margin-sm-bottom">
-                            <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-                                <el-form-item >
-                                    <el-date-picker
-                                            v-model="queryForm.ymd"
-                                            format="yyyy-MM-dd"
-                                            value-format="yyyyMMdd"
-                                            align="left"
-                                            :editable="false"
-                                            type="date"
-                                            :placeholder="$t('Date')"
-                                            :picker-options="pickerDateOption">
-                                    </el-date-picker>
-                                </el-form-item>
+                        <el-form :inline="true" :model="queryForm" class="demo-form-inline">
+                            <el-form-item>
+                                <el-date-picker
+                                        size="mini"
+                                        v-model="queryForm.ymd"
+                                        format="YYYY-MM-DD"
+                                        :editable="false"
+                                        type="date"
+                                        :placeholder="$t('Date')"
+                                        :disabled-date="disabledDate"
+                                        :shortcuts="shortcuts"
+                                        >
+                                </el-date-picker>
+                            </el-form-item>
 
-                                <el-form-item>
-                                    <el-button :loading="loading" type="primary" @click="onSearch"  icon="el-icon-search">{{ $t('Search') }}</el-button>
-                                </el-form-item>
-                            </el-form>
+                            <el-form-item>
+                                <el-button size="mini" :loading="loading" type="primary" @click="onSearch"
+                                           icon="el-icon-search">{{ $t('Search') }}
+                                </el-button>
+                            </el-form-item>
+                        </el-form>
                     </div>
 
                     <el-table
@@ -76,7 +76,6 @@
                 </div>
                 <div class="text-center">
                     <el-pagination
-                            background
                             :current-page="this.queryForm.page_index"
                             :page-sizes="[10, 20, 30, 50]"
                             :page-size="this.queryForm.page_size"
@@ -95,101 +94,101 @@
 </template>
 
 <script>
-	import apiLogApi from '../../api/apiLogApi'
+    import apiLogApi from '../../api/apiLogApi'
 
-
-
-
-	export default {
-		components: {
-
-		},
-		data() {
-			return {
-                pickerDateOption: {
-                    disabledDate(time) {
-                        return time.getTime() > Date.now();
-                    },
-                    shortcuts: [{
-                        text: this.$i18n.t('Today'),
-                        onClick(picker) {
-                            picker.$emit('pick', new Date());
-                        }
-                    }, {
-                        text: this.$i18n.t('Yesterday'),
-                        onClick(picker) {
-                            const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24);
-                            picker.$emit('pick', date);
-                        }
-                    }]
+    export default {
+        components: {},
+        data () {
+            return {
+                disabledDate (time) {
+                    return time.getTime() > Date.now()
                 },
+                shortcuts: [{
+                    text: this.$i18n.t('Today'),
+                    value: new Date(),
+                }, {
+                    text: this.$i18n.t('Yesterday'),
+                    value: (() => {
+                        const date = new Date()
+                        date.setTime(date.getTime() - 3600 * 1000 * 24)
+                        return date
+                    })(),
+                }],
                 queryForm: {
-					ymd: '',
+                    ymd: new Date(),
                     page_index: 1,
                     page_size: 10,
-				},
-				filterText: '',
-				list: [],
-				count: 0,
-				tableData: [],
-				loading: false,
-				dialogAddVisible: false,
-				dialogEditVisible: false,
-				order: 0, // 排序信息 1：sort从大到小排序 2：sort从小到大排序
-				selectTableRowId: '' // 选中的表格行id
-			}
-		},
-		computed: {},
-		watch: {
-			order(newValue) {
-				// TODO 手动排序
-			}
-		},
-		created() {
-		},
-        mounted: function() {
-			this.queryForm.ymd = (new Date()).format('yyyyMMdd');
-		    this.refresh();
+                },
+                filterText: '',
+                list: [],
+                count: 0,
+                tableData: [],
+                loading: false,
+                dialogAddVisible: false,
+                dialogEditVisible: false,
+                order: 0, // 排序信息 1：sort从大到小排序 2：sort从小到大排序
+                selectTableRowId: '' // 选中的表格行id
+            }
         },
-		methods: {
-			onSearch() {
-              this.refresh();
-            },
-			sortTable(data) {
-				console.debug ('排序', data.column, data.prop, data.order)
-				if (data.prop === 'sort' && data.order === 'ascending') {
-					this.order = 'cnt,asc'
-				} else {
-					this.order = 'cnt,desc'
-				}
+        computed: {},
+        watch: {
+            order (newValue) {
+                // TODO 手动排序
+            }
+        },
+        created () {
+        },
+        mounted: function () {
+            this.queryForm.ymd = (new Date()).format('yyyyMMdd')
+            this.refresh()
+        },
+        methods: {
+            onSearch () {
                 this.refresh()
-			},
-			byPagerSizeChange(val) {
-				console.debug (`每页 ${val} 条`)
+            },
+            sortTable (data) {
+                console.debug('排序', data.column, data.prop, data.order)
+                if (data.prop === 'sort' && data.order === 'ascending') {
+                    this.order = 'cnt,asc'
+                } else {
+                    this.order = 'cnt,desc'
+                }
+                this.refresh()
+            },
+            byPagerSizeChange (val) {
+                console.debug(`每页 ${val} 条`)
                 this.queryForm.page_size = val
                 this.refresh()
-			},
-			byPagerCurrentChange(val) {
-				console.debug (`当前页: ${val}`)
-				this.queryForm.page_index = val
+            },
+            byPagerCurrentChange (val) {
+                console.debug(`当前页: ${val}`)
+                this.queryForm.page_index = val
                 this.refresh()
-			},
-			query(suc) {
-			},
-			refresh() {
-				// 刷新当前
+            },
+            query (suc) {
+            },
+            refresh () {
+                // 刷新当前
+                let ymd = this.queryForm.ymd;
+                if (ymd instanceof Date) {
+                    ymd = ymd.format('yyyyMMdd');
+                }
                 this.tableData = []
                 this.loading = true
-                apiLogApi.query ({'order': this.order, 'ymd': this.queryForm.ymd, 'page_index': this.queryForm.page_index, 'page_size': this.queryForm.page_size}, (resp) => {
+                apiLogApi.query({
+                    'order': this.order,
+                    'ymd': ymd,
+                    'page_index': this.queryForm.page_index,
+                    'page_size': this.queryForm.page_size
+                }, (resp) => {
                     this.loading = false
-                    this.count = parseInt (resp.count)
+                    this.count = parseInt(resp.count)
                     this.tableData = resp.list
                 }, (resp) => {
-                    window.tools.alertError (resp.msg)
+                    window.tools.alertError(resp.msg)
                     this.loading = false
                 })
-			}
-		}
-	}
+            }
+        }
+    }
 </script>

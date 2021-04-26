@@ -190,9 +190,9 @@
         <!-- 支付宝配置 -->
 <!--        <el-dialog-->
 <!--                :show-close="false"-->
-<!--                :modal-append-to-body="false"-->
+<!--                :append-to-body="false"-->
 <!--                :title="$t('Config')"-->
-<!--                :visible.sync="dialogPayConfigVisible"-->
+<!--                v-model="dialogPayConfigVisible"-->
 <!--        >-->
 <!--            <el-form label-position="left" label-width="160px" :model="payConfigForm" size="mini" class="edit-form">-->
 <!--                <el-form-item :label="$t('AppId')">-->
@@ -229,9 +229,9 @@
 
 <!--        <el-dialog-->
 <!--                :show-close="false"-->
-<!--                :modal-append-to-body="false"-->
+<!--                :append-to-body="false"-->
 <!--                :title="$t('PaymentChannel')"-->
-<!--                :visible.sync="dialogPaymentVisible"-->
+<!--                v-model="dialogPaymentVisible"-->
 <!--        >-->
 <!--            <el-form  :model="paymentForm" size="mini" class="edit-form">-->
 <!--                <el-form-item>-->

@@ -54,8 +54,8 @@
                     </a>
                 </template>
                 <template v-else>
-                    <a href="#"
-                       @click="routerJump(menu.url)"
+                    <a href="javascript:void(0)"
+                       @click="linkClick(menu.url)"
                     >
                         <div class="nav-icon sidebar-trans">
               <span
@@ -75,6 +75,7 @@
     export default {
         name: 'SideBarNav',
         componentName: 'SideBarNav',
+        emits: ['NavOnActive', 'NavOnClick', 'RouteJump'],
         props: {
             navMaxHeight: {
                 type: Number,
@@ -93,7 +94,8 @@
             isNavActive: {
                 type: Boolean,
                 required: true
-            }
+            },
+            RouteJump: Function
         },
         data () {
             return {}
@@ -106,11 +108,12 @@
             navClick (index) {
                 this.$emit('NavOnClick', `${this.index}-${index}`, this.navMenu.children[index].children.length > 0 ? this.navMenu.children[index] : false)
             },
-            routerJump (UrlAddress) {
+            linkClick (UrlAddress) {
                 if (this.$route.path === UrlAddress) {
                     return
                 }
-                this.$router.push({ path:  UrlAddress });
+                this.$emit('RouteJump', UrlAddress)
+//                this.$router.push(UrlAddress);
             },
             navOnMouseHover (text, $event) {
                 // mimi状态才显示tooltip

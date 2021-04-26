@@ -88,9 +88,9 @@
         <el-dialog
                 :show-close="true"
                 center
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="viewForm.title"
-                :visible.sync="dialogViewVisible"
+                v-model="dialogViewVisible"
         >
             <i class="el-icon-loading" v-if="viewForm.loading"></i>
             <div v-if="!viewForm.loading" class="message-time">

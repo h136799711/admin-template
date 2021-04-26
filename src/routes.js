@@ -129,17 +129,15 @@ const OrderComplaintsIndex = () => import('./pages/order_complaints/index.vue')
 
 const routes = [
     // 地址为空的时候跳转
-    { path: '', redirect: '/admin' },
-    { path: '/', redirect: '/admin' },
     // 登录
     { path: '/login', component: Login },
     // 退出
     { path: '/logout', component: Logout },
-
     // 登录后管理首页
     {
         path: '/admin',
         component: Admin,
+        alias: ['/', ''],
         children: [
             { path: 'region/index', component: RegionIndex },
             { path: 'region/province/:id', component: RegionProvince, props: true },
@@ -209,7 +207,7 @@ const routes = [
             { path: 'menu/index', component: MenuIndex },
             { path: 'account/avatar', component: Avatar },
             { path: 'index', component: AdminIndex },
-            { path: '*', component: NotFound }
+            { path: ':pathMatch(.*)*', component: NotFound }
         ]
     },
     {

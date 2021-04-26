@@ -119,9 +119,9 @@
         <!-- 查看 -->
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 title="订单详情"
-                :visible.sync="dialogViewVisible"
+                v-model="dialogViewVisible"
         >
             <el-form
                     v-if="!dialogViewLoading"

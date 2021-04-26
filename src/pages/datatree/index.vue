@@ -158,9 +158,9 @@
 
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Add')"
-                :visible.sync="dialogAddVisible"
+                v-model="dialogAddVisible"
         >
             <el-form
                     ref="ruleForm"
@@ -238,9 +238,9 @@
         </el-dialog>
         <el-dialog
                 :show-close="false"
-                :modal-append-to-body="false"
+                :append-to-body="false"
                 :title="$t('Edit')"
-                :visible.sync="dialogEditVisible"
+                v-model="dialogEditVisible"
         >
             <el-form
                     ref="editForm"
@@ -448,7 +448,7 @@
 						this.editForm.id = selection[i].id
 						this.editForm.name = selection[i].name
 						this.editForm.alias = selection[i].alias
-						this.editForm.data_level = selection[i].data_level
+						this.editForm.data_level = (selection[i].data_level.toString());
 						this.editForm.iconurl = selection[i].iconurl
 						this.editForm.name = selection[i].name
 						this.editForm.notes = selection[i].notes

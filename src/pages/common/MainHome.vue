@@ -932,8 +932,7 @@
                 <div class="sidebar-content main-sidebar">
                     <div class="sidebar-inner">
                         <div
-                                class="sidebar-fold"
-                                @click="toggleMiniMenu"
+                                class="sidebar-fold" @click="toggleMiniMenu"
                         >
               <span
                       class="by-icon"
@@ -951,6 +950,7 @@
                                     :active-index="activeNavMenuIndex"
                                     @NavOnClick="SideBarNavOnClick"
                                     @NavOnActive="SideBarNavOnActive"
+                                    @RouteJump="routeJump"
                             />
                         </div>
                     </div>
@@ -976,8 +976,8 @@
 <!--                            name="custom-classes-transition"-->
 <!--                            enter-active-class="animated fadeIn"-->
 <!--                    >-->
-                    <router-view/>
-<!--                        <slot name="main-content"/>-->
+                    <router-view />
+<!--                        <slot name="mainContent"/>-->
 <!--                    </transition>-->
                 </div>
             </div>
@@ -1085,6 +1085,13 @@
           this.getUnreadMsg()
         },
         methods: {
+            routeJump(url) {
+                console.debug('route', url);
+                // this.$router.push('/admin/api/log')
+                this.$router.push({ path: url}).then(() => {
+                    console.log('push success');
+                }).catch((err) => {console.log(err)});
+            },
             jump2AdminIndex () {
                 this.$router.push('/admin/index')
             },
@@ -1140,7 +1147,7 @@
             },
             // 链接点击
             userLinkClick (link) {
-                window.tools.returnTop()
+                // window.tools.returnTop()
                 // setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link)) }, 1)
             },
             queryChildMenu (data = [], action) {
