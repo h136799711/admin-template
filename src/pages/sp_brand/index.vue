@@ -53,7 +53,7 @@
                         prop="is_sale"
                         :label="$t('Image')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <img :src="scope.row.icon" alt="icon" class="icon" />
                     </template>
                 </el-table-column>
@@ -62,13 +62,13 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.title}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         :label="$t('Description')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('' + scope.row.description)}}
                     </template>
                 </el-table-column>
@@ -77,7 +77,7 @@
                         width="320px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

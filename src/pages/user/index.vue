@@ -47,7 +47,7 @@
                         prop="title"
                         :label="$t('Mobile')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         ({{scope.row.country_no}}) {{scope.row.mobile}}
                         <div v-if="scope.row.mobile_auth == 1" class="el-text-success">
                             <el-alert
@@ -71,7 +71,7 @@
                         prop="title"
                         :label="$t('Email')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.email}}
                         <div v-if="scope.row.email_auth == 1" class="el-text-success">
                             <el-alert
@@ -94,7 +94,7 @@
                 <el-table-column
                         width="200px"
                         label="第三方登录">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         QQ: {{ scope.row.qq_openid}}<br/>
                         GITHUB: {{ scope.row.github_openid}}<br/>
                         WEIBO: {{ scope.row.weibo_openid}}<br/>
@@ -104,7 +104,7 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Time')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{ $t('RegTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}<br/>
                         {{$t('LastLoginTime')}}:{{(new Date(scope.row.last_login_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
@@ -112,7 +112,7 @@
                 <el-table-column
                         width="180px"
                         :label="$t('Ip')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{ $t('RegIp')}}: {{ numberToIp(scope.row.reg_ip) }}<br/>
                         {{ $t('LastLoginIp')}}: {{ numberToIp(scope.row.last_login_ip) }}
                     </template>
@@ -120,7 +120,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('2StepVerify')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-switch
                                 @change="changeGoogleSecret(scope.row)"
                                 v-model="scope.row.google_secret_switch"
@@ -145,7 +145,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('Session')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 @click="goSession(scope.row)">
@@ -156,7 +156,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('Client')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 @click="goClient(scope.row)">
@@ -169,7 +169,7 @@
                         width="360px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-tickets"

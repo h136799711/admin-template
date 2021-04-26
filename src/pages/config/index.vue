@@ -24,7 +24,7 @@
                 size="mini"
                 icon="by-icon by-shuaxin"
                 :loading="loading"
-                @click="refresh()">
+                @click="queryConfig()">
             {{ $t('Refresh')}}
         </el-button>
 
@@ -70,7 +70,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

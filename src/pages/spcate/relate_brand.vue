@@ -57,7 +57,7 @@
                         prop="is_sale"
                         :label="$t('Image')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <img :src="scope.row.icon" alt="icon" class="icon" />
                     </template>
                 </el-table-column>
@@ -66,13 +66,13 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.title}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         :label="$t('Description')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('' + scope.row.description)}}
                     </template>
                 </el-table-column>
@@ -80,7 +80,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('Is') + $t('Relate')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-tag :type="isRelated(scope.row.id) ? 'success': 'info'">{{isRelated(scope.row.id) ? $t("1"): $t("0")}}</el-tag>
                     </template>
                 </el-table-column>
@@ -88,7 +88,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 v-if="isRelated(scope.row.id)"
                                 size="mini"

@@ -79,7 +79,7 @@
                 />
                 <el-table-column
                         :label="$t('Photo')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <img :src="getImage(scope.row.photo_uri)" alt="photo" class="photo" />
                     </template>
                 </el-table-column>
@@ -90,7 +90,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

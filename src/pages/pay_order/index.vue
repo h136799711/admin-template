@@ -66,14 +66,14 @@
                         prop="pay_code"
                         :label="$t('PayCode')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.pay_code}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="300px"
                         :label="$t('Notify') + $t('Message')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.notify_msg}}
                     </template>
                 </el-table-column>
@@ -81,14 +81,14 @@
                 <el-table-column
                         width="140px"
                         :label="$t('Notify') + $t('Count')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.notify_count}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="140px"
                         :label="$t('NotifyTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
@@ -145,7 +145,7 @@
                         prop="channel"
                         :label="$t('Channel')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.client_id}}
                     </template>
                 </el-table-column>
@@ -154,14 +154,14 @@
                         prop="pay_code"
                         :label="$t('PayCode')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.pay_code}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         :label="$t('Merchant') + $t('OrderCode')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.out_order_no}}
                     </template>
                 </el-table-column>
@@ -170,7 +170,7 @@
                         prop="pay_code"
                         :label="$t('PayType')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{getPayType(scope.row.pay_type)}}
                     </template>
                 </el-table-column>
@@ -178,7 +178,7 @@
                 <el-table-column
                         width="120px"
                         :label="$t('Money')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('Initiate')}}: {{scope.row.money/100}} {{$t('Unit.Yuan')}}<br/>
                         {{$t('Notify')}}: {{scope.row.notify_money/100}} {{$t('Unit.Yuan')}}
                     </template>
@@ -186,20 +186,20 @@
                 <el-table-column
                         width="140px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="120px"
                         :label="$t('Is') + $t('Paid')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('' + scope.row.pay_status)}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 @click="onNotifyManual(scope.row.id)">

@@ -74,7 +74,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="by-icon by-tubiao_qudao"

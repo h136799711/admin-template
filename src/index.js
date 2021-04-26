@@ -4,10 +4,6 @@ import axios from 'axios' // Promise based HTTP client for the browser and node.
 import _ from 'lodash' //
 import Lockr from 'lockr' // 用于缓存较大的数据
 import moment from 'moment' // 日期处理
-import '../static/reset.css' // elementui theme
-import '../static/index.css' // elementui theme
-import ElementPlus from 'element-plus'
-// import 'element-plus/lib/theme-chalk/index.css'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import {createI18n} from 'vue-i18n'
@@ -21,6 +17,11 @@ import md5Utils from './assets/plugins/md5Utils'
 import cache from './assets/plugins/cache'
 import tools from './assets/plugins/tools'
 import Finger from 'fingerprintjs2'
+// ElementPlus
+import '../static/reset.css'
+import 'element-plus/lib/theme-chalk/index.css'
+import '../static/index.css' // black theme
+import ElementPlus from 'element-plus'
 import enLocale from 'element-plus/lib/locale/lang/en'
 import zhLocale from 'element-plus/lib/locale/lang/zh-CN'
 
@@ -28,17 +29,7 @@ import zhCN from './i18n/zh-CN'
 import en from './i18n/en'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
-const messages = {
-    en: {
-        ...en,
-        ...enLocale // 或者用 Object.assign({ message: 'hello' }, enLocale)
-    },
-    'zh': {
-        ...zhCN,
-        ...zhLocale // 或者用 Object.assign({ message: '你好' }, zhLocale)
-    }
-}
+import 'vue-json-pretty/lib/styles.css'
 
 axios.defaults.baseURL = ''
 axios.defaults.timeout = 30000
@@ -51,18 +42,30 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach((to, from, next) => {
-//     NProgress.start()
-//     next()
-// })
-//
-// router.afterEach(transition => {
-//     NProgress.done()
-// })
+router.beforeEach((to, from, next) => {
+    NProgress.start()
+    next()
+})
+
+router.afterEach(transition => {
+    NProgress.done()
+})
+const messages = {
+    zh: {
+        el: zhLocale.el,
+        ...zhCN
+    },
+    en: {
+        el: enLocale.el,
+        ...en
+    }
+};
+
 // Create VueI18n instance with options
 const i18n = createI18n({
-    locale: 'en', // set locale
-    messages, // set locale messages
+    locale: 'zh',
+    fallbackLocale: 'en',
+    messages
 })
 
 window.itboye = window.itboye || {}
@@ -98,22 +101,22 @@ window.tools.getDeviceToken = function () {
     }
     return ''
 }
-i18n.locale = tools.getBrowseLanguage()
-console.log('locale= ', i18n.locale)
+// i18n.locale = tools.getBrowseLanguage()
 
 const app = createApp(App)
 
 // use
 app.use(mavonEditor)
+app.use(ElementPlus,{
+    i18n: i18n.global.t
+})
 app.use(i18n)
-app.use(ElementPlus)
 app.use(router)
 app.use(store)
-
-window.bus = window.itboye.vue_instance = app.mount('#app')
+window.itboye.vue_instance = app.mount('#app')
 window.tools.alertError = (msg) => {
-    if (bus._byAlert) bus._byAlert.close()
-    bus._byAlert = bus.$message({
+    if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+    window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
         message: msg,
         type: 'error',
         showClose: true,
@@ -121,9 +124,8 @@ window.tools.alertError = (msg) => {
     })
 }
 window.tools.alertInfo = (msg) => {
-    if (bus._byAlert) bus._byAlert.close()
-
-    bus._byAlert = bus.$message({
+    if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+    window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
         message: msg,
         type: 'info',
         showClose: true,
@@ -131,8 +133,8 @@ window.tools.alertInfo = (msg) => {
     })
 }
 window.tools.alertSuc = (msg, duration) => {
-    if (bus._byAlert) bus._byAlert.close()
-    bus._byAlert = bus.$message({
+    if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+    window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
         message: msg,
         type: 'success',
         showClose: true,
@@ -140,8 +142,8 @@ window.tools.alertSuc = (msg, duration) => {
     })
 }
 window.tools.alertWarn = (msg) => {
-    if (bus._byAlert) bus._byAlert.close()
-    bus._byAlert = bus.$message({
+    if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+    window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
         message: msg,
         type: 'warning',
         showClose: true,
@@ -149,13 +151,5 @@ window.tools.alertWarn = (msg) => {
     })
 }
 window.tools.alertClose = () => {
-    if (bus._byAlert) bus._byAlert.close()
+    if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
 }
-// window.itboye.vue_instance = new Vue({
-//   el: '#app',
-//   components: { App },
-//   template: '<App/>',
-//   router,
-//   store,
-// 	i18n
-// }).$mount('#app')

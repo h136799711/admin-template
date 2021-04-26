@@ -57,7 +57,7 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.title}}
                     </template>
                 </el-table-column>
@@ -66,7 +66,7 @@
                         width="320px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

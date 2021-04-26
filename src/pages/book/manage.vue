@@ -45,7 +45,7 @@
                         width="100px"
                         prop="cate_name"
                         :label="$t('Category')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.cate_name}}
                     </template>
                 </el-table-column>
@@ -57,21 +57,21 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Title')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                        <a target="_blank" :href="'https://book-demo.hebidu.cn/book/' + scope.row.id + '_' + scope.row.def_source_type_id + '/' + scope.row.latest_page_no"> {{ scope.row.latest_chapter_title }}</a>
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="140px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.latest_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 @click="onEnd(scope.row.id)">

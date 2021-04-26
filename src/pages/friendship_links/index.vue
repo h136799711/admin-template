@@ -33,19 +33,19 @@
                         prop="name"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.name}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         :label="$t('JumpUrl')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.alias}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         :label="$t('Sort')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.sort}}
                     </template>
                 </el-table-column>
@@ -53,7 +53,7 @@
                 <el-table-column
                         width="140px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
@@ -62,7 +62,7 @@
                         width="200px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

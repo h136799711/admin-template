@@ -15,23 +15,16 @@
 </style>
 <template>
     <div class="main-content by-policy padding-md-bottom padding-md-top">
-        <el-button
-                type="primary"
-                size="mini"
-                icon="by-icon by-shuaxin"
-                :loading="loading"
-                @click="refresh()">
-            {{ $t('Refresh')}}
-        </el-button>
+
         <div class="margin-md-top">
-            <el-radio-group size="mini" v-model="queryForm.dtree_type" >
+            <el-radio-group size="mini" @change="refresh" v-model="queryForm.dtree_type" >
                 <el-radio-button label="announce">{{$t('System')}}-{{$t('Notification')}}</el-radio-button>
                 <el-radio-button label="user">{{$t('User')}}-{{$t('Notification')}}</el-radio-button>
             </el-radio-group>
         </div>
         <div class="margin-md-top">
-            <el-radio v-model="queryForm.msg_status" label="1">{{$t('Read')}}</el-radio>
-            <el-radio v-model="queryForm.msg_status" label="0">{{$t('Unread')}}</el-radio>
+            <el-radio v-model="queryForm.msg_status" @change="refresh" label="1">{{$t('Read')}}</el-radio>
+            <el-radio v-model="queryForm.msg_status" @change="refresh" label="0">{{$t('Unread')}}</el-radio>
         </div>
 
         <div class="grid-content margin-md-top">
@@ -54,7 +47,7 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Title')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button  type="text" @click="onView(scope.row)">
                             {{scope.row.title}}
                         </el-button>
@@ -66,7 +59,7 @@
 
                 <el-table-column
                         :label="$t('Time')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.createTime * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
@@ -107,13 +100,7 @@
 <script>
 	import api from '../../api/msgApi'
 
-
-
-
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
 				viewForm: {
@@ -133,12 +120,6 @@
 		},
 		computed: {},
 		watch: {
-            queryForm: {
-                handler(val){
-                  this.refresh()
-                },
-                deep: true
-            }
         },
 		created() {
 			this.refresh ();

@@ -1,11 +1,3 @@
-<style>
-    .edit-form {
-    }
-
-    .edit-form .el-input {
-        width: 320px;
-    }
-</style>
 <template>
     <div class="main-content by-clients padding-md-bottom padding-md-top">
         <div class="grid-content margin-md-top">

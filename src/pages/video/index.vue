@@ -77,7 +77,7 @@
                         width="100px"
                         prop="cover"
                         :label="$t('Cover')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <img :src="scope.row.cover" class="margin-sm" style="width: 72px;height: 120px;" alt="cover"/>
                     </template>
                 </el-table-column>
@@ -90,7 +90,7 @@
                         width="180px"
                         :label="$t('Info')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{$t('Actor')}}:{{scope.row.actors}}<br/>
                         {{$t('Director')}}::{{scope.row.directors}}<br/>
                         {{$t('Year')}}::{{scope.row.year}}<br/>
@@ -108,7 +108,7 @@
                         width="100px"
                         prop="cate_id"
                         :label="$t('Category')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{getCateName(scope.row.cate_id)}}
                     </template>
                 </el-table-column>
@@ -118,14 +118,14 @@
                 <el-table-column
                         width="140px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         label="推荐">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-switch
                                 size="mini"
                                 style="display: block"
@@ -143,7 +143,7 @@
                         width="320px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 v-if="scope.row.show_status == 0"
                                 size="mini"

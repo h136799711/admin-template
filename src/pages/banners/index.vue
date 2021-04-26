@@ -68,7 +68,7 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <p>{{scope.row.title}}</p>
 
                         <img class="banner-img" :width="scope.row.w + 'px'" :height="scope.row.h + 'px'" :src="getImgUrl(scope.row.img_url)" />
@@ -76,7 +76,7 @@
                 </el-table-column>
                 <el-table-column
                         :label="$t('JumpUrl')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <a v-if="scope.row.jump_type === 'url' " :href="scope.row.jump_url" target="_blank">
                             [{{scope.row.jump_type}}]{{scope.row.jump_url}}
                         </a>
@@ -86,21 +86,21 @@
                 <el-table-column
                         width="120px"
                         :label="$t('Sort')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.sort}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="100px"
                         :label="$t('CreatedBy')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{ifLoginUser(scope.row.uid)}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="140px"
                         :label="$t('Showing')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <span style="display:inline-block;width: 36px;">From</span> {{(new Date(scope.row.start_time * 1000)).format('yyyy-MM-dd')}} <br/>
                         <span style="display:inline-block;width: 36px;">To</span> {{(new Date(scope.row.end_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
@@ -110,7 +110,7 @@
                         width="200px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

@@ -50,7 +50,7 @@
                                 width="180"
                                 :label="$t('Date')"
                         >
-                            <template slot-scope="scope">
+                            <template #default>
                                 {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                             </template>
                         </el-table-column>
@@ -66,7 +66,7 @@
                                 width="180"
                                 :label="$t('Action')"
                         >
-                            <template slot-scope="scope">
+                            <template #default>
                                 <el-button
                                         type="primary"
                                         size="mini"

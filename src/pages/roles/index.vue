@@ -1,6 +1,3 @@
-<style>
-
-</style>
 <template>
     <div class="main-content by-datatree padding-md-bottom padding-md-top">
         <el-button
@@ -24,11 +21,9 @@
 
         <div class="grid-content margin-md-top">
             <el-table
-                    ref="table"
                     v-loading="loading"
                     :data="tableData"
                     stripe
-                    sortable="custom"
                     :element-loading-text="$t('Loading')"
                     style="width: 100%"
             >
@@ -48,9 +43,20 @@
                         :label="$t('Note')"
                 />
                 <el-table-column
+                        :label="$t('Enable')">
+                    <template #default="scope">
+                        <el-switch
+                                v-model="scope.row.enable"
+                                @click="onEnableChange(scope.row)"
+                                :active-value="1"
+                                :inactive-value="0">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button class=""
                                    @click="goUser(scope.row.id)"
                                    size="mini">
@@ -72,12 +78,6 @@
                                 @click="onEdit(scope.row)">
                             {{$t('Edit')}}
                         </el-button>
-                        <el-switch
-                                v-model="scope.row.enable"
-                                @change="onEnableChange(scope.row)"
-                                active-value="1"
-                                inactive-value="0">
-                        </el-switch>
                     </template>
                 </el-table-column>
             </el-table>
@@ -102,7 +102,6 @@
                 v-model="dialogEditVisible"
         >
             <el-form
-                    status-icon
                     ref="editForm"
                     :model="editForm"
                     label-position="right"
@@ -183,13 +182,7 @@
 <script>
 	import api from '../../api/roleApi'
 
-
-
-
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
 			    queryForm: {
@@ -204,8 +197,6 @@
 				loading: false,
 				dialogAddVisible: false,
 				dialogEditVisible: false,
-				order: 0, // 排序信息 1：sort从大到小排序 2：sort从小到大排序
-				selectTableRowId: '', // 选中的表格行id,
                 rules: {
                     name: [
                         {required: true, message: this.$i18n.t ('Please Input Name'), trigger: 'blur'},
@@ -280,6 +271,7 @@
                 this.$router.push ({path: 'user/' + id})
             },
 			onEnableChange(row) {
+                console.debug('onEnableChange', row);
 				api.enable ({'id': row.id, 'status': row.enable}, (resp) => {
 					this.loading = false
 				}, (resp) => {
@@ -297,17 +289,13 @@
 			},
 			refresh() {
 				// 刷新当前
-				this.count = 0
-				this.tableData = []
+				// this.count = 0
+				// this.tableData = []
 				this.loading = true
 				api.query (this.queryForm, (resp) => {
 					console.debug ('resp ', resp)
 					this.loading = false
 					this.count = parseInt (resp.count)
-					var i;
-					for (i = 0; i < resp.list.length; i++) {
-						resp.list[i]['enable'] = String (resp.list[i]['enable']);
-					}
 					this.tableData = resp.list
 				}, (resp) => {
 					window.tools.alertError (resp.msg)

@@ -88,7 +88,7 @@
                             prop="pic"
                             :label="$t('Image')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <ImgUploader :number="'' + scope.row.index" img-cls="goods-img"
                                          :ref="'imgUploader' + scope.row.index" @onUploadSuccess="onUploadSuccess"
                                          :defaultImgUrl="skuForm.pic[scope.row.index]" imgType="goods"/>
@@ -98,7 +98,7 @@
                             width="160px"
                             :label="$t('Goods') + $t('Number')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <el-input v-model="skuForm.out_goods_no[scope.row.index]"/>
                         </template>
                     </el-table-column>
@@ -106,7 +106,7 @@
                             width="160px"
                             :label="$t('Stock') + $t('Price')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <el-input v-model="skuForm.stock_price[scope.row.index]"/>
                         </template>
                     </el-table-column>
@@ -114,7 +114,7 @@
                             width="160px"
                             :label="$t('Price')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <el-input v-model="skuForm.price[scope.row.index]"/>
                         </template>
                     </el-table-column>
@@ -122,7 +122,7 @@
                             width="160px"
                             :label="$t('Stock')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <el-input v-model="skuForm.stock[scope.row.index]"/>
                         </template>
                     </el-table-column>

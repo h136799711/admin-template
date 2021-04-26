@@ -57,7 +57,7 @@
                         prop="start_url"
                         :label="$t('StartUrl')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <a :href="scope.row.start_url" target="_blank">{{scope.row.start_url}}</a>
                     </template>
                 </el-table-column>
@@ -66,7 +66,7 @@
                         prop="current_url"
                         :label="$t('CurrentUrl')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <a :href="scope.row.current_url" target="_blank">{{scope.row.current_url}}</a>
                     </template>
                 </el-table-column>
@@ -75,7 +75,7 @@
                         prop="page_no"
                         :label="$t('Chapter') + $t('Total')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.page_no}} <br/>
                         <el-button
                                 size="mini"
@@ -90,7 +90,7 @@
                         prop="next_crawling_time"
                         :label="$t('NextCrawlingTime')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{(new Date(scope.row.next_crawling_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
@@ -99,7 +99,7 @@
                         width="220px"
                         :label="$t('State')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{getState(scope.row)}}
                         <br/>
                         最近新章节更新时间: {{(new Date(scope.row.last_suc_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
@@ -109,7 +109,7 @@
                         width="320px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

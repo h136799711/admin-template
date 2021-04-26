@@ -56,7 +56,7 @@
                         width="100px"
                         prop="amount"
                         :label="$t('Amount')">
-                <template slot-scope="scope">
+                    <template #default="scope">
                     <span>{{ $t('Amount') }}: <el-tag type="primary" size="mini">{{scope.row.amount}}</el-tag></span><br/>
                     <span>{{ $t('Fee')}}: <el-tag type="primary" size="mini">{{scope.row.fee}}</el-tag></span>
                 </template>
@@ -64,7 +64,7 @@
                 <el-table-column
                         width="280px"
                         :label="$t('Card')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <span>{{ $t('Name') }}: <el-tag type="primary" size="mini">{{scope.row.name}}</el-tag></span><br/>
                         <span>{{ $t('Account') }}: <el-tag type="primary" size="mini">{{scope.row.account_no}}</el-tag></span>
                     </template>
@@ -72,7 +72,7 @@
                 <el-table-column
                         width="280px"
                         :label="$t('Information')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <span>Email: {{scope.row.account_email}}</span><br/>
                         <span>Phone: {{scope.row.account_mobile}}</span><br/>
                         <span>Company: {{scope.row.account_company}}</span><br/>
@@ -84,7 +84,7 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Extra')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-tag type="primary">{{scope.row.to_wallet_info}}</el-tag>
                     </template>
                 </el-table-column>
@@ -96,7 +96,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button v-if="scope.row.audit_status==0"
                                    size="mini"
                                    @click="onPass(scope.row.id)">

@@ -47,7 +47,7 @@
                         width="120px"
                         :label="$t('Method')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{getMethodType(scope.row.method)}}
                     </template>
                 </el-table-column>
@@ -55,7 +55,7 @@
                         width="120px"
                         :label="$t('LogisticsType')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{getLogisticType(scope.row.logistics_type)}}
                     </template>
                 </el-table-column>
@@ -64,7 +64,7 @@
                         prop="freight_type"
                         :label="$t('Freight')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{getFreightType(scope.row.freight_type)}}
                     </template>
                 </el-table-column>
@@ -73,7 +73,7 @@
                         prop="price_define"
                         :label="$t('Place')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <span v-html="parsePlace(scope.row.price_define)"></span>
                     </template>
                 </el-table-column>
@@ -81,14 +81,14 @@
                         width="400px"
                         :label="$t('FreeShipping')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <span v-html="parseFreeCondition(scope.row.free_condition)"></span>
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         :label="$t('UpdateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.update_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
@@ -96,7 +96,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"
@@ -151,7 +151,7 @@
                             style="width: 100%">
                         <el-table-column
                                 label="送达地区">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-cascader v-if="scope.row.index > 0" style="width: 240px;"
                                              v-model="placeTable[scope.row.index].place"
                                              :loading="loading"
@@ -165,28 +165,28 @@
                         <el-table-column
                                 :label="addForm.method === 'weight' ? '首重kg' : '首件'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].first"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="addForm.method === 'weight' ? '首重价格' : '首件价格'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].first_price"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="addForm.method === 'weight' ? '续重kg' : '续件'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].continuous"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="addForm.method === 'weight' ? '续重kg价格:元' : '续件价格:元'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].continuous_price"/>
                             </template>
                         </el-table-column>
@@ -205,7 +205,7 @@
                             style="width: 100%">
                         <el-table-column
                                 label="送达地区">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-cascader style="width: 240px;"
                                              v-model="freeTable[scope.row.index].place"
                                              :loading="loading"
@@ -217,7 +217,7 @@
                         <el-table-column
                                 label="选择运送方式"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-select size="mini" v-model="freeTable[scope.row.index].logistics_type">
                                     <el-option
                                             v-for="item in logisticsOptions"
@@ -232,7 +232,7 @@
                         <el-table-column
                                 label="设置包邮条件"
                                 width="540">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-select class="margin-md-bottom" size="mini"
                                            v-model="freeTable[scope.row.index].method">
                                     <el-option
@@ -344,7 +344,7 @@
                             style="width: 100%">
                         <el-table-column
                                 label="送达地区">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-cascader v-if="scope.row.index > 0" style="width: 240px;"
                                              v-model="placeTable[scope.row.index].place"
                                              :loading="loading"
@@ -358,28 +358,28 @@
                         <el-table-column
                                 :label="editForm.method === 'weight' ? '首重kg' : '首件'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].first"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="editForm.method === 'weight' ? '首重价格' : '首件价格'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].first_price"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="editForm.method === 'weight' ? '续重kg' : '续件'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].continuous"/>
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="editForm.method === 'weight' ? '续重kg价格:元' : '续件价格:元'"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-input v-model="placeTable[scope.row.index].continuous_price"/>
                             </template>
                         </el-table-column>
@@ -397,7 +397,7 @@
                             style="width: 100%">
                         <el-table-column
                                 label="送达地区">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-cascader style="width: 240px;"
                                              v-model="freeTable[scope.row.index].place"
                                              :loading="loading"
@@ -409,7 +409,7 @@
                         <el-table-column
                                 label="选择运送方式"
                                 width="180">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-select size="mini" v-model="freeTable[scope.row.index].logistics_type">
                                     <el-option
                                             v-for="item in logisticsOptions"
@@ -424,7 +424,7 @@
                         <el-table-column
                                 label="设置包邮条件"
                                 width="540">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-select class="margin-md-bottom" size="mini"
                                            v-model="freeTable[scope.row.index].method">
                                     <el-option

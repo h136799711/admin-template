@@ -37,20 +37,20 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.title}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         :label="$t('Description')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.description}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="200px"
                         :label="$t('Status')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
 
                         <el-tag type="info">{{scope.row.closed === 0 ? '营业': '休息'}}</el-tag>
                         <el-button
@@ -63,7 +63,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
@@ -72,7 +72,7 @@
                         width="360px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 @click="onAddGoods(scope.row.id)">

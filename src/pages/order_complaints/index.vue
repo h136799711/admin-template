@@ -44,14 +44,14 @@
                     <el-table-column
                             width="180px"
                             :label="$t('OrderCode')">
-                        <template slot-scope="scope">
+                    <template #default="scope">
                             {{scope.row.order_no}}
                         </template>
                     </el-table-column>
                     <!-- <el-table-column
                             width="160px"
                             :label="$t('Mobile')">
-                        <template slot-scope="scope">
+                    <template #default="scope">
                             {{scope.row.mobile}}
                         </template>
                     </el-table-column> -->
@@ -64,7 +64,7 @@
                             width="360"
                             :label="$t('Image')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <span v-for="image in scope.row.img_list">
                                 <a :href="image" target="_blank">
                                 <el-image
@@ -92,7 +92,7 @@
                     <el-table-column
                             fixed="right"
                             :label="$t('Action')">
-                        <template slot-scope="scope">
+                    <template #default="scope">
                             <el-button
                                     size="mini"
                                     icon="el-icon-folder"
@@ -195,7 +195,7 @@
                     >
                         <el-table-column
                                 :label="$t('Title')">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 <el-image :src="scope.row.item_image" style="width: 80px;height:60px;"></el-image><br/>
                                 {{scope.row.item_title}}/{{scope.row.item_sku_title}}
                             </template>
@@ -203,14 +203,14 @@
                         <el-table-column
                                 width="100px"
                                 :label="$t('Price')">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 {{(scope.row.item_sku_price/100.0).toFixed(2)}}
                             </template>
                         </el-table-column>
                         <el-table-column
                                 width="100px"
                                 label="数量">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 {{(scope.row.item_count)}}
                             </template>
                         </el-table-column>
@@ -231,13 +231,13 @@
                         <el-table-column
                                 width="120px"
                                 :label="$t('CreateTime')">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                             </template>
                         </el-table-column>
                         <el-table-column
                                 :label="$t('Note')">
-                            <template slot-scope="scope">
+                    <template #default="scope">
                                 {{scope.row.note}}
                             </template>
                         </el-table-column>

@@ -51,7 +51,7 @@
                         width="150px"
                         :label="$t('Information')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{$t('Username')}}: {{ scope.row.username}}<br/>
                         {{$t('Mobile')}}: {{ scope.row.mobile}}<br/>
                         {{$t('Email')}}: {{ scope.row.email}}<br/>
@@ -78,7 +78,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-folder"

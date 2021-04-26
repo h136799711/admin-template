@@ -94,7 +94,7 @@
                             width="220px"
                             :label="$t('Title')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             【{{scope.row.cate_name}}】{{scope.row.title}}
                         </template>
                     </el-table-column>
@@ -103,7 +103,7 @@
                             width="140px"
                             :label="$t('Cover')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <img v-if="scope.row.cover" alt="cover" :src="scope.row.cover"
                                  style="width:120px;height: auto;"/>
                             <span v-else>{{ $t('NoCover') }}</span>
@@ -114,7 +114,7 @@
                             width="100px"
                             :label="$t('Source')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <div v-if="scope.row.source_url">
                                 <a :href="scope.row.source_url" target="_blank">{{scope.row.come_from}}</a>
                             </div>
@@ -127,7 +127,7 @@
                             width="120px"
                             :label="$t('Tag')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             {{scope.row.tags}}
                         </template>
                     </el-table-column>
@@ -136,7 +136,7 @@
                             width="100px"
                             :label="$t('Author')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             {{scope.row.author_nick}}
                         </template>
                     </el-table-column>
@@ -145,7 +145,7 @@
                             width="90px"
                             :label="$t('View')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             {{scope.row.views}}
                         </template>
                     </el-table-column>
@@ -155,7 +155,7 @@
                             width="180px"
                             :label="$t('Status')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <span >
                                 {{ $t('CmsArticle.' + scope.row.publish_status) }}
 
@@ -182,7 +182,7 @@
                             fixed="right"
                             width="200px"
                             :label="$t('Action')">
-                        <template slot-scope="scope">
+                    <template #default="scope">
                             <el-button
                                     size="mini"
                                     icon="el-icon-edit"

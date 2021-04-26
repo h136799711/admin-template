@@ -46,7 +46,7 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.title}}
                     </template>
                 </el-table-column>
@@ -55,21 +55,21 @@
                         prop="is_sale"
                         :label="$t('Is') + ' '  + $t('SaleProperty')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{$t('' + scope.row.is_sale)}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="140px"
                         :label="$t('Is') + ' ' + $t('ColorProperty')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('' + scope.row.is_color)}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="100px"
                         :label="$t('PropertyType')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t(scope.row.prop_type)}}
                     </template>
                 </el-table-column>
@@ -78,7 +78,7 @@
                         width="360px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 @click="onAddValue(scope.row)">

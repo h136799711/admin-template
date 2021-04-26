@@ -45,7 +45,7 @@
                         prop="cond_goods_id"
                         :label="$t('GoodsId')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <span v-if="scope.row.cond_goods_id=='0'">任何商品</span>
                         <span v-else v-for="(item,index) in scope.row.cond_goods_info" :key="index">{{item.title}}
                             <span v-if="index<scope.row.cond_goods_info.length-1">,</span> </span>
@@ -55,7 +55,7 @@
                         width="160px"
                         :label="$t('DiscountAmount')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{(scope.row.discount_amount / 100).toFixed(2)}}
                         {{$t('Unit.Yuan')}}
                     </template>
@@ -64,7 +64,7 @@
                         width="160px"
                         :label="$t('CondAmount')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{(scope.row.cond_order_amount / 100).toFixed(2)}}
                         {{$t('Unit.Yuan')}}
                     </template>
@@ -73,21 +73,21 @@
                 <el-table-column
                         width="160px"
                         :label="$t('StartDate')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.begin_date * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         :label="$t('EndDate')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.end_date * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         :label="$t('GetTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>

@@ -68,63 +68,63 @@
                 <el-table-column
                         width="180px"
                         :label="$t('OrderCode')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.order_no}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         :label="$t('Mobile')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.user_mobile}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="160px"
                         :label="$t('PickupCode')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.pickup_code}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="120px"
                         :label="$t('Money')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.total_price/100}} {{$t('Unit.Yuan')}}<br/>
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="120px"
                         :label="$t('Pay') + $t('Money')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.pay_price/100}} {{$t('Unit.Yuan')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="140px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="140px"
                         :label="$t('PayTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.paid_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="120px"
                         :label="$t('Is') + $t('Paid')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('' + scope.row.pay_status)}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="120px"
                         :label="$t('OrderStatus')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <span v-if="scope.row.order_status==0">{{$t('NoPickedUp')}}</span>
                         <span v-if="scope.row.order_status==1">{{$t('PickedUp')}}</span>
                         <span v-if="scope.row.order_status==2">{{$t('Canceled')}}</span>
@@ -132,7 +132,7 @@
                 </el-table-column>
                <el-table-column
                        :label="$t('Action')">
-                   <template slot-scope="scope">
+                    <template #default="scope">
                        <el-button
                                size="mini"
                                v-if="scope.row.order_status==0"

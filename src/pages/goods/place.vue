@@ -52,7 +52,7 @@
                         prop="freight"
                         :label="$t('Freight')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{$t('Freight')}}{{$t('Template')}}: {{scope.row.freight_tpl_id}}
                     </template>
                 </el-table-column>
@@ -80,7 +80,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"

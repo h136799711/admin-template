@@ -61,7 +61,7 @@
                         width="200px"
                         :label="$t('Time')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{$t('CreateTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                         <br/>
                         {{$t('UpdateTime')}}: {{(new Date(scope.row.update_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
@@ -71,7 +71,7 @@
                         width="280px"
                         :label="$t('Url')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
                     </template>
                 </el-table-column>
@@ -79,7 +79,7 @@
                         width="220px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <a :href="getPageContent(scope.row)" target="_blank">
                             查看内容页
                         </a>

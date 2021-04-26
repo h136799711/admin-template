@@ -64,7 +64,7 @@
                             prop="title"
                             :label="$t('Image')"
                     >
-                        <template slot-scope="scope">
+                        <template #default>
                             <div>
                                 <el-image
                                         style="width: 120px;height:90px;"
@@ -95,7 +95,7 @@
                     <el-table-column
                             fixed="right"
                             :label="$t('Action')">
-                        <template slot-scope="scope">
+                    <template #default="scope">
                             <el-button
                                     size="mini"
                                     icon="el-icon-edit"

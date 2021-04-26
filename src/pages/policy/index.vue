@@ -46,37 +46,18 @@
                         :label="$t('ID')"
                 />
                 <el-table-column
-                        width="200px"
+                        width="160px"
                         prop="name"
                         :label="$t('Name')"
                 />
                 <el-table-column
+                        width="180px"
                         prop="note"
                         :label="$t('Note')"/>
                 <el-table-column
                         width="120px"
-                        prop="statements"
-                        :label="$t('Statements')">
-                    <template slot-scope="scope">
-                        <el-popover trigger="hover" placement="top">
-                            {{scope.row.statements}}
-<!--                            <vue-json-pretty-->
-<!--                                    :path="'res'"-->
-<!--                                    :deep="8"-->
-<!--                                    :data="JSON.parse(scope.row.statements)"-->
-<!--                            >-->
-<!--                            </vue-json-pretty>-->
-                            <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium">{{ $t('Policy') }}</el-tag>
-                            </div>
-                        </el-popover>
-                    </template>
-
-                </el-table-column>
-                <el-table-column
-                        fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="el-icon-edit"
@@ -84,6 +65,25 @@
                             {{$t('Edit')}}
                         </el-button>
                     </template>
+                </el-table-column>
+                <el-table-column
+                        fixed="right"
+                        prop="statements"
+                        :label="$t('Statements')">
+                    <template #default="scope">
+                        <el-popover trigger="hover" width="400px"  placement="top">
+                            <template #reference>
+                                <el-tag type="success" size="medium">{{ $t('Policy') }}</el-tag>
+                            </template>
+                            <vue-json-pretty
+                                    :path="'res'"
+                                    :deep="8"
+                                    :data="JSON.parse(scope.row.statements)"
+                            >
+                            </vue-json-pretty>
+                        </el-popover>
+                    </template>
+
                 </el-table-column>
             </el-table>
         </div>
@@ -210,14 +210,11 @@
 
 <script>
     import api from '../../api/policyApi'
-    // import VueJsonPretty from 'vue-json-pretty'
-
-
-
+    import VueJsonPretty from 'vue-json-pretty'
 
     export default {
         components: {
-            // VueJsonPretty
+            VueJsonPretty
         },
         data () {
             var validateStatements = (rule, value, callback) => {

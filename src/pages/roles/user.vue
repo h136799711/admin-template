@@ -67,14 +67,14 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Mobile')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.country_no}} {{scope.row.mobile}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 type="danger"

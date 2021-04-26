@@ -199,7 +199,7 @@ exports.default = {
 	'Article': '文章',
 	'All': '全部',
 	'Author': '作者',
-	'Cms': '内容管理系统',
+	'Cms': '文章',
 	'Content': '内容',
 	'Leaf': '叶子节点',
 	'Shop': '商城',

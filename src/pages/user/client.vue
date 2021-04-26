@@ -1,10 +1,3 @@
-<style>
-    .edit-form {
-    }
-    .edit-form .el-input {
-        width: 320px;
-    }
-</style>
 <template>
     <div class="main-content by-clients padding-md-bottom padding-md-top">
         <el-button
@@ -68,7 +61,7 @@
                         width="300px"
                         :label="$t('ClientSecret')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.client_secret}}&nbsp;&nbsp;&nbsp;<el-button size="mini" :loading="loading" @click.prevent="reset(scope.row)"> {{
                         $t('Reset') }}
                     </el-button>
@@ -82,7 +75,7 @@
                 <el-table-column
                         width="160px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
@@ -90,7 +83,7 @@
                         fixed="right"
                         width="200px"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button class=""
                                    @click="onEdit(scope.row)"
                                    icon="el-icon-edit"

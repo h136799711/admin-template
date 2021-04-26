@@ -53,7 +53,7 @@
                         width="260px"
                         :label="$t('ID')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{scope.row.id}}#{{scope.row.login_session_id}}
                     </template>
                 </el-table-column>
@@ -78,7 +78,7 @@
                 <el-table-column
                         width="200px"
                         :label="$t('Time')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{ $t('CreateTime')}}: {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}<br/>
                         {{$t('ExpireTime')}}:{{(new Date(scope.row.expire_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
                     </template>
@@ -89,7 +89,7 @@
                         width="240px"
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-popconfirm
                                 icon="el-icon-danger"
                                 iconColor="red"

@@ -71,7 +71,7 @@
                         prop="title"
                         :label="$t('Title')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <router-link class="blue" :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}" >{{scope.row.title}}</router-link>
                     </template>
                 </el-table-column>
@@ -84,7 +84,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('Leaf')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{$t('' + scope.row.leaf)}}
 
                     </template>
@@ -92,7 +92,7 @@
                 <el-table-column
                         width="100px"
                         :label="$t('Sort')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.sort}}
                     </template>
                 </el-table-column>
@@ -100,7 +100,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 v-if="scope.row.leaf"
                                 size="mini"

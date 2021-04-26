@@ -68,7 +68,7 @@
                         prop="title"
                         :label="$t('Image')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         <div>
                             <el-image
                                     style="width: 120px;height:90px;"
@@ -80,7 +80,7 @@
                         width="120px"
                         :label="$t('Price')"
                 >
-                    <template slot-scope="scope">
+                    <template #default>
                         {{(scope.row.min_price / 100).toFixed(2)}} - {{(scope.row.max_price / 100).toFixed(2)}}
                         {{$t('Unit.Yuan')}}
                     </template>
@@ -89,14 +89,14 @@
                 <el-table-column
                         width="120px"
                         :label="$t('CreateTime')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd')}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="120px"
                         :label="$t('Status')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <span >
                             <el-button
                                     v-if="scope.row.shelf_status == 'off'"
@@ -122,7 +122,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="by-icon by-pinpai"

@@ -66,14 +66,14 @@
                 <el-table-column
                         width="100px"
                         :label="$t('Telephone')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.tel_prefix}}
                     </template>
                 </el-table-column>
                 <el-table-column
                         width="100px"
                         :label="$t('Pinyin')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         {{scope.row.py}}
                     </template>
                 </el-table-column>
@@ -81,7 +81,7 @@
                 <el-table-column
                         fixed="right"
                         :label="$t('Action')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                                 size="mini"
                                 icon="by-icon by-pinpai"
