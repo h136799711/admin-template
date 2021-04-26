@@ -20,7 +20,13 @@
         height: 100%;
         font-size: 12px;
     }
-
+    .el-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /*margin-left: -200px;*/
+    }
     #app {
         height: 100%;
     }
