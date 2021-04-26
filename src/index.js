@@ -5,8 +5,9 @@ import _ from 'lodash' //
 import Lockr from 'lockr' // 用于缓存较大的数据
 import moment from 'moment' // 日期处理
 import '../static/reset.css' // elementui theme
+import '../static/index.css' // elementui theme
 import ElementPlus from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
+// import 'element-plus/lib/theme-chalk/index.css'
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import {createI18n} from 'vue-i18n'
