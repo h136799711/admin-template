@@ -1207,9 +1207,9 @@
                 window.location.href = this.$router.resolve('/admin/message/index', '#', false).href
             },
             changeLanguages (lang) {
-                console.debug('changeLanguages', lang)
+                this.$i18n.locale = lang.value;
+                console.debug('更换语言', this.$i18n.locale)
                 window.cache.setValue('lang', lang.value, 24 * 3600)
-                window.location.reload()
             },
             getUserData () {
                 window.tools.alertInfo(this.$i18n.t('Loading'))

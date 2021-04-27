@@ -555,7 +555,7 @@ export default {
       count: 0,
       tableData: [],
       loading: false,
-      dialogAddVisible: true,
+      dialogAddVisible: false,
       dialogEditVisible: false,
       order: 0, // 排序信息 1：sort从大到小排序 2：sort从小到大排序
       selectTableRowId: '', // 选中的表格行id,

@@ -334,8 +334,8 @@ export default {
   name: 'App',
   components: {},
   mounted: function () {
-    window.itboye.clientInfo.lang = window.tools.getBrowseLanguage()
     window.itboye.clientInfo.timezone = window.tools.getTimezone()
+    this.$i18n.locale = tools.getBrowseLanguage()
   }
 }
 </script>

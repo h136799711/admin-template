@@ -64,6 +64,24 @@ const router = createRouter({
   routes
 })
 
+const messages = {
+  'zh': {
+    el: zhLocale.el,
+    ...zhCN
+  },
+  'en': {
+    el: enLocale.el,
+    ...en
+  }
+}
+
+// Create VueI18n instance with options
+const i18n = createI18n({
+  locale: 'en',
+  // fallbackLocale: 'zh',
+  messages
+})
+
 router.beforeEach((to, from, next) => {
   NProgress.start()
   next()
@@ -72,24 +90,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach(transition => {
   NProgress.done()
 })
-const messages = {
-  zh: {
-    el: zhLocale.el,
-    ...zhCN
-  },
-  en: {
-    el: enLocale.el,
-    ...en
-  }
-}
-
-// Create VueI18n instance with options
-const i18n = createI18n({
-  locale: 'zh',
-  fallbackLocale: 'en',
-  messages
-})
-
 window.itboye = window.itboye || {}
 window.itboye.clientInfo = window.itboye.clientInfo || {}
 window.Lockr = Lockr
@@ -122,7 +122,6 @@ window.tools.getDeviceToken = function () {
   }
   return ''
 }
-// i18n.locale = tools.getBrowseLanguage()
 
 const app = createApp(App)
 
