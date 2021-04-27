@@ -1,8 +1,8 @@
 <template>
-  <Video></Video>
-<!--  <MainHome>-->
-<!--    <router-view />-->
-<!--  </MainHome>-->
+<!--  <Video></Video>-->
+  <MainHome>
+    <router-view />
+  </MainHome>
 </template>
 
 <script>

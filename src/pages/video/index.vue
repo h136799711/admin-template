@@ -166,15 +166,15 @@
           label="推荐"
         >
           <template #default="scope">
-<!--            <el-switch-->
-<!--              v-model="scope.row.recommend"-->
-<!--              size="mini"-->
-<!--              style="display: block"-->
-<!--              :active-value="1"-->
-<!--              :inactive-value="0"-->
-<!--              active-text="推荐"-->
-<!--              @change="onRecommend(scope.row.id, scope.row.recommend)"-->
-<!--            />-->
+            <el-switch
+              v-model="scope.row.recommend"
+              size="mini"
+              style="display: block"
+              :active-value="1"
+              :inactive-value="0"
+              active-text="推荐"
+              @change="onRecommend(scope.row.id, scope.row.recommend)"
+            />
           </template>
         </el-table-column>
 
