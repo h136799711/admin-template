@@ -1,5 +1,4 @@
 <template>
-<!--  <Video></Video>-->
   <MainHome>
     <router-view />
   </MainHome>
@@ -8,10 +7,9 @@
 <script>
 import '../assets/css/animate.css'
 import MainHome from './common/MainHome.vue'
-import Video from './video/index.vue'
 
 export default {
-  components: { MainHome, Video },
+  components: { MainHome },
   data () {
     return {}
   },
