@@ -64,8 +64,7 @@
             icon="el-icon-search"
             @click="refresh()"
           >
-            {{
-              $t('Search') }}
+            {{$t('Search') }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -167,15 +166,15 @@
           label="推荐"
         >
           <template #default="scope">
-            <el-switch
-              v-model="scope.row.recommend"
-              size="mini"
-              style="display: block"
-              :active-value="1"
-              :inactive-value="0"
-              active-text="推荐"
-              @change="onRecommend(scope.row.id, scope.row.recommend)"
-            />
+<!--            <el-switch-->
+<!--              v-model="scope.row.recommend"-->
+<!--              size="mini"-->
+<!--              style="display: block"-->
+<!--              :active-value="1"-->
+<!--              :inactive-value="0"-->
+<!--              active-text="推荐"-->
+<!--              @change="onRecommend(scope.row.id, scope.row.recommend)"-->
+<!--            />-->
           </template>
         </el-table-column>
 
@@ -232,321 +231,312 @@
     </div>
 
     <el-dialog
-      v-model="dialogEditVisible"
-      :show-close="false"
-      :append-to-body="false"
-      :title="$t('Edit')"
+            v-model="dialogEditVisible"
+            :show-close="false"
+            :append-to-body="false"
+            :title="$t('Edit')"
     >
       <el-form
-        ref="editForm"
-        :model="editForm"
-        label-position="right"
-        :rules="rules"
-        label-width="100px"
-        class="edit-form"
+              ref="editForm"
+              :model="editForm"
+              label-position="right"
+              :rules="rules"
+              label-width="100px"
+              class="edit-form"
       >
         <el-form-item
-          :label="$t('Title')"
-          prop="title"
+                :label="$t('Title')"
+                prop="title"
         >
           <el-input v-model="editForm.title" />
         </el-form-item>
 
         <el-form-item
-          :label="$t('Year')"
-          prop="year"
+                :label="$t('Year')"
+                prop="year"
         >
           <el-input v-model="editForm.year" />
         </el-form-item>
         <el-form-item
-          :label="$t('Area')"
-          prop="area"
+                :label="$t('Area')"
+                prop="area"
         >
           <el-input v-model="editForm.area" />
         </el-form-item>
         <el-form-item
-          :label="$t('Director')"
-          prop="directors"
+                :label="$t('Director')"
+                prop="directors"
         >
           <el-input v-model="editForm.directors" />
         </el-form-item>
         <el-form-item
-          :label="$t('Actor')"
-          prop="actors"
+                :label="$t('Actor')"
+                prop="actors"
         >
           <el-input v-model="editForm.actors" />
         </el-form-item>
         <el-form-item
-          :label="$t('End')"
-          prop="end"
+                :label="$t('End')"
         >
           <el-radio
-            v-model="editForm.is_end"
-            :label="1"
+                  v-model="editForm.is_end"
+                  :label="1"
           >
             {{ $t('Yes') }}
           </el-radio>
           <el-radio
-            v-model="editForm.is_end"
-            :label="0"
+                  v-model="editForm.is_end"
+                  :label="0"
           >
             {{ $t('No') }}
           </el-radio>
         </el-form-item>
         <el-form-item
-          :label="$t('Category')"
-          prop="cate_id"
+                :label="$t('Category')"
+                prop="cate_id"
         >
           <el-select v-model="editForm.cate_id">
             <el-option
-              v-for="item in category"
-              :key="parseInt(item.id)"
-              :label="item.title"
-              :value="parseInt(item.id)"
+                    v-for="item in category"
+                    :key="parseInt(item.id)"
+                    :label="item.title"
+                    :value="parseInt(item.id)"
             />
           </el-select>
         </el-form-item>
         <el-form-item
-          :label="$t('Cover')"
-          prop="cover"
+                :label="$t('Cover')"
+                prop="cover"
         >
           <ImgUploader
-            ref="editImgUploader"
-            show="all"
-            img-cls="videoCover"
-            :default-img-url="editForm.cover"
-            :clear="imgUploadClear"
-            img-type="video_cover"
-            @onUploadSuccess="onUploadSuccess"
+                  ref="editImgUploader"
+                  show="all"
+                  img-cls="videoCover"
+                  :default-img-url="editForm.cover"
+                  :clear="imgUploadClear"
+                  img-type="video_cover"
+                  @onUploadSuccess="onUploadSuccess"
           />
         </el-form-item>
         <el-form-item
-          :label="$t('Tag')"
-          prop="tag"
+                :label="$t('Tag')"
+                prop="tag"
         >
           <el-tag
-            v-for="t in editForm.tags"
-            :key="t"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)"
+                  v-for="t in editForm.tags"
+                  :key="t"
+                  closable
+                  :disable-transitions="false"
+                  @close="handleClose(tag)"
           >
             {{ t }}
           </el-tag>
           <el-input
-            v-if="inputVisible"
-            ref="refEditTag"
-            v-model="inputValue"
-            class="input-new-tag"
-            size="small"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
+                  v-if="inputVisible"
+                  ref="refEditTag"
+                  v-model="inputValue"
+                  class="input-new-tag"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm"
+                  @blur="handleInputConfirm"
           />
           <el-button
-            v-else
-            class="button-new-tag"
-            size="small"
-            @click="showInput"
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput"
           >
             {{ $t('Add') + $t('Tag') }}
           </el-button>
         </el-form-item>
         <el-form-item
-          :label="$t('Description')"
-          prop="description"
+                :label="$t('Description')"
+                prop="description"
         >
           <el-input
-            v-model="editForm.description"
-            :rows="5"
-            type="textarea"
+                  v-model="editForm.description"
+                  :rows="5"
+                  type="textarea"
           />
         </el-form-item>
         <el-form-item
-          label=""
-          prop="id"
-          class="hidden"
+                label=""
+                prop="id"
+                class="hidden"
         >
           <el-input
-            v-model="editForm.id"
-            :disabled="true"
-            class="hidden"
+                  v-model="editForm.id"
+                  :disabled="true"
+                  class="hidden"
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
         <el-button
 
-          :loading="loading"
-          type="primary"
-          @click="submitEditForm()"
+                :loading="loading"
+                type="primary"
+                @click="submitEditForm()"
         >
           {{ $t('Confirm') }}
         </el-button>
-      </div>
+      </template>
     </el-dialog>
 
     <!-- Add Form -->
     <el-dialog
-      v-model="dialogAddVisible"
-      :show-close="false"
-      :append-to-body="false"
-      :title="$t('Add')"
+            v-model="dialogAddVisible"
+            :show-close="false"
+            :append-to-body="false"
+            :title="$t('Add')"
     >
       <el-form
-        ref="addForm"
-        status-icon
-        :model="addForm"
-        label-position="right"
-        :rules="rules"
-        label-width="100px"
+              ref="addForm"
+              status-icon
+              :model="addForm"
+              label-position="right"
+              :rules="rules"
+              label-width="100px"
       >
         <el-form-item
-          :label="$t('Title')"
-          prop="title"
+                :label="$t('Title')"
+                prop="title"
         >
           <el-input v-model="addForm.title" />
         </el-form-item>
         <el-form-item
-          :label="$t('Year')"
-          prop="year"
+                :label="$t('Year')"
+                prop="year"
         >
           <el-input v-model="addForm.year" />
         </el-form-item>
         <el-form-item
-          :label="$t('Area')"
-          prop="area"
+                :label="$t('Area')"
+                prop="area"
         >
           <el-input v-model="addForm.area" />
         </el-form-item>
         <el-form-item
-          :label="$t('Director')"
-          prop="directors"
+                :label="$t('Director')"
+                prop="directors"
         >
           <el-input v-model="addForm.directors" />
         </el-form-item>
         <el-form-item
-          :label="$t('Actor')"
-          prop="actors"
+                :label="$t('Actor')"
+                prop="actors"
         >
           <el-input v-model="addForm.actors" />
         </el-form-item>
 
         <el-form-item
-          :label="$t('End')"
-          prop="end"
+                :label="$t('End')"
+                prop="end"
         >
           <el-radio
-            v-model="addForm.is_end"
-            :label="1"
+                  v-model="addForm.is_end"
+                  :label="1"
           >
             {{ $t('Yes') }}
           </el-radio>
           <el-radio
-            v-model="addForm.is_end"
-            :label="0"
+                  v-model="addForm.is_end"
+                  :label="0"
           >
             {{ $t('No') }}
           </el-radio>
         </el-form-item>
         <el-form-item
-          :label="$t('Category')"
-          prop="cate_id"
+                :label="$t('Category')"
+                prop="cate_id"
         >
           <el-select v-model="addForm.cate_id">
             <el-option
-              v-for="item in category"
-              :key="parseInt(item.id)"
-              :label="item.title"
-              :value="parseInt(item.id)"
+                    v-for="item in category"
+                    :key="parseInt(item.id)"
+                    :label="item.title"
+                    :value="parseInt(item.id)"
             />
           </el-select>
         </el-form-item>
 
         <el-form-item
-          :label="$t('Cover')"
-          prop="cover"
+                :label="$t('Cover')"
+                prop="cover"
         >
           <ImgUploader
-            ref="editImgUploader"
-            img-cls="videoCover"
-            :default-img-url="addForm.cover"
-            :clear="imgUploadClear"
-            img-type="video_cover"
-            @onUploadSuccess="onUploadSuccess"
+                  ref="editImgUploader"
+                  img-cls="videoCover"
+                  :default-img-url="addForm.cover"
+                  :clear="imgUploadClear"
+                  img-type="video_cover"
+                  @onUploadSuccess="onUploadSuccess"
           />
         </el-form-item>
         <el-form-item
-          :label="$t('Tag')"
-          prop="tag"
+                :label="$t('Tag')"
+                prop="tag"
         >
           <el-tag
-            v-for="t in addForm.tags"
-            :key="t"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)"
+                  v-for="t in addForm.tags"
+                  :key="t"
+                  closable
+                  :disable-transitions="false"
+                  @close="handleClose(tag)"
           >
             {{ t }}
           </el-tag>
           <el-input
-            v-if="inputVisible"
-            ref="refAddTag"
-            v-model="inputValue"
-            class="input-new-tag"
-            size="small"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
+                  v-if="inputVisible"
+                  ref="refAddTag"
+                  v-model="inputValue"
+                  class="input-new-tag"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm"
+                  @blur="handleInputConfirm"
           />
           <el-button
-            v-else
-            class="button-new-tag"
-            size="small"
-            @click="showInput"
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput"
           >
             {{ $t('Add') + $t('Tag') }}
           </el-button>
         </el-form-item>
         <el-form-item
-          :label="$t('Description')"
-          prop="description"
+                :label="$t('Description')"
+                prop="description"
         >
           <el-input
-            v-model="addForm.description"
-            type="textarea"
+                  v-model="addForm.description"
+                  type="textarea"
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
         <el-button @click="dialogAddVisible = false">
           {{ $t('Cancel') }}
         </el-button>
         <el-button
-          :loading="loading"
-          type="primary"
-          @click="submitAddForm()"
+                :loading="loading"
+                type="primary"
+                @click="submitAddForm()"
         >
           {{ $t('Confirm') }}
-        </el-button>
-      </div>
+        </el-button></template>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import api from '../../api/videoApi'
-import fileApi from '../../api/fileApi'
 import cateApi from '../../api/videoCateApi'
-
-import ImgUploader from '@/components/img-uploader2online.vue'
+import ImgUploader from '../../components/img-uploaderV3.vue'
 
 export default {
   components: {
@@ -618,7 +608,6 @@ export default {
     })
   },
   mounted: function () {
-    // this.refresh();
   },
   methods: {
     showInput () {
@@ -703,23 +692,11 @@ export default {
     onVideoSource (id) {
       this.$router.push({ path: 'source/' + id })
     },
-    editorImgAdd (pos, file) {
-      fileApi.upload(file, 'video_cover').then(({ data }) => {
-        if (data.code === 0) {
-          let imgUrl = window.tools.getImgUrl(data.data.relative_path)
-          this.$refs.md.$img2Url(pos, imgUrl)
-        } else {
-          window.tools.alertError(data.msg)
-        }
-      }).catch((reason) => {
-        window.tools.alertError(reason)
-      })
-    },
     onUploadSuccess (data) {
       if (this.dialogAddVisible) {
-        this.addForm.cover = window.tools.getImgUrl(data.path)
+        this.addForm.cover = data.trim(",")
       } else if (this.dialogEditVisible) {
-        this.editForm.cover = window.tools.getImgUrl(data.path)
+        this.editForm.cover = data.trim(",")
       }
       console.debug('image upload success', data)
     },
@@ -781,8 +758,7 @@ export default {
       this.dialogAddVisible = true
     },
     onEdit (row) {
-      console.log('row', row)
-      this.editForm.is_end = row.is_end
+      this.editForm.is_end = parseInt(row.end)
       this.editForm.directors = row.directors
       this.editForm.actors = row.actors
       this.editForm.area = row.area

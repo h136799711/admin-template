@@ -1,5 +1,5 @@
 <template>
-  <CmsArticle></CmsArticle>
+  <Video></Video>
 <!--  <MainHome>-->
 <!--    <router-view />-->
 <!--  </MainHome>-->
@@ -8,10 +8,10 @@
 <script>
 import '../assets/css/animate.css'
 import MainHome from './common/MainHome.vue'
-import CmsArticle from './cms_article/index.vue'
+import Video from './video/index.vue'
 
 export default {
-  components: { MainHome, CmsArticle },
+  components: { MainHome, Video },
   data () {
     return {}
   },
