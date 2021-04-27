@@ -95,7 +95,7 @@
           prop="pay_code"
           :label="$t('PayCode')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.pay_code }}
           </template>
         </el-table-column>
@@ -191,7 +191,7 @@
           prop="channel"
           :label="$t('Channel')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.client_id }}
           </template>
         </el-table-column>
@@ -200,7 +200,7 @@
           prop="pay_code"
           :label="$t('PayCode')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.pay_code }}
           </template>
         </el-table-column>
@@ -217,7 +217,7 @@
           prop="pay_code"
           :label="$t('PayType')"
         >
-          <template #default>
+          <template #default="scope">
             {{ getPayType(scope.row.pay_type) }}
           </template>
         </el-table-column>

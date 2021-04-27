@@ -72,7 +72,7 @@
           prop="start_url"
           :label="$t('StartUrl')"
         >
-          <template #default>
+          <template #default="scope">
             <a
               :href="scope.row.start_url"
               target="_blank"
@@ -84,7 +84,7 @@
           prop="current_url"
           :label="$t('CurrentUrl')"
         >
-          <template #default>
+          <template #default="scope">
             <a
               :href="scope.row.current_url"
               target="_blank"
@@ -96,7 +96,7 @@
           prop="page_no"
           :label="$t('Chapter') + $t('Total')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.page_no }} <br>
             <el-button
               size="mini"
@@ -112,7 +112,7 @@
           prop="next_crawling_time"
           :label="$t('NextCrawlingTime')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (new Date(scope.row.next_crawling_time * 1000)).format('yyyy-MM-dd') }}
           </template>
         </el-table-column>
@@ -121,7 +121,7 @@
           width="220px"
           :label="$t('State')"
         >
-          <template #default>
+          <template #default="scope">
             {{ getState(scope.row) }}
             <br>
             最近新章节更新时间: {{ (new Date(scope.row.last_suc_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}

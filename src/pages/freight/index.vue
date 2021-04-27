@@ -52,7 +52,7 @@
           width="120px"
           :label="$t('Method')"
         >
-          <template #default>
+          <template #default="scope">
             {{ getMethodType(scope.row.method) }}
           </template>
         </el-table-column>
@@ -60,7 +60,7 @@
           width="120px"
           :label="$t('LogisticsType')"
         >
-          <template #default>
+          <template #default="scope">
             {{ getLogisticType(scope.row.logistics_type) }}
           </template>
         </el-table-column>
@@ -69,7 +69,7 @@
           prop="freight_type"
           :label="$t('Freight')"
         >
-          <template #default>
+          <template #default="scope">
             {{ getFreightType(scope.row.freight_type) }}
           </template>
         </el-table-column>
@@ -78,7 +78,7 @@
           prop="price_define"
           :label="$t('Place')"
         >
-          <template #default>
+          <template #default="scope">
             <span v-html="parsePlace(scope.row.price_define)" />
           </template>
         </el-table-column>
@@ -86,7 +86,7 @@
           width="400px"
           :label="$t('FreeShipping')"
         >
-          <template #default>
+          <template #default="scope">
             <span v-html="parseFreeCondition(scope.row.free_condition)" />
           </template>
         </el-table-column>

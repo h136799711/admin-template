@@ -62,7 +62,7 @@
           prop="title"
           :label="$t('Mobile')"
         >
-          <template #default>
+          <template #default="scope">
             ({{ scope.row.country_no }}) {{ scope.row.mobile }}
             <div
               v-if="scope.row.mobile_auth == 1"
@@ -93,7 +93,7 @@
           prop="title"
           :label="$t('Email')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.email }}
             <div
               v-if="scope.row.email_auth == 1"

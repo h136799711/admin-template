@@ -74,7 +74,7 @@
           prop="is_sale"
           :label="$t('Image')"
         >
-          <template #default>
+          <template #default="scope">
             <img
               :src="scope.row.icon"
               alt="icon"
@@ -87,7 +87,7 @@
           prop="title"
           :label="$t('Title')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.title }}
           </template>
         </el-table-column>

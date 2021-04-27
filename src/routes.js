@@ -1,131 +1,130 @@
-import { defineAsyncComponent } from 'vue'
 
 // 公用组件
-const NotFound =  defineAsyncComponent(() => import('./pages/404/NotFound.vue'))
-const Login = defineAsyncComponent(() => import('./pages/account/Login.vue'))
-const Logout = defineAsyncComponent(() => import('./pages/account/Logout.vue'))
-const Password = defineAsyncComponent(() => import('./pages/account/password.vue'))
-const Avatar = defineAsyncComponent(() => import('./pages/account/avatar.vue'))
+const NotFound =          (() => import('./pages/error/NotFound.vue'))
+const Login =         (() => import('./pages/account/Login.vue'))
+const Logout =         (() => import('./pages/account/Logout.vue'))
+const Password =         (() => import('./pages/account/password.vue'))
+const Avatar =         (() => import('./pages/account/avatar.vue'))
 // admin组件，管理后台首页部分
-const Admin = defineAsyncComponent(() => import('./pages/Admin.vue'))
-const AdminIndex = defineAsyncComponent(() => import('./pages/admin/index.vue'))
+const Admin =         (() => import('./pages/Admin.vue'))
+const AdminIndex =         (() => import('./pages/admin/index.vue'))
 
 // 数据字典
-const DatatreeIndex = defineAsyncComponent(() => import('./pages/datatree/index.vue'))
+const DatatreeIndex =         (() => import('./pages/datatree/index.vue'))
 
 // 接口日志
-const ApiRequestLog = defineAsyncComponent(() => import('./pages/api/log.vue'))
+const ApiRequestLog =         (() => import('./pages/api/log.vue'))
 // 应用管理
-const ClientsIndex = defineAsyncComponent(() => import('./pages/clients/index.vue'))
+const ClientsIndex =         (() => import('./pages/clients/index.vue'))
 // 角色管理
-const RolesIndex = defineAsyncComponent(() => import('./pages/roles/index.vue'))
+const RolesIndex =         (() => import('./pages/roles/index.vue'))
 // 角色菜单
-const RolesMenu = defineAsyncComponent(() => import('pages/roles/menu.vue'))
+const RolesMenu =         (() => import('pages/roles/menu.vue'))
 
 // 角色策略
-const RolesPolicy = defineAsyncComponent(() => import('./pages/roles/policy.vue'))
+const RolesPolicy =         (() => import('./pages/roles/policy.vue'))
 // 角色用户
-const RolesUser = defineAsyncComponent(() => import('./pages/roles/user.vue'))
+const RolesUser =         (() => import('./pages/roles/user.vue'))
 // 策略管理
-const PolicyIndex = defineAsyncComponent(() => import('./pages/policy/index.vue'))
+const PolicyIndex =         (() => import('./pages/policy/index.vue'))
 // 消息
-const MessageIndex = defineAsyncComponent(() => import('./pages/message/index.vue'))
+const MessageIndex =         (() => import('./pages/message/index.vue'))
 // 配置
-const ConfigIndex = defineAsyncComponent(() => import('./pages/config/index.vue'))
+const ConfigIndex =         (() => import('./pages/config/index.vue'))
 // 菜单
-const MenuIndex = defineAsyncComponent(() => import('./pages/menu/index.vue'))
+const MenuIndex =         (() => import('./pages/menu/index.vue'))
 // 轮播
-const BannersIndex = defineAsyncComponent(() => import('./pages/banners/index.vue'))
+const BannersIndex =         (() => import('./pages/banners/index.vue'))
 
 // 相册
-const AlbumIndex = defineAsyncComponent(() => import('./pages/album/index.vue'))
+const AlbumIndex =         (() => import('./pages/album/index.vue'))
 // 相册分类
-const AlbumCategory = defineAsyncComponent(() => import('./pages/album/category.vue'))
+const AlbumCategory =         (() => import('./pages/album/category.vue'))
 // 相册照片
-const AlbumPhoto = defineAsyncComponent(() => import('./pages/album/photo.vue'))
+const AlbumPhoto =         (() => import('./pages/album/photo.vue'))
 // 文章
-const CmsArticle = defineAsyncComponent(() => import('./pages/cms_article/index.vue'))
+const CmsArticle =         (() => import('./pages/cms_article/index.vue'))
 
 // Shop* * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
-const SpCate = defineAsyncComponent(() => import('./pages/spcate/index.vue'))
-const SpBrand = defineAsyncComponent(() => import('./pages/sp_brand/index.vue'))
-const SpBrandRelate = defineAsyncComponent(() => import('./pages/spcate/relate_brand.vue'))
-const SpProp = defineAsyncComponent(() => import('./pages/sp_prop/index.vue'))
-const SpPropValue = defineAsyncComponent(() => import('./pages/sp_prop/value.vue'))
-const SpPropRelate = defineAsyncComponent(() => import('./pages/spcate/relate_prop.vue'))
+const SpCate =         (() => import('./pages/spcate/index.vue'))
+const SpBrand =         (() => import('./pages/sp_brand/index.vue'))
+const SpBrandRelate =         (() => import('./pages/spcate/relate_brand.vue'))
+const SpProp =         (() => import('./pages/sp_prop/index.vue'))
+const SpPropValue =         (() => import('./pages/sp_prop/value.vue'))
+const SpPropRelate =         (() => import('./pages/spcate/relate_prop.vue'))
 // Shop END * * * * ** * * * ** * * * ** * * * ** * * * ** * * * *
 // Pay ***********************
-const PayOrder = defineAsyncComponent(() => import('./pages/pay_order/index.vue'))
+const PayOrder =         (() => import('./pages/pay_order/index.vue'))
 // Pay END *******************
 
 // Video ***********************
-const VideoIndex = defineAsyncComponent(() => import('./pages/video/index.vue'))
-const VideoCate = defineAsyncComponent(() => import('./pages/video/cate.vue'))
-const VideoSource = defineAsyncComponent(() => import('./pages/video/source.vue'))
-const VideoPlay = defineAsyncComponent(() => import('./pages/video/play.vue'))
+const VideoIndex =         (() => import('./pages/video/index.vue'))
+const VideoCate =         (() => import('./pages/video/cate.vue'))
+const VideoSource =         (() => import('./pages/video/source.vue'))
+const VideoPlay =         (() => import('./pages/video/play.vue'))
 // Video END *******************
 
 // Goods ***********************
-const GoodsIndex = defineAsyncComponent(() => import('./pages/goods/index.vue'))
-const GoodsCreate = defineAsyncComponent(() => import('./pages/goods/create.vue'))
-const GoodsEdit = defineAsyncComponent(() => import('./pages/goods/edit.vue'))
-const GoodsSku = defineAsyncComponent(() => import('./pages/goods/sku.vue'))
-const GoodsPlace = defineAsyncComponent(() => import('./pages/goods/place.vue'))
-const FreightIndex = defineAsyncComponent(() => import('./pages/freight/index.vue'))
-const ShopIndex = defineAsyncComponent(() => import('./pages/sp_shop/index.vue'))
-const ShopGoods = defineAsyncComponent(() => import('./pages/sp_shop/goods.vue'))
+const GoodsIndex =         (() => import('./pages/goods/index.vue'))
+const GoodsCreate =         (() => import('./pages/goods/create.vue'))
+const GoodsEdit =         (() => import('./pages/goods/edit.vue'))
+const GoodsSku =         (() => import('./pages/goods/sku.vue'))
+const GoodsPlace =         (() => import('./pages/goods/place.vue'))
+const FreightIndex =         (() => import('./pages/freight/index.vue'))
+const ShopIndex =         (() => import('./pages/sp_shop/index.vue'))
+const ShopGoods =         (() => import('./pages/sp_shop/goods.vue'))
 // Goods END *******************
 
 // Book Start *******************
-const BookIndex = defineAsyncComponent(() => import('./pages/book/index.vue'))
-const BookSource = defineAsyncComponent(() => import('./pages/book/source.vue'))
-const BookAllSource = defineAsyncComponent(() => import('./pages/book/all_source.vue'))
-const BookManage = defineAsyncComponent(() => import('./pages/book/manage.vue'))
-const BookSourcePages = defineAsyncComponent(() => import('./pages/book/pages.vue'))
-const BookSourcePages2 = defineAsyncComponent(() => import('./pages/book/index_pages.vue'))
+const BookIndex =         (() => import('./pages/book/index.vue'))
+const BookSource =         (() => import('./pages/book/source.vue'))
+const BookAllSource =         (() => import('./pages/book/all_source.vue'))
+const BookManage =         (() => import('./pages/book/manage.vue'))
+const BookSourcePages =         (() => import('./pages/book/pages.vue'))
+const BookSourcePages2 =         (() => import('./pages/book/index_pages.vue'))
 // Book END *******************
 
 // User Start *******************
-const UserIndex = defineAsyncComponent(() => import('./pages/user/index.vue'))
-const UserSession = defineAsyncComponent(() => import('./pages/user/session.vue'))
-const UserProfile = defineAsyncComponent(() => import('./pages/user/profile.vue'))
-const UserLog = defineAsyncComponent(() => import('./pages/user/log.vue'))
-const UserClient = defineAsyncComponent(() => import('./pages/user/client.vue'))
-const UserWithdraw = defineAsyncComponent(() => import('./pages/withdrawals/index.vue'))
-const UserCoupon = defineAsyncComponent(() => import('./pages/user/coupon.vue'))
+const UserIndex =         (() => import('./pages/user/index.vue'))
+const UserSession =         (() => import('./pages/user/session.vue'))
+const UserProfile =         (() => import('./pages/user/profile.vue'))
+const UserLog =         (() => import('./pages/user/log.vue'))
+const UserClient =         (() => import('./pages/user/client.vue'))
+const UserWithdraw =         (() => import('./pages/withdrawals/index.vue'))
+const UserCoupon =         (() => import('./pages/user/coupon.vue'))
 // User END *******************
 
 // FriendShip Start *******************
-const FriendShipIndex = defineAsyncComponent(() => import('./pages/friendship_links/index.vue'))
+const FriendShipIndex =         (() => import('./pages/friendship_links/index.vue'))
 // FriendShip END *******************
 
 // Suggest Start *******************
-const SuggestIndex = defineAsyncComponent(() => import('./pages/suggest/index.vue'))
+const SuggestIndex =         (() => import('./pages/suggest/index.vue'))
 // Suggest END *******************
 
 // Suggest Start *******************
-const RechargeIndex = defineAsyncComponent(() => import('./pages/recharge/index.vue'))
-const RechargeProfile = defineAsyncComponent(() => import('./pages/recharge/profile.vue'))
+const RechargeIndex =         (() => import('./pages/recharge/index.vue'))
+const RechargeProfile =         (() => import('./pages/recharge/profile.vue'))
 // Suggest END *******************
 
 // Region Start *******************
-const RegionIndex = defineAsyncComponent(() => import('./pages/region/index.vue'))
-const RegionProvince = defineAsyncComponent(() => import('./pages/region/province.vue'))
-const RegionCity = defineAsyncComponent(() => import('./pages/region/city.vue'))
-const RegionCityArea = defineAsyncComponent(() => import('./pages/region/cityArea.vue'))
-const RegionTown = defineAsyncComponent(() => import('./pages/region/town.vue'))
+const RegionIndex =         (() => import('./pages/region/index.vue'))
+const RegionProvince =         (() => import('./pages/region/province.vue'))
+const RegionCity =         (() => import('./pages/region/city.vue'))
+const RegionCityArea =         (() => import('./pages/region/cityArea.vue'))
+const RegionTown =         (() => import('./pages/region/town.vue'))
 // Region END *******************
 
 // Diet Start *******************
-const DtGoodsIndex = defineAsyncComponent(() => import('./pages/dt_goods/index.vue'))
-const DtGoodsCreate = defineAsyncComponent(() => import('./pages/dt_goods/create.vue'))
-const DtGoodsEdit = defineAsyncComponent(() => import('./pages/dt_goods/edit.vue'))
-const DtGoodsSku = defineAsyncComponent(() => import('./pages/dt_goods/sku.vue'))
+const DtGoodsIndex =         (() => import('./pages/dt_goods/index.vue'))
+const DtGoodsCreate =         (() => import('./pages/dt_goods/create.vue'))
+const DtGoodsEdit =         (() => import('./pages/dt_goods/edit.vue'))
+const DtGoodsSku =         (() => import('./pages/dt_goods/sku.vue'))
 
-const DtCouponIndex = defineAsyncComponent(() => import('./pages/dt_coupon/index.vue'))
-const DtOrderIndex = defineAsyncComponent(() => import('./pages/dt_order/index.vue'))
-const PickupPlaceIndex = defineAsyncComponent(() => import('./pages/pickup_place/index.vue'))
-const OrderComplaintsIndex = defineAsyncComponent(() => import('./pages/order_complaints/index.vue'))
+const DtCouponIndex =         (() => import('./pages/dt_coupon/index.vue'))
+const DtOrderIndex =         (() => import('./pages/dt_order/index.vue'))
+const PickupPlaceIndex =         (() => import('./pages/pickup_place/index.vue'))
+const OrderComplaintsIndex =         (() => import('./pages/order_complaints/index.vue'))
 
 // Diet END *******************
 

@@ -129,7 +129,7 @@
           prop="pic"
           :label="$t('Image')"
         >
-          <template #default>
+          <template #default="scope">
             <ImgUploader
               :ref="'imgUploader' + scope.row.index"
               :number="'' + scope.row.index"
@@ -144,7 +144,7 @@
           width="160px"
           :label="$t('Goods') + $t('Number')"
         >
-          <template #default>
+          <template #default="scope">
             <el-input v-model="skuForm.out_goods_no[scope.row.index]" />
           </template>
         </el-table-column>
@@ -152,7 +152,7 @@
           width="160px"
           :label="$t('Stock') + $t('Price')"
         >
-          <template #default>
+          <template #default="scope">
             <el-input v-model="skuForm.stock_price[scope.row.index]" />
           </template>
         </el-table-column>
@@ -160,7 +160,7 @@
           width="160px"
           :label="$t('Price')"
         >
-          <template #default>
+          <template #default="scope">
             <el-input v-model="skuForm.price[scope.row.index]" />
           </template>
         </el-table-column>
@@ -168,7 +168,7 @@
           width="160px"
           :label="$t('Stock')"
         >
-          <template #default>
+          <template #default="scope">
             <el-input v-model="skuForm.stock[scope.row.index]" />
           </template>
         </el-table-column>

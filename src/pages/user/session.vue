@@ -70,7 +70,7 @@
           width="260px"
           :label="$t('ID')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.id }}#{{ scope.row.login_session_id }}
           </template>
         </el-table-column>

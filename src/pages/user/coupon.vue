@@ -47,7 +47,7 @@
           prop="cond_goods_id"
           :label="$t('GoodsId')"
         >
-          <template #default>
+          <template #default="scope">
             <span v-if="scope.row.cond_goods_id=='0'">任何商品</span>
             <span
               v-for="(item,index) in scope.row.cond_goods_info"
@@ -61,7 +61,7 @@
           width="160px"
           :label="$t('DiscountAmount')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (scope.row.discount_amount / 100).toFixed(2) }}
             {{ $t('Unit.Yuan') }}
           </template>
@@ -70,7 +70,7 @@
           width="160px"
           :label="$t('CondAmount')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (scope.row.cond_order_amount / 100).toFixed(2) }}
             {{ $t('Unit.Yuan') }}
           </template>

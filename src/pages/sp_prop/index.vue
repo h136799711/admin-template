@@ -63,7 +63,7 @@
           prop="title"
           :label="$t('Title')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.title }}
           </template>
         </el-table-column>
@@ -72,7 +72,7 @@
           prop="is_sale"
           :label="$t('Is') + ' ' + $t('SaleProperty')"
         >
-          <template #default>
+          <template #default="scope">
             {{ $t('' + scope.row.is_sale) }}
           </template>
         </el-table-column>

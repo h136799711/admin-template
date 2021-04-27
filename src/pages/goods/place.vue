@@ -55,7 +55,7 @@
           prop="freight"
           :label="$t('Freight')"
         >
-          <template #default>
+          <template #default="scope">
             {{ $t('Freight') }}{{ $t('Template') }}: {{ scope.row.freight_tpl_id }}
           </template>
         </el-table-column>

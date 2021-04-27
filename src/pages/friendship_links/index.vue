@@ -35,7 +35,7 @@
           prop="name"
           :label="$t('Title')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.name }}
           </template>
         </el-table-column>

@@ -115,7 +115,7 @@
             width="220px"
             :label="$t('Title')"
           >
-            <template #default>
+            <template #default="scope">
               【{{ scope.row.cate_name }}】{{ scope.row.title }}
             </template>
           </el-table-column>
@@ -124,7 +124,7 @@
             width="140px"
             :label="$t('Cover')"
           >
-            <template #default>
+            <template #default="scope">
               <img
                 v-if="scope.row.cover"
                 alt="cover"
@@ -139,7 +139,7 @@
             width="100px"
             :label="$t('Source')"
           >
-            <template #default>
+            <template #default="scope">
               <div v-if="scope.row.source_url">
                 <a
                   :href="scope.row.source_url"
@@ -157,7 +157,7 @@
             width="120px"
             :label="$t('Tag')"
           >
-            <template #default>
+            <template #default="scope">
               {{ scope.row.tags }}
             </template>
           </el-table-column>
@@ -166,7 +166,7 @@
             width="100px"
             :label="$t('Author')"
           >
-            <template #default>
+            <template #default="scope">
               {{ scope.row.author_nick }}
             </template>
           </el-table-column>
@@ -175,20 +175,17 @@
             width="90px"
             :label="$t('View')"
           >
-            <template #default>
+            <template #default="scope">
               {{ scope.row.views }}
             </template>
           </el-table-column>
 
           <el-table-column
-            prop="cf_status"
             width="180px"
             :label="$t('Status')"
           >
-            <template #default>
+            <template #default="scope">
               <span>
-                {{ $t('CmsArticle.' + scope.row.publish_status) }}
-
                 <el-button
                   v-if="scope.row.publish_status == 'draft'"
                   type="primary"
@@ -200,12 +197,10 @@
                 </el-button>
                 <el-button
                   v-if="scope.row.publish_status == 'published'"
-                  type="primary"
                   size="mini"
                   icon="by-icon by-xiajia"
                   @click="onDraft(scope.row.id)"
-                >
-                  {{ $t('No') }}-{{ $t('Publish') }}
+                >{{ $t('draft') }}
                 </el-button>
               </span>
             </template>
@@ -247,6 +242,7 @@
         />
       </div>
     </div>
+
     <!-- Edit Form -->
     <div
       v-if="this.dialogEditVisible"
@@ -257,7 +253,7 @@
       </div>
       <el-form
         ref="editForm"
-        status-icon
+        :status-icon="true"
         :model="editForm"
         label-position="right"
         :rules="rules"
@@ -278,98 +274,92 @@
           <el-input v-model="editForm.come_from" />
         </el-form-item>
         <el-form-item
-          :label="$t('Source') + 'Url'"
+                :label="$t('Source') + 'Url'"
         >
           <el-input v-model="editForm.source_url" />
         </el-form-item>
         <el-form-item
-          required
-          :label="$t('Summary')"
-          prop="summary"
+                required
+                :label="$t('Summary')"
+                prop="summary"
         >
           <el-input
-            v-model="editForm.summary"
-            type="textarea"
-            rows="5"
+                  v-model="editForm.summary"
+                  type="textarea"
+                  rows="5"
           />
         </el-form-item>
         <el-form-item
-          :label="$t('Category')"
-          prop="category"
+                :label="$t('Category')"
+                prop="category"
         >
           <el-select
-            v-model="editForm.category_id"
-            size="mini"
-            clearable
-            placeholder="请选择"
+                  v-model="editForm.category_id"
+                  size="mini"
+                  clearable
+                  placeholder="请选择"
           >
             <el-option
-              v-for="item in category"
-              :key="item.code"
-              :label="item.name"
-              :value="item.code"
+                    v-for="item in category"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.code"
             />
           </el-select>
         </el-form-item>
         <el-form-item
-          :label="$t('Cover')"
-          prop="cover"
+                :label="$t('Cover')"
+                prop="cover"
         >
           <ImgUploader
-            ref="editImgUploader"
-            :default-img-url="editForm.cover"
-            :clear="imgUploadClear"
-            img-type="cms_article"
-            @onUploadSuccess="onUploadSuccess"
+                  ref="editImgUploader"
+                  :default-img-url="editForm.cover"
+                  :clear="imgUploadClear"
+                  img-type="cms_article"
+                  @onUploadSuccess="onUploadSuccess"
           />
         </el-form-item>
         <el-form-item
-          :label="$t('Tag')"
-          prop="tag"
+                :label="$t('Tag')"
+                prop="tag"
         >
           <el-tag
-            v-for="t in editForm.tags"
-            :key="t"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)"
+                  v-for="t in editForm.tags"
+                  :key="t"
+                  closable
+                  :disable-transitions="false"
+                  @close="handleClose(tag)"
           >
             {{ t }}
           </el-tag>
           <el-input
-            v-if="inputVisible"
-            ref="refEditTag"
-            v-model="inputValue"
-            class="input-new-tag"
-            size="small"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
+                  v-if="inputVisible"
+                  ref="refEditTag"
+                  v-model="inputValue"
+                  class="input-new-tag"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm"
+                  @blur="handleInputConfirm"
           />
           <el-button
-            v-else
-            class="button-new-tag"
-            size="small"
-            @click="showInput"
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput"
           >
             {{ $t('Add') + $t('Tag') }}
           </el-button>
         </el-form-item>
 
         <el-form-item
-          :label="$t('Content')"
-          prop="content"
+                :label="$t('Content')"
+                prop="content"
         >
-          <mavon-editor
-            ref="md"
-            v-model="editForm.content"
-            @imgAdd="editorImgAdd"
-          />
+          <v-md-editor :disabled-menus="[]"
+                       @upload-image="editorUploadImageForAdd" v-model="editForm.content" height="400px"></v-md-editor>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div>
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -494,15 +484,11 @@
           :label="$t('Content')"
           prop="content"
         >
-          <mavon-editor
-            ref="md"
-            v-model="addForm.content"
-            @imgAdd="editorImgAdd"
-          />
+          <v-md-editor :disabled-menus="[]"
+                       @upload-image="editorUploadImageForAdd" v-model="addForm.content" height="400px"></v-md-editor>
         </el-form-item>
       </el-form>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button @click="dialogAddVisible = false">
@@ -523,12 +509,11 @@
 <script>
 import fileApi from '../../api/fileApi'
 import articleApi from '../../api/articleApi'
-
-import ImgUploader from '@/components/img-uploaderV3.vue'
+import ImgUploader from '../../components/img-uploaderV3.vue'
 
 export default {
   components: {
-    ImgUploader
+    ImgUploader,
   },
   data () {
     return {
@@ -570,7 +555,7 @@ export default {
       count: 0,
       tableData: [],
       loading: false,
-      dialogAddVisible: false,
+      dialogAddVisible: true,
       dialogEditVisible: false,
       order: 0, // 排序信息 1：sort从大到小排序 2：sort从小到大排序
       selectTableRowId: '', // 选中的表格行id,
@@ -632,13 +617,13 @@ export default {
     },
     showInput () {
       this.inputVisible = true
-      this.$nextTick(_ => {
-        if (this.dialogAddVisible) {
-          this.$refs.refAddTag.$refs.input.focus()
-        } else if (this.dialogEditVisible) {
-          this.$refs.refEditTag.$refs.input.focus()
-        }
-      })
+      // this.$nextTick(_ => {
+      //   if (this.dialogAddVisible) {
+      //     this.$refs.refAddTag.$refs.input.focus()
+      //   } else if (this.dialogEditVisible) {
+      //     this.$refs.refEditTag.$refs.input.focus()
+      //   }
+      // })
     },
     handleInputConfirm () {
       let inputValue = this.inputValue
@@ -697,23 +682,58 @@ export default {
       }).catch(() => {
       })
     },
-    editorImgAdd (pos, file) {
-      fileApi.upload(file, 'cms_article').then(({ data }) => {
-                	if (data.code === 0) {
-                		let imgUrl = window.tools.getImgUrl(data.data.relative_path)
-          this.$refs.md.$img2Url(pos, imgUrl)
+    editorUploadImageForAdd (event, insertImage, files) {
+      console.debug('编辑器图片文件', files, insertImage);
+      if (!files || files.length === 0) {
+        window.tools.alertInfo('请选择文件')
+        return;
+      }
+      fileApi.upload(files[0], 'cms_article').then(({ data }) => {
+        console.debug(data)
+        if (data.code === 0) {
+          let imgUrl = window.tools.getImgUrl(data.data.relative_path)
+          if (data.data.oss_key) {
+            imgUrl = data.data.oss_key
+          }
+            insertImage({
+              url: imgUrl,
+              desc: '图片',
+            })
         } else {
           window.tools.alertError(data.msg)
         }
       }).catch((reason) => {
-                	window.tools.alertError(reason)
+          window.tools.alertError(reason)
+      })
+    },
+    editorUploadImageForEdit (event, insertImage, files) {
+      console.debug('编辑器图片文件', files, insertImage);
+      if (!files || files.length === 0) {
+        window.tools.alertInfo('请选择文件')
+        return;
+      }
+      fileApi.upload(files[0], 'cms_article').then(({ resp }) => {
+        if (resp.code === 0) {
+          let imgUrl = window.tools.getImgUrl(resp.data.relative_path)
+          if (resp.data.oss_key) {
+            imgUrl = resp.data.oss_key
+          }
+          insertImage({
+            url: imgUrl,
+            desc: '',
+          })
+        } else {
+          window.tools.alertError(data.msg)
+        }
+      }).catch((reason) => {
+        window.tools.alertError(reason)
       })
     },
     onUploadSuccess (data) {
       if (this.dialogAddVisible) {
-        this.addForm.cover = window.tools.getImgUrl(data.path)
+        this.addForm.cover = data.trim(",")
       } else if (this.dialogEditVisible) {
-        this.editForm.cover = window.tools.getImgUrl(data.path)
+        this.editForm.cover = data.trim(",")
       }
       console.debug('image upload success', data)
     },

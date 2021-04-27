@@ -111,7 +111,7 @@
           prop="summary"
           :label="$t('Description')"
         >
-          <template #default>
+          <template #default="scope">
             <div class="summary">
               {{ scope.row.summary }}
             </div>
@@ -137,7 +137,7 @@
         <!--                <el-table-column-->
         <!--                        width="160px"-->
         <!--                        :label="$t('Recommend')">-->
-        <!--                    <template #default>-->
+        <!--                    <template #default="scope">-->
         <!--                        <el-switch-->
         <!--                                size="mini"-->
         <!--                                style="display: block"-->

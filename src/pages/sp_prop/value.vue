@@ -78,7 +78,7 @@
           prop="title"
           :label="$t('Title')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.title }}
           </template>
         </el-table-column>

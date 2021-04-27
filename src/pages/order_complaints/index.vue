@@ -82,7 +82,7 @@
             width="360"
             :label="$t('Image')"
           >
-            <template #default>
+            <template #default="scope">
               <span v-for="image in scope.row.img_list">
                 <a
                   :href="image"

@@ -69,7 +69,7 @@
           width="150px"
           :label="$t('Information')"
         >
-          <template #default>
+          <template #default="scope">
             {{ $t('Username') }}: {{ scope.row.username }}<br>
             {{ $t('Mobile') }}: {{ scope.row.mobile }}<br>
             {{ $t('Email') }}: {{ scope.row.email }}<br>

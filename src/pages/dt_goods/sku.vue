@@ -73,7 +73,7 @@
           width="160px"
           :label="$t('Price')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (scope.row.price/100.0).toFixed(2) }}
           </template>
         </el-table-column>
@@ -81,7 +81,7 @@
           width="160px"
           :label="$t('Image')"
         >
-          <template #default>
+          <template #default="scope">
             <el-image
               style="width: 120px;height:90px"
               :src="scope.row.img"

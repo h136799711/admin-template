@@ -80,7 +80,7 @@
           width="160px"
           :label="$t('Price')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (scope.row.show_price / 100).toFixed(2) }} {{ $t('Unit.Yuan') }}
           </template>
         </el-table-column>
@@ -88,7 +88,7 @@
           width="160px"
           :label="$t('Volume') + '/' + $t('Weight')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.volume }} cm <sup style="font-size: 10px;">3</sup> <br>
             {{ scope.row.weight }} Kg
           </template>

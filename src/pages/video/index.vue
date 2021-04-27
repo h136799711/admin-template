@@ -127,7 +127,7 @@
           width="180px"
           :label="$t('Info')"
         >
-          <template #default>
+          <template #default="scope">
             {{ $t('Actor') }}:{{ scope.row.actors }}<br>
             {{ $t('Director') }}::{{ scope.row.directors }}<br>
             {{ $t('Year') }}::{{ scope.row.year }}<br>

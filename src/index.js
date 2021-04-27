@@ -24,10 +24,33 @@ import ElementPlus from 'element-plus'
 import enLocale from 'element-plus/lib/locale/lang/en'
 import zhLocale from 'element-plus/lib/locale/lang/zh-CN'
 
+//VMdEditor Start
+import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
+import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+
+// codemirror 编辑器的相关资源
+import Codemirror from 'codemirror';
+// mode
+import 'codemirror/mode/markdown/markdown';
+// placeholder
+import 'codemirror/addon/display/placeholder';
+// active-line
+import 'codemirror/addon/selection/active-line';
+// scrollbar
+import 'codemirror/addon/scroll/simplescrollbars';
+import 'codemirror/addon/scroll/simplescrollbars.css';
+// style
+import 'codemirror/lib/codemirror.css';
+
+VMdEditor.Codemirror = Codemirror;
+VMdEditor.use(githubTheme);
+
+//VMEditor End
+
 import zhCN from './i18n/zh-CN'
 import en from './i18n/en'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
 import 'vue-json-pretty/lib/styles.css'
 
 axios.defaults.baseURL = ''
@@ -103,14 +126,14 @@ window.tools.getDeviceToken = function () {
 
 const app = createApp(App)
 
-// use
-app.use(mavonEditor)
 app.use(ElementPlus, {
   i18n: i18n.global.t
 })
 app.use(i18n)
 app.use(router)
 app.use(store)
+app.use(VMdEditor)
+
 window.itboye.vue_instance = app.mount('#app')
 window.tools.alertError = (msg) => {
   if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()

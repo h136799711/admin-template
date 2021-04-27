@@ -55,7 +55,7 @@
           width="200px"
           :label="$t('Time')"
         >
-          <template #default>
+          <template #default="scope">
             {{ $t('CreateTime') }}: {{ (new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
             <br>
             {{ $t('UpdateTime') }}: {{ (new Date(scope.row.update_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
@@ -65,7 +65,7 @@
           width="300px"
           :label="$t('Url')"
         >
-          <template #default>
+          <template #default="scope">
             <a
               :href="scope.row.url"
               target="_blank"

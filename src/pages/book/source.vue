@@ -45,7 +45,7 @@
           prop="start_url"
           :label="$t('StartUrl')"
         >
-          <template #default>
+          <template #default="scope">
             <a
               :href="scope.row.start_url"
               target="_blank"
@@ -57,7 +57,7 @@
           prop="current_url"
           :label="$t('CurrentUrl')"
         >
-          <template #default>
+          <template #default="scope">
             <a
               :href="scope.row.current_url"
               target="_blank"
@@ -69,7 +69,7 @@
           prop="page_no"
           :label="$t('Chapter') + $t('Total')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.page_no }}
           </template>
         </el-table-column>
@@ -78,7 +78,7 @@
           prop="next_crawling_time"
           :label="$t('NextCrawlingTime')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (new Date(scope.row.next_crawling_time * 1000)).format('yyyy-MM-dd') }}
           </template>
         </el-table-column>
@@ -87,7 +87,7 @@
           width="100px"
           :label="$t('State')"
         >
-          <template #default>
+          <template #default="scope">
             {{ getState(scope.row.crawling_state) }}
           </template>
         </el-table-column>

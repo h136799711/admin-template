@@ -63,7 +63,7 @@
           width="300px"
           :label="$t('ClientSecret')"
         >
-          <template #default>
+          <template #default="scope">
             {{ scope.row.client_secret }}&nbsp;&nbsp;&nbsp;<el-button
               size="mini"
               :loading="loading"

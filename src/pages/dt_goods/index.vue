@@ -84,7 +84,7 @@
           prop="title"
           :label="$t('Image')"
         >
-          <template #default>
+          <template #default="scope">
             <div>
               <el-image
                 style="width: 120px;height:90px;"
@@ -98,7 +98,7 @@
           width="120px"
           :label="$t('Price')"
         >
-          <template #default>
+          <template #default="scope">
             {{ (scope.row.min_price / 100).toFixed(2) }} - {{ (scope.row.max_price / 100).toFixed(2) }}
             {{ $t('Unit.Yuan') }}
           </template>

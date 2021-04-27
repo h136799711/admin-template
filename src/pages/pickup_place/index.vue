@@ -82,7 +82,7 @@
             prop="title"
             :label="$t('Image')"
           >
-            <template #default>
+            <template #default="scope">
               <div>
                 <el-image
                   style="width: 120px;height:90px;"

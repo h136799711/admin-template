@@ -312,6 +312,7 @@ exports.default = {
 	'ClientAlg': '通信算法',
 
 	// 文章
+	'draft': '草稿',
 	'CmsArticle.draft': '草稿',
 	'CmsArticle.published': '已发布',
 

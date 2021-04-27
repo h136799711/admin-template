@@ -90,7 +90,7 @@
           prop="title"
           :label="$t('Title')"
         >
-          <template #default>
+          <template #default="scope">
             <router-link
               class="blue"
               :to="{path: '/admin/spcate/index/' + scope.row.id, params: {id:scope.row.id}}"
