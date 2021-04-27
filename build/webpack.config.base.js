@@ -23,11 +23,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|vue)$/,
-                use: 'eslint-loader',
-                enforce: 'pre'
-            },
-            {
                 test: /\.vue$/,
                 use: 'vue-loader'
             }, {
@@ -78,10 +73,5 @@ module.exports = {
             inject: true
         }),
         new VueLoaderPlugin()
-        // new CopyWebpackPlugin ([{
-        // 	from: utils.resolve ('static'),
-        // 	to: utils.resolve ('dist/static'),
-        // 	toType: 'dir'
-        // }])
     ]
 }

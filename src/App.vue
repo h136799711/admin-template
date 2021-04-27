@@ -325,19 +325,19 @@
     }
 </style>
 <template>
-    <div id="app">
-        <router-view/>
-    </div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 <script>
-    export default {
-        name: 'App',
-        components: {},
-        mounted: function () {
-            window.itboye.clientInfo.lang = window.tools.getBrowseLanguage()
-            window.itboye.clientInfo.timezone = window.tools.getTimezone()
-        }
-    }
+export default {
+  name: 'App',
+  components: {},
+  mounted: function () {
+    window.itboye.clientInfo.lang = window.tools.getBrowseLanguage()
+    window.itboye.clientInfo.timezone = window.tools.getTimezone()
+  }
+}
 </script>
 
 <style>

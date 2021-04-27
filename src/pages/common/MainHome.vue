@@ -20,13 +20,15 @@
         height: 100%;
         font-size: 12px;
     }
+
     .el-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+        /*position: absolute;*/
+        /*top: 0;*/
+        /*left: 0;*/
+        /*width: 100%;*/
         /*margin-left: -200px;*/
     }
+
     #app {
         height: 100%;
     }
@@ -844,6 +846,22 @@
 
     }
 
+    .main-product .nav-tabs {
+        padding-bottom: 0px;
+    }
+
+    .main-product .nav-tabs .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
+        background: #363e41;
+        color: #FFFFFF;
+    }
+
+    .main-product .nav-tabs .el-tabs__item {
+        color: #363e41;
+    }
+
+    .main-product .nav-tabs .el-tabs--card > .el-tabs__header .el-tabs__nav {
+        border: 0px;
+    }
 </style>
 <template>
     <div
@@ -900,7 +918,11 @@
                                 class="topbar-btn topbar-product-btn"
                                 @click="goMessage"
                         >
-                            <el-badge :value="unreadMsgCnt" :max="99" class="item">
+                            <el-badge
+                                    :value="unreadMsgCnt"
+                                    :max="99"
+                                    class="item"
+                            >
                                 <i class="el-icon-bell"/>
                             </el-badge>
                         </div>
@@ -908,13 +930,13 @@
                     <TopBarDropMenu
                             :name="userInfo.mobile"
                             :head="userInfo.head"
-                            iconClass=""
+                            icon-class=""
                             :links="userDropMenus"
                             @logout="logout"
                     />
                     <TopBarDropMenu
                             name=""
-                            iconClass="by-icon by-duoyuyan"
+                            icon-class="by-icon by-duoyuyan"
                             :links="languages"
                             @changeLanguages="changeLanguages"
                     />
@@ -923,7 +945,10 @@
                                 class="topbar-btn topbar-product-btn"
                                 @click="toggleFullScreen"
                         >
-                            <i title="Fullscreen F11" class="by-icon by-webtubiaoku10"></i>
+                            <i
+                                    title="Fullscreen F11"
+                                    class="by-icon by-webtubiaoku10"
+                            />
                         </div>
                     </div>
                 </div>
@@ -938,7 +963,8 @@
                 <div class="sidebar-content main-sidebar">
                     <div class="sidebar-inner">
                         <div
-                                class="sidebar-fold" @click="toggleMiniMenu"
+                                class="sidebar-fold"
+                                @click="toggleMiniMenu"
                         >
               <span
                       class="by-icon"
@@ -978,13 +1004,27 @@
                         class="content-wrapper"
                         :style="{left: isShowSecondMenu ? 180 + 'px' : '0'}"
                 >
-<!--                    <transition-->
-<!--                            name="custom-classes-transition"-->
-<!--                            enter-active-class="animated fadeIn"-->
-<!--                    >-->
-                    <router-view />
-<!--                        <slot name="mainContent"/>-->
-<!--                    </transition>-->
+
+                    <div class="nav-tabs">
+                        <el-tabs type="card" v-model="currentTab" @tab-remove="removeTab"
+                                 :closable="true"
+                        >
+                            <el-tab-pane
+                                    v-for="(item, index) in tabOptions"
+                                    :label="$t(item.title)"
+                                    :name="item.url"
+                            >
+                            </el-tab-pane>
+                        </el-tabs>
+
+                    </div>
+                    <router-view v-slot="{ Component }">
+                        <transition name="custom-classes-transition" enter-active-class="animated fadeIn">
+                            <keep-alive>
+                                <component :is="Component"/>
+                            </keep-alive>
+                        </transition>
+                    </router-view>
                 </div>
             </div>
         </div>
@@ -1004,6 +1044,10 @@
         components: { SideBarNav, SecondNavBar, TopBarDropMenu },
         data () {
             return {
+                tabOptions: [
+                    { title: 'Home', url: '/admin/index', is_fixed: true }
+                ],
+                currentTab: '/admin/index',
                 isDropUserMenu: false,
                 unreadMsgCnt: 0,
                 menuList: [],
@@ -1081,22 +1125,73 @@
                         this.$router.push('/login')
                     }, 2500)
                 }
+            },
+            currentTab: function (newVal) {
+                this.$router.push({ path: newVal }).then(() => {
+                    console.log('push success')
+                }).catch((err) => {
+                    console.log(err)
+                })
             }
         },
         created () {
 
         },
         mounted () {
-          this.getUserData()
-          this.getUnreadMsg()
+            this.getUserData()
+            this.getUnreadMsg()
         },
         methods: {
-            routeJump(url) {
-                console.debug('route', url);
-                // this.$router.push('/admin/api/log')
-                this.$router.push({ path: url}).then(() => {
-                    console.log('push success');
-                }).catch((err) => {console.log(err)});
+            removeTab (targetName) {
+                console.debug('remove tab', targetName)
+                let canDelete = true
+                this.tabOptions.forEach((tab, index) => {
+                    if (tab.url === targetName && tab.is_fixed) {
+                        canDelete = false
+                    }
+                })
+                if (!canDelete) {
+                    console.debug('禁止删除', targetName)
+                    return
+                }
+                let tabs = this.tabOptions
+                let activeName = this.currentTab
+                if (activeName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        if (tab.url === targetName) {
+                            let nextTab = tabs[index + 1] || tabs[index - 1]
+                            if (nextTab) {
+                                activeName = nextTab.url
+                            }
+                        }
+                    })
+                }
+
+                this.currentTab = activeName
+                this.tabOptions = tabs.filter(tab => tab.url !== targetName)
+            },
+            clickTab () {
+                console.debug('click tab')
+            },
+            addTab (menu) {
+                for (let i = 0; i < this.tabOptions.length; i++) {
+                    if (this.tabOptions[i].url === menu.url) {
+                        return false
+                    }
+                }
+                this.tabOptions.push(menu)
+                return true
+            },
+            routeJump (menu) {
+                console.debug('route menu', menu)
+                if (!this.addTab(menu)) {
+                    console.debug('已存在Tab', menu.url)
+                    if (this.currentTab !== menu.url) {
+                        this.currentTab = menu.url
+                    }
+                    return
+                }
+                this.currentTab = menu.url
             },
             jump2AdminIndex () {
                 this.$router.push('/admin/index')

@@ -12,7 +12,7 @@ const bannersApi = {
 		http.methods.defaultPost ('', data, suc, fail)
 	},
 	create(data, suc, fail) {
-		data.service_type = 'by_Banners_createBy'
+		data.service_type = 'by_Banners_create'
 		http.methods.defaultPost ('', data, suc, fail)
 	},
 	update(data, suc, fail) {

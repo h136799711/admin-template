@@ -18,8 +18,13 @@
       class="topbar-btn topbar-info-dropdown-toggle"
       @click.stop="dropMenu()"
     >
-      <img v-if="head" :src="head" alt="avatar" class="avatar" />
-      <i :class="iconClass"></i>
+      <img
+        v-if="head"
+        :src="head"
+        alt="avatar"
+        class="avatar"
+      >
+      <i :class="iconClass" />
       <span>{{ name }}</span>
     </a>
     <ul
@@ -94,7 +99,7 @@ export default {
     userMenuClick (link) {
       this.dropMenu(false)
       if (link.url) {
-      	this.$router.push(link.url);
+      	this.$router.push(link.url)
       } else if (link.method) {
         this.$emit(link.method, link)
       }
