@@ -48,7 +48,19 @@ const apiMethods = {
       })
     },
     defaultPost: function (servicePath, data, suc, fail) {
-      var url = window.tools.getApiUrl('')
+      if (typeof  data.service_type === 'string') {
+        let tmp = data.service_type.split("_");
+        if (tmp.length === 3) {
+          if (typeof  data.service_version === 'undefined') {
+            servicePath = '/100/' + tmp[1] + '/' + tmp[2];
+          } else {
+            delete (data.service_version);
+            servicePath = '/' + data.service_version + '/' + tmp[1] + '/' + tmp[2];
+          }
+        }
+        delete (data.service_type);
+      }
+      let url = window.tools.getApiUrl('')
       this.apiPost(url + servicePath, data).then((res) => {
         if (res.code === 0) {
           if (typeof suc === 'function') {
@@ -69,7 +81,13 @@ const apiMethods = {
       let fd = new FormData()
       for (let i in obj) {
         if (obj.hasOwnProperty(i)) {
-          fd.append((i), (obj[i]));
+          if (Array.isArray(obj[i])) {
+            for (let j = 0; j < obj[i].length; j++) {
+              fd.append(i + '[' + j + ']', obj[i][j]);
+            }
+          } else {
+            fd.append((i), (obj[i]));
+          }
         }
       }
       return fd;

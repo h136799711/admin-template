@@ -19,13 +19,20 @@
 <template>
   <div class="main-content by-goods-sku padding-md-bottom padding-md-top">
     <el-button
-      type="primary"
-      size="mini"
-      icon="el-icon-plus"
-      :loading="loading"
-      @click="onBack()"
+            type="primary"
+            size="mini"
+            :loading="loading"
+            @click="onBack()"
     >
       {{ $t('Back') }}
+    </el-button>
+    <el-button
+            type="primary"
+            size="mini"
+            :loading="loading"
+            @click="refresh()"
+    >
+      {{ $t('Refresh') }}
     </el-button>
     <div class="margin-md-bottom">
       <el-alert class="margin-md-bottom">
@@ -142,7 +149,7 @@
         </el-table-column>
         <el-table-column
           width="160px"
-          :label="$t('Goods') + $t('Number')"
+          :label="$t('GoodsNo')"
         >
           <template #default="scope">
             <el-input v-model="skuForm.out_goods_no[scope.row.index]" />
@@ -273,6 +280,7 @@ export default {
             instance.confirmButtonLoading = true
             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
             this.loading = true
+            console.debug("保存内容", this.skuForm);
             goodsSkuApi.create(this.skuForm, (resp) => {
               done()
               this.loading = false
@@ -286,9 +294,8 @@ export default {
           }
         }
       }).then(() => {
-        done()
-      }).catch(() => {
-        done()
+      }).catch((err) => {
+
       })
     },
     setExistsProps () {

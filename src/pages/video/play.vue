@@ -10,6 +10,14 @@
 </style>
 <template>
   <div class="center-player">
+    <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-back"
+            @click="$router.go(-1)"
+    >
+      {{ $t('Back') }}
+    </el-button>
     <h3>视频源详情</h3>
     <iframe
       v-if="vtype == 'iframe_insert'"

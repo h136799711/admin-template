@@ -273,14 +273,15 @@
       <div v-else>
         载入中...
       </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogViewVisible = false">
           确定
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>

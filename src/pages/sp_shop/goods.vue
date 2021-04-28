@@ -51,11 +51,11 @@
             {{ scope.row.title }}
           </template>
         </el-table-column>
-        <el-table-column
-          width="160px"
-          prop="sub_title"
-          :label="$t('SubTitle')"
-        />
+<!--        <el-table-column-->
+<!--          width="160px"-->
+<!--          prop="sub_title"-->
+<!--          :label="$t('SubTitle')"-->
+<!--        />-->
         <el-table-column
           width="160px"
           :label="$t('Price')"
@@ -99,8 +99,7 @@
         </el-table-column>
 
         <el-table-column
-          width="360px"
-          fixed="right"
+          width="400px"
           :label="$t('Action')"
         >
           <template #default="scope">
@@ -163,10 +162,10 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogAddVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -179,6 +178,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>

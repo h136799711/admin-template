@@ -246,10 +246,9 @@
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -359,7 +358,6 @@
         </el-form-item>
       </el-form>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button @click="dialogAddVisible = false">

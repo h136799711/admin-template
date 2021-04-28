@@ -211,10 +211,10 @@
                     />
                 </el-form-item>
             </el-form>
-            <div
-                    slot="footer"
-                    class="dialog-footer"
-            >
+            <template #footer>
+                <div
+                        class="dialog-footer"
+                >
                 <el-button @click="dialogAddVisible = false">
                     {{ $t('Cancel') }}
                 </el-button>
@@ -225,6 +225,7 @@
                     {{ $t('Confirm') }}
                 </el-button>
             </div>
+            </template>
         </el-dialog>
         <el-dialog
                 v-model="dialogEditVisible"
@@ -302,10 +303,11 @@
                     />
                 </el-form-item>
             </el-form>
-            <div
-                    slot="footer"
-                    class="dialog-footer"
-            >
+
+            <template #footer>
+                <div
+                        class="dialog-footer"
+                >
                 <el-button @click="dialogEditVisible = false">
                     {{ $t('Cancel') }}
                 </el-button>
@@ -316,6 +318,7 @@
                     {{ $t('Confirm') }}
                 </el-button>
             </div>
+            </template>
         </el-dialog>
     </div>
 </template>

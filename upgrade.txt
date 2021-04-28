@@ -1,3 +1,9 @@
+#TODO
+
+router push的时候查询指定路由进行vuex生成标签
+
+
+
 http://localhost:8082/#/admin/clients/index
 
 slot大变化

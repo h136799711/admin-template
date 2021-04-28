@@ -100,7 +100,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="300px"
           :label="$t('Notify') + $t('Message')"
         >
           <template #default="scope">
@@ -146,7 +145,7 @@
           type="expand"
           :label="$t('Detail')"
         >
-          <template slot-scope="props">
+          <template #default="props">
             <el-form
               label-position="left"
               class="extra_info"
@@ -166,10 +165,6 @@
               >
                 {{ getPayType(props.row.pay_type) }}
               </el-form-item>
-              <!--                            <el-form-item-->
-              <!--                                    :label="$t('Initiate') + $t('PayTime')">-->
-              <!--                                    {{(new Date(props.row.pay_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}-->
-              <!--                            </el-form-item>-->
               <el-form-item :label="$t('PayTime')">
                 {{ (new Date(props.row.notify_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
               </el-form-item>
@@ -179,7 +174,7 @@
                   icon="el-icon-view"
                   @click="onNotifyHistory(props.row)"
                 >
-                  {{ $t('Notify') }}{{ $t('History') }}
+                  {{ $t('Notify') }}{{ $t('Exception') }}{{ $t('History') }}
                 </el-button>
               </el-form-item>
             </el-form>
@@ -198,22 +193,15 @@
         <el-table-column
           width="220px"
           prop="pay_code"
-          :label="$t('PayCode')"
+          :label="$t('PayCode')+'/'+$t('Merchant') + $t('OrderCode')"
         >
           <template #default="scope">
-            {{ scope.row.pay_code }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          width="160px"
-          :label="$t('Merchant') + $t('OrderCode')"
-        >
-          <template #default="scope">
+            {{ scope.row.pay_code }}<br/>
             {{ scope.row.out_order_no }}
           </template>
         </el-table-column>
         <el-table-column
-          width="200px"
+          width="120px"
           prop="pay_code"
           :label="$t('PayType')"
         >
@@ -240,7 +228,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="120px"
+          width="100px"
           :label="$t('Is') + $t('Paid')"
         >
           <template #default="scope">
@@ -255,7 +243,7 @@
               size="mini"
               @click="onNotifyManual(scope.row.id)"
             >
-              {{ $t('Notify') }}
+              {{ $t('Notify') }}({{scope.row.callback_cnt}})
             </el-button>
           </template>
         </el-table-column>

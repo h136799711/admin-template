@@ -1,7 +1,5 @@
-<style>
-</style>
 <template>
-  <div class="main-content by-album padding-md-bottom padding-md-top">
+  <div class="main-content padding-md-bottom padding-md-top">
     <el-button
       type="primary"
       size="mini"
@@ -98,7 +96,6 @@
 
     <el-dialog
       v-model="dialogEditVisible"
-      :show-close="false"
       :append-to-body="false"
       :title="$t('Edit')"
     >
@@ -154,19 +151,16 @@
           prop="v_uri"
         >
           <el-input v-model="editForm.v_uri" />
-
           <el-alert
             title=""
             type="success"
-            description="1. cloud是网盘格式, 网盘地址@提取密码,举例百度网盘: https//pan.baidu.com/s/1jyhLuh75oAoF2HZ8QJwpqw@sbb4
-                            "
+            description="1. cloud是网盘格式, 网盘地址@提取密码,举例百度网盘: https//pan.baidu.com/s/1jyhLuh75oAoF2HZ8QJwpqw@sbb4"
           />
 
           <el-alert
             title=""
             type="success"
-            description="2. iframe是第三方播放, 举例优酷: http://player.youku.com/embed/XNDI0ODY3MDA0OA==
-                            "
+            description="2. iframe是第三方播放, 举例优酷: http://player.youku.com/embed/XNDI0ODY3MDA0OA=="
           />
         </el-form-item>
 
@@ -188,8 +182,8 @@
           />
         </el-form-item>
       </el-form>
+      <template #footer>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button @click="dialogEditVisible = false">
@@ -204,12 +198,12 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
 
     <!-- Add Form -->
     <el-dialog
       v-model="dialogAddVisible"
-      :show-close="false"
       :append-to-body="false"
       :title="$t('Add')"
     >
@@ -288,8 +282,8 @@
           <el-input v-model="addForm.sort" />
         </el-form-item>
       </el-form>
+      <template #footer>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button @click="dialogAddVisible = false">
@@ -303,6 +297,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -315,7 +310,6 @@ export default {
   },
   props: {
     id: String,
-    require: true
   },
   data () {
     return {

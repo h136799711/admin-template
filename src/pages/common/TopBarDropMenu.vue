@@ -52,9 +52,8 @@
 <script>
 export default {
   name: 'TopBarDropMenu',
-
   componentName: 'TopBarDropMenu',
-
+  emits: ["menuClick"],
   props: {
     name: {
       type: String,
@@ -98,11 +97,7 @@ export default {
     },
     userMenuClick (link) {
       this.dropMenu(false)
-      if (link.url) {
-      	this.$router.push(link.url)
-      } else if (link.method) {
-        this.$emit(link.method, link)
-      }
+      this.$emit('menuClick', link)
     }
   }
 }

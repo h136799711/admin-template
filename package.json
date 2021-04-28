@@ -17,7 +17,7 @@
     "axios": "^0.18.1",
     "dotenv-webpack": "^1.8.0",
     "echarts": "^4.9.0",
-    "element-plus": "^1.0.2-beta.40",
+    "element-plus": "^1.0.2-beta.41",
     "fingerprintjs2": "^1.8.6",
     "js-base64": "^2.6.4",
     "lockr": "^0.8.5",

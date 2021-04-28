@@ -2,6 +2,12 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Exception': '异常',
+	'Message':'消息',
+	'WapAliPay': '支付宝(WAP)',
+	'UserAgent': '用户终端',
+	'PageNo':'页码',
+	'SourceTypeName': '来源类别名称',
 	'Subregion': '子级区域',
 	'Pinyin': '拼音',
 	'Telephone': '电话区号',
@@ -246,6 +252,7 @@ exports.default = {
 	'Language': '语言',
 	'Area': '地区',
 	'Goods': '商品',
+	'GoodsNo': '商品货号',
 	'SubTitle': '子标题',
 	'Price': '价格',
 	'Absolute': '绝对',

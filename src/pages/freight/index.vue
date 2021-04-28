@@ -5,29 +5,30 @@
 </style>
 <template>
   <div class="main-content by-banners padding-md-bottom padding-md-top">
-    <el-button
-      type="primary"
-      size="mini"
-      icon="el-icon-plus"
-      :loading="loading"
-      @click="onAdd()"
-    >
-      {{ $t('Add') }}
-    </el-button>
-    <el-button
-      type="primary"
-      size="mini"
-      icon="by-icon by-shuaxin"
-      :loading="loading"
-      @click="refresh()"
-    >
-      {{ $t('Refresh') }}
-    </el-button>
 
     <div
       v-if="!dialogAddVisible && !dialogEditVisible"
-      class="grid-content margin-md-top"
+      class="grid-content "
     >
+      <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-plus"
+              :loading="loading"
+              @click="onAdd()"
+      >
+        {{ $t('Add') }}
+      </el-button>
+      <el-button
+              type="primary"
+              size="mini"
+              icon="by-icon by-shuaxin"
+              :loading="loading"
+              @click="refresh()"
+      >
+        {{ $t('Refresh') }}
+      </el-button>
+
       <el-table
         ref="table"
         v-loading="loading"
@@ -215,7 +216,6 @@
                   v-if="scope.row.index > 0"
                   v-model="placeTable[scope.row.index].place"
                   style="width: 240px;"
-                  :loading="loading"
                   :options="pcaOptions"
                   filterable
                   placeholder=""
@@ -286,7 +286,6 @@
                 <el-cascader
                   v-model="freeTable[scope.row.index].place"
                   style="width: 240px;"
-                  :loading="loading"
                   :options="pcaOptions"
                   filterable
                   placeholder=""
@@ -419,9 +418,8 @@
         </el-form-item>
       </el-form>
       <div
-        slot="footer"
-        class="dialog-footer"
-      >
+            class="dialog-footer"
+        >
         <el-button
           size="mini"
           @click="dialogAddVisible = false"
@@ -530,7 +528,6 @@
                   v-if="scope.row.index > 0"
                   v-model="placeTable[scope.row.index].place"
                   style="width: 240px;"
-                  :loading="loading"
                   :options="pcaOptions"
                   filterable
                   placeholder=""
@@ -600,7 +597,6 @@
                 <el-cascader
                   v-model="freeTable[scope.row.index].place"
                   style="width: 240px;"
-                  :loading="loading"
                   :options="pcaOptions"
                   filterable
                   placeholder=""
@@ -733,7 +729,6 @@
         </el-form-item>
       </el-form>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button

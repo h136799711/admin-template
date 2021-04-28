@@ -5,7 +5,7 @@
     }
 </style>
 <template>
-  <div class="main-content by-album padding-md-bottom padding-md-top">
+  <div class="main-content padding-md-bottom padding-md-top">
     <div>
       <el-form
         :inline="true"
@@ -173,7 +173,7 @@
               :active-value="1"
               :inactive-value="0"
               active-text="推荐"
-              @change="onRecommend(scope.row.id, scope.row.recommend)"
+              @click="onRecommend(scope.row.id, scope.row.recommend)"
             />
           </template>
         </el-table-column>

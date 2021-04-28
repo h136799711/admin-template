@@ -43,14 +43,15 @@
           title="确定更新吗？更新后该用户必须重新登录"
           @onConfirm="onSubmitEdit()"
         >
-          <el-button
-            slot="reference"
-            type="danger"
-            size="mini"
-            icon="el-icon-edit-outline"
-          >
-            {{ $t('Save') }}
-          </el-button>
+          <template #reference>
+            <el-button
+              type="danger"
+              size="mini"
+              icon="el-icon-edit-outline"
+            >
+              {{ $t('Save') }}
+            </el-button>
+          </template>
         </el-popconfirm>
       </el-form-item>
     </el-form>
@@ -107,20 +108,21 @@
         >
           <template #default="scope">
             <el-popconfirm
-              icon="el-icon-danger"
-              icon-color="red"
-              confirm-button-type="Danger"
-              title="确定删除吗？"
-              @onConfirm="onDelete(scope.row)"
+                    icon="el-icon-danger"
+                    icon-color="red"
+                    confirm-button-type="Danger"
+                    title="确定删除吗？"
+                    @onConfirm="onDelete(scope.row)"
             >
+              <template #reference>
               <el-button
-                slot="reference"
-                type="danger"
-                size="mini"
-                icon="el-icon-delete"
+                      type="danger"
+                      size="mini"
+                      icon="el-icon-delete"
               >
                 {{ $t('Delete') }}
               </el-button>
+              </template>
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -157,11 +159,11 @@ export default {
   watch: {
   },
   created () {
+  },
+  mounted () {
     this.editForm.user_id = this.id
     this.editForm.limit = this.limit
     this.refresh()
-  },
-  mounted () {
     console.debug('index mounted')
   },
   methods: {

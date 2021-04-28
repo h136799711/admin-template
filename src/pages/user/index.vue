@@ -6,6 +6,7 @@
 </style>
 <template>
   <div class="main-content by-users padding-md-bottom padding-md-top">
+
     <div>
       <el-form
         :inline="true"
@@ -151,18 +152,19 @@
           </template>
         </el-table-column>
         <el-table-column
+                type="index"
           width="100px"
           :label="$t('2StepVerify')"
         >
           <template #default="scope">
             <el-switch
-              v-model="scope.row.google_secret_switch"
-              :active-value="1"
-              :inactive-value="0"
-              @change="changeGoogleSecret(scope.row)"
+                    v-model="scope.row.google_secret_switch"
+                    :inactive-value="0"
+                    :active-value="1"
+                    :beforeChange="allowChangeGoogleSecret"
+                    @change="changeGoogleSecret($event, scope.row.id)"
             />
-
-            <span v-if="scope.row.google_secret">
+            <span v-if="scope.row.google_secret_switch">
               <el-popover
                 placement="right"
                 width="120"
@@ -173,10 +175,11 @@
                   :size="100"
                   level="H"
                 />
+              <template #reference>
                 <el-button
-                  slot="reference"
                   size="mini"
                 >二维码</el-button>
+              </template>
               </el-popover>
             </span>
             <span v-else />
@@ -238,12 +241,11 @@
             </el-button>
             <el-switch
               v-model="scope.row.status"
-              :active-value="1"
               :inactive-value="0"
-              @change="onDisableEnable(scope.row)"
+              :active-value="1"
+              :beforeChange="allowChangeGoogleSecret"
+              @change="onDisableEnable($event, scope.row.id)"
             />
-            <span v-if="scope.row.status==1">{{ $t('Enable') }}</span>
-            <span v-else-if="scope.row.status==0">{{ $t('Disable') }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -299,10 +301,10 @@
           除了英文大小写字母数字之外<br>密码可含特殊字符 (_!@#$%^&*()_+-=[]{}|;:,.&lt;&gt;)
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogAddVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -314,6 +316,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
 
     <el-dialog
@@ -360,10 +363,10 @@
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -375,6 +378,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
 
     <el-dialog
@@ -407,10 +411,10 @@
           </el-button>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogBindPhoneVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -422,12 +426,12 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>
 
 <script>
-
 import QrcodeVue from 'qrcode.vue'
 import api from '../../api/userApi'
 
@@ -464,7 +468,15 @@ export default {
       }
     }
 
+
+
     return {
+      switch: [
+        true,false,false,false,true,true,true,true,true,true,true,true,true,true,
+      ],
+      switch2: [
+        true,false,false,false,true,true,true,true,true,true,true,true,true,true,
+      ],
       dialogBindPhoneVisible: false,
       queryForm: {
         mobile: '',
@@ -611,129 +623,61 @@ export default {
     getImgUrl (url) {
       return window.tools.getImgUrl(url)
     },
-    onEnable (id) {
-      this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
-        confirmButtonText: this.$i18n.t('Confirm'),
-        cancelButtonText: this.$i18n.t('Cancel'),
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-
-            api.enable({ id: id }, (res) => {
-              instance.confirmButtonLoading = false
-              this.refresh()
-              done()
-            }, (res) => {
-              console.debug(res)
-              done()
-              window.tools.alertError(res.msg)
-              instance.confirmButtonLoading = false
-            })
-          } else {
-            done()
-          }
-        }
-      }).then(() => {
-      }).catch(() => {
-      })
-    },
     onTurnOn (id) {
-      this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
-        confirmButtonText: this.$i18n.t('Confirm'),
-        cancelButtonText: this.$i18n.t('Cancel'),
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-            api.turnOn2StepVerify({ id: id }, (res) => {
-              instance.confirmButtonLoading = false
-              this.refresh()
-              done()
-            }, (res) => {
-              console.debug(res)
-              done()
-              window.tools.alertError(res.msg)
-              instance.confirmButtonLoading = false
-            })
-          } else {
-            done()
-          }
-        }
-      }).then(() => {
-      }).catch(() => {
-      })
+      return api.turnOn2StepVerify({ id: id }, (res) => {
+        this.refresh()
+      }, (res) => {
+        window.tools.alertError(res.msg)
+      });
     },
     onTurnOff (id) {
-      this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
-        confirmButtonText: this.$i18n.t('Confirm'),
-        cancelButtonText: this.$i18n.t('Cancel'),
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-            api.turnOff2StepVerify({ id: id }, (res) => {
-              instance.confirmButtonLoading = false
-              this.refresh()
-              done()
-            }, (res) => {
-              console.debug(res)
-              done()
-              window.tools.alertError(res.msg)
-              instance.confirmButtonLoading = false
-            })
-          } else {
-            done()
-          }
-        }
-      }).then(() => {
-      }).catch(() => {
-      })
+      return api.turnOff2StepVerify({ id: id }, (res) => {
+      }, (res) => {
+        window.tools.alertError(res.msg)
+      });
     },
-    changeGoogleSecret (row) {
-      if (row.google_secret_switch == 1) {
-        this.onTurnOn(row.id)
+    allowChangeGoogleSecret() {
+      return new Promise((resolve, reject) => {
+        this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
+          confirmButtonText: this.$i18n.t('Confirm'),
+          cancelButtonText: this.$i18n.t('Cancel'),
+          type: 'warning',
+        }).then(() => {
+          resolve('123');
+        }).catch(() => {
+          reject(new Error('Cancel'));
+        });
+      });
+    },
+    changeGoogleSecret (row, id) {
+      console.log('change', row, id)
+      if (row === 1) {
+        this.onTurnOn(id)
       } else {
-        this.onTurnOff(row.id)
+        this.onTurnOff(id)
       }
     },
-    onDisableEnable (row) {
-      console.log('状态', row.status)
-      if (row.status == 1) {
-        this.onEnable(row.id)
+    onDisableEnable (status, id) {
+      console.log('状态', status, id)
+      if (status === 1) {
+        this.onEnable(id)
       } else {
-        this.onDisable(row.id)
+        this.onDisable(id)
       }
+    },
+    onEnable (id) {
+      return api.enable({ id: id }, (res) => {
+        // this.refresh()
+      }, (res) => {
+        console.debug(res)
+        window.tools.alertError(res.msg)
+      });
     },
     onDisable (id) {
-      this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
-        confirmButtonText: this.$i18n.t('Confirm'),
-        cancelButtonText: this.$i18n.t('Cancel'),
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
-
-            api.disable({ id: id }, (res) => {
-              instance.confirmButtonLoading = false
-              this.refresh()
-              done()
-            }, (res) => {
-              console.debug(res)
-              done()
-              window.tools.alertError(res.msg)
-              instance.confirmButtonLoading = false
-            })
-          } else {
-            done()
-          }
-        }
-      }).then(() => {
-      }).catch(() => {
+      return api.disable({ id: id }, (res) => {
+        // this.refresh()
+      }, (res) => {
+        window.tools.alertError(res.msg)
       })
     },
     ifLoginUser (uid) {

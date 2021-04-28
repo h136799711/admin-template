@@ -91,7 +91,7 @@
           :label="$t('Description')"
         >
           <template #default="scope">
-            {{ $t('' + scope.row.description) }}
+            {{ scope.row.description }}
           </template>
         </el-table-column>
 
@@ -177,10 +177,10 @@
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogAddVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -193,6 +193,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
 
     <el-dialog
@@ -219,7 +220,7 @@
           :label="$t('Icon')"
           prop="icon"
         >
-          <ImgUploader2Online
+          <ImgUploader
             ref="editImgUploader"
             show="all"
             :default-img-url="editForm.icon"
@@ -239,10 +240,10 @@
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -255,6 +256,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -263,11 +265,11 @@
 import fileApi from '../../api/fileApi'
 import spBrand from '../../api/spBrandApi'
 
-import ImgUploader2Online from '@/components/img-uploader2online.vue'
+import ImgUploader from '../../components/img-uploaderV3.vue'
 
 export default {
   components: {
-    ImgUploader2Online
+    ImgUploader
   },
   data () {
     return {
@@ -332,9 +334,9 @@ export default {
     },
     onUploadSuccess (data) {
       if (this.dialogAddVisible) {
-        this.addForm.icon = window.tools.getImgUrl(data.path)
+        this.addForm.icon = data.trim(",")
       } else if (this.dialogEditVisible) {
-        this.editForm.icon = window.tools.getImgUrl(data.path)
+        this.editForm.icon = data.trim(",")
       }
     },
     byPagerSizeChange (val) {

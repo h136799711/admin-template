@@ -2,6 +2,11 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Exception':'Exception',
+	'Message':'Message',
+	'UserAgent': 'UserAgent',
+	'PageNo':'PageNo',
+	'SourceTypeName': 'SourceTypeName',
 	'Subregion': 'Subregion',
 	'Pinyin': 'Pinyin',
 	'Telephone': 'Telephone',
@@ -248,6 +253,7 @@ exports.default = {
 	'Language': 'Language',
 	'Area': 'Area',
 	'Goods': 'Goods',
+	'GoodsNo': 'GoodsNo',
 	'SubTitle': 'SubTitle',
 	'Price': 'Price',
 	'Absolute': 'Absolute',

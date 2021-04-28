@@ -13,6 +13,7 @@
         class="demo-form-inline"
       >
         <el-form-item>
+
           <el-input
             v-model="queryForm.title"
             size="mini"
@@ -26,8 +27,7 @@
             icon="el-icon-search"
             @click="refresh()"
           >
-            {{
-              $t('Search') }}
+            {{ $t('Search') }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -71,11 +71,11 @@
           prop="title"
           :label="$t('Title')"
         />
-        <el-table-column
-          width="160px"
-          prop="sub_title"
-          :label="$t('SubTitle')"
-        />
+<!--        <el-table-column-->
+<!--          width="160px"-->
+<!--          prop="sub_title"-->
+<!--          :label="$t('SubTitle')"-->
+<!--        />-->
         <el-table-column
           width="160px"
           :label="$t('Price')"
@@ -119,6 +119,7 @@
         </el-table-column>
 
         <el-table-column
+                width="400px"
           fixed="right"
           :label="$t('Action')"
         >
@@ -128,7 +129,7 @@
               icon="by-icon by-pinpai"
               @click="onSku(scope.row)"
             >
-              {{ $t('Goods') }}{{ $t('SKU') }}
+              {{ $t('SKU') }}
             </el-button>
             <el-button
               size="mini"
@@ -137,38 +138,38 @@
             >
               {{ $t('Delivery') }}{{ $t('Place') }}
             </el-button>
+            &nbsp;&nbsp;
+
             <el-dropdown
               size="mini"
               type="danger"
+              :split-button="true"
             >
-              <el-button
-                size="mini"
-                type="danger"
-              >
-                {{ $t('More') }}<i class="el-icon-arrow-down el-icon--right" />
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
-                  <el-button
-                    type="text"
-                    size="mini"
-                    icon="el-icon-edit"
-                    @click="onEdit(scope.row)"
-                  >
-                    {{ $t('Edit') }}
-                  </el-button>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-button
-                    type="text"
-                    size="mini"
-                    icon="el-icon-delete"
-                    @click="onDelete(scope.row.id)"
-                  >
-                    {{ $t('Delete') }}
-                  </el-button>
-                </el-dropdown-item>
-              </el-dropdown-menu>
+                {{ $t('More') }}
+              <template #dropdown>
+                <el-dropdown-menu  >
+                  <el-dropdown-item>
+                    <el-button
+                            type="text"
+                            size="mini"
+                            icon="el-icon-edit"
+                            @click="onEdit(scope.row)"
+                    >
+                      {{ $t('Edit') }}
+                    </el-button>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <el-button
+                            type="text"
+                            size="mini"
+                            icon="el-icon-delete"
+                            @click="onDelete(scope.row.id)"
+                    >
+                      {{ $t('Delete') }}
+                    </el-button>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
             </el-dropdown>
           </template>
         </el-table-column>

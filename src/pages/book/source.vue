@@ -115,11 +115,9 @@ import api from '../../api/bookApi'
 
 export default {
   components: {
-    ImgUploader
   },
   props: {
     id: String,
-    require: true
   },
   data () {
     return {

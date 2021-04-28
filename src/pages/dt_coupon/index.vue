@@ -1,8 +1,3 @@
-<style>
-    .blue {
-        color: blue;
-    }
-</style>
 <template>
   <div class="main-content by-banners padding-md-bottom padding-md-top">
     <div v-if="!(this.dialogEditVisible || this.dialogAddVisible || this.dialogGiveVisible)">
@@ -205,10 +200,9 @@
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogGiveVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -336,7 +330,6 @@
         </el-form-item>
       </el-form>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button @click="dialogEditVisible = false">
@@ -464,7 +457,6 @@
         </el-form-item>
       </el-form>
       <div
-        slot="footer"
         class="dialog-footer"
       >
         <el-button @click="dialogAddVisible = false">

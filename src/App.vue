@@ -323,6 +323,9 @@
     .number-input, .number-input.el-input {
         width: 120px;
     }
+    .el-dropdown-menu{
+      position:relative;
+    }
 </style>
 <template>
   <div id="app">

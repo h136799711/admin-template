@@ -90,6 +90,7 @@ export default {
         page_index: 1,
         page_size: 15
       },
+      count: 0,
       tableData: [],
       loading: false
     }

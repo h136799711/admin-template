@@ -73,7 +73,7 @@
           :label="$t('Is') + ' ' + $t('SaleProperty')"
         >
           <template #default="scope">
-            {{ $t('' + scope.row.is_sale) }}
+            {{ $t(scope.row.is_sale.toString()) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -81,7 +81,7 @@
           :label="$t('Is') + ' ' + $t('ColorProperty')"
         >
           <template #default="scope">
-            {{ $t('' + scope.row.is_color) }}
+            {{ $t(scope.row.is_color.toString()) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -89,7 +89,7 @@
           :label="$t('PropertyType')"
         >
           <template #default="scope">
-            {{ $t(scope.row.prop_type) }}
+            {{ $t(scope.row.prop_type.toString()) }}
           </template>
         </el-table-column>
 
@@ -213,10 +213,10 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogAddVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -229,6 +229,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
 
     <el-dialog
@@ -308,10 +309,10 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -324,6 +325,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>

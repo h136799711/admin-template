@@ -66,7 +66,7 @@
     }
 
     .content-wrapper .main-content {
-        margin: 10px 10px 0;
+        margin: 0px 10px 0;
         padding: 0;
         min-height: calc(100vh - 101px);
         padding-bottom: 50px;
@@ -932,13 +932,13 @@
                             :head="userInfo.head"
                             icon-class=""
                             :links="userDropMenus"
-                            @logout="logout"
+                            @menuClick="menuClick"
                     />
                     <TopBarDropMenu
                             name=""
                             icon-class="by-icon by-duoyuyan"
                             :links="languages"
-                            @changeLanguages="changeLanguages"
+                            @menuClick="menuClick"
                     />
                     <div class="topbar-product topbar-left topbar-info-item">
                         <div
@@ -1068,16 +1068,16 @@
                 activeNavMenuIndex: false,
                 secondMenuData: false,
                 userDropMenus: [
-                    { 'name': this.$i18n.t('Avatar'), url: '/admin/account/avatar' },
-                    { 'name': this.$i18n.t('ModifyPassword'), url: '/admin/account/password' },
-                    { 'name': this.$i18n.t('Logout'), url: '/logout' }
+                    { 'name': this.$i18n.t('Avatar'), value: 'avatar' },
+                    { 'name': this.$i18n.t('ModifyPassword'), value: 'password' },
+                    { 'name': this.$i18n.t('Logout'), value: 'logout' }
                 ],
                 languages: [
                     {
-                        'name': 'English', method: 'changeLanguages', 'value': 'en'
+                        'name': 'English', 'value': 'en'
                     },
                     {
-                        'name': '中文简体', method: 'changeLanguages', 'value': 'zh'
+                        'name': '中文简体', 'value': 'zh'
                     }
                 ]
             }
@@ -1142,6 +1142,45 @@
             this.getUnreadMsg()
         },
         methods: {
+            menuClick(link) {
+                console.debug(link);
+                let menu = {
+                    title: this.$i18n.t('Logout'),
+                    url: '/logout'
+                };
+                switch (link.value) {
+                    case 'zh':
+                    case 'en':
+                        this.changeLanguages(link.value);
+                        break;
+                    case 'logout':
+                        menu.title = this.$i18n.t('Logout');
+                        menu.url = '/logout';
+                        this.routeJump(menu);
+                        break;
+                    case 'avatar':
+                        menu.title = this.$i18n.t('Avatar');
+                        menu.url = '/admin/account/avatar';
+                        this.routeJump(menu);
+                        break;
+                    case 'password':
+                        menu.title = this.$i18n.t('ModifyPassword');
+                        menu.url = '/admin/account/password';
+                        this.routeJump(menu);
+                        break;
+                    default: break;
+                }
+            },
+            jump2AdminIndex () {
+                this.currentTab = '/admin/index';
+            },
+            goMessage () {
+                let menu = {
+                    title: this.$i18n.t('Message'),
+                    url: '/admin/message/index'
+                };
+                this.routeJump(menu);
+            },
             removeTab (targetName) {
                 console.debug('remove tab', targetName)
                 let canDelete = true
@@ -1170,8 +1209,8 @@
                 this.currentTab = activeName
                 this.tabOptions = tabs.filter(tab => tab.url !== targetName)
             },
-            clickTab () {
-                console.debug('click tab')
+            clickTab (ev) {
+                console.debug('click tab', ev)
             },
             addTab (menu) {
                 for (let i = 0; i < this.tabOptions.length; i++) {
@@ -1193,23 +1232,16 @@
                 }
                 this.currentTab = menu.url
             },
-            jump2AdminIndex () {
-                this.$router.push('/admin/index')
-            },
             getUnreadMsg () {
                 api.getUnreadCount({ 'uid': window.tools.getUID() }, (resp) => {
                     this.unreadMsgCnt = resp
                 }, (resp) => {
                 })
             },
-            goMessage () {
-                window.tools.returnTop()
-                window.location.href = this.$router.resolve('/admin/message/index', '#', false).href
-            },
             changeLanguages (lang) {
-                this.$i18n.locale = lang.value;
+                this.$i18n.locale = lang;
                 console.debug('更换语言', this.$i18n.locale)
-                window.cache.setValue('lang', lang.value, 24 * 3600)
+                window.cache.setValue('lang', lang, 24 * 3600)
             },
             getUserData () {
                 window.tools.alertInfo(this.$i18n.t('Loading'))

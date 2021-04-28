@@ -209,8 +209,7 @@
           <el-date-picker
             v-model="editForm.next_crawling_time"
             size="mini"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="timestamp"
+            format="YYYY-MM-DD HH:mm:ss"
             :editable="false"
             type="datetime"
             :placeholder="$t('Date')"
@@ -228,10 +227,10 @@
           />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -244,6 +243,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -320,8 +320,10 @@ export default {
       this.$refs.editForm.validate((valid) => {
         if (valid) {
           if (this.editForm.next_crawling_time instanceof Date) {
-            this.editForm.next_crawling_time = this.editForm.next_crawling_time.getTime()
+            this.editForm.next_crawling_time = this.editForm.next_crawling_time.getTime() / 1000;
           }
+          this.editForm.nextCrawlingTime = this.editForm.next_crawling_time;
+          console.debug(this.editForm.next_crawling_time)
           api.updateSource(this.editForm, (resp) => {
             this.loading = false
             this.dialogEditVisible = false

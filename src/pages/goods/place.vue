@@ -126,7 +126,6 @@
             ref="addPlaceCascader"
             v-model="place"
             style="width: 320px;"
-            :loading="loading"
             placeholder=""
             size="small"
             :props="pcaProps"
@@ -150,10 +149,10 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogAddVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -164,6 +163,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
 
     <el-dialog
@@ -187,7 +187,6 @@
             ref="editPlaceCascader"
             v-model="place"
             style="width: 320px;"
-            :loading="loading"
             placeholder=""
             size="small"
             :props="pcaProps"
@@ -211,10 +210,10 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <template #footer>
+        <div
+                class="dialog-footer"
+        >
         <el-button @click="dialogEditVisible = false">
           {{ $t('Cancel') }}
         </el-button>
@@ -225,6 +224,7 @@
           {{ $t('Confirm') }}
         </el-button>
       </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -292,8 +292,8 @@ export default {
           const { value, level } = node
           switch (parseInt(level)) {
             case 0 :
-              pcaApi.query({}, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.query({country_id: 1, page_size: 5000}, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: false
@@ -302,8 +302,8 @@ export default {
               })
               break
             case 1:
-              pcaApi.queryCity({ code: value }, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.queryCity({ code: value, page_size: 5000 }, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: false
@@ -312,8 +312,8 @@ export default {
               })
               break
             case 2:
-              pcaApi.queryArea({ code: value }, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.queryArea({ code: value, page_size: 5000 }, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: false
@@ -322,8 +322,8 @@ export default {
               })
               break
             case 3:
-              pcaApi.queryTown({ 'code': value }, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.queryTown({ 'code': value, page_size: 5000 }, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: true
@@ -355,7 +355,7 @@ export default {
       if (this.dialogAddVisible) {
         chkNode = this.$refs.addPlaceCascader.getCheckedNodes()
       } else if (this.dialogEditVisible) {
-        chkNode = this.$ref.editPlaceCascader.getCheckedNodes()
+        chkNode = this.$refs.editPlaceCascader.getCheckedNodes()
       }
       this.addForm.province_name = chkNode[0].pathLabels[0]
       this.addForm.city_name = chkNode[0].pathLabels[1]

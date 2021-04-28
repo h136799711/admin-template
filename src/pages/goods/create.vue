@@ -83,7 +83,6 @@
         <el-cascader
           v-model="cateId"
           style="width: 320px;"
-          :loading="loading"
           :options="cateOptions"
           placeholder="试试搜索：男装"
           filterable
@@ -185,7 +184,7 @@
           size="mini"
           class="number-input"
         />
-        {{ $t('Yuan') }}
+        {{ $t('Unit.Yuan') }}
       </el-form-item>
       <el-form-item
         :label="$t('Weight')"
@@ -232,7 +231,6 @@
           ref="placeCascader"
           v-model="place"
           style="width: 320px;"
-          :loading="loading"
           placeholder=""
           size="small"
           :props="pcaProps"
@@ -285,7 +283,7 @@
       <el-form-item
         :label="$t('Cover')"
       >
-        <ImgUploader2online
+        <ImgUploaderV3
           ref="addImgUploader"
           show="all"
           img-cls="coverImg"
@@ -297,7 +295,7 @@
       <el-form-item
         :label="$t('SmallCover')"
       >
-        <ImgUploader2online
+        <ImgUploaderV3
           ref="smallImgUploader"
           show="all"
           img-cls="coverImg"
@@ -339,14 +337,12 @@ import pcaApi from '../../api/pcaApi'
 import spCateApi from '../../api/spCateApi'
 import goodsApi from '../../api/goodsApi'
 
-import ImgUploader2online from '@/components/img-uploader2online.vue'
 import ImgUploaderV3 from '../../../src/components/img-uploaderV3'
 import datatreeApi from '../../api/datatreeApi'
 
 export default {
   components: {
-    ImgUploaderV3,
-    ImgUploader2online
+    ImgUploaderV3
   },
   data () {
     return {
@@ -364,8 +360,8 @@ export default {
           const { value, level } = node
           switch (parseInt(level)) {
             case 0 :
-              pcaApi.query({}, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.query({country_id: 1, page_size: 5000}, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: false
@@ -374,8 +370,8 @@ export default {
               })
               break
             case 1:
-              pcaApi.queryCity({ code: value }, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.queryCity({ code: value, page_size: 5000 }, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: false
@@ -384,8 +380,8 @@ export default {
               })
               break
             case 2:
-              pcaApi.queryArea({ code: value }, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.queryArea({ code: value, page_size: 5000 }, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: false
@@ -394,8 +390,8 @@ export default {
               })
               break
             case 3:
-              pcaApi.queryTown({ 'code': value }, function (resp) {
-                let nodes = resp.map(item => ({
+              pcaApi.queryTown({ 'code': value, page_size: 5000 }, function (resp) {
+                let nodes = resp.list.map(item => ({
                   value: item.code,
                   label: item.name,
                   leaf: true
@@ -504,6 +500,8 @@ export default {
   },
   methods: {
     classify (data) {
+      this.cateProperties = [];
+      this.skuProperties = [];
       for (var i = 0; i < data.length; i++) {
         if (data[i].is_sale) {
           this.skuProperties.push(data[i])
@@ -516,7 +514,6 @@ export default {
       spCateApi.getProp({ cate_id: cateId, is_sale: 0 }, (resp) => {
         this.classify(resp)
         console.debug('Cate', this.cateProperties, this.skuProperties, resp)
-        this.selectedPropValueIds = null
         this.selectedPropValueIds = new Array(this.cateProperties.length)
       }, (err) => {
         window.tools.alertError('获取类目属性失败')
@@ -570,11 +567,12 @@ export default {
             instance.confirmButtonLoading = true
             this.addForm.show_price = 100 * this.addForm.show_price
             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            console.debug("保存内容", this.addForm);
+
             goodsApi.create(this.addForm, (resp) => {
-              window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
-              instance.confirmButtonLoading = false
               done()
-              this.$router.go(-1)
+              instance.confirmButtonLoading = false
+              this.$router.push('/admin/goods/index')
             }, (resp) => {
               done()
               instance.confirmButtonLoading = false
