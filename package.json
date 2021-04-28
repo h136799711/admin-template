@@ -14,7 +14,7 @@
   "dependencies": {
     "@kangc/v-md-editor": "^2.2.2",
     "@vue/compiler-sfc": "^3.0.11",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "dotenv-webpack": "^1.8.0",
     "echarts": "^4.9.0",
     "element-plus": "^1.0.2-beta.41",
