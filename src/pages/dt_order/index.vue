@@ -16,25 +16,22 @@
 </style>
 <template>
   <div class="main-content by-banners padding-md-bottom padding-md-top">
-    <div v-if="!notifyVisible">
+    <div >
       <el-form
         :inline="true"
         :model="queryForm"
         class="demo-form-inline"
       >
         <el-form-item>
-          <el-radio
-            v-model="queryForm.pay_status"
-            :label="0"
-          >
-            {{ $t('NotPaid') }}
-          </el-radio>
-          <el-radio
-            v-model="queryForm.pay_status"
-            :label="1"
-          >
-            {{ $t('Paid') }}
-          </el-radio>
+          <label>{{ $t('PayStatus')}}</label>:
+          <el-select size="mini" v-model="queryForm.pay_status" clearable :placeholder="$t('All')">
+            <el-option key="" value="" :label="$t('All')">
+            </el-option>
+            <el-option key="0" value="0" :label="$t('NotPaid')">
+            </el-option>
+            <el-option key="1" value="1" :label="$t('Paid')">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <label>{{ $t('OrderStatus') }}</label>:
@@ -64,6 +61,8 @@
               value="2"
               :label="$t('Canceled')"
             />
+            <el-option key="3" value="3" :label="$t('Sent')">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -88,27 +87,15 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-button
-      v-if="!notifyVisible"
-      type="primary"
-      size="mini"
-      icon="by-icon by-shuaxin"
-      :loading="loading"
-      @click="refresh()"
-    >
-      {{ $t('Refresh') }}
-    </el-button>
 
     <div
       class="grid-content margin-md-top "
-      :style="notifyVisible ?'display:none':'display:block' "
     >
       <el-table
         ref="table"
         v-loading="loading"
         :data="tableData"
         stripe
-        sortable="custom"
         :element-loading-text="$t('Loading')"
         style="width: 100%"
       >
@@ -137,32 +124,25 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="120px"
-          :label="$t('Money')"
+                width="120px"
+                :label="$t('Money')"
         >
           <template #default="scope">
             {{ scope.row.total_price/100 }} {{ $t('Unit.Yuan') }}<br>
-          </template>
-        </el-table-column>
-        <el-table-column
-          width="120px"
-          :label="$t('Pay') + $t('Money')"
-        >
-          <template #default="scope">
             {{ scope.row.pay_price/100 }} {{ $t('Unit.Yuan') }}
           </template>
         </el-table-column>
         <el-table-column
-          width="140px"
-          :label="$t('CreateTime')"
+                width="140px"
+                :label="$t('CreateTime')"
         >
           <template #default="scope">
             {{ (new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
           </template>
         </el-table-column>
         <el-table-column
-          width="140px"
-          :label="$t('PayTime')"
+                width="140px"
+                :label="$t('PayTime')"
         >
           <template #default="scope">
             {{ (new Date(scope.row.paid_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
@@ -170,10 +150,10 @@
         </el-table-column>
         <el-table-column
           width="120px"
-          :label="$t('Is') + $t('Paid')"
+          :label="$t('Paid')"
         >
           <template #default="scope">
-            {{ $t('' + scope.row.pay_status) }}
+            {{ $t(scope.row.pay_status.toString()) }}
           </template>
         </el-table-column>
         <el-table-column
@@ -184,6 +164,7 @@
             <span v-if="scope.row.order_status==0">{{ $t('NoPickedUp') }}</span>
             <span v-if="scope.row.order_status==1">{{ $t('PickedUp') }}</span>
             <span v-if="scope.row.order_status==2">{{ $t('Canceled') }}</span>
+            <span v-if="scope.row.order_status==3">{{ $t('Sent') }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -191,7 +172,7 @@
         >
           <template #default="scope">
             <el-button
-              v-if="scope.row.order_status==0"
+              :disabled="scope.row.order_status !== 0"
               size="mini"
               @click="onSetOut(scope.row)"
             >
@@ -260,7 +241,7 @@ export default {
       queryForm: {
         mobile: '',
         order_status: '',
-        pay_status: 1,
+        pay_status: '',
         page_index: 1,
         page_size: 10
       },
@@ -275,7 +256,6 @@ export default {
       count: 0,
       tableData: [],
       loading: false,
-      notifyVisible: false
     }
   },
   computed: {},
@@ -287,12 +267,6 @@ export default {
     this.refresh()
   },
   methods: {
-    back () {
-      this.notifyVisible = false
-    },
-    unescape (url) {
-      return decodeURIComponent(url)
-    },
     getPayType (payType) {
       switch (payType) {
         case 'alipay_pc':
@@ -317,13 +291,12 @@ export default {
     },
     async refresh () {
       // 刷新当前
-      // this.tableData = [];
       this.loading = true
       let that = this
       try {
         let data = await dtOrderApi.query(that.queryForm)
-        that.tableData = data
-        that.count = parseInt(that.tableData.length)
+        that.tableData = data.list
+        that.count = parseInt(data.count)
         that.loading = false
       } catch (err) {
         console.debug(err)
@@ -339,14 +312,13 @@ export default {
     sureSetOut () {
       this.loading = true
       let that = this
-      dtOrderApi.setOut({ id: this.order_id, uid: this.user_id }).then(function () {
-        window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+      dtOrderApi.setOut({ id: this.order_id, uid: this.user_id }).catch((err) => {
+        tools.alertError(err.message);
+      }).then(function () {
+        that.refresh()
       }).finally(function () {
-        setTimeout(function () {
           that.loading = false
           that.dialogGiveVisible = false
-          that.refresh()
-        }, 1000)
       })
     }
   }

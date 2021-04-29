@@ -348,6 +348,7 @@ exports.default = {
 	'NoPickedUp': 'Waiting for delivery',
 	'PickedUp': 'PickedUp',
 	'Canceled': 'Canceled',
+	'Sent': 'Sent',
 	'PickupCode': 'Pickup COde',
 
 	'otherReason': 'Other Reason',

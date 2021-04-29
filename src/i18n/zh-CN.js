@@ -346,6 +346,7 @@ exports.default = {
 	'NoPickedUp': '待送出',
 	'PickedUp': '已取货',
 	'Canceled': '已取消',
+	'Sent': '已送出',
 	'PickupCode': '取货码',
 
 	'otherReason': '其他原因',

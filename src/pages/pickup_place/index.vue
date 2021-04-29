@@ -125,7 +125,7 @@
                 {{ $t('Edit') }}
               </el-button>
               <el-button
-                type="text"
+                type="danger"
                 size="mini"
                 icon="el-icon-delete"
                 @click="onDelete(scope.row.id)"
@@ -214,6 +214,7 @@
             ref="editImgUploader"
             :default-img-url="editForm.thumbnail"
             :clear="imgUploadClear"
+            show="all"
             img-type="pic"
             @onUploadSuccess="onUploadSuccess"
           />
@@ -325,6 +326,7 @@
             ref="addImgUploader"
             :default-img-url="addForm.thumbnail"
             :clear="imgUploadClear"
+            show="all"
             img-type="pic"
             @onUploadSuccess="onUploadSuccess"
           />
@@ -505,18 +507,6 @@ export default {
       this.editForm.phone = resp.phone
       this.editForm.booking_days = resp.booking_days
       this.dialogEditVisible = true
-    },
-    editorImgAdd (pos, file) {
-      fileApi.upload(file, 'pic').then(({ data }) => {
-                	if (data.code === 0) {
-                		let imgUrl = window.tools.getImgUrl(data.data.relative_path)
-          this.$refs.md.$img2Url(pos, imgUrl)
-        } else {
-          window.tools.alertError(data.msg)
-        }
-      }).catch((reason) => {
-                	window.tools.alertError(reason)
-      })
     },
     onUploadSuccess (data) {
       if (this.dialogAddVisible) {
