@@ -19,7 +19,7 @@
             :placeholder="$t('Title')"
           />
         </el-form-item>
-        <el-form-item label="最新章节标题(可以查含大结局,感言,后记,番外,最终章,完本,全书,完结感言等)">
+        <el-form-item label="最新章节标题">
           <el-input
             v-model="queryForm.chapter_title"
             size="mini"
@@ -38,6 +38,10 @@
           </el-button>
         </el-form-item>
       </el-form>
+      <div>
+        (可以查含大结局,感言,后记,番外,最终章,完本,全书,完结感言,全文,终结,新书等)
+
+      </div>
     </div>
 
     <div class="grid-content margin-md-top">

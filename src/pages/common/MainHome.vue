@@ -66,7 +66,7 @@
     }
 
     .content-wrapper .main-content {
-        margin: 0px 10px 0;
+        margin: 48px 10px 0 10px;
         padding: 0;
         min-height: calc(100vh - 101px);
         padding-bottom: 50px;
@@ -367,12 +367,12 @@
     }
 
     .main-sidebar .sidebar-fold {
-        height: 30px;
+        height: 39px;
         width: 100%;
         background: #4A5064;
         color: #aeb9c2;
         text-align: center;
-        line-height: 30px !important;
+        line-height: 39px !important;
         font-size: 12px;
         user-select: none;
         cursor: pointer;
@@ -848,6 +848,10 @@
 
     .main-product .nav-tabs {
         padding-bottom: 0px;
+        position: fixed;
+        height: 40px;
+        width: 100%;
+        z-index: 100;
     }
 
     .main-product .nav-tabs .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {

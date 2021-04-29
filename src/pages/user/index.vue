@@ -15,6 +15,7 @@
       >
         <el-form-item>
           <el-input
+                  size="mini"
             v-model="queryForm.mobile"
             :placeholder="$t('Mobile')"
           />
