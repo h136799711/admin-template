@@ -220,11 +220,11 @@ export default {
           tempDate += 24 * 3600 * 1000
         }
       }
-      console.debug(option.series)
+      // console.debug(option.series)
       lineChart.setOption(option)
     },
     drawChapters (data) {
-      console.debug(data)
+      // console.debug(data)
       let lineChart = echarts.init(document.getElementById('site_update'))
       var option = {
         title: {
@@ -278,7 +278,7 @@ export default {
           tempDate += 24 * 3600 * 1000
         }
       }
-      console.debug(option.series)
+      // console.debug(option.series)
       lineChart.setOption(option)
     }
   }

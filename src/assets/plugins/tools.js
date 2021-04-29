@@ -66,19 +66,17 @@ const getAvatar = () => {
 
 // 设置会话id
 const setSessionId = (sessionId) => {
-	// console.debug('set session_id', sessionId)
 	window.cache.setValue ('BY_SESSION_ID', sessionId, 3600)
 }
 
 // 设置Jwt
 const setJwt = (jwt) => {
-	window.cache.setValue ('BY_JWT_ID', jwt, 12 * 3600)
+	window.cache.setValue ('BY_JWT', jwt, 12 * 3600)
 }
 
 // 获取会话id
 const getJwt = () => {
-	let jwt = window.cache.getValue ('BY_JWT_ID')
-	// console.debug('getSessionId', sessionId)
+	let jwt = window.cache.getValue ('BY_JWT')
 	if (typeof (jwt) === 'undefined' || jwt === '') {
 		return '';
 	}
@@ -195,7 +193,7 @@ const getBrowseLanguage = () => {
 const getTimezone = () => {
 	var timezone = (0 - ((new Date ()).getTimezoneOffset ()) / 60);
 	window.cache.setValue ('timezone', timezone, 8*3600);
-	console.log ("时差", timezone, '小时');
+	console.debug ("时差", timezone, '小时');
 	return timezone;
 }
 

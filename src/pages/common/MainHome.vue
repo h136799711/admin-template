@@ -1132,9 +1132,9 @@
             },
             currentTab: function (newVal) {
                 this.$router.push({ path: newVal }).then(() => {
-                    console.log('push success')
+                    console.debug('push success')
                 }).catch((err) => {
-                    console.log(err)
+                    console.debug(err)
                 })
             }
         },

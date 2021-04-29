@@ -123,7 +123,7 @@ const mutations = {
 		state.userSessionData.loading = 1
 		state.userSessionData.code = 0;
 		state.userSessionData = {...state.userSessionData, data: data}
-		console.debug ('ByUserSessionDataSuc', data, state.userSessionData)
+		// console.debug ('ByUserSessionDataSuc', data, state.userSessionData)
 	}
 }
 

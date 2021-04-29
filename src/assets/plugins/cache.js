@@ -57,11 +57,11 @@ const setBigDataValue = (key, value, expireSeconds) => {
 
 // 缓存设置
 const setValue = (key, value, expireSeconds) => {
-  setCookie(key, value, expireSeconds);
+  setCookie(tools.md5Utils.hex_hmac_md5('asasi', key), value, expireSeconds);
 };
 // 缓存获取
 const getValue = (key) => {
-  return getCookie(key);
+  return getCookie(tools.md5Utils.hex_hmac_md5('asasi', key));
 };
 // 清除缓存
 const clear = () => {
@@ -70,6 +70,7 @@ const clear = () => {
 };
 
 const cache = {
+	getCookie,
   setValue, getValue, clear, setBigDataValue, getBigDataValue
 };
 
