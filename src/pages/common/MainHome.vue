@@ -1018,10 +1018,10 @@
                         </el-tabs>
 
                     </div>
-                    <router-view v-slot="{ Component }">
+                    <router-view v-slot="{ Component, route }">
                         <transition name="custom-classes-transition" enter-active-class="animated fadeIn">
                             <keep-alive>
-                                <component :is="Component"/>
+                                <component :is="Component" :key="randKey(route.path)" />
                             </keep-alive>
                         </transition>
                     </router-view>
@@ -1142,6 +1142,9 @@
             this.getUnreadMsg()
         },
         methods: {
+            randKey(path) {
+                return path + (new Date()).getTime();
+            },
             menuClick(link) {
                 console.debug(link);
                 let menu = {

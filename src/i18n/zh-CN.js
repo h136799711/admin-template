@@ -328,4 +328,40 @@ exports.default = {
 
 	// PayType
 	'PcAliPay': '支付宝-电脑端',
+
+	// 商品状态
+	'DtGoods.on': '上架',
+	'DtGoods.off': '下架',
+
+	//优惠券
+	'DiscountAmount': '抵扣金额',
+	'CondAmount': '条件金额',
+	'Give': '赠送券',
+	'GetTime': '领取时间',
+
+	//自提点
+	'Lng': '经度',
+	'Lat': '纬度',
+	'ContactPhone': '联系电话',
+	'NoPickedUp': '待送出',
+	'PickedUp': '已取货',
+	'Canceled': '已取消',
+	'PickupCode': '取货码',
+
+	'otherReason': '其他原因',
+	'BookingDays': '可提前几小时',
+
+	'UsedTime': '使用时间',
+	'SmallImage': '小图',
+	'DisplayOrder': '排序序号',
+	'Coupon': '优惠券',
+	'PickUpLocation': '自提点',
+	'Location': '定位',
+	'WxappMini':'小程序支付',
+	'Fake': '模拟支付',
+	'Diet': '餐饮',
+	'Complaints': '投诉',
+	'SimpleShop': '简易商店',
+	'OrderStatus': '订单状态',
+	'GoodsId': '商品ID',
 };

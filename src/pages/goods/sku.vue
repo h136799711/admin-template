@@ -258,7 +258,7 @@ export default {
     },
     onUploadSuccess (data) {
       console.debug('image upload success', this.skuForm, data)
-      this.skuForm.pic[parseInt(data.id)] = window.tools.getImgUrl(data.path)
+      this.skuForm.pic[parseInt(data.id)] = data.trim(',')
     },
     fillUniqGoodsNo () {
       // 设置 系统货号，如果有的话

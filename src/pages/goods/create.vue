@@ -523,10 +523,10 @@ export default {
       this.addForm.img_list = data
     },
     onSmallUploadSuccess (data) {
-      this.addForm.small_cover_img = window.tools.getImgUrl(data.path)
+      this.addForm.small_cover_img = data.trim(',')
     },
     onUploadSuccess (data) {
-      this.addForm.cover_img = window.tools.getImgUrl(data.path)
+      this.addForm.cover_img = data.trim(',')
     },
     onPrev () {
       if (this.active == 0) {

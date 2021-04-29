@@ -65,22 +65,22 @@
           :label="$t('ID')"
         />
         <el-table-column
-          width="160px"
+          width="120px"
           prop="title"
           :label="$t('Title')"
         />
         <el-table-column
-          width="160px"
+          width="120px"
           prop="sub_title"
           :label="$t('SubTitle')"
         />
         <el-table-column
-          width="160px"
+          width="120px"
           prop="description"
           :label="$t('Description')"
         />
         <el-table-column
-          width="160px"
+          width="120px"
           prop="title"
           :label="$t('Image')"
         >
@@ -95,7 +95,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="120px"
+          width="100px"
           :label="$t('Price')"
         >
           <template #default="scope">
@@ -136,7 +136,6 @@
               >
                 {{ $t('OffShelves') }}
               </el-button>
-              <!--                                {{ $t('DtGoods.' + scope.row.shelf_status) }}-->
             </span>
           </template>
         </el-table-column>
@@ -151,16 +150,9 @@
               icon="by-icon by-pinpai"
               @click="onSku(scope.row)"
             >
-              {{ $t('Goods') }}{{ $t('SKU') }}
+              {{ $t('SKU') }}
             </el-button>
-            <el-button
-              size="mini"
-              icon="el-icon-edit"
-              @click="onEdit(scope.row)"
-            >
-              {{ $t('Edit') }}
-            </el-button>
-
+            &nbsp;&nbsp;
             <el-dropdown
               size="mini"
               type="danger"
@@ -171,7 +163,18 @@
               >
                 {{ $t('More') }}<i class="el-icon-arrow-down el-icon--right" />
               </el-button>
-              <el-dropdown-menu slot="dropdown">
+              <template #dropdown>
+              <el-dropdown-menu >
+                <el-dropdown-item>
+                  <el-button
+                          type="text"
+                          size="mini"
+                          icon="el-icon-edit"
+                          @click="onEdit(scope.row)"
+                  >
+                    {{ $t('Edit') }}
+                  </el-button>
+                </el-dropdown-item>
                 <el-dropdown-item>
                   <el-button
                     type="text"
@@ -184,6 +187,7 @@
                   </el-button>
                 </el-dropdown-item>
               </el-dropdown-menu>
+              </template>
             </el-dropdown>
           </template>
         </el-table-column>

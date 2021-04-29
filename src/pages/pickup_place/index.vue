@@ -110,7 +110,7 @@
           <el-table-column
             width="160px"
             prop="booking_days"
-            :label="$t('BookingDays')"
+            :label="$t('HoursAhead')"
           />
           <el-table-column
             fixed="right"
@@ -236,7 +236,7 @@
           />
         </el-form-item>
         <el-form-item
-          :label="$t('BookingDays')"
+          :label="$t('HoursAhead')"
           required
           prop="booking_days"
         >
@@ -287,7 +287,7 @@
             maxlength="60"
             size="mini"
             show-word-limit
-            placeholder="优惠券标题"
+            placeholder="标题"
           />
         </el-form-item>
         <el-form-item
@@ -347,7 +347,7 @@
           />
         </el-form-item>
         <el-form-item
-          :label="$t('BookingDays')"
+          :label="$t('HoursAhead')"
           required
           prop="booking_days"
         >
@@ -520,9 +520,9 @@ export default {
     },
     onUploadSuccess (data) {
       if (this.dialogAddVisible) {
-        this.addForm.thumbnail = window.tools.getImgUrl(data.path)
+        this.addForm.thumbnail = data.trim(',')
       } else if (this.dialogEditVisible) {
-        this.editForm.thumbnail = window.tools.getImgUrl(data.path)
+        this.editForm.thumbnail = data.trim(',')
       }
       console.debug('image upload success', data)
     },

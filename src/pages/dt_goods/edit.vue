@@ -44,7 +44,7 @@
       >
         <el-input
           v-model="editForm.title"
-          maxlength="60"
+          maxlength="30"
           size="mini"
           show-word-limit
           placeholder="商品标题"
@@ -57,7 +57,7 @@
       >
         <el-input
           v-model="editForm.sub_title"
-          maxlength="250"
+          maxlength="120"
           size="mini"
           show-word-limit
           placeholder="商品子标题"
@@ -70,7 +70,7 @@
       >
         <el-input
           v-model="editForm.description"
-          maxlength="500"
+          maxlength="300"
           size="mini"
           show-word-limit
           type="textarea"
@@ -159,14 +159,14 @@ export default {
     },
     onUploadSuccess (data) {
       console.debug('onUploadSuccess', data)
-      this.editForm.main_image = window.tools.getImgUrl(data.path)
+      this.editForm.main_image = data.trim(',')
     },
     onSave () {
       let that = this
       that.loading = true
       this.editForm.id = this.id
       goodsApi.edit(this.editForm).then(function () {
-        window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+        window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
       }).finally(function () {
         setTimeout(function () {
           that.loading = false
@@ -179,7 +179,6 @@ export default {
       // let that = this
       this.loading = true
       let resp = await goodsApi.info({ id: this.id })
-      console.debug(resp)
       this.editForm.title = resp.title
       this.editForm.sub_title = resp.sub_title
       this.editForm.description = resp.description

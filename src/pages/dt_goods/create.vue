@@ -45,7 +45,7 @@
       >
         <el-input
           v-model="addForm.title"
-          maxlength="60"
+          maxlength="30"
           size="mini"
           show-word-limit
           placeholder="商品标题"
@@ -58,7 +58,7 @@
       >
         <el-input
           v-model="addForm.sub_title"
-          maxlength="250"
+          maxlength="120"
           size="mini"
           show-word-limit
           placeholder="商品子标题"
@@ -71,7 +71,7 @@
       >
         <el-input
           v-model="addForm.description"
-          maxlength="500"
+          maxlength="300"
           size="mini"
           show-word-limit
           type="textarea"
@@ -160,13 +160,13 @@ export default {
     },
     onUploadSuccess (data) {
       console.debug('onUploadSuccess', data)
-      this.addForm.main_image = window.tools.getImgUrl(data.path)
+      this.addForm.main_image = data.trim(',')
     },
     onCreate () {
       let that = this
       that.loading = true
       goodsApi.create(this.addForm).then(function () {
-        window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+        window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
       }).finally(function () {
         setTimeout(function () {
           that.loading = false

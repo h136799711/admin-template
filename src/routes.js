@@ -122,6 +122,7 @@ const DtGoodsEdit =         (() => import('./pages/dt_goods/edit.vue'))
 const DtGoodsSku =         (() => import('./pages/dt_goods/sku.vue'))
 
 const DtCouponIndex =         (() => import('./pages/dt_coupon/index.vue'))
+const DtCouponUser = () => import('./pages/dt_coupon/user.vue')
 const DtOrderIndex =         (() => import('./pages/dt_order/index.vue'))
 const PickupPlaceIndex =         (() => import('./pages/pickup_place/index.vue'))
 const OrderComplaintsIndex =         (() => import('./pages/order_complaints/index.vue'))
@@ -179,6 +180,7 @@ const routes = [
       { path: 'dt_goods/edit/:id', component: DtGoodsEdit, props: true },
       { path: 'dt_goods/sku/:id', component: DtGoodsSku, props: true },
       { path: 'dt_coupon/index', component: DtCouponIndex },
+      { path: 'dt_coupon/user/:id', component: DtCouponUser, props: true},
       { path: 'dt_order/index', component: DtOrderIndex },
       { path: 'pickup_place/index', component: PickupPlaceIndex },
       { path: 'order_complaints/index', component: OrderComplaintsIndex },

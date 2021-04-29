@@ -118,7 +118,7 @@ export default {
       })
     },
     onUploadSuccess (data) {
-      this.info.head = window.tools.getImgUrl(data.path)
+      this.info.head = data.trim(',')
       console.debug('image upload success', data)
     },
     refresh () {

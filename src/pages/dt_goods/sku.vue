@@ -149,6 +149,7 @@
         >
           <ImgUploader
             img-cls="goodsImg"
+            show="all"
             :clear="imgUploadClear"
             img-type="goods"
             @onUploadSuccess="onUploadSuccess"
@@ -208,6 +209,7 @@
           prop="img"
         >
           <ImgUploader
+                  show="all"
             img-cls="goodsImg"
             :default-img-url="editForm.img"
             :clear="imgUploadClear"
@@ -288,9 +290,9 @@ export default {
     onUploadSuccess (data) {
       console.debug('image upload success', data)
       if (this.dialogEditVisible) {
-        this.editForm.img = window.tools.getImgUrl(data.path)
+        this.editForm.img = data.trim(',')
       } else {
-        this.addForm.img = window.tools.getImgUrl(data.path)
+        this.addForm.img = data.trim(',')
       }
     },
     onAdd () {
@@ -323,11 +325,15 @@ export default {
       let that = this
       this.loading = true
       this.editForm.price = this.editForm.price * 100
-      goodsSkuApi.editSku(this.editForm).finally(function () {
+      goodsSkuApi.editSku(this.editForm).catch((err) => {
+        window.tools.alertError(err.message);
+      }).then(function () {
         that.dialogEditVisible = false
-        that.loading = false
         that.refresh()
-      })
+      }).finally(() => {
+        that.loading = false
+
+      });
     },
     onBack () {
       this.$router.replace({ path: '/admin/dt_goods/index' })
@@ -359,6 +365,7 @@ export default {
       // 刷新当前
       this.loading = true
       this.tableData = await goodsSkuApi.querySku({ goods_id: this.id })
+      console.debug(this.tableData);
       this.loading = false
     }
   }

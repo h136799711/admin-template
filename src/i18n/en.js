@@ -330,4 +330,40 @@ exports.default = {
 	// PayType
 	'PcAliPay': 'AliPay PC',
 	'WapAliPay': 'AliPay WAP',
+
+	// 商品状态
+	'DtGoods.on': 'On',
+	'DtGoods.off': 'Off',
+
+	//优惠券
+	'DiscountAmount': 'discount',
+	'CondAmount': 'Condition',
+	'Give': 'Give',
+	'GetTime': 'GetTime',
+
+	//自提点
+	'Lng': 'longitude',
+	'Lat': 'latitude',
+	'ContactPhone': 'Contact Phone',
+	'NoPickedUp': 'Waiting for delivery',
+	'PickedUp': 'PickedUp',
+	'Canceled': 'Canceled',
+	'PickupCode': 'Pickup COde',
+
+	'otherReason': 'Other Reason',
+	'HoursAhead': 'Hours Ahead',
+
+	'UsedTime': 'Used Time',
+	'SmallImage': 'Small Image',
+	'DisplayOrder': 'Display Order',
+	'Coupon': 'Coupon',
+	'PickUpLocation': 'Pickup Location',
+	'Location': 'Location',
+	'WxappMini':'Wxmini Pay',
+	'Fake': 'Fake',
+	'Diet': 'Diet',
+	'Complaints': 'Complaints',
+	'SimpleShop': 'SimpleShop',
+	'OrderStatus': 'OrderStatus',
+	'GoodsId': 'GoodsId',
 };
