@@ -92,14 +92,9 @@ const mutations = {
 		state.loginError = []
 	},
 	[types.ByUserLoginSuc](state, data) {
-		console.debug ('ByUserLoginSuc')
-		if (data.code === 0) {
-			state.userInfo = data.data
-			state.loginStatus = types.ByUserLoginSuc
-		} else {
-			state.userInfo = []
-			state.loginStatus = types.ByUserLoginFail
-		}
+		console.debug ('ByUserLoginSuc', data)
+		state.userInfo = data
+		state.loginStatus = types.ByUserLoginSuc
 	},
 
 	[types.ByUserLoginFail](state, data) {
@@ -123,10 +118,11 @@ const mutations = {
 	},
 	[types.ByUserSessionDataSuc](state, data) {
 		// rollback to the cart saved before sending the request
-		// console.debug('数据转化', data, JSON.stringify(data), tools.base64Utils.encode(JSON.stringify(data)));
+		// console.debug('数据转化', data, JSON.stringify(data));
 		window.cache.setBigDataValue (types.ByUserSessionDataReq, window.tools.base64Utils.encode (JSON.stringify (data)), 3600)
 		state.userSessionData.loading = 1
-		state.userSessionData = {...state.userSessionData, msg: data.msg, code: data.code, data: data.data}
+		state.userSessionData.code = 0;
+		state.userSessionData = {...state.userSessionData, data: data}
 		console.debug ('ByUserSessionDataSuc', data, state.userSessionData)
 	}
 }

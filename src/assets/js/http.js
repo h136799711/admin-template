@@ -9,15 +9,19 @@ const apiMethods = {
         data.app_version = window.tools.getVersion()
         data.app_type = window.tools.getDeviceType()
         data.client_id = window.tools.getAppId()
-        data.sid = window.tools.getSessionId()
-        data.uid = window.tools.getUID()
         data.device_type = window.tools.getDeviceType()
         data.device_token = window.tools.getDeviceToken()
 
+        let headers = {
+          'Content-Type': 'multipart/form-data',
+        };
+        let bear = window.tools.getJwt();
+        if (bear.length > 0) {
+          headers.Authorization = 'Bearer ' + bear;
+        }
+
         axios.post(url, this.convertFormData(data), {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+          headers: headers
         }).then((response) => {
           let ret = response.data
           if (ret.code === 1111) {
@@ -98,15 +102,20 @@ const apiMethods = {
         data.app_version = window.tools.getVersion()
         data.app_type = window.tools.getDeviceType()
         data.client_id = window.tools.getAppId()
-        data.sid = window.tools.getSessionId()
-        data.uid = window.tools.getUID()
+        // data.sid = window.tools.getSessionId()
+        // data.uid = window.tools.getUID()
         data.device_type = window.tools.getDeviceType()
         data.device_token = window.tools.getDeviceToken()
+        let headers = {
+          'Content-Type': 'multipart/form-data',
+        };
+        let bear = window.tools.getJwt();
+        if (bear.length > 0) {
+          headers.Authorization = 'Bearer ' + bear;
+        }
 
         axios.post(url, this.convertFormData(data), {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+          headers: headers
         }).then((response) => {
           let data = response.data
           if (data.code === 1111) {

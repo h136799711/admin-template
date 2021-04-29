@@ -66,8 +66,24 @@ const getAvatar = () => {
 
 // 设置会话id
 const setSessionId = (sessionId) => {
-  // console.debug('set session_id', sessionId)
+	// console.debug('set session_id', sessionId)
 	window.cache.setValue ('BY_SESSION_ID', sessionId, 3600)
+}
+
+// 设置Jwt
+const setJwt = (jwt) => {
+	window.cache.setValue ('BY_JWT_ID', jwt, 12 * 3600)
+}
+
+// 获取会话id
+const getJwt = () => {
+	let jwt = window.cache.getValue ('BY_JWT_ID')
+	// console.debug('getSessionId', sessionId)
+	if (typeof (jwt) === 'undefined' || jwt === '') {
+		return '';
+	}
+	setJwt(jwt)
+	return jwt
 }
 
 // 获取会话id
@@ -194,6 +210,7 @@ const tools = {
   getClientId, setClientId,
 	getAvatar, setAvatar,
 	getVersion, getApiUrl, getAvatarUploadUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
+	,getJwt, setJwt
 }
 String.prototype.trim = function (char, type) {
 	if (char) {

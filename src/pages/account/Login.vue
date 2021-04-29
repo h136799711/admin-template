@@ -304,12 +304,10 @@
 </template>
 
 <script>
-import http from '../../assets/js/http'
 import * as types from '../../store/mutation-types'
 import securityCodeApi from '../../api/securityCodeApi.js'
 
 export default {
-  mixins: [http],
   data () {
     return {
       isLogging: false,
@@ -317,6 +315,7 @@ export default {
       verifyImg: '',
       user: {
         mobile: '',
+        loginInfo: '',
         token: '',
         password: '',
         verifyCode: '',
@@ -337,7 +336,7 @@ export default {
   },
   watch: {
     loginStatus: function (oldVal, newVal) {
-      console.debug(oldVal, this.loginError)
+      console.debug('loginStatus', oldVal, this.loginError)
       if (oldVal === types.ByUserLoginFail) {
         this.isLogging = false
         this.refresh_verify()
@@ -350,7 +349,7 @@ export default {
         this.isLogging = false
         let msg = this.loginUser.nickname + ', Login Success'
         console.debug(this.loginUser)
-        window.tools.setSessionId(this.loginUser.sid)
+        window.tools.setJwt(this.loginUser.jwt)
         window.tools.setUID(this.loginUser.id)
         window.tools.alertSuc(msg)
         setTimeout(() => {
@@ -360,13 +359,14 @@ export default {
     }
   },
   created () {
+  },
+  mounted () {
     this.refresh_verify()
     // 刷新验证码后清除本地保留的以下缓存
     window.tools.setUID('')
     window.tools.setClientId('')
     window.tools.setSessionId('')
-  },
-  mounted () {
+    window.tools.setJwt('');
     console.debug('mounted', process.env)
   },
   methods: {
