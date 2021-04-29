@@ -101,6 +101,8 @@ const getAvatarUploadUrl = () => {
 }
 
 const getImgUrl = (imgUrl) => {
+	if (!imgUrl) return "";
+
 	if (!_.startsWith(imgUrl, 'http')) {
 		imgUrl = window.tools.getApiUrl() + imgUrl
 	}
@@ -138,23 +140,24 @@ const getDeviceType = () => {
 						(s = ua.match (/chrome\/([\d\.]+)/)) ? Sys.chrome = s[1] :
 							(s = ua.match (/version\/([\d\.]+).*safari/)) ? Sys.safari = s[1] : 0;
 	// 根据关系进行判断
-	if (Sys.ie) return ('IE: ' + Sys.ie);
-	if (Sys.edge) return ('EDGE: ' + Sys.edge);
-	if (Sys.firefox) return ('Firefox: ' + Sys.firefox);
-	if (Sys.chrome) return ('Chrome: ' + Sys.chrome);
-	if (Sys.opera) return ('Opera: ' + Sys.opera);
-	if (Sys.safari) return ('Safari: ' + Sys.safari);
+	if (Sys.ie) return 'IE';//('IE: ' + Sys.ie);
+	if (Sys.edge) return 'EDGE';//('EDGE: ' + Sys.edge);
+	if (Sys.firefox) return 'Firefox';//('Firefox: ' + Sys.firefox);
+	if (Sys.chrome) return 'Chrome';//('Chrome: ' + Sys.chrome);
+	if (Sys.opera) return 'Opera';//('Opera: ' + Sys.opera);
+	if (Sys.safari) return'Safari';// ('Safari: ' + Sys.safari);
 	return 'Unkonwn';
 }
 
 const getBrowseLanguage = () => {
 	let lang = window.cache.getValue ('lang');
+	console.debug('缓存语言设置', lang)
 	if (!lang) {
 		if (navigator.language) {
 			lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
 			lang = lang.substr (0, 2);//获取浏览器配置语言前两位
 			// if (inArray)
-          let supportLanguages = ['en', 'zh']
+          	let supportLanguages = ['en', 'zh']
 			let isExists = supportLanguages.some(function (i) {
               return (i === lang)
 			})
@@ -166,6 +169,8 @@ const getBrowseLanguage = () => {
 		} else {
           lang = 'zh'
 		}
+	} else {
+		window.cache.setValue('lang', lang.value, 24 * 3600)
 	}
 
 	return lang;
@@ -190,6 +195,17 @@ const tools = {
 	getAvatar, setAvatar,
 	getVersion, getApiUrl, getAvatarUploadUrl, getKeyInObject, returnTop, getAppId, getSessionId, setSessionId
 }
+String.prototype.trim = function (char, type) {
+	if (char) {
+		if (type == 'left') {
+			return this.replace(new RegExp('^\\'+char+'+', 'g'), '');
+		} else if (type == 'right') {
+			return this.replace(new RegExp('\\'+char+'+$', 'g'), '');
+		}
+		return this.replace(new RegExp('^\\'+char+'+|\\'+char+'+$', 'g'), '');
+	}
+	return this.replace(/^\s+|\s+$/g, '');
+};
 
 Date.prototype.format = function(fmt) {
 	var o = {

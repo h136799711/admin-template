@@ -1,14 +1,12 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import axios from 'axios' // Promise based HTTP client for the browser and node.js
-import _ from 'lodash' //
 import Lockr from 'lockr' // 用于缓存较大的数据
 import moment from 'moment' // 日期处理
-import ElementUI from 'element-ui'
-import '../theme/reset.css' // elementui theme
-import '../theme/index.css' // elementui theme
-import VueRouter from 'vue-router'
-import NProgress from 'nprogress';
+
+import { createRouter, createWebHashHistory } from 'vue-router'
+import { createI18n } from 'vue-i18n'
+import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from './store/index'
 import routes from './routes'
@@ -18,26 +16,42 @@ import md5Utils from './assets/plugins/md5Utils'
 import cache from './assets/plugins/cache'
 import tools from './assets/plugins/tools'
 import Finger from 'fingerprintjs2'
-import VueI18n from 'vue-i18n'
-import enLocale from 'element-ui/lib/locale/lang/en'
-import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+// ElementPlus
+import '../static/reset.css'
+import 'element-plus/lib/theme-chalk/index.css'
+import '../static/index.css' // black theme
+import ElementPlus from 'element-plus'
+import enLocale from 'element-plus/lib/locale/lang/en'
+import zhLocale from 'element-plus/lib/locale/lang/zh-CN'
+
+//VMdEditor Start
+import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
+import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+
+// codemirror 编辑器的相关资源
+import Codemirror from 'codemirror';
+// mode
+import 'codemirror/mode/markdown/markdown';
+// placeholder
+import 'codemirror/addon/display/placeholder';
+// active-line
+import 'codemirror/addon/selection/active-line';
+// scrollbar
+import 'codemirror/addon/scroll/simplescrollbars';
+import 'codemirror/addon/scroll/simplescrollbars.css';
+// style
+import 'codemirror/lib/codemirror.css';
+
+VMdEditor.Codemirror = Codemirror;
+VMdEditor.use(githubTheme);
+
+//VMEditor End
+
 import zhCN from './i18n/zh-CN'
 import en from './i18n/en'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-// use
-Vue.use(mavonEditor)
-
-const messages = {
-	en: {
-		...en,
-		...enLocale // 或者用 Object.assign({ message: 'hello' }, enLocale)
-	},
-  'zh': {
-		...zhCN,
-		...zhLocale // 或者用 Object.assign({ message: '你好' }, zhLocale)
-	}
-}
+import 'vue-json-pretty/lib/styles.css'
 
 axios.defaults.baseURL = ''
 axios.defaults.timeout = 30000
@@ -45,75 +59,84 @@ axios.defaults.headers['Content-Type'] = 'application/json'
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.withCredentials = false
 
-
-const router = new VueRouter({
-  mode: 'hash',
-  base: __dirname,
+const router = createRouter({
+  history: createWebHashHistory(__dirname),
   routes
 })
 
+const messages = {
+  'zh': {
+    el: zhLocale.el,
+    ...zhCN
+  },
+  'en': {
+    el: enLocale.el,
+    ...en
+  }
+}
+
+// Create VueI18n instance with options
+const i18n = createI18n({
+  locale: 'en',
+  // fallbackLocale: 'zh',
+  messages
+})
+
 router.beforeEach((to, from, next) => {
-  // const hideLeft = to.meta.hideLeft
-  // store.dispatch('showLeftMenu', hideLeft)
-  // store.dispatch('showLoading', true)
-  NProgress.start();
+  NProgress.start()
   next()
 })
 
 router.afterEach(transition => {
-  NProgress.done();
-})
-
-Vue.use(VueI18n)
-Vue.use(ElementUI, {
-	i18n: (key, value) => i18n.t(key, value)
-})
-Vue.use(VueRouter)
-// Create VueI18n instance with options
-const i18n = new VueI18n({
-    locale: 'zh', // set locale
-	messages, // set locale messages
+  NProgress.done()
 })
 window.itboye = window.itboye || {}
 window.itboye.clientInfo = window.itboye.clientInfo || {}
 window.Lockr = Lockr
 window.moment = moment
 window.axios = axios
-window._ = _
 window.cache = cache
 window.tools = tools
 window.tools.md5Utils = md5Utils
 window.tools.base64Utils = base64Utils.Base64
 window.tools.finger = new Finger()
 window.tools.getDeviceToken = function () {
-  let token = cache.getValue('BY_TOKEN');
+  let token = cache.getValue('BY_TOKEN')
   if (token) {
-    return token;
+    return token
   }
-	if (window.requestIdleCallback) {
-		requestIdleCallback(function () {
+  if (window.requestIdleCallback) {
+    requestIdleCallback(function () {
       window.tools.finger.get(function (components) {
-				cache.setValue('BY_TOKEN', components, 7200);
-				itboye.clientInfo.deviceToken = components;
-			})
-		})
-	} else {
-		setTimeout(function () {
-			window.tools.finger.get(function (components) {
-				cache.setValue('BY_TOKEN', components, 7200);
-				itboye.clientInfo.deviceToken = components;
-			})
-		}, 500)
-	}
-	return "";
+        cache.setValue('BY_TOKEN', components, 7200)
+        itboye.clientInfo.deviceToken = components
+      })
+    })
+  } else {
+    setTimeout(function () {
+      window.tools.finger.get(function (components) {
+        cache.setValue('BY_TOKEN', components, 7200)
+        itboye.clientInfo.deviceToken = components
+      })
+    }, 500)
+  }
+  return ''
 }
-i18n.locale = tools.getBrowseLanguage();
-console.log('locale= ', i18n.locale)
-const bus = new Vue()
-window.bus = bus
+
+const app = createApp(App)
+
+app.use(ElementPlus, {
+  i18n: i18n.global.t
+})
+app.use(i18n)
+app.use(router)
+app.use(store)
+app.use(VMdEditor)
+
+window.itboye.vue_instance = app.mount('#app')
 window.tools.alertError = (msg) => {
-  if (bus._byAlert) bus._byAlert.close()
-  bus._byAlert = bus.$message({
+  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
     message: msg,
     type: 'error',
     showClose: true,
@@ -121,8 +144,8 @@ window.tools.alertError = (msg) => {
   })
 }
 window.tools.alertInfo = (msg) => {
-  if (bus._byAlert) bus._byAlert.close()
-  bus._byAlert = bus.$message({
+  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
     message: msg,
     type: 'info',
     showClose: true,
@@ -130,8 +153,8 @@ window.tools.alertInfo = (msg) => {
   })
 }
 window.tools.alertSuc = (msg, duration) => {
-  if (bus._byAlert) bus._byAlert.close()
-  bus._byAlert = bus.$message({
+  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
     message: msg,
     type: 'success',
     showClose: true,
@@ -139,8 +162,8 @@ window.tools.alertSuc = (msg, duration) => {
   })
 }
 window.tools.alertWarn = (msg) => {
-  if (bus._byAlert) bus._byAlert.close()
-  bus._byAlert = bus.$message({
+  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
     message: msg,
     type: 'warning',
     showClose: true,
@@ -148,14 +171,5 @@ window.tools.alertWarn = (msg) => {
   })
 }
 window.tools.alertClose = () => {
-  if (bus._byAlert) bus._byAlert.close()
+  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
 }
-
-window.itboye.vue_instance = new Vue({
-  el: '#app',
-  components: { App },
-  template: '<App/>',
-  router,
-  store,
-	i18n
-}).$mount('#app')

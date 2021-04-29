@@ -54,9 +54,10 @@
           </a>
         </template>
         <template v-else>
-            <a href="#"
-               @click="routerJump(menu.url)"
-            >
+          <a
+            href="javascript:void(0)"
+            @click="linkClick(menu)"
+          >
             <div class="nav-icon sidebar-trans">
               <span
                 class="boyefont"
@@ -65,7 +66,7 @@
             </div>
             <span class="nav-title">{{ $t(menu.title) }}
             </span>
-            </a>
+          </a>
         </template>
       </li>
     </ul>
@@ -75,6 +76,7 @@
 export default {
   name: 'SideBarNav',
   componentName: 'SideBarNav',
+  emits: ['NavOnActive', 'NavOnClick', 'RouteJump'],
   props: {
     navMaxHeight: {
       type: Number,
@@ -93,10 +95,11 @@ export default {
     isNavActive: {
       type: Boolean,
       required: true
-    }
+    },
+    routeJump: Function
   },
   data () {
-    return { }
+    return {}
   },
   methods: {
     // 切换显示子菜单
@@ -106,17 +109,12 @@ export default {
     navClick (index) {
       this.$emit('NavOnClick', `${this.index}-${index}`, this.navMenu.children[index].children.length > 0 ? this.navMenu.children[index] : false)
     },
-    routerJump (UrlAddress) {
-      if (this.$route.path === UrlAddress) {
-          return
+    linkClick (menu) {
+      if (this.$route.path === menu.url) {
+        return
       }
-      //console.debug(this.$route.path, UrlAddress)
-      this.$router.push({path: UrlAddress})
-//      console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
-//      window.location.href = this.$router.resolve(UrlAddress, '#', false).href
-    },
-    routerUrl (UrlAddress) {
-      return this.$router.resolve(`${UrlAddress}`).href
+      this.$emit('RouteJump', menu)
+      //                this.$router.push(UrlAddress);
     },
     navOnMouseHover (text, $event) {
       // mimi状态才显示tooltip

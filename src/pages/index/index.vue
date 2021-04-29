@@ -1,20 +1,20 @@
 <template>
   <el-alert
-          :title="$t('WelcomeToUse')"
-          type="success">
-  </el-alert>
+    :title="$t('WelcomeToUse')"
+    type="success"
+  />
 </template>
 
 <script>
-  export default {
-    data () {
-      return {}
-    },
-    computed: {
-    },
-    watch: {
-    },
-    methods: {
-    }
+export default {
+  data () {
+    return {}
+  },
+  computed: {
+  },
+  watch: {
+  },
+  methods: {
   }
+}
 </script>

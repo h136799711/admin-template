@@ -194,31 +194,32 @@
         </div>
         <p style="padding: 30px 0 10px; position: relative;">
           <span class="by-icon by-yonghuming u_logo" /> <input
-                ref="username_input"
-                autocomplete="username"
-                v-model.trim="user.mobile"
-                class="ipt"
-                type="text"
-                name="username"
-                placeholder="mobile(only can log in by mobile)"
-                value=""
-                tabindex="1"
-                @keydown.enter="login"
+            ref="username_input"
+            v-model.trim="user.mobile"
+            autocomplete="username"
+            class="ipt"
+            type="text"
+            name="username"
+            placeholder="mobile(only can log in by mobile)"
+            tabindex="1"
+            @keydown.enter="login"
           >
         </p>
         <p style="position: relative;">
           <span class="by-icon by-iconfontlock p_logo" />
           <input
-                  autocomplete="current-password"
-                  id="password"
-                  ref="password_input"
-                  v-model="user.password"
-                  class="ipt"
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  value=""
-                  tabindex="2" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
+            id="password"
+            ref="password_input"
+            v-model="user.password"
+            autocomplete="current-password"
+            class="ipt"
+            type="password"
+            name="password"
+            placeholder="password"
+            tabindex="2"
+            @focus="pswFocus(true)"
+            @keydown.enter="login"
+            @blur="pswFocus(false)"
           >
         </p>
         <p style="position: relative; margin: 10px 0">
@@ -233,7 +234,7 @@
               maxlength="6"
               type="text"
               placeholder="verify code"
-value="" @keydown.enter="login"
+              @keydown.enter="login"
             >
             <span class="codeImg">
               <template v-if="verifyImg == 'error'">
@@ -246,13 +247,13 @@ value="" @keydown.enter="login"
               </template>
               <template v-else>
                 <span
-                        v-if="verifyImg == ''"
-                        class="inf-rotate by-icon by-iconloading-copy"
+                  v-if="verifyImg == ''"
+                  class="inf-rotate by-icon by-iconloading-copy"
                 />
                 <img
-                        :src="verifyImg"
-                        class="verifyImg"
-                        @click="refresh_verify"
+                  :src="verifyImg"
+                  class="verifyImg"
+                  @click="refresh_verify"
                 >
               </template>
             </span>
@@ -262,31 +263,40 @@ value="" @keydown.enter="login"
         <div style="position: relative;">
           <span class="by-iconfontlock by-icon c_icon_token" />
           <input
-                  style="font-size: 12px;"
-                  id="google"
-                  v-model="user.token"
-                  class="ipt"
-                  type="text"
-                  name="token"
-                  placeholder="开启2步验证后需要填写"
-                  value=""
-                  tabindex="4" @focus="pswFocus(true)" @keydown.enter="login" @blur="pswFocus(false)"
+            id="google"
+            v-model="user.token"
+            style="font-size: 12px;"
+            class="ipt"
+            type="text"
+            name="token"
+            placeholder="开启2步验证后需要填写"
+            tabindex="4"
+            @focus="pswFocus(true)"
+            @keydown.enter="login"
+            @blur="pswFocus(false)"
           >
         </div>
-        <div style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
-          <p style="margin: 0 35px 20px 45px;">
-            <span style="float: right;">
-              <a
-                style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
-                href="javascript:void(0);"
-                class="ajax-post"
-                @click="login"
-                @keyup.enter="login"
-              >
-                {{ isLogging ? 'Log in...' : 'Log In' }}
-              </a>
-            </span>
-          </p>
+        <div
+          class="clearfix"
+          style="height: 50px; line-height: 50px; margin-top: 20px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;"
+        >
+          <div style="float: right;margin: 0 35px 20px 45px;">
+            <el-button
+              type="primary"
+              @click="login"
+              @keyup.enter="login"
+            >
+              {{ isLogging ? 'Log in...' : 'Log In' }}
+            </el-button>
+            <!--              <a-->
+            <!--                style="display:block;background: rgb(0, 142, 173);margin-top:7px; padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"-->
+            <!--                href="javascript:void(0);"-->
+            <!--                class="ajax-post"-->
+            <!--                @click="login"-->
+            <!--                @keyup.enter="login"-->
+            <!--              >-->
+            <!--              </a>-->
+          </div>
         </div>
       </div>
     </form>
@@ -294,11 +304,11 @@ value="" @keydown.enter="login"
 </template>
 
 <script>
-	import http from '../../assets/js/http'
-	import * as types from '../../store/mutation-types'
-	import securityCodeApi from '../../api/securityCodeApi.js'
+import http from '../../assets/js/http'
+import * as types from '../../store/mutation-types'
+import securityCodeApi from '../../api/securityCodeApi.js'
 
-	export default {
+export default {
   mixins: [http],
   data () {
     return {
@@ -351,10 +361,10 @@ value="" @keydown.enter="login"
   },
   created () {
     this.refresh_verify()
-      // 刷新验证码后清除本地保留的以下缓存
-      window.tools.setUID('')
-      window.tools.setClientId('')
-      window.tools.setSessionId('')
+    // 刷新验证码后清除本地保留的以下缓存
+    window.tools.setUID('')
+    window.tools.setClientId('')
+    window.tools.setSessionId('')
   },
   mounted () {
     console.debug('mounted', process.env)

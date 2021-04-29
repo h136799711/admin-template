@@ -6,7 +6,7 @@ import http from '../assets/js/http'
 const fileApi = {
 	upload (file, imgType) {
 		imgType = imgType || 'other'
-      let url = window.tools.getAvatarUploadUrl()
+        let url = window.tools.getAvatarUploadUrl()
 		url = url + '?t=' + imgType
 		var formdata = new FormData()
 		formdata.append('image', file)

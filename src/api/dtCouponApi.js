@@ -21,6 +21,9 @@ const dtCouponApi = {
     async queryByUserId (data) {
         return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCoupon/queryByUserId');
     },
+    async queryByCouponId (data) {
+        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCoupon/queryByCouponId');
+    },
 };
 
 export default dtCouponApi

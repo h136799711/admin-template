@@ -2,6 +2,12 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Exception': '异常',
+	'Message':'消息',
+	'WapAliPay': '支付宝(WAP)',
+	'UserAgent': '用户终端',
+	'PageNo':'页码',
+	'SourceTypeName': '来源类别名称',
 	'Subregion': '子级区域',
 	'Pinyin': '拼音',
 	'Telephone': '电话区号',
@@ -199,7 +205,7 @@ exports.default = {
 	'Article': '文章',
 	'All': '全部',
 	'Author': '作者',
-	'Cms': '内容管理系统',
+	'Cms': '文章',
 	'Content': '内容',
 	'Leaf': '叶子节点',
 	'Shop': '商城',
@@ -246,6 +252,7 @@ exports.default = {
 	'Language': '语言',
 	'Area': '地区',
 	'Goods': '商品',
+	'GoodsNo': '商品货号',
 	'SubTitle': '子标题',
 	'Price': '价格',
 	'Absolute': '绝对',
@@ -312,6 +319,7 @@ exports.default = {
 	'ClientAlg': '通信算法',
 
 	// 文章
+	'draft': '草稿',
 	'CmsArticle.draft': '草稿',
 	'CmsArticle.published': '已发布',
 
@@ -320,4 +328,41 @@ exports.default = {
 
 	// PayType
 	'PcAliPay': '支付宝-电脑端',
+
+	// 商品状态
+	'DtGoods.on': '上架',
+	'DtGoods.off': '下架',
+
+	//优惠券
+	'DiscountAmount': '抵扣金额',
+	'CondAmount': '条件金额',
+	'Give': '赠送券',
+	'GetTime': '领取时间',
+
+	//自提点
+	'Lng': '经度',
+	'Lat': '纬度',
+	'ContactPhone': '联系电话',
+	'NoPickedUp': '待送出',
+	'PickedUp': '已取货',
+	'Canceled': '已取消',
+	'Sent': '已送出',
+	'PickupCode': '取货码',
+
+	'otherReason': '其他原因',
+	'BookingDays': '可提前几小时',
+
+	'UsedTime': '使用时间',
+	'SmallImage': '小图',
+	'DisplayOrder': '排序序号',
+	'Coupon': '优惠券',
+	'PickUpLocation': '自提点',
+	'Location': '定位',
+	'WxappMini':'小程序支付',
+	'Fake': '模拟支付',
+	'Diet': '餐饮',
+	'Complaints': '投诉',
+	'SimpleShop': '简易商店',
+	'OrderStatus': '订单状态',
+	'GoodsId': '商品ID',
 };

@@ -1,0 +1,15 @@
+#TODO
+
+router push的时候查询指定路由进行vuex生成标签
+
+
+
+http://localhost:8082/#/admin/clients/index
+
+slot大变化
+
+table组件
+slot-scope替换成#default
+
+el-dialog组件
+:visible.sync 替换成 v-model

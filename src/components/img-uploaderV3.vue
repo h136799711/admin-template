@@ -84,9 +84,7 @@
                 上传日期
                 <el-date-picker
                         v-model="date"
-                        format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd"
-                        align="left"
+                        format="YYYY-MM-DD"
                         :editable="false"
                         type="date"
                         :placeholder="$t('Date')">
@@ -101,11 +99,11 @@
             </el-alert>
             <span class="el-icon-loading" v-if="loadingUploadedImgs"></span>
             <span v-if="!loadingUploadedImgs && uploadedImgs.length === 0">
-                {{date}} 没有图片上传
+                {{date && date.format('yyyy-MM-dd')}} 没有图片上传
             </span>
             <span v-else v-for="img in uploadedImgs">
                     <el-image
-                            :class="(chooseImgId.indexOf(img.id + ',') !== -1) ? 'actived':''"
+                            :class="(imageUrlArr.indexOf(img.url) !== -1) ? 'actived':''"
                             @click="choose(img)"
                             style="cursor:pointer;width: 80px; height: 100px"
                             :src="img.url"
@@ -133,11 +131,11 @@
                     class="img-uploader"
                     name="image"
                     :data="extraData"
-                    :action="avatarUploadUrl"
+                    :action="uploadApiUrl"
                     :show-file-list="false"
                     :on-success="handleSuccess"
                     :before-upload="beforeUpload">
-                <i v-if="this.choosedImgPaths.length < this.items" class="el-icon-plus avatar-uploader-icon"></i>
+                <i v-if="this.imageUrlArr.length < this.items" class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
         </div>
         <!-- 本地上传图片 END-->
@@ -153,204 +151,222 @@
 </template>
 
 <script>
-  import fileApi from '../api/fileApi'
+    import fileApi from '../api/fileApi'
 
-  export default {
-    props: {
-      pageSize: {
-        type: Number,
-        default () {
-          return 6
-        }
-      },
-      items: {
-        type: Number,
-        default () {
-          return 1
-        }
-      },
-      imgCls: {
-        type: String,
-        default () {
-          return 'avatar'
-        }
-      },
-      editMode: {
-        type: Boolean,
-        default () {
-          return false
-        }
-      },
-      defaultImgUrl: String,
-      show: String,// remote , local, uploaded, all
-      imgType: String,
-      clear: Boolean,
-    },
-    data () {
-      return {
-        chooseImgId: '',
-        loadingUploadedImgs: false,
-        date: '',
-        pageIndex: 0,
-        count: 0,
-        uploadedImgs: [],
-        imageUrl: '',
-        sourceType: '1',
-        avatarUploadUrl: '',
-        extraData: { 't': 'other' },
-      }
-    },
-    computed: {
-      imageUrlArr () {
-        return this.imageUrl.split(',').filter(function (item) {
-          return item && item.length > 0
-        })
-      },
-      choosedImgPaths () {
-        let imgArr = this.imageUrl.split(',').filter(function (item) {
-          return item && item.length > 0
-        })
-        return imgArr
-      }
-    },
-    watch: {
-      clear (newVal, oldVal) {
-        if (newVal) {
-          // this.imageUrl = ''
-        }
-      },
-      defaultImgUrl (newVal) {
-        this.imageUrl = this.defaultImgUrl
-      },
-      imageUrl (newVal) {
-        console.log('image url', newVal)
-        if (newVal.length === '') {
-          this.imageUrl = this.defaultImgUrl
-        }
-      }
-    },
-    mounted () {
-      console.debug('img uploader mounted')
-    },
-    created () {
-      console.debug('img uploader created')
-      this.extraData.t = this.imgType
-      this.avatarUploadUrl = window.tools.getAvatarUploadUrl()
-      this.extraData.uid = window.tools.getUID()
-      this.extraData.sid = window.tools.getSessionId()
-      this.extraData.deviceType = window.tools.getDeviceType()
-      this.imageUrl = this.defaultImgUrl
-    },
-    methods: {
-      removeUploadImg (url) {
-        if (this.imageUrl.indexOf(url + ',') !== -1) {
-          this.imageUrl = this.imageUrl.replace(url + ',', '')
-        }
-        console.debug('remove', url, this.imageUrl)
-      },
-      inputRemoteImgs () {
-        this.$emit('onUploadSuccess', this.imageUrl)
-      },
-      appendImageUrl (url) {
-        if (this.imageUrl.indexOf(url + ',') !== -1) {
-          this.imageUrl = this.imageUrl.replace(url + ',', '')
-          return
-        }
-        this.imageUrl = this.imageUrl + url + ','
-      },
-      pushChooseImageId (img) {
-        if (this.chooseImgId.indexOf(img.id + ',') !== -1) {
-          this.chooseImgId = this.chooseImgId.replace(img.id + ',', '')
-          this.imageUrl = this.imageUrl.replace(img.url + ',', '')
-          return
-        }
-        if (this.choosedImgPaths.length >= this.items) {
-          // 限制数量
-          this.$message.error('最多选' + this.items + '张图片')
-          return
-        }
-        this.chooseImgId = this.chooseImgId + img.id + ','
-        this.imageUrl = this.imageUrl + img.url + ','
-        console.debug('url => ', this.imageUrl)
-      },
-      choose (img) {
-        this.pushChooseImageId(img)
-        this.$emit('onUploadSuccess', this.imageUrl)
-      },
-      sourceTypeChange (val) {
-        console.debug('source type', val)
-        if (parseInt(val) === 2) {
-          this.queryUploaded()
-        }
-      },
-      getImgUrl (relativePath) {
+    export default {
+        emits: ['onUploadSuccess'],
+        props: {
+            pageSize: {
+                type: Number,
+                default () {
+                    return 6
+                }
+            },
+            items: {
+                type: Number,
+                default () {
+                    return 1
+                }
+            },
+            imgCls: {
+                type: String,
+                default () {
+                    return 'avatar'
+                }
+            },
+            editMode: {
+                type: Boolean,
+                default () {
+                    return false
+                }
+            },
+            oss_type: {
+                type: String,
+                default () {
+                    // ali,qiniu
+                    return ''
+                }
+            },
+            defaultImgUrl: String,
+            show: String,// remote , local, uploaded, all
+            imgType: {
+                type: String,
+                default () {
 
-      },
-      byPagerCurrentChange (val) {
-        this.pageIndex = val
-        this.queryUploaded()
-      },
-      queryUploaded () {
-        this.loadingUploadedImgs = true
-        if (!this.date) {
-          this.date = ''
-        }
+                    return 'other'
+                }
+            },
+            clear: {
+                type: Boolean,
+                default () {
 
-        let promise = fileApi.query(this.date, this.pageIndex - 1 > 0 ? this.pageIndex - 1 : 0, this.pageSize)
-        let that = this
-        setTimeout(function () {
-          promise.then(({ data }) => {
-            console.log(data)
-            if (data.code === 0) {
-              that.uploadedImgs = data.data.list
-              that.count = parseInt(data.data.count)
-            } else {
-              window.tools.alertError(data.msg)
+                    return false
+                }
+            },
+        },
+        data () {
+            return {
+                chooseImgId: '',
+                loadingUploadedImgs: false,
+                date: '',
+                pageIndex: 0,
+                count: 0,
+                uploadedImgs: [],
+                imageUrl: '',
+                sourceType: '1',
+                uploadApiUrl: '',
+                tmpLastImageUrl: '',
+                extraData: { 't': 'other' },
             }
-          }).catch((reason) => {
-            window.tools.alertError(reason)
-          }).finally(() => {
-            console.debug('finally')
-            that.loadingUploadedImgs = false
-          })
-        }, 3000)
+        },
+        computed: {
+            imageUrlArr () {
+                return this.imageUrl.split(',').filter(function (item) {
+                    return item && item.length > 0
+                })
+            }
+        },
+        watch: {
+            imageUrl (newVal, oldVal) {
+                console.debug('当前选择值', newVal)
+                if (newVal.length > 0) {
+                    let start = newVal.length - 1
+                    if (newVal.substr(start, 1) !== ',') {
+                        this.imageUrl = this.imageUrl + ','
+                    }
+                }
+            }
+        },
+        mounted () {
+        },
+        created () {
+            this.extraData.t = this.imgType
+            this.uploadApiUrl = window.tools.getAvatarUploadUrl()
+            this.extraData.uid = window.tools.getUID()
+            this.extraData.sid = window.tools.getSessionId()
+            this.extraData.deviceType = window.tools.getDeviceType()
+            this.extraData.oss_type = this.oss_type
+            if (this.defaultImgUrl) {
+                this.imageUrl = this.defaultImgUrl
+            }
+        },
+        methods: {
+            removeUploadImg (url) {
+                if (this.imageUrl.indexOf(url + ',') !== -1) {
+                    this.imageUrl = this.imageUrl.replace(url + ',', '')
+                }
+                console.debug('remove', url, this.imageUrl)
+            },
+            inputRemoteImgs () {
+                this.$emit('onUploadSuccess', this.imageUrl)
+            },
 
-      },
-      getImage (uri) {
-        if (uri.length === 0) return false
-        if (!_.startsWith(uri, 'http')) {
-          uri = window.tools.getApiUrl() + uri
-        }
-        return uri
-      },
-      handleSuccess (res, file) {
-        if (parseInt(res.code) === 0) {
-          this.appendImageUrl(res.data.relative_path)
-          this.$emit('onUploadSuccess', this.imageUrl)
-        } else {
-          this.$message.error(res.msg)
-        }
-      },
-      beforeUpload (file) {
-        const isJPGOrPng = (file.type === 'image/jpeg' || file.type === 'image/png')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (this.choosedImgPaths.length >= this.items) {
-          this.$message.error('最多传' + this.items + '张图片')
-          return false
-        }
-        if (!isJPGOrPng) {
-          this.$message.error(this.$i18n.t('FileTypeLimitJpgPng'))
-        }
-        if (!isLt2M) {
-          this.$message.error(this.$i18n.t('FileSizeLimit2MB'))
-        }
-        return isJPGOrPng && isLt2M
-      },
-    },
-    name: 'uploaderV3'
-  }
+            pushChooseImageId (url) {
+                console.debug('选择的图片', url)
+                if (url.length === 0) {
+                    console.debug('error')
+                    return
+                }
+                if (this.imageUrl.indexOf(url + ',') !== -1) {
+                    this.imageUrl = this.imageUrl.replace(url + ',', '')
+                    console.debug('REPLACE', this.imageUrl, url)
+                    return
+                }
+                console.debug('APPEND', this.imageUrl, url)
+                if (this.imageUrlArr.length >= this.items) {
+                    // 限制数量
+                    this.$message.error('最多选' + this.items + '张图片')
+                    return
+                }
+                this.imageUrl = this.imageUrl + url + ','
+                console.debug('imageUrl', this.imageUrl)
+            },
+            choose (img) {
+                this.pushChooseImageId(img.url)
+                this.$emit('onUploadSuccess', this.imageUrl)
+            },
+            sourceTypeChange (val) {
+                console.debug('source type', val)
+                if (parseInt(val) === 2) {
+                    // 如果线上则清除
+                    this.tmpLastImageUrl = this.imageUrl;
+                    this.imageUrl = ''
+                    this.queryUploaded()
+                } else {
+                    if (this.imageUrl.length === 0) {
+                        this.imageUrl = this.tmpLastImageUrl;
+                    }
+                }
+            },
+            getImgUrl (relativePath) {
+
+            },
+            byPagerCurrentChange (val) {
+                this.pageIndex = val
+                this.queryUploaded()
+            },
+            queryUploaded () {
+                this.loadingUploadedImgs = true
+                let qDate = ''
+
+                if (this.date instanceof Date) {
+                    qDate = this.date.format('yyyy-MM-dd')
+                }
+                let promise = fileApi.query(qDate, this.pageIndex - 1 > 0 ? this.pageIndex - 1 : 0, this.pageSize)
+                let that = this
+
+                promise.then(({ data }) => {
+                    console.log(data)
+                    if (data.code === 0) {
+                        that.uploadedImgs = data.data.list
+                        that.count = parseInt(data.data.count)
+                    } else {
+                        window.tools.alertError(data.msg)
+                    }
+                }).catch((reason) => {
+                    window.tools.alertError(reason)
+                }).finally(() => {
+                    console.debug('finally')
+                    that.loadingUploadedImgs = false
+                })
+
+            },
+            getImage (uri) {
+                if (uri.length === 0) return false
+                if (!_.startsWith(uri, 'http')) {
+                    uri = window.tools.getApiUrl() + uri
+                }
+                return uri
+            },
+            handleSuccess (res, file) {
+                if (parseInt(res.code) === 0) {
+                    console.debug('上传图片', res.data)
+                    if (res.data.oss_key.length > 0) {
+                        this.pushChooseImageId(res.data.oss_key)
+                    } else {
+                        this.pushChooseImageId(res.data.relative_path)
+                    }
+                    this.$emit('onUploadSuccess', this.imageUrl)
+                } else {
+                    this.$message.error(res.msg)
+                }
+            },
+            beforeUpload (file) {
+                const isJPGOrPng = (file.type === 'image/jpeg' || file.type === 'image/png')
+                const isLt2M = file.size / 1024 / 1024 < 2
+                if (this.imageUrlArr.length >= this.items) {
+                    this.$message.error('最多传' + this.items + '张图片')
+                    return false
+                }
+                if (!isJPGOrPng) {
+                    this.$message.error(this.$i18n.t('FileTypeLimitJpgPng'))
+                }
+                if (!isLt2M) {
+                    this.$message.error(this.$i18n.t('FileSizeLimit2MB'))
+                }
+                return isJPGOrPng && isLt2M
+            },
+        },
+        name: 'uploaderV3'
+    }
 </script>
-
-<style scoped>
-
-</style>

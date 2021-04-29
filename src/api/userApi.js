@@ -23,13 +23,11 @@ const userApi = {
         data.service_type = 'by_LoginSession_logout'
         http.methods.defaultPost('', data, suc, fail)
     },
-    turnOn2StepVerify: (data, suc, fail) => {
-        data.service_type = 'by_UserAccount_turnOn2StepVerify'
-        http.methods.defaultPost('', data, suc, fail)
+    async turnOn2StepVerify(data) {
+        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/UserAccount/turnOn2StepVerify');
     },
-    turnOff2StepVerify: (data, suc, fail) => {
-        data.service_type = 'by_UserAccount_turnOff2StepVerify'
-        http.methods.defaultPost('', data, suc, fail)
+    async turnOff2StepVerify(data) {
+        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/UserAccount/turnOff2StepVerify');
     },
     updateLimit: (data, suc, fail) => {
         data.service_type = 'by_UserAccount_updateLimit'

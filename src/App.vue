@@ -323,21 +323,24 @@
     .number-input, .number-input.el-input {
         width: 120px;
     }
+    .el-dropdown-menu{
+      position:relative;
+    }
 </style>
 <template>
-    <div id="app">
-        <router-view/>
-    </div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 <script>
-    export default {
-        name: 'App',
-        components: {},
-        mounted: function () {
-            window.itboye.clientInfo.lang = window.tools.getBrowseLanguage()
-            window.itboye.clientInfo.timezone = window.tools.getTimezone()
-        }
-    }
+export default {
+  name: 'App',
+  components: {},
+  mounted: function () {
+    window.itboye.clientInfo.timezone = window.tools.getTimezone()
+    this.$i18n.locale = tools.getBrowseLanguage()
+  }
+}
 </script>
 
 <style>

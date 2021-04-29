@@ -1,21 +1,21 @@
 <template>
-  <main-home>
-    <router-view slot="main-content" />
-  </main-home>
+  <MainHome>
+    <router-view />
+  </MainHome>
 </template>
 
 <script>
-	import '../assets/css/animate.css'
-	import MainHome from './common/MainHome.vue'
+import '../assets/css/animate.css'
+import MainHome from './common/MainHome.vue'
 
-	export default {
-      components: { MainHome },
-      data () {
-        return {}
-      },
-      computed: {
-      },
-      methods: {
-      }
-    }
+export default {
+  components: { MainHome },
+  data () {
+    return {}
+  },
+  computed: {
+  },
+  methods: {
+  }
+}
 </script>
