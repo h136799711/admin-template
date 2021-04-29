@@ -89,7 +89,7 @@
     </div>
 
     <div
-      class="grid-content margin-md-top "
+      class="grid-content "
     >
       <el-table
         ref="table"
