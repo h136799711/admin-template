@@ -339,9 +339,6 @@ export default {
   mounted: function () {
     window.itboye.clientInfo.timezone = window.tools.getTimezone()
     this.$i18n.locale = tools.getBrowseLanguage()
-    if (tools.getCookie('debug').length === 0) {
-      console.debug = () => {};
-    }
   }
 }
 </script>
