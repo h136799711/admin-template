@@ -7,6 +7,10 @@ require('babel-polyfill')
 const utils = require('./utils')
 const webpack = require('webpack');
 module.exports = {
+    performance: {
+        hints: process.env.NODE_ENV === 'production' ? "warning" : false
+    },
+    devtool: 'source-map',
     entry: ['babel-polyfill', './src/index.js'],
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -28,7 +32,11 @@ module.exports = {
             }, {
                 test: /\.js$/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: {
+                        compact: true,
+                        minified: true
+                    }
                 }
             }, {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -36,7 +44,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: utils.assetsPath('img/[name].[hash:7].[ext]')
+                        name: ('/static/img/[name].[hash:7].[ext]')
                     }
                 }
             }, {
@@ -45,7 +53,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: utils.assetsPath('media/[name].[hash:7].[ext]')
+                        name: ('/static/media/[name].[hash:7].[ext]')
                     }
                 }
             }, {
@@ -54,7 +62,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+                        name: '/static/fonts/[name].[hash:7].[ext]'
                     }
                 }
             }

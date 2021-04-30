@@ -90,6 +90,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(transition => {
   NProgress.done()
 })
+
 window.itboye = window.itboye || {}
 window.itboye.clientInfo = window.itboye.clientInfo || {}
 window.Lockr = Lockr
@@ -172,4 +173,11 @@ window.tools.alertWarn = (msg) => {
 }
 window.tools.alertClose = () => {
   if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
+}
+
+window.itboye.env = process.env.NODE_ENV;
+if (window.itboye.env === 'production') {
+  // 正式环境不打印
+  window.console.debug = () => {
+  };
 }
