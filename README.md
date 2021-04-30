@@ -1,6 +1,8 @@
 # admin-template
 
 
+如何分割vendor，以及分割大文件
+
     "vue-json-pretty": "^1.6.0",
 
 > 配置 
