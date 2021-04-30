@@ -8,8 +8,7 @@ module.exports = {
 		return path.join(__dirname, '..', dir)
 	},
 
-	assetsPath: function (_path) {
-		const assetsSubDirectory = 'static'
+	assetsPath: function (assetsSubDirectory, _path) {
 		return path.posix.join(assetsSubDirectory, _path)
 	}
 }

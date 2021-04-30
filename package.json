@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "analyze": "webpack-bundle-analyzer dist/static/js/*.js",
-    "dev": "webpack-dev-server --mode development --config build/webpack.config.dev.js",
+    "dev": "webpack-dev-server --hot --mode development --config build/webpack.config.dev.js",
     "prod": "webpack --mode production --config build/webpack.config.prod.js"
   },
   "keywords": [],
@@ -21,7 +21,6 @@
     "echarts": "^4.9.0",
     "element-plus": "^1.0.2-beta.41",
     "fingerprintjs2": "^1.8.6",
-    "http-server": "^0.12.3",
     "js-base64": "^2.6.4",
     "lockr": "^0.8.5",
     "moment": "^2.29.1",
@@ -42,6 +41,7 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "http-server": "^0.12.3",
     "@babel/core": "^7.13.16",
     "webpack-bundle-analyzer": "^4.4.1",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",

@@ -6,9 +6,13 @@ const { VueLoaderPlugin } = require('vue-loader')
 require('babel-polyfill')
 const utils = require('./utils')
 const webpack = require('webpack');
+
+const IsProduction = process.env.NODE_ENV === 'production'
+const StaticDir = IsProduction ? "/static" : "static"
+
 module.exports = {
     performance: {
-        hints: process.env.NODE_ENV === 'production' ? "warning" : false
+        hints: IsProduction ? "warning" : false
     },
     devtool: 'source-map',
     entry: ['babel-polyfill', './src/index.js'],
@@ -35,7 +39,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         compact: true,
-                        minified: true
+                        minified: IsProduction
                     }
                 }
             }, {
@@ -44,7 +48,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: ('/static/img/[name].[hash:7].[ext]')
+                        name: utils.assetsPath(StaticDir,'/img/[name].[hash:7].[ext]')
                     }
                 }
             }, {
@@ -53,7 +57,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: ('/static/media/[name].[hash:7].[ext]')
+                        name: utils.assetsPath(StaticDir,'/media/[name].[hash:7].[ext]')
                     }
                 }
             }, {
@@ -62,7 +66,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: '/static/fonts/[name].[hash:7].[ext]'
+                        name: utils.assetsPath(StaticDir,'/fonts/[name].[hash:7].[ext]')
                     }
                 }
             }
