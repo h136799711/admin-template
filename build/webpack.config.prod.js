@@ -17,17 +17,11 @@ module.exports = merge(baseConfig, {
         minimize: true,
         splitChunks: {
             cacheGroups: {
-                defaultVendors: {
+                common: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendor',
-                    chunks: 'all',
-					reuseExistingChunk: true,
-                },
-                default: {
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true,
-                },
+                    chunks: 'all'
+                }
             },
         },
     },
