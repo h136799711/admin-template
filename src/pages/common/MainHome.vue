@@ -827,7 +827,7 @@
         background-color: #425160;
     }
 
-    .el-badge__content.is-fixed {
+    .main-topbar .el-badge__content.is-fixed {
         position: absolute;
         border-radius: 0px;
         background: #373d41;
