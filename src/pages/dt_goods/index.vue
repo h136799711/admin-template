@@ -1,8 +1,3 @@
-<style>
-    .blue {
-        color: blue;
-    }
-</style>
 <template>
   <div class="main-content by-banners padding-md-bottom padding-md-top">
     <div>
