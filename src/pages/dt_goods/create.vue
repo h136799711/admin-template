@@ -3,14 +3,14 @@
         color: blue;
     }
 
-    .img-uploader .coverImg {
-        width: 160px;
-        height: 160px;
+    .img-uploader .coverImg, .uploadedimg .coverImg {
+      width: 200px;
+      height: 150px;
     }
 
     .img-uploader-container .imgList {
-        width: 160px;
-        height: 160px;
+      width: 160px;
+      height: 120px;
     }
 
     .by-goods-create .cate-prop-item {
@@ -82,7 +82,7 @@
       <el-form-item
         :label="$t('Cover')"
       >
-        <ImgUploader2online
+        <ImgUploaderV3
           ref="addImgUploader"
           show="local"
           img-cls="coverImg"
@@ -118,11 +118,11 @@
 <script>
 import goodsApi from '../../api/dtGoodsApi'
 
-import ImgUploader2online from '@/components/img-uploader2online.vue'
+import ImgUploaderV3 from '../../components/img-uploaderV3'
 
 export default {
   components: {
-    ImgUploader2online
+    ImgUploaderV3
   },
   data () {
     return {

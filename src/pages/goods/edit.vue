@@ -303,7 +303,6 @@
 import spCateApi from '../../api/spCateApi'
 import goodsApi from '../../api/goodsApi'
 
-import ImgUploader2online from '@/components/img-uploader2online.vue'
 import ImgUploaderV3 from '../../../src/components/img-uploaderV3'
 import datatreeApi from '../../api/datatreeApi'
 

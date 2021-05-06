@@ -81,7 +81,7 @@
       <el-form-item
         :label="$t('Cover')"
       >
-        <ImgUploader2online
+        <ImgUploaderV3
           ref="addImgUploader"
           show="local"
           img-cls="coverImg"
@@ -116,12 +116,11 @@
 
 <script>
 import goodsApi from '../../api/dtGoodsApi'
-
-import ImgUploader2online from '@/components/img-uploader2online.vue'
+import ImgUploaderV3 from '../../components/img-uploaderV3'
 
 export default {
   components: {
-    ImgUploader2online
+    ImgUploaderV3
   },
   props: {
     id: String

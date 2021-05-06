@@ -135,7 +135,7 @@
                     :show-file-list="false"
                     :on-success="handleSuccess"
                     :before-upload="beforeUpload">
-                <i v-if="this.imageUrlArr.length < this.items" class="el-icon-plus avatar-uploader-icon"></i>
+                <i :class="imgCls" v-if="this.imageUrlArr.length < this.items" class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
         </div>
         <!-- 本地上传图片 END-->
