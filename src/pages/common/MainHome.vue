@@ -1099,9 +1099,6 @@
             userSessionData () {
                 return this.$store.getters.userSessionData
             },
-            userAvatarUrl () {
-                return window.tools.getAvatarUrl(this.userInfo.id)
-            },
             navMaxHeight () {
                 // const navNumber = this.menuList.length;
                 // 顶部导航高度50 侧边导航切换按钮高度30 菜单头40
