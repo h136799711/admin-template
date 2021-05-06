@@ -249,7 +249,7 @@
       <el-form-item
         :label="$t('Cover')"
       >
-        <ImgUploader2online
+        <ImgUploaderV3
           ref="addImgUploader"
           show="all"
           img-cls="coverImg"
@@ -261,7 +261,7 @@
       <el-form-item
         :label="$t('SmallCover')"
       >
-        <ImgUploader2online
+        <ImgUploaderV3
           ref="smallImgUploader"
           show="all"
           img-cls="coverImg"
@@ -308,8 +308,7 @@ import datatreeApi from '../../api/datatreeApi'
 
 export default {
   components: {
-    ImgUploaderV3,
-    ImgUploader2online
+    ImgUploaderV3
   },
   props: {
     id: String
