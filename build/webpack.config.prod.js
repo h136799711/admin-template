@@ -38,12 +38,39 @@ module.exports = merge(baseConfig, {
                                 // e.g. for ./css/admin/main.css the publicPath will be ../../
                                 // while for ./css/main.css the publicPath will be ../
                                 return path.relative(path.dirname(resourcePath), context) + '/'
-                            },
-                            hmr: process.env.NODE_ENV === 'development'
+                            }
                         }
                     },
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: '/static/img/[name].[hash:7].[ext]'
+                    }
+                }
+            }, {
+                test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: '/static/media/[name].[hash:7].[ext]'
+                    }
+                }
+            }, {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: '/static/fonts/[name].[hash:7].[ext]'
+                    }
+                }
             }
         ]
     },
