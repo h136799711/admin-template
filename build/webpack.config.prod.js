@@ -13,6 +13,7 @@ module.exports = merge(baseConfig, {
         path: utils.resolve('dist'),
         filename: 'static/js/[name].[hash:7].js'
     },
+    devtool: 'source-map',
     optimization: {
         minimize: true,
         splitChunks: {

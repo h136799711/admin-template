@@ -13,6 +13,7 @@
       >
         <el-form-item>
           <el-input
+                  :placeholder="$t('Title')"
             v-model="queryForm.title"
             size="mini"
           />

@@ -845,13 +845,19 @@
         line-height: 14px;
 
     }
-
-    .main-product .nav-tabs {
+    .main-product .nav-tabs{
         padding-bottom: 0px;
         position: fixed;
         height: 40px;
         width: 100%;
         z-index: 100;
+    }
+
+    .main-sidebar-full .main-product .nav-tabs {
+        padding-right: 185px;
+    }
+    .main-sidebar-mini .main-product .nav-tabs {
+        padding-right: 55px;
     }
 
     .main-product .nav-tabs .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {

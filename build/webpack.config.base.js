@@ -14,7 +14,6 @@ module.exports = {
     performance: {
         hints: IsProduction ? "warning" : false
     },
-    devtool: 'source-map',
     entry: ['babel-polyfill', './src/index.js'],
     resolve: {
         extensions: ['.js', '.vue', '.json'],
