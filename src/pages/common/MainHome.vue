@@ -55,6 +55,9 @@
         -moz-transition: all 0.2s ease;
         -webkit-transition: all 0.2s ease;
     }
+    .el-pager li.active {
+        color: #f56c6b;
+    }
 
     .el-loading-mask {
         z-index: 999 !important;
