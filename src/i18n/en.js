@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Batch': 'Batch',
 	'Exception':'Exception',
 	'Message':'Message',
 	'UserAgent': 'UserAgent',

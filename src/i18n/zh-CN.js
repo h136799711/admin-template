@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Batch':'批量',
 	'Exception': '异常',
 	'Message':'消息',
 	'WapAliPay': '支付宝(WAP)',

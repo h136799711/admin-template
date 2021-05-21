@@ -9,6 +9,9 @@ const bookApi = {
     info (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_info' }), suc, fail)
     },
+    batchSetEnd (data, suc, fail) {
+        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_batchSetEnd' }), suc, fail)
+    },
     setEnd (data, suc, fail) {
         http.methods.defaultPost('', Object.assign(data, { service_type: 'by_BsBook_setEnd' }), suc, fail)
     },

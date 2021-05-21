@@ -39,8 +39,16 @@
         </el-form-item>
       </el-form>
       <div>
-        (可以查含大结局,感言,后记,番外,最终章,完本,全书,完结,感言,全文,终结,新书,新的开始,尾声,结束语)
+        (可以查含 本书,完,大结局,感言,后记,番外,最终章,完本,全书,完结,感言,全文,终结,新书,新的开始,尾声,结束语)
 
+        <el-button
+                :loading="loading"
+                type="primary"
+                size="mini"
+                @click="onBatchEnd()"
+        >
+          {{ $t('Batch') + $t('End') }}
+        </el-button>
       </div>
     </div>
 
@@ -51,15 +59,14 @@
         :data="tableData"
         stripe
         sortable="custom"
+        @selection-change="handleSelectionChange"
         :element-loading-text="$t('Loading')"
         style="width: 100%"
       >
         <el-table-column
-          prop="id"
-          width="60px"
-          class="text-center"
-          :label="$t('ID')"
-        />
+                type="selection"
+                width="55">
+        </el-table-column>
         <el-table-column
           width="140px"
           prop="title"
@@ -150,15 +157,35 @@ export default {
       },
       count: 0,
       tableData: [],
-      loading: false
+      loading: false,
+      multipleSelection: []
     }
-  },
-  created () {
   },
   mounted: function () {
     this.refresh()
   },
   methods: {
+    onBatchEnd () {
+      let ids = '';
+      this.multipleSelection.forEach((value) => {
+        if (ids.length > 0) {
+          ids += ',';
+        }
+        ids += value.id;
+      });
+      api.batchSetEnd({ ids: ids }, (resp) => {
+        console.debug(resp);
+        this.loading = false
+        this.refresh()
+      }, (resp) => {
+        window.tools.alertError(resp.msg)
+        this.loading = false
+      })
+    },
+    handleSelectionChange(val) {
+      console.debug("选择", val);
+      this.multipleSelection = val;
+    },
     onCrawlingFirst (id) {
       api.setSort({ book_id: id, crawler_sort: 111 }, (resp) => {
         this.loading = false
@@ -191,6 +218,8 @@ export default {
     },
     refresh () {
       // 刷新当前
+
+      this.multipleSelection = [];
       this.tableData = []
       this.loading = true
       api.queryChapters(this.queryForm, (resp) => {
