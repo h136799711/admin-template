@@ -761,14 +761,14 @@ export default {
       // 刷新当前
 //    this.tableData = []
       this.loading = true
-      api.queryByPaging(Object.assign({}, this.queryForm), (resp) => {
+      api.queryByPaging(Object.assign({},this.queryForm), (resp) => {
         this.loading = false
         this.count = parseInt(resp.count)
         this.tableData = resp.list
           for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].google_secret_switch = this.tableData[i].google_secret.length > 0 ? 1 : 0
         }
-       this.page_index = this.queryForm.page_index;
+        this.page_index = this.queryForm.page_index;
       }, (resp) => {
         window.tools.alertError(resp.msg)
         this.loading = false
