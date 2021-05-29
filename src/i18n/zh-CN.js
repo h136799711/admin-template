@@ -2,6 +2,9 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Wallet': '钱包',
+	'RechargeRebate': '充值返利',
+	'RechargeOrder': '充值订单',
 	'Batch':'批量',
 	'Exception': '异常',
 	'Message':'消息',

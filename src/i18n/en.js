@@ -2,6 +2,9 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Wallet': 'Wallet',
+	'RechargeRebate': 'RechargeRebate',
+	'RechargeOrder': 'RechargeOrder',
 	'Batch': 'Batch',
 	'Exception':'Exception',
 	'Message':'Message',

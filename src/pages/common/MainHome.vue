@@ -854,6 +854,7 @@
         height: 40px;
         width: 100%;
         z-index: 100;
+        background: #f7f4f4;
     }
 
     .main-sidebar-full .main-product .nav-tabs {
@@ -1117,6 +1118,9 @@
                 }
                 if (newValue.code === 0) {
                     let data = _.cloneDeep(newValue.data)
+                    if (data.data) {
+                        data = data.data;
+                    }
                     console.debug('登录成功', data)
                     this.loadMenu(data.menuList)
                     this.loadUserInfo(data.userInfo)

@@ -2,13 +2,13 @@ import { defineAsyncComponent } from 'vue'
 
 // 公用组件
 const NotFound = (() => import('./pages/error/NotFound.vue'))
-const Login = defineAsyncComponent(() => import('./pages/account/Login.vue'))
+const Login = (() => import('./pages/account/Login.vue'))
 const Logout = (() => import('./pages/account/Logout.vue'))
 const Password = (() => import('./pages/account/password.vue'))
 const Avatar = (() => import('./pages/account/avatar.vue'))
 // admin组件，管理后台首页部分
 const Admin = (() => import('./pages/Admin.vue'))
-const AdminIndex = defineAsyncComponent(() => import('./pages/admin/index.vue'))
+const AdminIndex = (() => import('./pages/admin/index.vue'))
 
 // 数据字典
 const DatatreeIndex = (() => import('./pages/datatree/index.vue'))
@@ -95,6 +95,7 @@ const UserLog = (() => import('./pages/user/log.vue'))
 const UserClient = (() => import('./pages/user/client.vue'))
 const UserWithdraw = (() => import('./pages/withdrawals/index.vue'))
 const UserCoupon = (() => import('./pages/user/coupon.vue'))
+const UserWallet = (() => import('./pages/user/wallet.vue'))
 // User END *******************
 
 // FriendShip Start *******************
@@ -108,6 +109,7 @@ const SuggestIndex = (() => import('./pages/suggest/index.vue'))
 // Suggest Start *******************
 const RechargeIndex = (() => import('./pages/recharge/index.vue'))
 const RechargeProfile = (() => import('./pages/recharge/profile.vue'))
+const RechargeRebate = (() => import('./pages/recharge/rebate.vue'))
 // Suggest END *******************
 
 // Region Start *******************
@@ -158,7 +160,9 @@ const routes = [
             { path: 'withdrawal/index', component: UserWithdraw },
             { path: 'recharge/index', component: RechargeIndex },
             { path: 'recharge/profile/:id', component: RechargeProfile, props: true },
+            { path: 'recharge/rebate', component: RechargeRebate, props: true },
             { path: 'user/session/:id/:limit', component: UserSession, props: true },
+            { path: 'user/wallet/:id/:limit', component: UserWallet, props: true },
             { path: 'user/log/:id', component: UserLog, props: true },
             { path: 'user/client/:id', component: UserClient, props: true },
             { path: 'user/profile/:id', component: UserProfile, props: true },

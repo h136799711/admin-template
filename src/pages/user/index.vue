@@ -60,7 +60,7 @@
           :label="$t('ID')"
         />
         <el-table-column
-          width="160px"
+          width="140px"
           prop="title"
           :label="$t('Mobile')"
         >
@@ -72,6 +72,7 @@
             >
               <el-alert
                 class="alert-small tip"
+                size="mini"
                 effect="dark"
                 :closable="false"
                 title="已验证"
@@ -91,7 +92,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          width="160px"
+          width="140px"
           prop="title"
           :label="$t('Email')"
         >
@@ -104,6 +105,7 @@
               <el-alert
                 class="alert-small tip"
                 effect="dark"
+                size="mini"
                 :closable="false"
                 title="已验证"
                 show-icon
@@ -124,7 +126,7 @@
         </el-table-column>
 
         <el-table-column
-          width="200px"
+          width="180px"
           label="第三方登录"
         >
           <template #default="scope">
@@ -135,7 +137,7 @@
         </el-table-column>
 
         <el-table-column
-          width="200px"
+          width="180px"
           :label="$t('Time')"
         >
           <template #default="scope">
@@ -143,15 +145,15 @@
             {{ $t('LastLoginTime') }}:{{ (new Date(scope.row.last_login_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
           </template>
         </el-table-column>
-        <el-table-column
-          width="180px"
-          :label="$t('Ip')"
-        >
-          <template #default="scope">
-            {{ $t('RegIp') }}: {{ numberToIp(scope.row.reg_ip) }}<br>
-            {{ $t('LastLoginIp') }}: {{ numberToIp(scope.row.last_login_ip) }}
-          </template>
-        </el-table-column>
+<!--        <el-table-column-->
+<!--          width="180px"-->
+<!--          :label="$t('Ip')"-->
+<!--        >-->
+<!--          <template #default="scope">-->
+<!--            {{ $t('RegIp') }}: {{ numberToIp(scope.row.reg_ip) }}<br>-->
+<!--            {{ $t('LastLoginIp') }}: {{ numberToIp(scope.row.last_login_ip) }}-->
+<!--          </template>-->
+<!--        </el-table-column>-->
         <el-table-column
                 type="index"
           width="100px"
@@ -214,11 +216,17 @@
         </el-table-column>
 
         <el-table-column
-          width="360px"
           fixed="right"
           :label="$t('Action')"
         >
           <template #default="scope">
+            <el-button
+                    size="mini"
+                    icon="el-icon-tickets"
+                    @click="goWallet(scope.row)"
+            >
+              {{ $t('Wallet') }}
+            </el-button>
             <el-button
               size="mini"
               icon="el-icon-tickets"
@@ -253,8 +261,8 @@
     </div>
     <div class="text-center">
       <el-pagination
-        :current-page="queryForm.page_index"
-        :page-sizes="[10, 20, 30, 50]"
+          :current-page="page_index"
+        :page-sizes="[3, 10, 20, 30, 50]"
         :page-size="queryForm.page_size"
         layout="total, sizes, prev, pager, next, jumper"
         :total="count"
@@ -435,10 +443,25 @@
 <script>
 import QrcodeVue from 'qrcode.vue'
 import api from '../../api/userApi'
+import { getCurrentInstance,onMounted, onUpdated, onUnmounted,ref } from 'vue'
+import { useRouter,useRoute } from 'vue-router';
 
 export default {
   components: {
     QrcodeVue
+  },
+  setup(){
+    onUpdated(() =>  {
+      console.debug('on Updated');
+      // const internalInstance = getCurrentInstance()
+      // internalInstance.data.queryForm.page_index = 3;
+//      console.debug(internalInstance, internalInstance.data.queryForm.page_index);
+    })
+  //   const route = useRoute();
+  //   const page_index = ref(route.query.p ? parseInt(route.query.p) : 1);
+  //   return {
+  //     page_index
+  //   };
   },
   data () {
     var validatePass = (rule, value, callback) => {
@@ -469,20 +492,13 @@ export default {
       }
     }
 
-
-
     return {
-      switch: [
-        true,false,false,false,true,true,true,true,true,true,true,true,true,true,
-      ],
-      switch2: [
-        true,false,false,false,true,true,true,true,true,true,true,true,true,true,
-      ],
+      page_index: 1,
       dialogBindPhoneVisible: false,
       queryForm: {
         mobile: '',
         page_index: 1,
-        page_size: 10
+        page_size: 3
       },
       addForm: { mobile: '', countryNo: '86', password: '', repassword: '' },
       editForm: { id: 0, nickname: '' },
@@ -541,14 +557,17 @@ export default {
     }
   },
   created () {
-    this.refresh()
   },
   mounted () {
-    console.debug('index mounted')
+    this.queryForm.page_index = parseInt(this.$route.query.p ?? 1);
+    this.refresh();
   },
   methods: {
     goSession (row) {
-      this.$router.push({ path: 'session/' + row.id + '/' + row.login_device_cnt })
+     this.$router.push({ path: 'session/' + row.id + '/' + row.login_device_cnt })
+    },
+    goWallet (row) {
+      this.$router.push({ path: 'wallet/' + row.id + '/' + this.queryForm.page_index })
     },
     goLog (row) {
       this.$router.push({ path: 'log/' + row.id })
@@ -652,6 +671,7 @@ export default {
     },
     changeGoogleSecret (row, id) {
       console.log('change', row, id)
+      if (!id) return ;
       if (row === 1) {
         this.onTurnOn(id)
       } else {
@@ -660,6 +680,7 @@ export default {
     },
     onDisableEnable (status, id) {
       console.log('状态', status, id)
+      if (!id) return ;
       if (status === 1) {
         this.onEnable(id)
       } else {
@@ -738,15 +759,16 @@ export default {
     },
     refresh () {
       // 刷新当前
-      this.tableData = []
+//    this.tableData = []
       this.loading = true
-      api.queryByPaging(this.queryForm, (resp) => {
+      api.queryByPaging(Object.assign({}, this.queryForm), (resp) => {
         this.loading = false
         this.count = parseInt(resp.count)
         this.tableData = resp.list
-        for (let i = 0; i < this.tableData.length; i++) {
+          for (let i = 0; i < this.tableData.length; i++) {
           this.tableData[i].google_secret_switch = this.tableData[i].google_secret.length > 0 ? 1 : 0
         }
+       this.page_index = this.queryForm.page_index;
       }, (resp) => {
         window.tools.alertError(resp.msg)
         this.loading = false
