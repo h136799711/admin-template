@@ -3,6 +3,9 @@
 import http from '../assets/js/http.js';
 
 const dtOrderApi = {
+    async info (data) {
+        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtOrder/info')
+    },
     async query (data) {
         return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtOrder/query')
     },
@@ -12,8 +15,8 @@ const dtOrderApi = {
     async queryComplaints (data) {
         return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtOrder/queryComplaints')
 	},
-	
-	
+
+
 };
 
 export default dtOrderApi;

@@ -3,6 +3,10 @@
 import http from '../assets/js/http.js'
 
 const dtGoodsApi = {
+
+    async saveStock (data) {
+        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/saveStock')
+    },
     async query (data) {
         return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/query')
     },

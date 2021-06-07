@@ -171,6 +171,15 @@
           :label="$t('Action')"
         >
           <template #default="scope">
+
+            <el-button
+                    size="mini"
+                    @click="onView(scope.row)"
+            >
+              {{ $t('View') }}
+            </el-button>
+
+
             <el-button
               :disabled="scope.row.order_status !== 0"
               size="mini"
@@ -225,6 +234,150 @@
       </div>
       </template>
     </el-dialog>
+
+
+    <!-- 查看 -->
+    <el-dialog
+            :show-close="false"
+            :append-to-body="false"
+            title="订单详情"
+            v-model="dialogViewVisible"
+    >
+      <el-form
+              v-if="!dialogViewLoading"
+              label-width="120px"
+      >
+
+        <el-form-item
+                label="用户ID/手机"
+        >
+          [{{ viewForm.user_id }}]{{ viewForm.user_mobile }}
+        </el-form-item>
+        <el-form-item
+                label="订单号"
+        >
+          {{ viewForm.order_no }}
+        </el-form-item>
+        <el-form-item
+                label="总金额/支付金额"
+        >
+          {{ (viewForm.total_price/100.0).toFixed(2) }}元 / {{(viewForm.pay_price/100.0).toFixed(2)}}元
+        </el-form-item>
+        <el-form-item
+                label="下单时间"
+        >
+          {{(new Date(viewForm.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+        </el-form-item>
+        <el-form-item
+                label="取餐号码"
+        >
+          {{viewForm.pickup_code}}
+        </el-form-item>
+        <el-form-item
+                label="取餐日期"
+        >
+          {{(new Date(viewForm.pick_up_time_begin * 1000)).format('yyyy-MM-dd hh:mm')}}-{{(new
+          Date(viewForm.pick_up_time_end * 1000)).format('hh:mm')}}
+        </el-form-item>
+        <el-form-item
+                label="取餐地点"
+        >
+          {{ viewForm.pick_up_place_info.title }}({{ viewForm.pick_up_place_info.phone }})<br/>
+          {{ viewForm.pick_up_place_info.location }}
+        </el-form-item>
+
+        <el-form-item
+                label="备注"
+        >
+          {{ viewForm.note }}
+        </el-form-item>
+        <el-form-item
+                label="券信息"
+        >
+          <div v-if="viewForm.user_coupon_id == 0">
+            没有使用券
+          </div>
+          <div v-else>
+            [{{ viewForm.user_coupon_id }}]
+            {{viewForm.user_coupon_info.title}}
+
+            {{viewForm.user_coupon_info.note}}
+
+          </div>
+        </el-form-item>
+        <el-form-item
+                label="商品"
+        >
+          <el-table
+                  ref="table"
+                  :data="viewForm.items"
+                  stripe
+                  style="width: 100%"
+          >
+            <el-table-column
+                    :label="$t('Title')">
+              <template #default="scope">
+                <el-image :src="scope.row.item_image" style="width: 80px;height:60px;"></el-image>
+                <br/>
+                {{scope.row.item_title}}/{{scope.row.item_sku_title}}
+              </template>
+            </el-table-column>
+            <el-table-column
+                    width="100px"
+                    :label="$t('Price')">
+              <template #default="scope">
+                {{(scope.row.item_sku_price/100.0).toFixed(2)}}
+              </template>
+            </el-table-column>
+            <el-table-column
+                    width="100px"
+                    label="数量">
+              <template #default="scope">
+                {{(scope.row.item_count)}}
+              </template>
+            </el-table-column>
+          </el-table>
+
+        </el-form-item>
+
+
+        <el-form-item
+                label="状态日志"
+        >
+          <el-table
+                  :data="viewForm.his"
+                  stripe
+                  style="width: 100%"
+          >
+            <el-table-column
+                    width="120px"
+                    :label="$t('CreateTime')">
+              <template #default="scope">
+                {{(new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss')}}
+              </template>
+            </el-table-column>
+            <el-table-column
+                    :label="$t('Note')">
+              <template #default="scope">
+                {{scope.row.note}}
+              </template>
+            </el-table-column>
+          </el-table>
+
+        </el-form-item>
+
+      </el-form>
+      <div v-else>
+        载入中...
+      </div>
+      <template #footer>
+      <div  class="dialog-footer">
+        <el-button @click="dialogViewVisible = false">
+          确定
+        </el-button>
+      </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -236,6 +389,8 @@ export default {
   },
   data () {
     return {
+      dialogViewVisible: false,
+      dialogViewLoading: true,
       notifyHistory: [],
       dialogGiveVisible: false,
       queryForm: {
@@ -244,6 +399,11 @@ export default {
         pay_status: '',
         page_index: 1,
         page_size: 10
+      },
+      viewForm: {
+        address_info: {
+          name: '',mobile:'',detail:''
+        }
       },
       rules: {
         title: [
@@ -267,6 +427,19 @@ export default {
     this.refresh()
   },
   methods: {
+    async onView(row) {
+      this.dialogViewVisible = true;
+      this.dialogViewLoading = true;
+      let order = await dtOrderApi.info({id: row.id});
+
+      this.dialogViewLoading = false;
+      // this.viewForm.order_no = row.order_no
+      this.viewForm = order;
+      this.viewForm.pick_up_place_info = JSON.parse(this.viewForm.pick_up_place_info);
+      if (this.viewForm.user_coupon_info.length > 0) {
+        this.viewForm.user_coupon_info = JSON.parse(this.viewForm.user_coupon_info);
+      }
+    },
     getPayType (payType) {
       switch (payType) {
         case 'alipay_pc':
