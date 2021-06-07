@@ -30,7 +30,11 @@ const apiMethods = {
             window.itboye.vue_instance.$router.push('/login')
             reject(ret.msg)
           } else {
-            resolve(ret.data)
+            if (ret.code == 0) {
+              resolve(ret.data)
+            } else {
+              reject(ret.msg);
+            }
           }
         }).catch((error) => {
           if (error.response) {
