@@ -59,6 +59,16 @@
           width="40px"
           :label="$t('ID')"
         />
+
+        <el-table-column
+                width="120px"
+                prop="nickname"
+                label="用户昵称"
+        >
+          <template #default="scope">
+            {{scope.row.nickname}}
+          </template>
+        </el-table-column>
         <el-table-column
           width="140px"
           prop="title"
@@ -135,14 +145,21 @@
             WEIBO: {{ scope.row.weibo_openid }}<br>
           </template>
         </el-table-column>
-
         <el-table-column
-          width="180px"
-          :label="$t('Time')"
+                width="180px"
+                :label="$t('Time')"
         >
           <template #default="scope">
             {{ $t('RegTime') }}: {{ (new Date(scope.row.create_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}<br>
             {{ $t('LastLoginTime') }}:{{ (new Date(scope.row.last_login_time * 1000)).format('yyyy-MM-dd hh:mm:ss') }}
+          </template>
+        </el-table-column>
+        <el-table-column
+                width="120px"
+                label="邀请码"
+        >
+          <template #default="scope">
+          {{ scope.row.idcode }}
           </template>
         </el-table-column>
 <!--        <el-table-column-->
@@ -573,7 +590,7 @@ export default {
       this.$router.push({ path: 'log/' + row.id })
     },
     goClient (row) {
-      this.$router.push({ path: 'client/' + row.id })
+      this.$router.push({ path: 'client/' + row.id + '/' + this.queryForm.page_index })
     },
     goProfile (row) {
       this.$router.push({ path: 'profile/' + row.id })

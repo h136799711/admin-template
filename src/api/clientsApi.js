@@ -3,63 +3,20 @@
 import http from '../assets/js/http.js'
 
 const clientsApi = {
+    async resetSysRsaKey (data) {
+        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/Clients/resetSysRsaKey')
+    },
     info (data, suc, fail) {
-        let url = window.tools.getApiUrl()
-        data.service_type = 'by_Clients_info'
-        http.methods.apiPost(url, data).then((res) => {
-            console.log(res)
-            if (res.code === 0) {
-                if (typeof suc === 'function') {
-                    suc(res.data)
-                } else {
-                    tools.alertSuc(res.msg)
-                }
-            } else {
-                if (typeof fail === 'function') {
-                    fail(res)
-                } else {
-                    tools.alertError(res.msg)
-                }
-            }
-        })
+        data.service_type = 'by_Clients_info';
+        http.methods.defaultPost('', data, suc, fail);
     },
     update (data, suc, fail) {
-        let url = window.tools.getApiUrl()
         data.service_type = 'by_Clients_update'
-        http.methods.apiPost(url, data).then((res) => {
-            if (res.code === 0) {
-                if (typeof suc === 'function') {
-                    suc(res.data)
-                } else {
-                    tools.alertSuc(res.msg)
-                }
-            } else {
-                if (typeof fail === 'function') {
-                    fail(res)
-                } else {
-                    tools.alertError(res.msg)
-                }
-            }
-        })
+        http.methods.defaultPost('', data, suc, fail);
     },
     reset (data, suc, fail) {
-        let url = window.tools.getApiUrl()
         data.service_type = 'by_Clients_resetClientSecretKey'
-        http.methods.apiPost(url, data).then((res) => {
-            if (res.code === 0) {
-                if (typeof suc === 'function') {
-                    suc(res.data)
-                } else {
-                    tools.alertSuc(res.msg)
-                }
-            } else {
-                if (typeof fail === 'function') {
-                    fail(res)
-                } else {
-                    tools.alertError(res.msg)
-                }
-            }
-        })
+        http.methods.defaultPost('', data, suc, fail);
     },
     query (data, suc, fail) {
         data.service_type = 'by_Clients_query'
@@ -69,12 +26,24 @@ const clientsApi = {
         data.service_type = 'by_Clients_create'
         http.methods.defaultPost('', data, suc, fail)
     },
+    createBySelf (data, suc, fail) {
+        data.service_type = 'by_Clients_createBySelf'
+        http.methods.defaultPost('', data, suc, fail)
+    },
     payConfig (data, suc, fail) {
         data.service_type = 'by_ClientsConfig_payConfig'
         http.methods.defaultPost('', data, suc, fail)
     },
+    wxpayConfig (data, suc, fail) {
+        data.service_type = 'by_ClientsConfig_wxpayConfig'
+        http.methods.defaultPost('', data, suc, fail)
+    },
     updatePayConfig (data, suc, fail) {
         data.service_type = 'by_ClientsConfig_updatePayConfig'
+        http.methods.defaultPost('', data, suc, fail)
+    },
+    updateWxPayConfig (data, suc, fail) {
+        data.service_type = 'by_ClientsConfig_updateWxPayConfig'
         http.methods.defaultPost('', data, suc, fail)
     },
     paymentList(data, suc, fail) {

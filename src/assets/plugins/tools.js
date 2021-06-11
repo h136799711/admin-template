@@ -170,23 +170,19 @@ const getBrowseLanguage = () => {
 		if (navigator.language) {
 			lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
 			lang = lang.substr (0, 2);//获取浏览器配置语言前两位
-			// if (inArray)
+
           	let supportLanguages = ['en', 'zh']
 			let isExists = supportLanguages.some(function (i) {
               return (i === lang)
 			})
-			if (isExists) {
-              return lang
-			} else {
-              return 'zh'
+			if (!isExists) {
+				lang = 'zh'
 			}
 		} else {
           lang = 'zh'
 		}
-	} else {
-		window.cache.setValue('lang', lang.value, 24 * 3600)
 	}
-
+	window.cache.setValue('lang', lang, 24 * 3600)
 	return lang;
 }
 

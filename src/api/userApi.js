@@ -66,16 +66,16 @@ const userApi = {
         http.methods.defaultPost('/100/UserAccount/query', data, suc, fail)
     },
     logout(data , suc, fail) {
-        console.debug('[ajax] userApi::logout 用户登出', data)
+        // console.debug('[ajax] userApi::logout 用户登出', data)
         window.tools.clear()
         http.methods.defaultPost('/101/UserLoginSession/logout', data, suc, fail)
     },
     login (data, suc,fail) {
-        console.debug('[ajax] userApi::login 用户登录', data)
+        // console.debug('[ajax] userApi::login 用户登录', data)
         http.methods.defaultPost('/101/UserLoginSession/loginByMobilePassword', data, suc, fail)
     },
     getUserData (suc, fail) {
-        console.debug('[ajax] userApi::getUserData 获取用户数据')
+        // console.debug('[ajax] userApi::getUserData 获取用户数据')
         http.methods.defaultPost('/101/UserLoginSession/adminData', {}, suc, fail)
     }
 }

@@ -2,6 +2,7 @@
 
 exports.__esModule = true;
 exports.default = {
+	'Weixin': '微信',
 	'Wallet': '钱包',
 	'RechargeRebate': '充值返利',
 	'RechargeOrder': '充值订单',
@@ -42,7 +43,7 @@ exports.default = {
 	'Withdrawal': '提现',
 	'Order': '订单',
 	'AliPublicKey': '系统公钥',
-	'UserPublicKey': '用户私钥',
+	'UserPublicKey': '用户公钥',
 	'Mode': '模式',
 	'ReturnUrl': '跳转地址',
 	'NotifyUrl': '异步通知地址',
@@ -68,7 +69,7 @@ exports.default = {
 	'RegTime': '注册时间',
 	'RegIp': '注册IP',
 	'LastLoginIp': '最近登录IP',
-	'LastLoginTime': '最近登录时间',
+	'LastLoginTime': '最近登录',
 	'NoCover': '无封面',
 	'Index': '首页',
 	'Set': '设置',

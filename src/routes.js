@@ -164,7 +164,7 @@ const routes = [
             { path: 'user/session/:id/:limit', component: UserSession, props: true },
             { path: 'user/wallet/:id/:limit', component: UserWallet, props: true },
             { path: 'user/log/:id', component: UserLog, props: true },
-            { path: 'user/client/:id', component: UserClient, props: true },
+            { path: 'user/client/:id/:limit', component: UserClient, props: true },
             { path: 'user/profile/:id', component: UserProfile, props: true },
             { path: 'book/source/:id', component: BookSource, props: true },
             { path: 'book/all_source', component: BookAllSource },
