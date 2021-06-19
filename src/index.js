@@ -73,7 +73,8 @@ router.beforeEach((to, from) => {
   let jwt = tools.getJwt();
   if (jwt) {
     let expTime = tools.getJwtExpireTime();
-    if (expTime < ((new Date()).getTime()/1000).toFixed(0) - 300) {
+    console.debug(expTime, (new Date()).getTimestamp() + 300);
+    if (expTime < (new Date()).getTimestamp() + 300) {
       jwtApi.refresh({}).then((resp) => {
         if (resp.jwt && resp.jwt_expire) {
           console.debug("Refresh Token");
@@ -127,26 +128,7 @@ window.tools.md5Utils = md5Utils
 window.tools.base64Utils = base64Utils.Base64
 window.tools.finger = new Finger()
 window.tools.getDeviceToken = function () {
-  let token = cache.getValue('BY_DEVICE_TOKEN')
-  if (token) {
-    return token
-  }
-  if (window.requestIdleCallback) {
-    requestIdleCallback(function () {
-      window.tools.finger.get(function (components) {
-        cache.setValue('BY_DEVICE_TOKEN', components, 7200)
-        itboye.clientInfo.deviceToken = components
-      })
-    })
-  } else {
-    setTimeout(function () {
-      window.tools.finger.get(function (components) {
-        cache.setValue('BY_DEVICE_TOKEN', components, 7200)
-        itboye.clientInfo.deviceToken = components
-      })
-    }, 500)
-  }
-  return ''
+  return tools.getSessionId();
 }
 
 const app = createApp(App)

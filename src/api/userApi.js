@@ -77,6 +77,9 @@ const userApi = {
     getUserData (suc, fail) {
         // console.debug('[ajax] userApi::getUserData 获取用户数据')
         http.methods.defaultPost('/100/UserLoginSession/adminData', {}, suc, fail)
+    },
+    updateNicknameHead (data, suc, fail) {
+        http.methods.defaultPost('/100/UserLoginSession/updateInfo', data, suc, fail)
     }
 }
 

@@ -1,135 +1,83 @@
 <style>
     .avatar-uploader {
-        text-align: center;
-    }
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
-        text-align: center;
-    }
-    .avatar-uploader .avatar {
-        width: 178px;
-        height: 178px;
-        display: block;
-        margin: auto;
-    }
-    .by-avatar .update-avatar {
         margin: 0 auto;
-        display: block;
+        width: 200px;
     }
 </style>
 <template>
-  <div class="main-content by-avatar padding-md-bottom padding-md-top">
-    <el-row type="flex">
-      <el-col :span="3">
-        <div class="grid-content bg-purple" />
-      </el-col>
-      <el-col :span="12">
-        <el-upload
-          ref="uploader"
-          class="avatar-uploader"
-          name="image"
-          :data="extraData"
-          :action="avatarUploadUrl"
-          :show-file-list="true"
-          :on-success="handleAvatarSuccess"
-          drag=""
-          :auto-upload="false"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img
-            :src="imageUrl"
-            class="avatar"
-          >
-          <i class="el-icon-upload" />
-          <div class="el-upload__text">
-            {{ $t('Drag') }}&nbsp;{{ $t('File') }}，{{ $t('Or') }}&nbsp;<em>{{ $t('Click') }}&nbsp;{{ $t('Upload') }}</em>
-          </div>
-          <div
-            slot="tip"
-            class="el-upload__tip"
-          >
-            {{ $t('FileTypeLimitJpg') }}，{{ $t('FileSizeLimit2MB') }}
-          </div>
-        </el-upload>
-
-        <el-button
-          class="update-avatar"
-          :loading="loading"
-          type="primary"
-          size="mini"
-          icon="by-icon by-Icon-baocun"
-          @click="submitUpload()"
-        >
-          {{ $t('Save') }}
-        </el-button>
-      </el-col>
-      <el-col :span="3">
-        <div class="grid-content bg-purple" />
-      </el-col>
-    </el-row>
-  </div>
+    <div class="main-content by-avatar padding-md-bottom padding-md-top">
+        <div class="help-block">
+            <el-alert
+                    title="上传头像文件不要超过500KB"
+                    type="info">
+            </el-alert>
+        </div>
+        <div class="avatar-uploader margin-md-top">
+            <div class="margin-md-bottom" style="padding: 0px 6px;">
+              <el-input type="text" id="nickname" name="nickname" size="mini" placeholder="昵称" v-model="editForm.nickname"/>
+            </div>
+            <ImgUploader
+                    ref="editImgUploader"
+                    :default-img-url="editForm.head"
+                    img-type="avatar"
+                    @onUploadSuccess="onUploadSuccess"
+            />
+            <div class="text-center">
+                <el-button
+                        type="primary"
+                        size="mini"
+                        :loading="loading"
+                        @click="save()"
+                >
+                    {{ $t('Save') }}
+                </el-button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+    import userApi from '../../api/userApi'
+    import ImgUploader from '../../components/img-uploaderV3.vue'
 
-export default {
-  components: {
-  },
-  data () {
-    return {
-      extraData: { 't': 'avatar' },
-      avatarUploadUrl: '',
-      imageUrl: '',
-      rules: {
-      },
-      loading: false
+    export default {
+        components: {
+            ImgUploader
+        },
+        data () {
+            return {
+                editForm: {
+                    nickname: '',
+                    head: ''
+                },
+                loading: false
+            }
+        },
+        computed: {},
+        watch: {},
+        created () {
+            this.editForm.head = tools.getAvatar()
+            this.editForm.nickname = tools.getNick()
+        },
+        mounted: function () {
+        },
+        methods: {
+            onUploadSuccess (data) {
+                this.editForm.head = data.trim(',')
+                console.debug('image upload success', data.trim(','))
+            },
+            save () {
+                this.loading = true
+                userApi.updateNicknameHead(this.editForm, (suc) => {
+                  this.loading = false
+                  tools.setAvatar(this.editForm.head)
+                  tools.setNick(this.editForm.nickname)
+                  window.tools.alertSuc('操作成功')
+                }, (err) => {
+                  this.loading = false;
+                  window.tools.alertError(err.msg)
+                })
+            }
+        }
     }
-  },
-  computed: {
-  },
-  watch: {},
-  created () {
-    this.avatarUploadUrl = window.tools.getAvatarUploadUrl()
-    this.extraData.uid = window.tools.getUID()
-    this.extraData.sid = window.tools.getSessionId()
-    this.extraData.deviceType = window.tools.getDeviceType()
-    this.imageUrl = 'https://image.hebidu.cn/uploads/avatar/' + window.tools.getUID() + '/avatar.png'
-  },
-  mounted: function () {
-  },
-  methods: {
-    handleAvatarSuccess (res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error(this.$i18n.t('FileTypeLimitJpg'))
-      }
-      if (!isLt2M) {
-        this.$message.error(this.$i18n.t('FileSizeLimit2MB'))
-      }
-      return isJPG && isLt2M
-    },
-    submitUpload () {
-      this.$refs.uploader.submit()
-    }
-  }
-}
 </script>

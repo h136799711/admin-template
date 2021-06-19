@@ -87,12 +87,11 @@
                         :label="$t('Photo')"
                 >
                     <template #default="scope">
-
-                                              <img
-                                                      :src="getImage(scope.row.photo_uri)"
-                                                      alt="photo"
-                                                      class="photo"
-                                              >
+                          <img
+                                  :src="scope.row.photo_uri"
+                                  alt="photo"
+                                  class="photo"
+                          >
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -162,47 +161,14 @@
                         :label="$t('Photo')"
                         prop="uri"
                 >
-                    <el-radio
-                            v-model="sourceType"
-                            label="0"
-                    >
-                        网络图片
-                    </el-radio>
-                    <el-radio
-                            v-model="sourceType"
-                            label="1"
-                    >
-                        本地上传
-                    </el-radio>
-                    <el-upload
-                            v-if="sourceType === '1'"
-                            class="avatar-uploader"
-                            name="image"
-                            :data="extraData"
-                            :action="avatarUploadUrl"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"
-                    >
-                        <img
-                                v-if="imageUrl"
-                                :src="imageUrl"
-                                class="avatar"
-                        >
-                        <i
-                                v-else
-                                class="el-icon-plus avatar-uploader-icon"
-                        />
-                    </el-upload>
-                    <el-input
-                            v-if="sourceType === '0' "
-                            v-model="editForm.uri"
+
+                    <ImgUploader
+                            ref="editImgUploader"
+                            :default-img-url="editForm.uri"
+                            :clear="imgUploadClear"
+                            img-type="album"
+                            @onUploadSuccess="onUploadSuccess"
                     />
-                    <img
-                            v-if="sourceType === '0' "
-                            :src="getImage(editForm.uri)"
-                            class="preview-img"
-                    >
                 </el-form-item>
 
                 <el-form-item
@@ -264,47 +230,13 @@
                         :label="$t('Photo')"
                         prop="uri"
                 >
-                    <el-radio
-                            v-model="sourceType"
-                            label="0"
-                    >
-                        网络图片
-                    </el-radio>
-                    <el-radio
-                            v-model="sourceType"
-                            label="1"
-                    >
-                        本地上传
-                    </el-radio>
-                    <el-upload
-                            v-if="sourceType === '1'"
-                            class="avatar-uploader"
-                            name="image"
-                            :data="extraData"
-                            :action="avatarUploadUrl"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"
-                    >
-                        <img
-                                v-if="imageUrl"
-                                :src="imageUrl"
-                                class="avatar"
-                        >
-                        <i
-                                v-else
-                                class="el-icon-plus avatar-uploader-icon"
-                        />
-                    </el-upload>
-                    <el-input
-                            v-if="sourceType === '0' "
-                            v-model="addForm.uri"
+                    <ImgUploader
+                            ref="addImgUploader"
+                            :default-img-url="addForm.uri"
+                            :clear="imgUploadClear"
+                            img-type="album"
+                            @onUploadSuccess="onUploadSuccess"
                     />
-                    <img
-                            v-if="sourceType === '0' && addForm.uri "
-                            :src="getImage(addForm.uri)"
-                            class="preview-img"
-                    >
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -329,18 +261,18 @@
 
 <script>
     import api from '../../api/albumApi'
+    import ImgUploader from '../../components/img-uploaderV3.vue'
 
     export default {
-        components: {},
+        components: {
+            ImgUploader
+        },
         props: {
             id: String,
         },
         data () {
             return {
-                sourceType: '0',
-                imageUrl: '',
-                extraData: { 't': 'album' },
-                avatarUploadUrl: '',
+                imgUploadClear: false,
                 queryForm: {
                     album_id: 0,
                     page_index: 1,
@@ -365,42 +297,16 @@
         created () {
         },
         mounted() {
-          this.avatarUploadUrl = window.tools.getAvatarUploadUrl()
-          this.extraData.uid = window.tools.getUID()
-          this.extraData.sid = window.tools.getSessionId()
-          this.extraData.deviceType = window.tools.getDeviceType()
           this.refresh()
         },
         methods: {
-            getImage (uri) {
-                if (!_.startsWith(uri, 'http')) {
-                    uri = window.tools.getApiUrl() + uri
+            onUploadSuccess (data) {
+                if (this.dialogAddVisible) {
+                    this.addForm.uri = data.trim(",")
+                } else if (this.dialogEditVisible) {
+                    this.editForm.uri = data.trim(",")
                 }
-                return uri
-            },
-            handleAvatarSuccess (res, file) {
-                // if (parseInt(res.code) === 0) {
-                //     if (this.dialogAddVisible) {
-                //         this.addForm.uri = res.data.relative_path
-                //     } else if (this.dialogEditVisible) {
-                //         this.editForm.uri = res.data.relative_path
-                //     }
-                //     this.imageUrl = URL.createObjectURL(file.raw)
-                // } else {
-                //     this.$message.error(res.msg)
-                // }
-            },
-            beforeAvatarUpload (file) {
-                const isJPGOrPng = (file.type === 'image/jpeg' || file.type === 'image/png')
-                const isLt2M = file.size / 1024 / 1024 < 2
-
-                if (!isJPGOrPng) {
-                    this.$message.error(this.$i18n.t('FileTypeLimitJpgPng'))
-                }
-                if (!isLt2M) {
-                    this.$message.error(this.$i18n.t('FileSizeLimit2MB'))
-                }
-                return isJPGOrPng && isLt2M
+                console.debug('image upload success', data.trim(","))
             },
             onDelete (id) {
                 this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
@@ -474,7 +380,7 @@
                     album_id: this.id,
                     uri: row.photo_uri
                 }
-                this.imageUrl = this.getImage(row.photo_uri)
+                this.imageUrl = (row.photo_uri)
                 this.dialogEditVisible = true
             },
             byPagerSizeChange (val) {

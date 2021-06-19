@@ -18,7 +18,7 @@ const fileApi = {
             url: url,
             method: 'post',
             data: formdata,
-            headers: { 'Content-Type': 'multipart/form-data' },
+            // headers: { 'Content-Type': 'multipart/form-data' },
         })
     },
     query (date, pageIndex, pageSize) {

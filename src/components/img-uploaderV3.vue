@@ -55,16 +55,21 @@
         margin-right: 5px;
     }
 
+    .by-img-uploader .img-uploader-container {
+        text-align: center;
+    }
+
     .by-img-uploader .img-uploader-container .img-item {
         position: relative;
         display: inline-block;
         cursor: pointer;
+        margin: 0 auto;
     }
 
     .by-img-uploader .img-uploader-container .remove {
         position: absolute;
         top: 5px;
-        right: 5px;
+        right: -5px;
         font-size: 25px;
         color: red;
         background: #FFF;
@@ -184,7 +189,7 @@
                 type: String,
                 default () {
                     // ali,qiniu
-                    return 'local'
+                    return 'ali'
                 }
             },
             defaultImgUrl: String,

@@ -49,14 +49,34 @@ const setUID = (uid, expire) => {
 
 // 获取会话id
 const getUID = () => {
-    var uid = window.cache.getValue('BY_UID')
+    let uid = window.cache.getValue('BY_UID')
     // console.debug('getUID', uid)
     if (typeof (uid) === 'undefined' || uid === '') {
         uid = 0
-        console.debug('generate uid', uid)
     }
     setUID(uid)
-    return uid
+    return parseInt(uid);
+}
+
+// 设置昵称
+const setNick = (nick, expire) => {
+    if (!expire) {
+        expire = getJwtExpireTime();
+        if (expire <= 0) return;
+    }
+    let expireSec = expire - ((new Date()).getTime() / 1000).toFixed(0);
+    expireSec = expireSec > 0 ? expireSec : 0;
+    window.cache.setValue('BY_NICK', nick, expireSec)
+}
+
+// 获取昵称
+const getNick = () => {
+    let nick = window.cache.getValue('BY_NICK')
+    if (typeof (nick) === 'undefined' || nick === '') {
+        nick = '';
+    }
+    setNick(nick)
+    return nick;
 }
 // 设置头像地址
 const setAvatar = (avatar, expire) => {
@@ -73,31 +93,16 @@ const setAvatar = (avatar, expire) => {
 // 获取会话id
 const getAvatar = () => {
     var avatar = window.cache.getValue('BY_AVATAR')
-    // console.debug('getAvatar', avatar)
     if (typeof (avatar) === 'undefined' || avatar === '') {
-        avatar = 0
+        avatar = ''
     }
     setAvatar(avatar)
     return avatar
 }
 Date.prototype.getTimestamp = function () {
-    return (this.getTime() / 1000).toFixed(0);
+    return parseInt((this.getTime() / 1000).toFixed(0))
 }
-// 设置会话id
-// 会话ID 必有，随机生成的会缓存 1小时
-const setSessionId = (sessionId, expire) => {
-    if (!expire) {
-        expire = getJwtExpireTime();
-        if (expire <= 0) {
-            // 默认 1小时
-            expire = (new Date()).getTimestamp() + 3600;
-        }
-    }
-    let expireSec = expire - (new Date()).getTimestamp();
-    expireSec = expireSec > 0 ? expireSec : 0;
 
-    window.cache.setValue('BY_SESSION_ID', sessionId, expireSec)
-}
 
 // 设置Jwt
 const setJwt = (jwt, jwtExpire) => {
@@ -123,7 +128,21 @@ const getJwt = () => {
     }
     return jwt
 }
+// 设置会话id
+// 会话ID 必有，随机生成的会缓存 1小时
+const setSessionId = (sessionId, expire) => {
+    if (!expire) {
+        expire = getJwtExpireTime();
+        if (expire <= 0) {
+            // 默认 1小时
+            expire = (new Date()).getTimestamp() + 3600;
+        }
+    }
+    let expireSec = expire - (new Date()).getTimestamp();
+    expireSec = expireSec > 0 ? expireSec : 0;
 
+    window.cache.setValue('BY_SESSION_ID', sessionId, expireSec)
+}
 // 获取会话id
 const getSessionId = () => {
     let sessionId = window.cache.getValue('BY_SESSION_ID')
@@ -243,10 +262,11 @@ const tools = {
     clear,
     getDeviceType,
     getUID, setUID,
+    getNick,setNick,
     getClientId, setClientId,
     getAvatar, setAvatar,
     getVersion, getApiUrl, getAvatarUploadUrl, getKeyInObject, returnTop, getAppId,
-	getSessionId, setSessionId,
+	getSessionId,
 	getJwt, setJwt, getJwtExpireTime,
 }
 String.prototype.trim = function (char, type) {

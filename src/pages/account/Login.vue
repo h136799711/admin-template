@@ -352,6 +352,7 @@ export default {
         console.debug('用户信息', this.loginUser)
         window.tools.setJwt(this.loginUser.jwt, this.loginUser.jwt_expire);
         window.tools.setUID(this.loginUser.id, this.loginUser.jwt_expire);
+        window.tools.setNick(this.loginUser.nickname, this.loginUser.jwt_expire);
         window.tools.setClientId(this.loginUser.client_id, this.loginUser.jwt_expire);
         window.tools.setAvatar(this.loginUser.avatar, this.loginUser.jwt_expire);
 
