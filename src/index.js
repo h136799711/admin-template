@@ -83,7 +83,7 @@ router.beforeEach((to, from) => {
         console.debug("Refresh Token Failed", reason);
       }))
     } else {
-      console.debug("Cached Token", jwt);
+      console.debug("Cached Token");
     }
   }
   return true
