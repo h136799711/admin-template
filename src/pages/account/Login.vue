@@ -353,7 +353,7 @@ export default {
         window.tools.setJwt(this.loginUser.jwt, this.loginUser.jwt_expire);
         window.tools.setUID(this.loginUser.id, this.loginUser.jwt_expire);
         window.tools.setClientId(this.loginUser.client_id, this.loginUser.jwt_expire);
-        window.tools.setAvatar(this.loginUser.avatar)
+        window.tools.setAvatar(this.loginUser.avatar, this.loginUser.jwt_expire);
 
         window.tools.alertSuc(msg)
         setTimeout(() => {
@@ -365,10 +365,13 @@ export default {
   created () {
   },
   mounted () {
+    if (tools.getJwt()) {
+      // 如果有缓存 则跳转
+      this.jump2Admin();
+    }
     this.refresh_verify()
-    // 刷新验证码后清除本地保留的以下缓存
-    window.tools.setUID('')
-    window.tools.setJwt('', 0);
+    // window.tools.setUID('', 0);
+    // window.tools.setJwt('', 0);
   },
   methods: {
     pswFocus (is) {

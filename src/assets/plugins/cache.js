@@ -53,12 +53,12 @@ const setBigDataValue = (key, value, expireSeconds) => {
 
 // 缓存设置
 const setValue = (key, value, expireSeconds) => {
-	key = tools.md5Utils.hex_hmac_md5('asasi', key)
+	// key = tools.md5Utils.hex_hmac_md5('asasi', key)
 	setCookie(key, value, expireSeconds)
 }
 // 缓存获取
 const getValue = (key) => {
-	key = tools.md5Utils.hex_hmac_md5('asasi', key)
+	// key = tools.md5Utils.hex_hmac_md5('asasi', key)
 	return getCookie(key)
 }
 // 清除缓存

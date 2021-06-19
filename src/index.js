@@ -127,21 +127,21 @@ window.tools.md5Utils = md5Utils
 window.tools.base64Utils = base64Utils.Base64
 window.tools.finger = new Finger()
 window.tools.getDeviceToken = function () {
-  let token = cache.getValue('BY_TOKEN')
+  let token = cache.getValue('BY_DEVICE_TOKEN')
   if (token) {
     return token
   }
   if (window.requestIdleCallback) {
     requestIdleCallback(function () {
       window.tools.finger.get(function (components) {
-        cache.setValue('BY_TOKEN', components, 7200)
+        cache.setValue('BY_DEVICE_TOKEN', components, 7200)
         itboye.clientInfo.deviceToken = components
       })
     })
   } else {
     setTimeout(function () {
       window.tools.finger.get(function (components) {
-        cache.setValue('BY_TOKEN', components, 7200)
+        cache.setValue('BY_DEVICE_TOKEN', components, 7200)
         itboye.clientInfo.deviceToken = components
       })
     }, 500)

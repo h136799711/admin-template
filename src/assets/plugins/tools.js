@@ -18,8 +18,14 @@ const clear = () => {
     window.cache.clear()
 }
 
-const setClientId = (clientId) => {
-    window.cache.setValue('BY_CLIENT_ID', clientId, 3600)
+const setClientId = (clientId, expire) => {
+    if (!expire) {
+        expire = getJwtExpireTime();
+        if (expire <= 0) return;
+    }
+    let expireSec = expire - ((new Date()).getTime() / 1000).toFixed(0);
+    expireSec = expireSec > 0 ? expireSec : 0;
+    window.cache.setValue('BY_CLIENT_ID', clientId, expireSec)
 }
 
 const getClientId = () => {
@@ -31,9 +37,14 @@ const getClientId = () => {
     return cId
 }
 // 设置会话id
-const setUID = (uid) => {
-    // console.debug('set uid', uid)
-    window.cache.setValue('BY_UID', uid, 3600)
+const setUID = (uid, expire) => {
+    if (!expire) {
+        expire = getJwtExpireTime();
+        if (expire <= 0) return;
+    }
+    let expireSec = expire - ((new Date()).getTime() / 1000).toFixed(0);
+    expireSec = expireSec > 0 ? expireSec : 0;
+    window.cache.setValue('BY_UID', uid, expireSec)
 }
 
 // 获取会话id
@@ -48,9 +59,15 @@ const getUID = () => {
     return uid
 }
 // 设置头像地址
-const setAvatar = (avatar) => {
-    // console.debug('set avatar', avatar)
-    window.cache.setValue('BY_AVATAR', avatar, 3600)
+const setAvatar = (avatar, expire) => {
+    if (!expire) {
+        expire = getJwtExpireTime();
+        if (expire <= 0) return;
+    }
+    let expireSec = expire - ((new Date()).getTime() / 1000).toFixed(0);
+    expireSec = expireSec > 0 ? expireSec : 0;
+
+    window.cache.setValue('BY_AVATAR', avatar, expireSec)
 }
 
 // 获取会话id
@@ -63,10 +80,23 @@ const getAvatar = () => {
     setAvatar(avatar)
     return avatar
 }
-
+Date.prototype.getTimestamp = function () {
+    return (this.getTime() / 1000).toFixed(0);
+}
 // 设置会话id
-const setSessionId = (sessionId) => {
-    window.cache.setValue('BY_SESSION_ID', sessionId, 3600)
+// 会话ID 必有，随机生成的会缓存 1小时
+const setSessionId = (sessionId, expire) => {
+    if (!expire) {
+        expire = getJwtExpireTime();
+        if (expire <= 0) {
+            // 默认 1小时
+            expire = (new Date()).getTimestamp() + 3600;
+        }
+    }
+    let expireSec = expire - (new Date()).getTimestamp();
+    expireSec = expireSec > 0 ? expireSec : 0;
+
+    window.cache.setValue('BY_SESSION_ID', sessionId, expireSec)
 }
 
 // 设置Jwt

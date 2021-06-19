@@ -10,7 +10,7 @@ const fileApi = {
         url = url + '?t=' + imgType
         var formdata = new FormData()
         formdata.append('image', file)
-        formdata.append('token', window.tools.getJwt())
+        formdata.append('jwt', window.tools.getJwt())
         formdata.append('sid', window.tools.getSessionId())
         formdata.append('uid', window.tools.getUID())
         formdata.append('device_type', window.tools.getDeviceType())
@@ -26,6 +26,7 @@ const fileApi = {
         let formdata = new FormData()
         formdata.append('sid', window.tools.getSessionId())
         formdata.append('uid', window.tools.getUID())
+        formdata.append('jwt', window.tools.getJwt())
         formdata.append('date', date)
         formdata.append('page_index', pageIndex)
         formdata.append('page_size', pageSize || 10)
