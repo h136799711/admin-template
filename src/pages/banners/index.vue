@@ -209,6 +209,7 @@
                     <ImgUploader
                             :clear="imgUploadClear"
                             img-type="banner"
+                            oss_type="qiniu"
                             show="local"
                             default-img-url=""
                             @onUploadSuccess="onUploadSuccess"

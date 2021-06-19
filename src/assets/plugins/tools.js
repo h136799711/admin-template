@@ -97,7 +97,6 @@ const getJwt = () => {
 // 获取会话id
 const getSessionId = () => {
     let sessionId = window.cache.getValue('BY_SESSION_ID')
-    // console.debug('getSessionId', sessionId)
     if (typeof (sessionId) === 'undefined' || sessionId === '') {
         let UUID = require('uuid')
         sessionId = ('DBH' + UUID.v4()).replace(/-/g, '')

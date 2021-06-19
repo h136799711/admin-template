@@ -184,7 +184,7 @@
                 type: String,
                 default () {
                     // ali,qiniu
-                    return ''
+                    return 'local'
                 }
             },
             defaultImgUrl: String,
@@ -241,9 +241,10 @@
         },
         created () {
             this.extraData.t = this.imgType
-            this.uploadApiUrl = window.tools.getAvatarUploadUrl()
+            this.uploadApiUrl = window.tools.getAvatarUploadUrl() + '/v2/upload';
             this.extraData.uid = window.tools.getUID()
             this.extraData.sid = window.tools.getSessionId()
+            this.extraData.token = window.tools.getJwt();
             this.extraData.deviceType = window.tools.getDeviceType()
             this.extraData.oss_type = this.oss_type
             if (this.defaultImgUrl) {

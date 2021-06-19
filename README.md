@@ -1,6 +1,9 @@
 # admin-template
 
 
+# 登录后 缓存 jwt token
+
+
 如何分割vendor，以及分割大文件
 
     "vue-json-pretty": "^1.6.0",
