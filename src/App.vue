@@ -339,6 +339,12 @@ export default {
   mounted: function () {
     window.itboye.clientInfo.timezone = window.tools.getTimezone()
     this.$i18n.locale = tools.getBrowseLanguage()
+    this.initialize();
+  },
+  methods: {
+    initialize() {
+      console.debug("%c App Initialize ", "font-size:16px;color:blue;background:#fff");
+    }
   }
 }
 </script>

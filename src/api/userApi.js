@@ -57,7 +57,7 @@ const userApi = {
         http.methods.defaultPost('/100/UserAccount/enable', data, suc, fail)
     },
     updatePassword (data, suc, fail) {
-        http.methods.defaultPost('/101/UserLoginSession/updatePassword', data, suc, fail)
+        http.methods.defaultPost('/100/UserLoginSession/updatePassword', data, suc, fail)
     },
     queryByPagingNoCount(data, suc, fail) {
         http.methods.defaultPost('/100/UserAccount/queryForAjax', data, suc, fail)
@@ -68,15 +68,15 @@ const userApi = {
     logout(data , suc, fail) {
         // console.debug('[ajax] userApi::logout 用户登出', data)
         window.tools.clear()
-        http.methods.defaultPost('/101/UserLoginSession/logout', data, suc, fail)
+        http.methods.defaultPost('/100/UserLoginSession/logout', data, suc, fail)
     },
     login (data, suc,fail) {
         // console.debug('[ajax] userApi::login 用户登录', data)
-        http.methods.defaultPost('/101/UserLoginSession/loginByMobilePassword', data, suc, fail)
+        http.methods.defaultPost('/100/UserLoginSession/loginByMobilePassword', data, suc, fail)
     },
     getUserData (suc, fail) {
         // console.debug('[ajax] userApi::getUserData 获取用户数据')
-        http.methods.defaultPost('/101/UserLoginSession/adminData', {}, suc, fail)
+        http.methods.defaultPost('/100/UserLoginSession/adminData', {}, suc, fail)
     }
 }
 

@@ -839,7 +839,7 @@
         right: 2px;
     }
 
-    .alert-small {
+    .el-alert.alert-small,.alert-small {
         padding: 0 5px;
     }
 
@@ -1339,10 +1339,6 @@
                 this.userInfo.username = userInfo.username
                 this.userInfo.head = userInfo.head
                 this.userInfo.mobile = userInfo.mobile
-
-                // 替换本地的基础client_id 为 登录用户的clientId
-                window.tools.setClientId(userInfo.client_id)
-                window.tools.setAvatar(userInfo.head)
             },
             // 加载平台信息
             loadPlatformInfo (PlatformInfo) {

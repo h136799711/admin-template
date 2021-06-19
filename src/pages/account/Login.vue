@@ -348,9 +348,13 @@ export default {
       if (oldVal === types.ByUserLoginSuc && this.loginUser) {
         this.isLogging = false
         let msg = this.loginUser.nickname + ', Login Success'
-        console.debug(this.loginUser)
-        window.tools.setJwt(this.loginUser.jwt)
-        window.tools.setUID(this.loginUser.id)
+        // 登录用户的clientId
+        console.debug('用户信息', this.loginUser)
+        window.tools.setJwt(this.loginUser.jwt, this.loginUser.jwt_expire);
+        window.tools.setUID(this.loginUser.id, this.loginUser.jwt_expire);
+        window.tools.setClientId(this.loginUser.client_id, this.loginUser.jwt_expire);
+        window.tools.setAvatar(this.loginUser.avatar)
+
         window.tools.alertSuc(msg)
         setTimeout(() => {
           this.jump2Admin()
@@ -364,10 +368,7 @@ export default {
     this.refresh_verify()
     // 刷新验证码后清除本地保留的以下缓存
     window.tools.setUID('')
-    window.tools.setClientId('')
-    window.tools.setSessionId('')
-    window.tools.setJwt('');
-    console.debug('mounted', process.env)
+    window.tools.setJwt('', 0);
   },
   methods: {
     pswFocus (is) {

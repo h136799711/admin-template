@@ -43,6 +43,7 @@ import 'codemirror/addon/scroll/simplescrollbars';
 import 'codemirror/addon/scroll/simplescrollbars.css';
 // style
 import 'codemirror/lib/codemirror.css';
+import jwtApi from './api/jwtApi'
 
 VMdEditor.Codemirror = Codemirror;
 VMdEditor.use(githubTheme);
@@ -62,6 +63,30 @@ axios.defaults.withCredentials = false
 const router = createRouter({
   history: createWebHashHistory(__dirname),
   routes
+})
+router.beforeEach((to, from) => {
+  if (to.path === '/login') {
+    return true;
+  }
+  console.debug(to)
+  let jwt = tools.getJwt();
+  if (jwt) {
+    let expTime = tools.getJwtExpireTime();
+    if (expTime < ((new Date()).getTime()/1000).toFixed(0) - 600) {
+
+      jwtApi.refresh({}).then((resp) => {
+        if (resp.jwt && resp.jwt_expire) {
+          console.debug("Refresh Token");
+          tools.setJwt(resp.jwt, resp.jwt_expire);
+        }
+      }).catch((reason => {
+        console.debug("Refresh Token Failed", reason);
+      }))
+    } else {
+      console.debug("Cached Token", jwt);
+    }
+  }
+  return true
 })
 
 const messages = {
