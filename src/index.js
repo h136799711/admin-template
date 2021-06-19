@@ -64,6 +64,7 @@ const router = createRouter({
   history: createWebHashHistory(__dirname),
   routes
 })
+// 刷新 JWT Token
 router.beforeEach((to, from) => {
   if (to.path === '/login') {
     return true;
@@ -72,8 +73,7 @@ router.beforeEach((to, from) => {
   let jwt = tools.getJwt();
   if (jwt) {
     let expTime = tools.getJwtExpireTime();
-    if (expTime < ((new Date()).getTime()/1000).toFixed(0) - 600) {
-
+    if (expTime < ((new Date()).getTime()/1000).toFixed(0) - 300) {
       jwtApi.refresh({}).then((resp) => {
         if (resp.jwt && resp.jwt_expire) {
           console.debug("Refresh Token");
