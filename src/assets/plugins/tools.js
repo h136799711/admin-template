@@ -100,7 +100,7 @@ const getSessionId = () => {
     // console.debug('getSessionId', sessionId)
     if (typeof (sessionId) === 'undefined' || sessionId === '') {
         let UUID = require('uuid')
-        sessionId = ('BY' + UUID.v4()).replace(/-/g, '')
+        sessionId = ('DBH' + UUID.v4()).replace(/-/g, '')
         console.debug('generate session id', sessionId)
     }
     setSessionId(sessionId)

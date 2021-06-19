@@ -7,8 +7,7 @@ const setCookie = (name, value, expireTime) => {
     if (expireTime) {
         var date = new Date()
         date.setTime(date.getTime() + (expireTime * 1000))
-		console.debug(name, expireTime, date.getTime())
-
+		// console.debug(name, expireTime, date.getTime())
         var expires = '; expires=' + date.toGMTString()
     } else {
         var expires = ''
@@ -38,7 +37,7 @@ const clearCookie = () => {
 
 // 缓存设置
 const getBigDataValue = (key) => {
-    // key = tools.md5Utils.hex_hmac_md5('asasi', key)
+    key = tools.md5Utils.hex_hmac_md5('asasi', key)
     var expireDateTime = Lockr.get(key + '_time')
     if (expireDateTime < (new Date()).getTime()) {
         return ''
@@ -46,7 +45,7 @@ const getBigDataValue = (key) => {
     return Lockr.get(key)
 }
 const setBigDataValue = (key, value, expireSeconds) => {
-    // key = tools.md5Utils.hex_hmac_md5('asasi', key)
+    key = tools.md5Utils.hex_hmac_md5('asasi', key)
     Lockr.set(key, value)
     var expireDateTime = ((new Date()).getTime() + expireSeconds * 1000)
     Lockr.set(key + '_time', expireDateTime)
@@ -54,12 +53,12 @@ const setBigDataValue = (key, value, expireSeconds) => {
 
 // 缓存设置
 const setValue = (key, value, expireSeconds) => {
-	// key = tools.md5Utils.hex_hmac_md5('asasi', key)
+	key = tools.md5Utils.hex_hmac_md5('asasi', key)
 	setCookie(key, value, expireSeconds)
 }
 // 缓存获取
 const getValue = (key) => {
-	// key = tools.md5Utils.hex_hmac_md5('asasi', key)
+	key = tools.md5Utils.hex_hmac_md5('asasi', key)
 	return getCookie(key)
 }
 // 清除缓存
