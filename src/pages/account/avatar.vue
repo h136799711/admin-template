@@ -14,7 +14,8 @@
         </div>
         <div class="avatar-uploader margin-md-top">
             <div class="margin-md-bottom" style="padding: 0px 6px;">
-              <el-input type="text" id="nickname" name="nickname" size="mini" placeholder="昵称" v-model="editForm.nickname"/>
+                <el-input type="text" id="nickname" name="nickname" size="mini" placeholder="昵称"
+                          v-model="editForm.nickname"/>
             </div>
             <ImgUploader
                     ref="editImgUploader"
@@ -53,7 +54,11 @@
                 loading: false
             }
         },
-        computed: {},
+        computed: {
+            userSessionData () {
+                return this.$store.getters.userSessionData
+            },
+        },
         watch: {},
         created () {
             this.editForm.head = tools.getAvatar()
@@ -63,19 +68,24 @@
         },
         methods: {
             onUploadSuccess (data) {
-                this.editForm.head = data.trim(',')
-                console.debug('image upload success', data.trim(','))
+                this.editForm.head = data.trim(',');
+                console.debug('image upload success', this.editForm.head)
             },
             save () {
                 this.loading = true
                 userApi.updateNicknameHead(this.editForm, (suc) => {
-                  this.loading = false
-                  tools.setAvatar(this.editForm.head)
-                  tools.setNick(this.editForm.nickname)
-                  window.tools.alertSuc('操作成功')
+                    this.loading = false
+                    tools.setAvatar(this.editForm.head)
+                    tools.setNick(this.editForm.nickname)
+                    this.$store.dispatch('updateNicknameHead', {
+                        head: this.editForm.head,
+                        nickname: this.editForm.nickname
+                    })
+
+                    window.tools.alertSuc('操作成功')
                 }, (err) => {
-                  this.loading = false;
-                  window.tools.alertError(err.msg)
+                    this.loading = false
+                    window.tools.alertError(err.msg)
                 })
             }
         }

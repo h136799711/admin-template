@@ -189,7 +189,7 @@
                 type: String,
                 default () {
                     // ali,qiniu
-                    return 'ali'
+                    return 'qiniu'
                 }
             },
             defaultImgUrl: String,
@@ -248,9 +248,7 @@
             this.extraData.t = this.imgType
             this.uploadApiUrl = window.tools.getAvatarUploadUrl() + '/v2/upload';
             this.extraData.uid = window.tools.getUID()
-            this.extraData.sid = window.tools.getSessionId()
-            this.extraData.token = window.tools.getJwt();
-            this.extraData.deviceType = window.tools.getDeviceType()
+            this.extraData.jwt = window.tools.getJwt();
             this.extraData.oss_type = this.oss_type
             if (this.defaultImgUrl) {
                 this.imageUrl = this.defaultImgUrl

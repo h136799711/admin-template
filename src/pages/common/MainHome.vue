@@ -1121,12 +1121,15 @@
                     if (data.data) {
                         data = data.data;
                     }
-                    console.debug('登录成功', data)
+                    console.debug('登录成功')
                     this.loadMenu(data.menuList)
                     this.loadUserInfo(data.userInfo)
                     this.loadPlatformInfo(data.platformInfo)
                     window.tools.alertClose()
-                    this.$router.push('/admin/index')
+                    let avatarPath = '/admin/account/avatar';
+                    if (this.$route.fullPath != avatarPath || this.currentTab != avatarPath) {
+                        this.$router.push('/admin/index')
+                    }
                 } else if (newValue.msg) {
                     console.debug('登录失败', newValue)
                     window.tools.alertWarn(newValue.msg)
@@ -1334,6 +1337,7 @@
             },
             // 加载用户信息
             loadUserInfo (userInfo) {
+                console.debug("MainHome载入用户信息 ", userInfo);
                 this.userInfo.nickname = userInfo.nickname
                 this.userInfo.id = userInfo.id
                 this.userInfo.username = userInfo.username

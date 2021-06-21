@@ -8,32 +8,29 @@ const fileApi = {
         imgType = imgType || 'other'
         let url = window.tools.getAvatarUploadUrl() + '/v2/upload';
         url = url + '?t=' + imgType
-        var formdata = new FormData()
-        formdata.append('image', file)
-        formdata.append('jwt', window.tools.getJwt())
-        formdata.append('sid', window.tools.getSessionId())
-        formdata.append('uid', window.tools.getUID())
-        formdata.append('device_type', window.tools.getDeviceType())
+        let formData = new FormData()
+        formData.append('image', file)
+        formData.append('jwt', window.tools.getJwt())
+        formData.append('user_id', window.tools.getUID())
         return axios({
             url: url,
             method: 'post',
-            data: formdata,
+            data: formData,
             // headers: { 'Content-Type': 'multipart/form-data' },
         })
     },
     query (date, pageIndex, pageSize) {
         let url = window.tools.getAvatarUploadUrl() + '/picture/query'
-        let formdata = new FormData()
-        formdata.append('sid', window.tools.getSessionId())
-        formdata.append('uid', window.tools.getUID())
-        formdata.append('jwt', window.tools.getJwt())
-        formdata.append('date', date)
-        formdata.append('page_index', pageIndex)
-        formdata.append('page_size', pageSize || 10)
+        let formData = new FormData()
+        formData.append('uid', window.tools.getUID())
+        formData.append('jwt', window.tools.getJwt())
+        formData.append('date', date)
+        formData.append('page_index', pageIndex)
+        formData.append('page_size', pageSize || 10)
         return axios({
             url: url,
             method: 'post',
-            data: formdata
+            data: formData
         })
     }
 }

@@ -394,6 +394,7 @@ export default {
     login () {
       if (!this.checkLogin()) return
       this.isLogging = true
+
       this.$store.dispatch('login', this.user)
     },
     refresh_verify () {

@@ -57,6 +57,18 @@ const actions = {
 			commit (types.ByUserSessionDataFail, res)
 		})
 	},
+	updateNicknameHead({commit}, userInfo) {
+		console.debug ('修改缓存信息的头像或昵称', userInfo)
+		let sessionData = window.cache.getBigDataValue (types.ByUserSessionDataReq)
+		if (sessionData && sessionData !== '') {
+			sessionData = JSON.parse (window.tools.base64Utils.decode (sessionData));
+
+			console.debug ('[cache] 获取到了本地缓存', sessionData)
+			sessionData.userInfo.head = userInfo.head
+			sessionData.userInfo.nickname = userInfo.nickname
+			commit (types.ByUserSessionDataSuc,  sessionData)
+		}
+	},
 	logout({commit}, userInfo) {
 		console.debug ('用户登出', userInfo)
 		commit (types.ByUserLogoutReq)
