@@ -111,7 +111,7 @@
                             :class="(imageUrlArr.indexOf(img.url) !== -1) ? 'actived':''"
                             @click="choose(img)"
                             style="cursor:pointer;width: 80px; height: 100px"
-                            :src="img.url"
+                            :src="img.url.removeSchema()"
                             fit="fill" lazy></el-image>
                 </span>
             <div class="text-center">
@@ -323,6 +323,7 @@
                     console.log(data)
                     if (data.code === 0) {
                         that.uploadedImgs = data.data.list
+
                         that.count = parseInt(data.data.count)
                     } else {
                         window.tools.alertError(data.msg)

@@ -281,6 +281,11 @@ String.prototype.trim = function (char, type) {
     return this.replace(/^\s+|\s+$/g, '')
 }
 
+// 移除 removeSchema
+String.prototype.removeSchema = function() {
+    return this.replace("http:", "").replace("https:", "");
+}
+
 Date.prototype.format = function (fmt) {
     var o = {
         'M+': this.getMonth() + 1,                 //月份

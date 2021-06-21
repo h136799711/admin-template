@@ -20,7 +20,7 @@
     >
       <img
         v-if="head"
-        :src="head"
+        :src="head.removeSchema()"
         alt="avatar"
         class="avatar"
       >
@@ -80,7 +80,8 @@ export default {
       isDropMenu: false
     }
   },
-
+  computed: {
+  },
   mounted () {
     document.addEventListener('click', (e) => {
       if (!this.$refs.dropMenu) return
