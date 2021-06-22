@@ -621,15 +621,7 @@
                 })
             },
             renderContent (h, { node, data, store }) {
-                return (
-                    < span >
-                    < span
-            class
-                = 'grid-content' >
-                    { node.label }
-                    < /span>
-                    < /span>
-            )
+                return h('span', {class: 'gird-content'}, node.label);
             },
             treeNodeClick (data, node, tree) {
                 console.debug('treenode click')

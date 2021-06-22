@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 const DotEnv = require('dotenv-webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(baseConfig, {
     mode: 'development',

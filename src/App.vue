@@ -1,9 +1,6 @@
 <style>
     * {
         box-sizing: border-box;
-    }
-
-    * {
         padding: 0;
         margin: 0;
     }
@@ -338,12 +335,19 @@ export default {
   components: {},
   mounted: function () {
     window.itboye.clientInfo.timezone = window.tools.getTimezone()
-    this.$i18n.locale = tools.getBrowseLanguage()
+    window.itboye.clientInfo.lang = this.$i18n.locale = tools.getBrowseLanguage()
     this.initialize();
   },
   methods: {
     initialize() {
-      console.debug("%c App Initialize ", "font-size:16px;color:blue;background:#fff");
+      let timezone = itboye.clientInfo.timezone;
+      if (timezone > 0) timezone = '+' + timezone.toString();
+      tools.debug('Environment', process.env.NODE_ENV)
+      tools.debug('Language',  itboye.clientInfo.lang)
+      tools.debug('Timezone', 'GMT' + timezone)
+      tools.debug('Build Version', process.env.APP_VERSION)
+
+//      console.debug("%c Environment " + process.env.NODE_ENV, "font-size:16px;color:blue;background:#fff");
     }
   }
 }

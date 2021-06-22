@@ -19,7 +19,6 @@
 
 <script>
 export default {
-  mixins: [],
   data () {
     return {
       pageLoading: true

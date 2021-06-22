@@ -2,8 +2,14 @@
 'use strict'
 const apiMethods = {
   methods: {
+    getApiUrl: function(url){
+      let _url = url || window.tools.getApiUrl(url);
+
+      return _url;
+    },
     promisePost: function (data, url) {
-      url = url || window.tools.getApiUrl(url)
+      url = this.getApiUrl(url);
+
       return new Promise((resolve, reject) => {
         if (!data) data = {}
         data.app_version = window.tools.getVersion()
@@ -68,7 +74,9 @@ const apiMethods = {
         }
         delete (data.service_type);
       }
-      let url = window.tools.getApiUrl('')
+
+      let url = this.getApiUrl('');
+
       this.apiPost(url + servicePath, data).then((res) => {
         if (res.code === 0) {
           if (typeof suc === 'function') {
@@ -100,6 +108,7 @@ const apiMethods = {
       }
       return fd;
     },
+
     apiPost (url, data) {
       return new Promise((resolve, reject) => {
         if (!data) data = {}

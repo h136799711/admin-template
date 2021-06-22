@@ -181,9 +181,9 @@ window.tools.alertWarn = (msg) => {
 window.tools.alertClose = () => {
   if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
 }
+window.itboye.clientInfo.env = process.env.NODE_ENV;
 
-window.itboye.env = process.env.NODE_ENV;
-if (window.itboye.env === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // 正式环境不打印
   window.console.debug = () => {
   };

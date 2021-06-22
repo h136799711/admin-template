@@ -103,7 +103,6 @@ Date.prototype.getTimestamp = function () {
     return parseInt((this.getTime() / 1000).toFixed(0))
 }
 
-
 // 设置Jwt
 const setJwt = (jwt, jwtExpire) => {
     let expireSec = jwtExpire - ((new Date()).getTime() / 1000).toFixed(0);
@@ -155,21 +154,12 @@ const getSessionId = () => {
     return sessionId
 }
 
-const getApiUrl = url => {
-
-    return `${api_url}`
-    // 除去(Admin or admin)
-//  url = url.replace(/(A|a)dmin\//, '')
-
-    // 替换控制器驼峰为下划线
-    //let func = url.substr(url.indexOf('/'))
-    //let controller = url.substr(0, url.indexOf('/')).replace(/([a-zA-Z])([A-Z])/g, '$1_$2').toLowerCase()
-
-    // return `${api_url}/${controller}${func}`
+const getApiUrl = () => {
+    return getCurrentProtocol() + (`${api_url}`).replace('http:', '').replace('https:', '');
 }
 
 const getAvatarUploadUrl = () => {
-    return `${picture_url}`
+    return getCurrentProtocol() + (`${picture_url}`).replace('http:', '').replace('https:', '')
 }
 
 const getImgUrl = (imgUrl) => {
@@ -181,7 +171,9 @@ const getImgUrl = (imgUrl) => {
 
     return imgUrl
 }
-
+const getCurrentProtocol = () => {
+    return window.location.protocol;
+}
 const getKeyInObject = (object, exp) => {
     if (typeof object === 'undefined') return undefined
     let args = exp.split('.')
@@ -223,7 +215,6 @@ const getDeviceType = () => {
 
 const getBrowseLanguage = () => {
     let lang = window.cache.getValue('lang')
-    debug('缓存语言设置', lang)
     if (!lang) {
         if (navigator.language) {
             lang = navigator.language//获取浏览器配置语言，支持非IE浏览器
@@ -247,7 +238,6 @@ const getBrowseLanguage = () => {
 const getTimezone = () => {
     var timezone = (0 - ((new Date()).getTimezoneOffset()) / 60)
     window.cache.setValue('timezone', timezone, 8 * 3600)
-    debug('时差', timezone + '小时')
     return timezone
 }
 const debug = (title, value) => {

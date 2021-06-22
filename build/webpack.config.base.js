@@ -9,7 +9,6 @@ const webpack = require('webpack');
 
 const IsProduction = process.env.NODE_ENV === 'production'
 const StaticDir = IsProduction ? "/static" : "static"
-
 module.exports = {
     performance: {
         hints: IsProduction ? "warning" : false
@@ -49,12 +48,10 @@ module.exports = {
 		new webpack.DefinePlugin({
 			__VUE_OPTIONS_API__: true,
 			__VUE_PROD_DEVTOOLS__: false,
-            // __VUE_I18N_FULL_INSTALL__: true,
-            // __VUE_I18N_LEGACY_API__: true,
-            // __VUE_I18N_PROD_DEVTOOLS__: false,
-            // __INTLIFY_PROD_DEVTOOLS__: false
-            __FEATURE_ESM_BUNDLER_WARN__:false
-
+            __VUE_I18N_FULL_INSTALL__: true,
+            __VUE_I18N_LEGACY_API__: true,
+            __VUE_I18N_PROD_DEVTOOLS__: false,
+            __INTLIFY_PROD_DEVTOOLS__: false,
 		}),
         new HtmlWebpackPlugin({
             filename: 'index.html',

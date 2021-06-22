@@ -251,6 +251,7 @@
                   class="inf-rotate by-icon by-iconloading-copy"
                 />
                 <img
+                        v-else
                   :src="verifyImg"
                   class="verifyImg"
                   @click="refresh_verify"
@@ -399,14 +400,14 @@ export default {
     },
     refresh_verify () {
       this.verifyImg = ''
+      let that = this;
       securityCodeApi.image_create([], function (resData) {
-        console.debug(resData)
-        this.user.verifyId = resData.id
-        this.verifyImg = resData.code
-      }.bind(this), function (failMsg) {
-        console.debug(failMsg)
-        this.verifyImg = 'error'
-      }.bind(this))
+        that.user.verifyId = resData.id
+        that.verifyImg = resData.code
+      }, function (failMsg) {
+
+        that.verifyImg = 'error'
+      })
     },
     jump2Admin () {
       this.$router.push({ path: '/admin' })
