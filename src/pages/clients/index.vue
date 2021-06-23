@@ -508,7 +508,7 @@
                                     done()
                                 }).catch((err) => {
                                     done()
-                                    window.tools.alertError(res.msg)
+                                    window.tools.alertError(err)
                                     instance.confirmButtonLoading = false
                                 })
                         } else {
@@ -531,7 +531,7 @@
                     that.loading = false
                     that.dialogPaymentVisible = false
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     that.loading = false
                     that.dialogPaymentVisible = false
                 })
@@ -555,7 +555,7 @@
                         }
                     })
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             },
@@ -566,7 +566,7 @@
                     that.loading = false
                     that.dialogWxPayConfigVisible = false
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     that.loading = false
                     that.dialogWxPayConfigVisible = false
                 })
@@ -578,7 +578,7 @@
               that.loading = false
               that.dialogWxPayConfigVisible = false
             }, (resp) => {
-              window.tools.alertError(resp.msg)
+              window.tools.alertError(resp)
               that.loading = false
               that.dialogWxPayConfigVisible = false
             })
@@ -609,7 +609,7 @@
                 that.wxpayConfigForm.key = resp.key
                 that.wxpayConfigForm.serial_no = resp.serial_no
               }, (resp) => {
-                window.tools.alertError(resp.msg)
+                window.tools.alertError(resp)
                 this.loading = false
               })
             },
@@ -635,7 +635,7 @@
                     that.payConfigForm.ali_public_key = resp.ali_public_key
                     that.payConfigForm.private_key = resp.private_key
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             },
@@ -646,7 +646,7 @@
                     this.loading = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             },
@@ -666,7 +666,7 @@
                     this.loading = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             },
@@ -681,7 +681,7 @@
                     this.loading = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             },
@@ -734,7 +734,7 @@
                     // this.editForm.dailyLimit = resp.day_limit
                     // this.editForm.projectId = resp.project_id
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             }

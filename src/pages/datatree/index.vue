@@ -594,7 +594,7 @@
                         this.tableData = resp.list
                         this.count = parseInt(resp.count)
                     }, (resp) => {
-                        window.tools.alertError(resp.msg)
+                        window.tools.alertError(resp)
                         this.loading = false
                     })
             },
@@ -606,7 +606,7 @@
                     suc(resp.list)
                     this.loadRightTable(parentId)
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             },

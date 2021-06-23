@@ -540,7 +540,7 @@
                 }
                 that.refresh()
             }, (resp) => {
-                window.tools.alertError(resp.msg)
+                window.tools.alertError(resp)
                 that.loading = false
             })
         },
@@ -603,7 +603,7 @@
                     this.dialogEditVisible = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                     this.dialogEditVisible = false
                 })
@@ -623,7 +623,7 @@
                             this.refresh()
                         }, (resp) => {
                             this.loading = false
-                            window.tools.alertError(resp.msg)
+                            window.tools.alertError(resp)
                         })
                     } else {
                         return false
@@ -678,7 +678,7 @@
                     this.count = parseInt(resp.count)
                     this.tableData = resp.list
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             }

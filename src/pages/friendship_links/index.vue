@@ -284,7 +284,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.tools.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -301,7 +301,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -317,7 +317,7 @@ export default {
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
           })
         } else {
           return false
@@ -349,7 +349,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

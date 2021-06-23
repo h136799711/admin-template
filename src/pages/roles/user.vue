@@ -242,7 +242,7 @@ export default {
                 	}
         cb(formatRes)
       }, (res) => {
-        window.tools.alertError(res.msg)
+        window.tools.alertError(res)
       })
     },
         	submitAddForm () {
@@ -251,7 +251,7 @@ export default {
           this.refresh()
           this.dialogAddVisible = false
         }, (res) => {
-          window.tools.alertError(res.msg)
+          window.tools.alertError(res)
           this.dialogAddVisible = false
         })
       }
@@ -289,7 +289,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.tools.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -310,7 +310,7 @@ export default {
         this.list = resp.list
         this.count = resp.count
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

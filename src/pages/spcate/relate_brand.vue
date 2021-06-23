@@ -230,7 +230,7 @@ export default {
               done()
             }, (res) => {
               done()
-              window.tools.alertError(res.msg)
+              window.tools.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -248,7 +248,7 @@ export default {
         this.refresh()
       }, (resp) => {
         this.loading = false
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
       })
     },
     refresh () {
@@ -261,7 +261,7 @@ export default {
         that.tableData = resp.list
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         that.loading = false
       })
     },
@@ -275,7 +275,7 @@ export default {
         that.loading = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         that.loading = false
       })
     }

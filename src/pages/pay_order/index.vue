@@ -336,7 +336,7 @@ export default {
         that.count = parseInt(resp.count)
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         that.loading = false
       })
     },
@@ -344,9 +344,12 @@ export default {
       this.loading = true
       let that = this
       payOrder.notify({ id: id }, (resp) => {
+
+        window.tools.alertSuc('操作成功');
         that.loading = false
+        that.refresh();
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         that.loading = false
       })
     },
@@ -358,7 +361,7 @@ export default {
         that.notifyHistory = resp
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         that.loading = false
       })
     }

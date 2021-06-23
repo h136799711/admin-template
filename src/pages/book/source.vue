@@ -177,7 +177,7 @@ export default {
       api.setDefaultSource({ id: this.id, source_type_id: row.source_type_id }, (resp) => {
         this.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     },

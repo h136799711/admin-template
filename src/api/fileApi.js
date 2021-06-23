@@ -8,6 +8,7 @@ const fileApi = {
         url = url + '?t=' + imgType
         let formData = new FormData()
         formData.append('image', file)
+        formData.append('oss_type', 'qiniu');
         formData.append('jwt', window.tools.getJwt())
         formData.append('uid', window.tools.getUID())
         return axios.post(url, formData);

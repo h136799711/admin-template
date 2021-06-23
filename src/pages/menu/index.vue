@@ -311,7 +311,7 @@ export default {
             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
             this.loading = false
           })
         } else {
@@ -334,7 +334,7 @@ export default {
         }, resp)
         this.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
       console.debug(this.editForm)
@@ -349,7 +349,7 @@ export default {
             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
             this.loading = false
           })
         } else {
@@ -387,7 +387,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.tools.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -411,7 +411,7 @@ export default {
           children: resp
         }]
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

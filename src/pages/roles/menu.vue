@@ -113,7 +113,7 @@ export default {
       api.attachMenus({ 'role_id': this.id, 'menu_ids': this.$refs.tree.getCheckedKeys().join(',') }, (res) => {
         this.refresh()
       }, (res) => {
-        window.tools.alertError(res.msg)
+        window.tools.alertError(res)
       })
     },
     onDelete () {
@@ -141,7 +141,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.tools.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -164,7 +164,7 @@ export default {
           this.$refs.tree.setCheckedKeys(resp[0])
         }
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

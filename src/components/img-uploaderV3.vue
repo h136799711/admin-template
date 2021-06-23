@@ -56,7 +56,7 @@
     }
 
     .by-img-uploader .img-uploader-container {
-        text-align: center;
+        text-align: left;
     }
 
     .by-img-uploader .img-uploader-container .img-item {

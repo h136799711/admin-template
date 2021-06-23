@@ -113,7 +113,7 @@ export default {
         this.loading = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     },
@@ -132,7 +132,7 @@ export default {
         this.info.sex = resp.sex
         this.info.userId = resp.uid
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

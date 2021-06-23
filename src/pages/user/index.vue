@@ -614,7 +614,7 @@ export default {
         this.loading = false
         window.tools.alertSuc('密码已重置')
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     },
@@ -626,7 +626,7 @@ export default {
         console.log(resp)
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.sendCode = false
       })
     },
@@ -637,7 +637,7 @@ export default {
         console.log(resp)
         window.tools.alertSuc(resp, 3000)
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.sendCode = false
       })
     },
@@ -647,7 +647,7 @@ export default {
         this.sendEmail = false
         window.tools.alertSuc('已发送')
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.sendEmail = false
       })
     },
@@ -729,7 +729,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     },
@@ -744,7 +744,7 @@ export default {
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
           })
         } else {
           return false
@@ -787,7 +787,7 @@ export default {
         }
         this.page_index = this.queryForm.page_index;
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

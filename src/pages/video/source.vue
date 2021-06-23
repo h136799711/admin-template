@@ -417,7 +417,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -431,7 +431,7 @@ export default {
             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
             this.loading = false
           })
         } else {
@@ -487,7 +487,7 @@ export default {
         this.loading = false
         this.tableData = resp
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }

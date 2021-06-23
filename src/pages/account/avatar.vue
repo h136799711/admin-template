@@ -3,6 +3,9 @@
         margin: 0 auto;
         width: 200px;
     }
+    .by-avatar .by-img-uploader .img-uploader-container{
+        text-align: center;
+    }
 </style>
 <template>
     <div class="main-content by-avatar padding-md-bottom padding-md-top">
@@ -85,7 +88,7 @@
                     window.tools.alertSuc('操作成功')
                 }, (err) => {
                     this.loading = false
-                    window.tools.alertError(err.msg)
+                    window.tools.alertError(err)
                 })
             }
         }

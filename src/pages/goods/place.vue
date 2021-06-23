@@ -426,7 +426,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.tools.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {

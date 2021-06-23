@@ -323,7 +323,7 @@ export default {
     editorImgAdd (pos, file) {
       fileApi.upload(file, 'brand_icon').then(({ data }) => {
         if (data.code === 0) {
-          let imgUrl = window.tools.getImgUrl(data.data.relative_path)
+          let imgUrl = data.oss_key;
           this.$refs.md.$img2Url(pos, imgUrl)
         } else {
           window.tools.alertError(data.msg)
@@ -381,7 +381,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -396,7 +396,7 @@ export default {
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
           })
         } else {
           return false
@@ -433,7 +433,7 @@ export default {
         that.count = parseInt(resp.count)
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         that.loading = false
       })
     }

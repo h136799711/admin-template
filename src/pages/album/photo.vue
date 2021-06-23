@@ -325,7 +325,7 @@
                             }, (res) => {
                                 console.debug(res)
                                 done()
-                                window.tools.alertError(res.msg)
+                                window.tools.alertError(res)
                                 instance.confirmButtonLoading = false
                             })
                         } else {
@@ -342,7 +342,7 @@
                     this.dialogEditVisible = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                     this.dialogEditVisible = false
                 })
@@ -356,7 +356,7 @@
                             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                             this.refresh()
                         }, (resp) => {
-                            window.tools.alertError(resp.msg)
+                            window.tools.alertError(resp)
                             this.loading = false
                         })
                     } else {
@@ -402,7 +402,7 @@
                     this.count = parseInt(resp.count)
                     this.tableData = resp.list
                 }, (resp) => {
-                    window.tools.alertError(resp.msg)
+                    window.tools.alertError(resp)
                     this.loading = false
                 })
             }

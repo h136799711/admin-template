@@ -258,7 +258,7 @@ export default {
             window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp.msg)
+            window.tools.alertError(resp)
             this.loading = false
           })
         } else {
@@ -295,7 +295,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.tools.alertError(resp)
         this.loading = false
       })
     }
