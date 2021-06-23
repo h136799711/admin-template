@@ -1174,9 +1174,7 @@
                         this.changeLanguages(link.value);
                         break;
                     case 'logout':
-                        menu.title = this.$i18n.t('Logout');
-                        menu.url = '/logout';
-                        this.routeJump(menu);
+                        this.logout();
                         break;
                     case 'avatar':
                         menu.title = this.$i18n.t('Avatar');
@@ -1296,7 +1294,7 @@
             // 退出
             logout () {
                 console.debug('logout')
-                this.$router.push('logout')
+                this.$router.push('/logout')
             },
             queryChildMenu (data = [], action) {
                 if (typeof action !== 'function') return

@@ -1,7 +1,3 @@
-<style>
-
-</style>
-
 <template>
   <div class="main-login">
     <el-row
