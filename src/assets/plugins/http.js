@@ -2,7 +2,9 @@
 'use strict'
 const promisePost = function (servicePath, data) {
     let url = tools.getApiUrl() + servicePath
-    return apiPost(url, data)
+    return apiPost(url, data).then((resp) => {
+        return resp.data
+    })
 }
 const defaultPost = function (servicePath, data, suc, fail) {
     let url = tools.getApiUrl() + servicePath

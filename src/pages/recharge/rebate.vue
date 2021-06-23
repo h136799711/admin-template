@@ -162,6 +162,7 @@
         components: {},
         data() {
             return {
+                dialogGiveVisible: false,
                 dialogAddVisible: false,
                 dialogEditVisible: false,
                 inputVisible: false,
@@ -279,6 +280,7 @@
                 let that = this;
                 try {
                     let data = await rebateApi.query(that.queryForm);
+                    console.debug(data);
                     data.forEach(element => {
                         element.money = (element.money / 100).toFixed(2);
                         element.rebate = (element.rebate / 100).toFixed(2);
