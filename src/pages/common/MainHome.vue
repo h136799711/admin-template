@@ -1330,6 +1330,9 @@
             },
             // 加载用户信息
             loadUserInfo (userInfo) {
+                if (!userInfo) {
+                    return ;
+                }
                 console.debug("MainHome载入用户信息 ", userInfo);
                 this.userInfo.nickname = userInfo.nickname
                 this.userInfo.id = userInfo.id
