@@ -2,6 +2,8 @@
 
 exports.__esModule = true;
 exports.default = {
+	'English': 'English',
+	'中文简体': '中文简体',
 	'Rebate': 'Rebate',
 	'draft': 'draft',
 	'Wallet': 'Wallet',

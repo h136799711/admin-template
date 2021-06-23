@@ -2,6 +2,8 @@
 
 exports.__esModule = true;
 exports.default = {
+	'English': 'English',
+	'中文简体': '中文简体',
 	'Weixin': '微信',
 	'Wallet': '钱包',
 	'RechargeRebate': '充值返利',

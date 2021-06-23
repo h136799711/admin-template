@@ -1082,9 +1082,9 @@
                 activeNavMenuIndex: false,
                 secondMenuData: false,
                 userDropMenus: [
-                    { 'name': this.$i18n.t('Avatar'), value: 'avatar' },
-                    { 'name': this.$i18n.t('ModifyPassword'), value: 'password' },
-                    { 'name': this.$i18n.t('Logout'), value: 'logout' }
+                    { 'name': 'Avatar', value: 'avatar' },
+                    { 'name': 'ModifyPassword', value: 'password' },
+                    { 'name': 'Logout', value: 'logout' }
                 ],
                 languages: [
                     {

@@ -8,15 +8,15 @@ const defaultPost = function (servicePath, data, suc, fail) {
     let url = tools.getApiUrl() + servicePath
     apiPost(url, data).then((data) => {
         if (typeof suc === 'function') {
-            suc(data)
+            suc(data.data)
         } else {
-            window.tools.alertSuc(res.msg)
+            window.tools.alertSuc(data.msg)
         }
     }).catch((err) => {
         if (typeof fail === 'function') {
             fail(err)
         } else {
-            window.tools.alertError(res.msg)
+            window.tools.alertError(err)
         }
     })
 }
@@ -63,7 +63,7 @@ const apiPost = function (url, data) {
                 resolve(data)
             } else {
                 if (0 === parseInt(data.code)) {
-                    resolve(data.data)
+                    resolve(data)
                 } else {
                     reject(data.msg)
                 }

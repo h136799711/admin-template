@@ -112,7 +112,7 @@ const mutations = {
 	[types.ByUserLoginFail](state, data) {
 		// rollback to the cart saved before sending the request
 		state.loginStatus = types.ByUserLoginFail // 'by_user_login_fail';
-		state.loginError = {...state.loginError, msg: data.msg, code: data.code, data: data.data}
+		state.loginError = {...state.loginError, msg: data}
 		console.debug ('ByUserLoginFail', state.loginError)
 	},
 	[types.ByUserSessionDataReq](state) {
@@ -125,7 +125,7 @@ const mutations = {
 	[types.ByUserSessionDataFail](state, data) {
 		// rollback to the cart saved before sending the request
 		state.userSessionData.loading = -1
-		state.userSessionData = {...state.userSessionData, msg: data.msg, code: data.code, data: data.data}
+		state.userSessionData = {...state.userSessionData, msg: data} //.msg, code: data.code, data: data.data}
 		console.debug ('ByUserSessionDataFail', state.loginError)
 	},
 	[types.ByUserSessionDataSuc](state, data) {

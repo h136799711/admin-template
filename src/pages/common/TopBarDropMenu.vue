@@ -42,7 +42,7 @@
           :href="link.url ? link.url : 'javascript:void(0);'"
           @click.prevent="userMenuClick(link)"
         >
-          <span>{{ link.name }}</span>
+          <span>{{ $t(link.name) }}</span>
         </a>
       </li>
     </ul>

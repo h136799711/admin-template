@@ -105,7 +105,7 @@ const messages = {
 // Create VueI18n instance with options
 const i18n = createI18n({
   locale: 'en',
-  // fallbackLocale: 'zh',
+  fallbackLocale: 'zh',
   messages
 })
 
