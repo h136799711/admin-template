@@ -1,37 +1,34 @@
 /* eslint-disable */
 'use strict'
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const videoApi = {
   create (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, {
-      service_version: 101,
-      service_type: 'by_Video_create'
-    }), suc, fail)
+    http.defaultPost('/100/Video/create', data, suc, fail)
   },
   info (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_info' }), suc, fail)
+    http.defaultPost('/100/Video/info' , data, suc, fail)
   },
   update (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_update' }), suc, fail)
+    http.defaultPost('/100/Video/update' , data, suc, fail)
   },
   query (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_query' }), suc, fail)
+    http.defaultPost('/100/Video/query' , data, suc, fail)
   },
   delete (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_delete' }), suc, fail)
+    http.defaultPost('/100/Video/delete' , data, suc, fail)
   },
   offShelves (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_offline' }), suc, fail)
+    http.defaultPost('/100/Video/offline' , data, suc, fail)
   },
   onShelves (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_online' }), suc, fail)
+    http.defaultPost('/100/Video/online' , data, suc, fail)
   },
   recommend (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_recommend' }), suc, fail)
+    http.defaultPost('/100/Video/recommend' , data, suc, fail)
   },
   unrecommend (data, suc, fail) {
-    http.methods.defaultPost('', Object.assign(data, { service_type: 'by_Video_unrecommend' }), suc, fail)
+    http.defaultPost('/100/Video/unrecommend' , data, suc, fail)
   }
 
 }

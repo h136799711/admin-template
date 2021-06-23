@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import axios from 'axios' // Promise based HTTP client for the browser and node.js
 import Lockr from 'lockr' // 用于缓存较大的数据
-import moment from 'moment' // 日期处理
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
@@ -11,11 +10,10 @@ import 'nprogress/nprogress.css'
 import store from './store/index'
 import routes from './routes'
 import './assets/plugins/fullscreen'
-import base64Utils from 'js-base64'
+import { Base64 } from 'js-base64'
 import md5Utils from './assets/plugins/md5Utils'
 import cache from './assets/plugins/cache'
 import tools from './assets/plugins/tools'
-import Finger from 'fingerprintjs2'
 // ElementPlus
 import '../static/reset.css'
 import 'element-plus/lib/theme-chalk/index.css'
@@ -66,14 +64,13 @@ const router = createRouter({
 })
 // 刷新 JWT Token
 router.beforeEach((to, from) => {
+  NProgress.start()
   if (to.path === '/login') {
     return true;
   }
-  console.debug(to)
   let jwt = tools.getJwt();
   if (jwt) {
     let expTime = tools.getJwtExpireTime();
-    console.debug(expTime, (new Date()).getTimestamp() + 300);
     if (expTime < (new Date()).getTimestamp() + 300) {
       jwtApi.refresh({}).then((resp) => {
         if (resp.jwt && resp.jwt_expire) {
@@ -84,10 +81,14 @@ router.beforeEach((to, from) => {
         console.debug("Refresh Token Failed", reason);
       }))
     } else {
-      console.debug("Cached Token");
+      console.debug("Cached Token", (new Date(expTime * 1000).format("yyyy-MM-dd hh:mm")));
     }
   }
   return true
+})
+
+router.afterEach(transition => {
+  NProgress.done()
 })
 
 const messages = {
@@ -108,25 +109,15 @@ const i18n = createI18n({
   messages
 })
 
-router.beforeEach((to, from, next) => {
-  NProgress.start()
-  next()
-})
-
-router.afterEach(transition => {
-  NProgress.done()
-})
 
 window.itboye = window.itboye || {}
 window.itboye.clientInfo = window.itboye.clientInfo || {}
 window.Lockr = Lockr
-window.moment = moment
 window.axios = axios
 window.cache = cache
 window.tools = tools
 window.tools.md5Utils = md5Utils
-window.tools.base64Utils = base64Utils.Base64
-window.tools.finger = new Finger()
+window.tools.base64Utils = Base64
 window.tools.getDeviceToken = function () {
   return tools.getSessionId();
 }

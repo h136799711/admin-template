@@ -1,23 +1,19 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js';
+import http from '../assets/plugins/http.js';
 
 const datatreeApi = {
   query (data, suc, fail) {
-    data.service_type = 'by_Datatree_query';
-    http.methods.defaultPost('', data, suc, fail);
+    http.defaultPost('/100/Datatree/query', data, suc, fail);
   },
   delete (data, suc, fail) {
-    data.service_type = 'by_Datatree_delete';
-    http.methods.defaultPost('', data, suc, fail);
+    http.defaultPost('/100/Datatree/delete', data, suc, fail);
   },
   add (data, suc, fail) {
-    data.service_type = 'by_Datatree_create';
-    http.methods.defaultPost('', data, suc, fail);
+    http.defaultPost('/100/Datatree/create', data, suc, fail);
   },
   update (data, suc, fail) {
-		data.service_type = 'by_Datatree_update';
-    http.methods.defaultPost('datatree/update', data, suc, fail);
+    http.defaultPost('/100/Datatree/update', data, suc, fail);
   }
 };
 

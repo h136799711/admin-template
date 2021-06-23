@@ -1,57 +1,47 @@
 /* eslint-disable */
-'use strict';
-import http from '../assets/js/http.js';
+'use strict'
+import http from '../assets/plugins/http.js'
 
 const roleApi = {
-	create (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_AuthRole_create'}), suc, fail);
-	},
-	update (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_AuthRole_update'}), suc, fail);
-	},
-	query (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_AuthRole_query'}), suc, fail);
-	},
-	enable (data, suc, fail) {
-		data.service_type = 'by_AuthRole_changeStatus';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	menu (data, suc, fail) {
-		data.service_type = 'by_AuthRole_listMenus';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	deleteMenu (data, suc, fail) {
-		data.service_type = 'by_AuthRole_removeMenus';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	attachMenus (data, suc, fail) {
-		data.service_type = 'by_AuthRole_attachMenus'
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	policy (data, suc, fail) {
-		data.service_type = 'by_AuthRole_listPolicies';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	removePolicies (data, suc, fail) {
-		data.service_type = 'by_AuthRole_removePolicies';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	attachPolicies (data, suc, fail) {
-		data.service_type = 'by_AuthRole_attachPolicies';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	user (data, suc, fail) {
-		data.service_type = 'by_AuthRole_listUsers';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	removeUser (data, suc, fail) {
-		data.service_type = 'by_AuthRole_removeUser';
-		http.methods.defaultPost('', data, suc, fail);
-	},
-	attachUser (data, suc, fail) {
-		data.service_type = 'by_AuthRole_attachUser';
-		http.methods.defaultPost('', data, suc, fail);
-	}
-};
+    create (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/create', data, suc, fail)
+    },
+    update (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/update', data, suc, fail)
+    },
+    query (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/query', data, suc, fail)
+    },
+    enable (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/changeStatus', data, suc, fail)
+    },
+    menu (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/listMenus', data, suc, fail)
+    },
+    deleteMenu (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/removeMenus', data, suc, fail)
+    },
+    attachMenus (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/attachMenus', data, suc, fail)
+    },
+    policy (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/listPolicies', data, suc, fail)
+    },
+    removePolicies (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/removePolicies', data, suc, fail)
+    },
+    attachPolicies (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/attachPolicies', data, suc, fail)
+    },
+    user (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/listUsers', data, suc, fail)
+    },
+    removeUser (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/removeUser', data, suc, fail)
+    },
+    attachUser (data, suc, fail) {
+        http.defaultPost('/100/AuthRole/attachUser', data, suc, fail)
+    }
+}
 
-export default roleApi;
+export default roleApi

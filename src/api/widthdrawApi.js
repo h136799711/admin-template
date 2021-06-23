@@ -1,20 +1,17 @@
 /* eslint-disable */
-'use strict';
-import http from '../assets/js/http.js'
+'use strict'
+import http from '../assets/plugins/http.js'
 
 const widthdrawApi = {
-	query(data, suc, fail) {
-		data.service_type = 'by_UserWithdraw_query'
-		http.methods.defaultPost ('', data, suc, fail)
-	},
-	pass(data, suc, fail) {
-		data.service_type = 'by_UserWithdraw_pass';
-		http.methods.defaultPost ('', data, suc, fail);
-	},
-	deny(data, suc, fail) {
-		data.service_type = 'by_UserWithdraw_deny';
-		http.methods.defaultPost ('', data, suc, fail);
-	}
+    query (data, suc, fail) {
+        http.defaultPost('/100/UserWithdraw/query', data, suc, fail)
+    },
+    pass (data, suc, fail) {
+        http.defaultPost('/100/UserWithdraw/pass', data, suc, fail)
+    },
+    deny (data, suc, fail) {
+        http.defaultPost('/100/UserWithdraw/deny', data, suc, fail)
+    }
 }
 
 export default widthdrawApi

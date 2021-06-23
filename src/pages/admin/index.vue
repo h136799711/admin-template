@@ -110,7 +110,7 @@
 
 <script>
 import staticsApi from '../../api/staticsApi'
-import echarts from 'echarts'
+import * as echarts from 'echarts'
 
 export default {
   data () {
@@ -138,12 +138,15 @@ export default {
       let that = this
       this.requestSiteUpdateData = true
       staticsApi.query({ page_size: 30 }, function (data) {
+        console.debug("请求成功", data);
         that.siteUpdateData = data
         that.requestSiteUpdateData = false
         that.drawChapters(data)
         that.drawVideos(data)
         that.setYesterdayValue(data)
       }, function (err) {
+        console.debug("请求失败",err)
+//        tools.alertError(err);
         that.requestSiteUpdateData = false
       })
     },
@@ -225,6 +228,7 @@ export default {
     },
     drawChapters (data) {
       // console.debug(data)
+      console.debug(echarts)
       let lineChart = echarts.init(document.getElementById('site_update'))
       var option = {
         title: {

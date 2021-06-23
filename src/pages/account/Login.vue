@@ -350,17 +350,13 @@ export default {
         this.isLogging = false
         let msg = this.loginUser.nickname + ', Login Success'
         // 登录用户的clientId
-        console.debug('用户信息', this.loginUser)
+//        console.debug('用户信息', this.loginUser)
         window.tools.setJwt(this.loginUser.jwt, this.loginUser.jwt_expire);
         window.tools.setUID(this.loginUser.id, this.loginUser.jwt_expire);
         window.tools.setNick(this.loginUser.nickname, this.loginUser.jwt_expire);
         window.tools.setClientId(this.loginUser.client_id, this.loginUser.jwt_expire);
         window.tools.setAvatar(this.loginUser.avatar, this.loginUser.jwt_expire);
-
-        window.tools.alertSuc(msg)
-        setTimeout(() => {
-          this.jump2Admin()
-        }, 1000)
+        this.jump2Admin()
       }
     }
   },

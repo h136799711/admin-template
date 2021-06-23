@@ -1,19 +1,19 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js';
+import http from '../assets/plugins/http.js';
 
 const spPropValueApi = {
 	create (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpPropertyValue_create'}), suc, fail);
+		http.defaultPost('/100/SpPropertyValue/create', data, suc, fail);
 	},
 	update (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpPropertyValue_update'}), suc, fail);
+		http.defaultPost('/100/SpPropertyValue/update', data, suc, fail);
 	},
 	query (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpPropertyValue_query'}), suc, fail);
+		http.defaultPost('/100/SpPropertyValue/query', data, suc, fail);
 	},
 	delete (data, suc, fail) {
-		http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpPropertyValue_delete'}), suc, fail);
+		http.defaultPost('/100/SpPropertyValue/delete', data, suc, fail);
 	}
 };
 

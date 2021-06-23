@@ -1,34 +1,34 @@
 /* eslint-disable */
 'use strict'
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const spShopApi = {
     close (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_close' }), suc, fail)
+        http.defaultPost('/100/SpShop/close' , data, suc, fail)
     },
     opening (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_opening' }), suc, fail)
+        http.defaultPost('/100/SpShop/opening' , data, suc, fail)
     },
     create (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_create' }), suc, fail)
+        http.defaultPost('/100/SpShop/create' , data, suc, fail)
     },
     queryGoods (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_queryGoods' }), suc, fail)
+        http.defaultPost('/100/SpShop/queryGoods' , data, suc, fail)
     },
     addGoods (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_addGoods' }), suc, fail)
+        http.defaultPost('/100/SpShop/addGoods' , data, suc, fail)
     },
     removeGoods (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_removeGoods' }), suc, fail)
+        http.defaultPost('/100/SpShop/removeGoods' , data, suc, fail)
     },
     update (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_update' }), suc, fail)
+        http.defaultPost('/100/SpShop/update' , data, suc, fail)
     },
     query (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_query' }), suc, fail)
+        http.defaultPost('/100/SpShop/query' , data, suc, fail)
     },
     delete (data, suc, fail) {
-        http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpShop_delete' }), suc, fail)
+        http.defaultPost('/100/SpShop/delete' , data, suc, fail)
     }
 }
 

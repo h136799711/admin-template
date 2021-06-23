@@ -1,28 +1,28 @@
 /* eslint-disable */
 'use strict'
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const dtCateApi = {
     async query (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/query')
+        return http.promisePost('/100/DtCate/query', data)
     },
     async update (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/update');
+        return http.promisePost('/100/DtCate/update', data);
     },
     async add (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/add');
+        return http.promisePost('/100/DtCate/add', data);
     },
     async delete (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/delete');
+        return http.promisePost('/100/DtCate/delete', data);
     },
     async addGoods (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/addGoods')
+        return http.promisePost('/100/DtCate/addGoods', data)
     },
     async removeGoods (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/removeGoods');
+        return http.promisePost('/100/DtCate/removeGoods', data);
     },
     async queryGoods (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtCate/queryGoods');
+        return http.promisePost('/100/DtCate/queryGoods', data);
     }
 };
 

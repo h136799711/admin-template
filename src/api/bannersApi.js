@@ -1,28 +1,23 @@
 /* eslint-disable */
-'use strict';
-import http from '../assets/js/http.js'
+'use strict'
+import http from '../assets/plugins/http.js'
 
 const bannersApi = {
-	query(data, suc, fail) {
-		data.service_type = 'by_Banners_query'
-		http.methods.defaultPost ('', data, suc, fail)
-	},
-	queryPosition(data, suc, fail) {
-		data.service_type = 'by_Banners_queryPosition'
-		http.methods.defaultPost ('', data, suc, fail)
-	},
-	create(data, suc, fail) {
-		data.service_type = 'by_Banners_create'
-		http.methods.defaultPost ('', data, suc, fail)
-	},
-	update(data, suc, fail) {
-		data.service_type = 'by_Banners_update';
-		http.methods.defaultPost ('', data, suc, fail);
-	},
-	delete(data, suc, fail) {
-		data.service_type = 'by_Banners_delete';
-		http.methods.defaultPost ('', data, suc, fail);
-	}
+    query (data, suc, fail) {
+        http.defaultPost('/100/Banners/query', data, suc, fail)
+    },
+    queryPosition (data, suc, fail) {
+        http.defaultPost('/100/Banners/queryPosition', data, suc, fail)
+    },
+    create (data, suc, fail) {
+        http.defaultPost('/100/Banners/create', data, suc, fail)
+    },
+    update (data, suc, fail) {
+        http.defaultPost('/100/Banners/update', data, suc, fail)
+    },
+    delete (data, suc, fail) {
+        http.defaultPost('/100/Banners/delete', data, suc, fail)
+    }
 }
 
 export default bannersApi

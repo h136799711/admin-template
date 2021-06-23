@@ -76,6 +76,7 @@ module.exports = merge(baseConfig, {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new DotEnv({
             path: './.env.prod', // load this now instead of the ones in '.env'
             safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
@@ -84,7 +85,6 @@ module.exports = merge(baseConfig, {
             filename: 'static/css/[name].[hash:8].css',
             chunkFilename: 'static/css/[name].[hash:8].css',
             ignoreOrder: false
-        }),
-        new CleanWebpackPlugin()
+        })
     ]
 })

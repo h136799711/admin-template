@@ -1,43 +1,37 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js';
+import http from '../assets/plugins/http.js';
 
 const msgApi = {
 	async delete(data) {
-		return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/Message/delete')
+		return http.promisePost('/100/Message/delete', data)
 	},
 	async editMessage(data) {
-		return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/Message/editMessage')
+		return http.promisePost('/100/Message/editMessage', data)
 	},
 	async querySystem (data) {
-		return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/Message/querySystemMessage')
+		return http.promisePost('/100/Message/querySystemMessage', data)
 	},
 	async createSystem (data) {
-		return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/Message/createSystemMessage')
+		return http.promisePost('/100/Message/createSystemMessage', data)
 	},
 	getUnreadCount (data, suc, fail) {
-		data.service_type = 'by_Message_countUserUnreadMessage';
-		http.methods.defaultPost('', data, suc, fail)
+		http.defaultPost( '/100/Message/countUserUnreadMessage', data, suc, fail)
 	},
 	queryPublicMsg (data, suc, fail) {
-		data.service_type = 'by_Message_queryPublicMessage'
-		http.methods.defaultPost('', data, suc, fail)
+		http.defaultPost('/100/Message/queryPublicMessage', data, suc, fail)
 	},
 	queryAllMsg (data, suc, fail) {
-		data.service_type = 'by_Message_queryAllMessage'
-		http.methods.defaultPost('', data, suc, fail)
+		http.defaultPost('/100/Message/queryAllMessage', data, suc, fail)
 	},
 	queryUserMsg (data, suc, fail) {
-		data.service_type = 'by_Message_queryUserMessage'
-		http.methods.defaultPost('', data, suc, fail)
+		http.defaultPost('/100/Message/queryUserMessage', data, suc, fail)
 	},
 	readBatch (data, suc, fail) {
-		data.service_type = 'by_Message_readBatch'
-		http.methods.defaultPost('', data, suc, fail)
+		http.defaultPost('/100/Message/readBatch', data, suc, fail)
 	},
 	info (data, suc, fail) {
-		data.service_type = 'by_Message_info'
-		http.methods.defaultPost('', data, suc, fail)
+		http.defaultPost('/100/Message/info', data, suc, fail)
 	}
 };
 

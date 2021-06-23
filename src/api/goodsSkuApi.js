@@ -1,13 +1,13 @@
 /* eslint-disable */
 'use strict'
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const goodsSkuApi = {
     create (data, suc, fail) {
-        http.methods.defaultPost('/100/SpGoodsSku/create', data, suc, fail)
+        http.defaultPost('/100/SpGoodsSku/create', data, suc, fail)
     },
     query (data, suc, fail) {
-        return http.methods.defaultPost('', Object.assign(data, { service_type: 'by_SpGoodsSku_query' }), suc, fail)
+        return http.defaultPost('/100/SpGoodsSku/query' , data, suc, fail)
     }
 }
 

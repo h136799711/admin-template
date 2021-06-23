@@ -1,44 +1,44 @@
 /* eslint-disable */
 'use strict'
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const dtGoodsApi = {
 
     async saveStock (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/saveStock')
+        return http.promisePost('/100/DtGoods/saveStock', data)
     },
     async query (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/query')
+        return http.promisePost('/100/DtGoods/query', data)
     },
     async edit (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/edit');
+        return http.promisePost('/100/DtGoods/edit', data);
     },
     async create (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/create');
+        return http.promisePost('/100/DtGoods/create', data);
     },
     async info (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/info');
+        return http.promisePost('/100/DtGoods/info', data);
     },
     async delete (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/delete');
+        return http.promisePost('/100/DtGoods/delete', data);
     },
     async shelfOn (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/shelfOn');
+        return http.promisePost('/100/DtGoods/shelfOn', data);
     },
     async shelfOff (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/shelfOff');
+        return http.promisePost('/100/DtGoods/shelfOff', data);
     },
     async querySku (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/querySku')
+        return http.promisePost('/100/DtGoods/querySku', data)
     },
     async editSku (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/editSku');
+        return http.promisePost('/100/DtGoods/editSku', data);
     },
     async addSku (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/addSku');
+        return http.promisePost('/100/DtGoods/addSku', data);
     },
     async removeSku (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtGoods/removeSku');
+        return http.promisePost('/100/DtGoods/removeSku', data);
     }
 };
 

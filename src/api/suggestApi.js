@@ -1,15 +1,13 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js';
+import http from '../assets/plugins/http.js';
 
 const suggestApi = {
   reply(data, suc, fail) {
-    data.service_type = 'by_Suggest_reply';
-    http.methods.defaultPost('', data, suc, fail);
+    http.defaultPost('/100/Suggest/reply', data, suc, fail);
   },
   query (data, suc, fail) {
-    data.service_type = 'by_Suggest_query';
-    http.methods.defaultPost('', data, suc, fail);
+    http.defaultPost('/100/Suggest/query', data, suc, fail);
   }
 };
 

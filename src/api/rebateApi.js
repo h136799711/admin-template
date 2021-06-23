@@ -1,19 +1,19 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js';
+import http from '../assets/plugins/http.js';
 
 const rebateApi = {
   async edit (data) {
-    return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtRechargeRebate/edit')
+    return http.promisePost('/100/DtRechargeRebate/edit', data)
   },
   async create (data) {
-    return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtRechargeRebate/create')
+    return http.promisePost('/100/DtRechargeRebate/create', data)
   },
   async query (data) {
-    return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtRechargeRebate/query')
+    return http.promisePost('/100/DtRechargeRebate/query', data)
   },
   async delete (data) {
-    return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/DtRechargeRebate/delete')
+    return http.promisePost('/100/DtRechargeRebate/delete', data)
   },
 };
 

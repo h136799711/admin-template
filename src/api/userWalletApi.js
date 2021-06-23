@@ -1,13 +1,13 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const userWalletApi = {
 	async info (data) {
-		return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/UserWallet/info')
+		return http.promisePost('/100/UserWallet/info', data)
 	},
 	async query (data) {
-		return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/UserWallet/queryLogHistory')
+		return http.promisePost('/100/UserWallet/queryLogHistory', data)
 	}
 };
 

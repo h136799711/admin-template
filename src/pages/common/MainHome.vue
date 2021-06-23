@@ -1298,11 +1298,6 @@
                 console.debug('logout')
                 this.$router.push('logout')
             },
-            // 链接点击
-            userLinkClick (link) {
-                // window.tools.returnTop()
-                // setTimeout(() => { this.$store.dispatch('mainFrameJump', window.tools.getApiUrl(link)) }, 1)
-            },
             queryChildMenu (data = [], action) {
                 if (typeof action !== 'function') return
                 let ret = []

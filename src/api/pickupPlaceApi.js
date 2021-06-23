@@ -1,19 +1,19 @@
 /* eslint-disable */
 'use strict'
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const pickupPlaceApi = {
     async query (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/PickUpPlace/query')
+        return http.promisePost('/100/PickUpPlace/query', data)
     },
     async edit (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/PickUpPlace/edit');
+        return http.promisePost('/100/PickUpPlace/edit', data);
     },
     async create (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/PickUpPlace/create');
+        return http.promisePost('/100/PickUpPlace/create', data);
     },
     async delete (data) {
-        return http.methods.promisePost(data, window.tools.getApiUrl('') + '/100/PickUpPlace/delete');
+        return http.promisePost('/100/PickUpPlace/delete', data);
     },
 };
 

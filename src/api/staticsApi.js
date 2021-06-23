@@ -1,11 +1,10 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/js/http.js'
+import http from '../assets/plugins/http.js'
 
 const staticsApi = {
 	query(data, suc, fail) {
-		data.service_type = 'by_Statics_index'
-		http.methods.defaultPost ('', data, suc, fail)
+		http.defaultPost ('/100/Statics/index', data, suc, fail)
 	}
 }
 
