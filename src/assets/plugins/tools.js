@@ -99,7 +99,7 @@ const getAvatar = () => {
         avatar = ''
     }
     setAvatar(avatar)
-    return avatar
+    return avatar.removeSchema();
 }
 Date.prototype.getTimestamp = function () {
     return parseInt((this.getTime() / 1000).toFixed(0))
