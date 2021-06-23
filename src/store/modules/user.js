@@ -129,9 +129,7 @@ const mutations = {
 		console.debug ('ByUserSessionDataFail', state.loginError)
 	},
 	[types.ByUserSessionDataSuc](state, data) {
-		// rollback to the cart saved before sending the request
-		// console.debug('数据转化', data, JSON.stringify(data));
-		window.cache.setBigDataValue (types.ByUserSessionDataReq, window.tools.base64Utils.encode (JSON.stringify (data)), 3600)
+		tools.setUserSessionData(window.tools.base64Utils.encode(JSON.stringify (data)));
 		state.userSessionData.loading = 1
 		state.userSessionData.code = 0;
 		state.userSessionData = {...state.userSessionData, data: data}

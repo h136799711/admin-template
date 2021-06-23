@@ -1,6 +1,8 @@
 /* eslint-disable */
 // tools.js 包含工具方法和固定的配置信息, 后期考虑移植配置信息到config.js 中
 
+import * as types from '../../store/mutation-types'
+
 const api_url = process.env.API_ROOT_URI
 const picture_url = process.env.PICTURE_UPLOAD_URI
 const client_id = process.env.CLIENT_ID
@@ -243,8 +245,23 @@ const getTimezone = () => {
 const debug = (title, value) => {
     console.debug("%c " + title + " %c " + value + " ", "background:#606060;padding: 1px; border-radius: 3px 0px 0px 3px;color:#ffffff;", "background:#3474ad;padding: 1px; border-radius: 0px 3px 3px 0px;color:#ffffff;");
 }
+const setUserSessionData = (userSessionData) => {
+    window.cache.setBigDataValue ('BY_USER_SESSION_DATA', userSessionData, 3600);
+}
+const getUserSessionData = () => {
+    return window.cache.getBigDataValue ('BY_USER_SESSION_DATA');
+}
+const isLogin = () => {
+    let sessionData = getUserSessionData();
+    if (sessionData && sessionData !== '' && sessionData.data && sessionData.data.length > 0 && getJwt()) {
+        return true;
+    }
+    return false;
+}
 const tools = {
     debug,
+    setUserSessionData,
+    getUserSessionData,
     getRouteMode,
     getImgUrl,
     getBrowseLanguage,
@@ -258,6 +275,7 @@ const tools = {
     getVersion, getApiUrl, getAvatarUploadUrl, getKeyInObject, returnTop, getAppId,
 	getSessionId,
 	getJwt, setJwt, getJwtExpireTime,
+    isLogin,
 }
 String.prototype.trim = function (char, type) {
     if (char) {

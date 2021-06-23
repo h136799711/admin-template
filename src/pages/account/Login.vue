@@ -363,13 +363,8 @@ export default {
   created () {
   },
   mounted () {
-    if (tools.getJwt()) {
-      // 如果有缓存 则跳转
-      this.jump2Admin();
-    }
-    this.refresh_verify()
-    // window.tools.setUID('', 0);
-    // window.tools.setJwt('', 0);
+    tools.clear();
+    this.refresh_verify();
   },
   methods: {
     pswFocus (is) {
