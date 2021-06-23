@@ -942,7 +942,7 @@
                         </div>
                     </div>
                     <TopBarDropMenu
-                            :name="userInfo.mobile"
+                            :name="userInfo.nickname"
                             :head="userInfo.head"
                             icon-class=""
                             :links="userDropMenus"
