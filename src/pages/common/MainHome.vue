@@ -1117,17 +1117,26 @@
                     return
                 }
                 if (newValue.code === 0) {
+                    if (newValue.data.length === 0) {
+                        window.tools.alertWarn('请重新登录')
+                        setTimeout(() => {
+                            this.$router.push('/login')
+                        }, 2500)
+                        return;
+                    }
+
+                    this.getUnreadMsg();
                     let data = _.cloneDeep(newValue.data)
                     if (data.data) {
                         data = data.data;
                     }
-                    console.debug('登录成功')
+                    console.debug('登录成功', data)
                     this.loadMenu(data.menuList)
                     this.loadUserInfo(data.userInfo)
                     this.loadPlatformInfo(data.platformInfo)
                     window.tools.alertClose()
                     let avatarPath = '/admin/account/avatar';
-                    if (this.$route.fullPath != avatarPath || this.currentTab != avatarPath) {
+                    if (this.$route.fullPath !== avatarPath || this.currentTab !== avatarPath) {
                         this.$router.push('/admin/index')
                     }
                 } else if (newValue.msg) {
@@ -1156,7 +1165,6 @@
         },
         mounted () {
             this.getUserData()
-            this.getUnreadMsg()
         },
         methods: {
             randKey(path) {

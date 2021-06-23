@@ -176,6 +176,6 @@ window.itboye.clientInfo.env = process.env.NODE_ENV;
 
 if (process.env.NODE_ENV === 'production') {
   // 正式环境不打印
-  window.console.debug = () => {
-  };
+  // window.console.debug = () => {
+  // };
 }
