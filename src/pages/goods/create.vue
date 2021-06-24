@@ -565,7 +565,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            this.addForm.show_price = 100 * this.addForm.show_price
+            this.addForm.show_price = (100 * this.addForm.show_price).toFixed(2);
             instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
             console.debug("保存内容", this.addForm);
 
