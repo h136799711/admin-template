@@ -287,7 +287,7 @@
             submitAddForm() {
                 let that = this;
                 this.loading = true;
-                this.addForm.price = (this.addForm.price * 100).toFixed(2);
+                this.addForm.price = (this.addForm.price * 100).toFixed(0);
                 goodsSkuApi.addSku(this.addForm).finally(function () {
                     that.dialogAddVisible = false;
                     that.loading = false;
@@ -305,7 +305,7 @@
             submitEditForm() {
                 let that = this;
                 this.loading = true;
-                this.editForm.price = (this.editForm.price * 100).toFixed(2);
+                this.editForm.price = (this.editForm.price * 100).toFixed(0);
                 goodsSkuApi.editSku(this.editForm).finally(function () {
                     that.dialogEditVisible = false;
                     that.loading = false;
