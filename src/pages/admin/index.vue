@@ -137,7 +137,7 @@ export default {
       // if (this.pageLoading) return;
       let that = this
       this.requestSiteUpdateData = true
-      staticsApi.query({ page_size: 30 }, function (data) {
+      staticsApi.query({ page_size: 8 }, function (data) {
         console.debug("请求成功", data);
         that.siteUpdateData = data
         that.requestSiteUpdateData = false

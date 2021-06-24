@@ -246,14 +246,25 @@ const debug = (title, value) => {
     console.info("%c " + title + " %c " + value + " ", "background:#606060;padding: 1px; border-radius: 3px 0px 0px 3px;color:#ffffff;", "background:#3474ad;padding: 1px; border-radius: 0px 3px 3px 0px;color:#ffffff;");
 }
 const setUserSessionData = (userSessionData) => {
+    userSessionData = window.tools.base64Utils.encode(JSON.stringify (userSessionData));
     window.cache.setBigDataValue ('BY_USER_SESSION_DATA', userSessionData, 3600);
 }
 const getUserSessionData = () => {
-    return window.cache.getBigDataValue ('BY_USER_SESSION_DATA');
-}
+    let sessionData = window.cache.getBigDataValue ('BY_USER_SESSION_DATA');
+    if (!sessionData || sessionData === '') {
+        return false;
+    }
+    try {
+        sessionData = JSON.parse(window.tools.base64Utils.decode(sessionData));
+        return sessionData;
+    } catch (e) {
+        console.debug('getUserSessionData', e);
+        return false;
+    }
+};
 const isLogin = () => {
     let sessionData = getUserSessionData();
-    if (sessionData && sessionData !== '' && sessionData.data && sessionData.data.length > 0 && getJwt()) {
+    if (sessionData && sessionData.data && sessionData.data.length > 0 && getJwt()) {
         return true;
     }
     return false;

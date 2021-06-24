@@ -1130,7 +1130,7 @@
                     if (data.data) {
                         data = data.data;
                     }
-                    console.debug('登录成功', data)
+                    // console.debug('登录成功', data)
                     this.loadMenu(data.menuList)
                     this.loadUserInfo(data.userInfo)
                     this.loadPlatformInfo(data.platformInfo)
@@ -1259,8 +1259,15 @@
                 this.currentTab = menu.url
             },
             getUnreadMsg () {
-                api.getUnreadCount({ 'uid': window.tools.getUID() }, (resp) => {
+                let msgCnt = parseInt(cache.getValue('unread_msg_cnt'));
+                if (!isNaN(msgCnt)) {
+                    console.debug('Cache unread_msg_cnt', msgCnt);
+                    this.unreadMsgCnt = msgCnt;
+                    return;
+                }
+                api.getUnreadCount({}, (resp) => {
                     this.unreadMsgCnt = resp
+                    cache.setValue('unread_msg_cnt', resp, 3600);
                 }, (resp) => {
                 })
             },

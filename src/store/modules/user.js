@@ -44,11 +44,11 @@ const actions = {
 	getUserSessionData({commit}) {
 		console.debug ('用户登录成功后获取用户会话数据')
 		commit (types.ByUserSessionDataReq)
-		let sessionData = window.cache.getBigDataValue (types.ByUserSessionDataReq)
-		if (sessionData && sessionData !== '') {
+
+		let sessionData = tools.getUserSessionData();
+		if (sessionData) {
 			console.debug ('[cache] getUserSessionData 使用缓存')
-			sessionData = window.tools.base64Utils.decode (sessionData)
-			commit (types.ByUserSessionDataSuc, JSON.parse (sessionData))
+			commit (types.ByUserSessionDataSuc, sessionData)
 			return
 		}
 		userApi.getUserData ((res) => {
@@ -129,7 +129,7 @@ const mutations = {
 		console.debug ('ByUserSessionDataFail', state.loginError)
 	},
 	[types.ByUserSessionDataSuc](state, data) {
-		tools.setUserSessionData(window.tools.base64Utils.encode(JSON.stringify (data)));
+		tools.setUserSessionData(data);
 		state.userSessionData.loading = 1
 		state.userSessionData.code = 0;
 		state.userSessionData = {...state.userSessionData, data: data}
