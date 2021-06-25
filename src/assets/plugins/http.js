@@ -28,10 +28,18 @@ const convertFormData = function (obj) {
         if (obj.hasOwnProperty(i)) {
             if (Array.isArray(obj[i])) {
                 for (let j = 0; j < obj[i].length; j++) {
-                    fd.append(i + '[' + j + ']', obj[i][j])
+                    let value = obj[i][j];
+                    if (typeof value === 'number') {
+                        value = value.toFixed(2);
+                    }
+                    fd.append(i + '[' + j + ']', value)
                 }
             } else {
-                fd.append((i), (obj[i]))
+                let value = obj[i];
+                if (typeof value === 'number') {
+                    value = value.toFixed(2);
+                }
+                fd.append((i), value)
             }
         }
     }
