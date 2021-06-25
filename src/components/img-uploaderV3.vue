@@ -229,6 +229,10 @@
                 return this.imageUrl.split(',').filter(function (item) {
                     return item && item.length > 0
                 })
+            },
+            defaultImgUrl (newVal, oldVal) {
+                console.debug('默认图片', newVal)
+                this.imageUrl = this.defaultImgUrl;
             }
         },
         watch: {
