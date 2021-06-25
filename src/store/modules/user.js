@@ -117,9 +117,6 @@ const mutations = {
 	},
 	[types.ByUserSessionDataReq](state) {
 		console.debug ('ByUserSessionDataReq')
-		// state.userSessionData.code = '';
-		// state.userSessionData.msg = '';
-		// state.userSessionData.data = '';
 		state.userSessionData.loading = 2
 	},
 	[types.ByUserSessionDataFail](state, data) {
