@@ -461,7 +461,7 @@
 import QrcodeVue from 'qrcode.vue'
 import api from '../../api/userApi'
 import { getCurrentInstance,onMounted, onUpdated, onUnmounted,ref } from 'vue'
-import { useRouter,useRoute } from 'vue-router';
+import {dbhTool} from '@peter_xiter/dbh-js-tools'
 
 export default {
   components: {
@@ -612,9 +612,9 @@ export default {
       this.loading = true
       api.resetPwd({ user_id: id }, (resp) => {
         this.loading = false
-        window.tools.alertSuc('密码已重置')
+        window.dbh.alertSuc('密码已重置')
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     },
@@ -626,7 +626,7 @@ export default {
         console.log(resp)
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.sendCode = false
       })
     },
@@ -635,9 +635,9 @@ export default {
       api.sendAuthCode(this.sendCodeForm, (resp) => {
         this.sendCode = false
         console.log(resp)
-        window.tools.alertSuc(resp, 3000)
+        window.dbh.alertSuc(resp, 3000)
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.sendCode = false
       })
     },
@@ -645,9 +645,9 @@ export default {
       this.sendEmail = true
       api.sendAuthEmail({ id: id }, (resp) => {
         this.sendEmail = false
-        window.tools.alertSuc('已发送')
+        window.dbh.alertSuc('已发送')
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.sendEmail = false
       })
     },
@@ -658,19 +658,19 @@ export default {
                     (Math.floor(number % 256))
     },
     getImgUrl (url) {
-      return window.tools.getImgUrl(url)
+      return dbhTool.getImgUrl(url)
     },
     onTurnOn (id) {
       return api.turnOn2StepVerify({ id: id }, (res) => {
         this.refresh()
       }, (res) => {
-        window.tools.alertError(res.msg)
+        window.dbh.alertError(res.msg)
       });
     },
     onTurnOff (id) {
       return api.turnOff2StepVerify({ id: id }, (res) => {
       }, (res) => {
-        window.tools.alertError(res.msg)
+        window.dbh.alertError(res.msg)
       });
     },
     allowChangeGoogleSecret() {
@@ -709,18 +709,18 @@ export default {
         // this.refresh()
       }, (res) => {
         console.debug(res)
-        window.tools.alertError(res.msg)
+        window.dbh.alertError(res.msg)
       });
     },
     onDisable (id) {
       return api.disable({ id: id }, (res) => {
         // this.refresh()
       }, (res) => {
-        window.tools.alertError(res.msg)
+        window.dbh.alertError(res.msg)
       })
     },
     ifLoginUser (uid) {
-      return uid === window.tools.getUID() ? 'You' : 'Other'
+      return uid === dbhTool.getUID() ? 'You' : 'Other'
     },
     submitEditForm () {
       this.loading = true
@@ -729,7 +729,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     },
@@ -740,11 +740,11 @@ export default {
           api.registerByMobileCode(this.addForm, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp)
+            window.dbh.alertError(resp)
           })
         } else {
           return false
@@ -787,7 +787,7 @@ export default {
         }
         this.page_index = this.queryForm.page_index;
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

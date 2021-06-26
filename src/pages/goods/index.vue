@@ -232,7 +232,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             goodsApi.delete({ id: id }, (res) => {
               instance.confirmButtonLoading = false
               this.refresh()
@@ -240,7 +240,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.dbh.alertError(res.msg)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -283,7 +283,7 @@ export default {
         that.loading = false
       } catch (err) {
         console.debug(err)
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
         that.loading = false
       }
     }

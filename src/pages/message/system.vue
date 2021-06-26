@@ -261,7 +261,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             api.delete({ id: id }).finally(function () {
                                 instance.confirmButtonLoading = false
                                 that.refresh();
@@ -294,7 +294,7 @@
                     let resp = await api.createSystem(this.addForm);
                     this.refresh();
                 } catch (e) {
-                    window.tools.alertError(e.message)
+                    window.dbh.alertError(e.message)
                 } finally {
                     this.loading = false;
                     this.dialogAddVisible = false;
@@ -312,7 +312,7 @@
                     let resp = await api.editMessage(this.editForm);
                     this.refresh();
                 } catch (e) {
-                    window.tools.alertError(e.message)
+                    window.dbh.alertError(e.message)
                 } finally {
                     this.loading = false;
                     this.dialogEditVisible = false;
@@ -335,7 +335,7 @@
                     this.count = parseInt(resp.count);
                     this.tableData = resp.list;
                 } catch (e) {
-                    window.tools.alertError(e.message)
+                    window.dbh.alertError(e.message)
                 } finally {
                     this.loading = false
                 }

@@ -454,7 +454,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             let data = {
                                 'id': this.selectTableRowId
                             }
@@ -472,7 +472,7 @@
                             }, (res) => {
                                 instance.confirmButtonLoading = false
                                 console.debug(res)
-                                window.tools.alertError(res.msg)
+                                window.dbh.alertError(res.msg)
                                 done()
                             })
                         } else {
@@ -519,7 +519,7 @@
                                 this.$refs[formName].resetFields()
                                 this.dialogAddVisible = false
                             }, (res) => {
-                                window.tools.alertError(res.msg)
+                                window.dbh.alertError(res.msg)
                             })
                         } else if (formName === 'editForm') {
                             let model = this.$refs[formName].model
@@ -551,7 +551,7 @@
                                 }
                                 this.dialogEditVisible = false
                             }, (res) => {
-                                window.tools.alertError(res.msg)
+                                window.dbh.alertError(res.msg)
                             })
                         }
                     } else {
@@ -594,7 +594,7 @@
                         this.tableData = resp.list
                         this.count = parseInt(resp.count)
                     }, (resp) => {
-                        window.tools.alertError(resp)
+                        window.dbh.alertError(resp)
                         this.loading = false
                     })
             },
@@ -606,7 +606,7 @@
                     suc(resp.list)
                     this.loadRightTable(parentId)
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                 })
             },

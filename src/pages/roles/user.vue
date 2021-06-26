@@ -242,7 +242,7 @@ export default {
                 	}
         cb(formatRes)
       }, (res) => {
-        window.tools.alertError(res)
+        window.dbh.alertError(res)
       })
     },
         	submitAddForm () {
@@ -251,7 +251,7 @@ export default {
           this.refresh()
           this.dialogAddVisible = false
         }, (res) => {
-          window.tools.alertError(res)
+          window.dbh.alertError(res)
           this.dialogAddVisible = false
         })
       }
@@ -275,7 +275,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
             console.debug(uid)
             let data = {
@@ -289,7 +289,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res)
+              window.dbh.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -310,7 +310,7 @@ export default {
         this.list = resp.list
         this.count = resp.count
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

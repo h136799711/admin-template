@@ -412,7 +412,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
             let data = {
               'id': id
@@ -424,7 +424,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res)
+              window.dbh.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -440,10 +440,10 @@ export default {
       api.update(this.editForm, (resp) => {
                  	this.loading = false
         this.dialogEditVisible = false
-        window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+        window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
         this.queryConfig()
       }, (resp) => {
-                 	window.tools.alertError(resp)
+                 	window.dbh.alertError(resp)
                  	this.loading = false
         this.dialogEditVisible = false
       })
@@ -454,10 +454,10 @@ export default {
           api.create(this.addForm, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.queryConfig()
           }, (resp) => {
-            window.tools.alertError(resp)
+            window.dbh.alertError(resp)
             this.loading = false
           })
         } else {
@@ -506,7 +506,7 @@ export default {
                 	this.count = parseInt(resp.count)
                 	this.tableData = resp.list
       }, (resp) => {
-                	window.tools.alertError(resp)
+                	window.dbh.alertError(resp)
                 	this.loading = false
       })
     },

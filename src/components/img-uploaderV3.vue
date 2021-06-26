@@ -156,6 +156,7 @@
 </template>
 
 <script>
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
     import fileApi from '../api/fileApi'
 
     export default {
@@ -250,9 +251,9 @@
         },
         created () {
             this.extraData.t = this.imgType
-            this.uploadApiUrl = window.tools.getAvatarUploadUrl() + '/v2/upload';
-            this.extraData.uid = window.tools.getUID()
-            this.extraData.jwt = window.tools.getJwt();
+            this.uploadApiUrl = window.config.getAvatarUploadUrl() + '/v2/upload';
+            this.extraData.uid = dbhTool.getUID()
+            this.extraData.jwt = dbhTool.getJwt();
             this.extraData.oss_type = this.oss_type
             if (this.defaultImgUrl) {
                 this.imageUrl = this.defaultImgUrl
@@ -330,10 +331,10 @@
 
                         that.count = parseInt(data.data.count)
                     } else {
-                        window.tools.alertError(data.msg)
+                        window.dbh.alertError(data.msg)
                     }
                 }).catch((reason) => {
-                    window.tools.alertError(reason)
+                    window.dbh.alertError(reason)
                 }).finally(() => {
                     console.debug('finally')
                     that.loadingUploadedImgs = false
@@ -341,11 +342,7 @@
 
             },
             getImage (uri) {
-                if (uri.length === 0) return false
-                if (!_.startsWith(uri, 'http')) {
-                    uri = window.tools.getApiUrl() + uri
-                }
-                return uri
+                return dbhTool.getImgUrl(uri)
             },
             handleSuccess (res, file) {
                 if (parseInt(res.code) === 0) {

@@ -237,7 +237,7 @@
                 dtGoodsApi.saveStock({id: row.id, stock: row.stock}).then(() => {
                     that.refresh();
                 }).catch((msg) => {
-                    tools.alertError(msg);
+                    dbh.alertError(msg);
                 }).finally(() => {
                     that.loading = false;
                 })
@@ -252,7 +252,7 @@
                     this.refresh();
                 } catch(err) {
                     console.debug(err);
-                    window.tools.alertError(err);
+                    window.dbh.alertError(err);
                 } finally {
                     this.loading = false
                 }
@@ -264,7 +264,7 @@
                     this.refresh();
                 } catch(err) {
                     console.debug(err);
-                    window.tools.alertError(err);
+                    window.dbh.alertError(err);
                 } finally {
                     this.loading = false
                 }
@@ -278,7 +278,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             dtGoodsApi.delete({ id: id }).finally(function () {
                                 instance.confirmButtonLoading = false
                                 that.refresh();
@@ -291,7 +291,7 @@
                             // }, (res) => {
                             //     console.debug(res)
                             //     done()
-                            //     window.tools.alertError(res.msg)
+                            //     window.dbh.alertError(res.msg)
                             //     instance.confirmButtonLoading = false
                             // })
                         } else {
@@ -331,7 +331,7 @@
                     that.loading = false
                 } catch (err) {
                     console.debug(err);
-                    window.tools.alertError(err);
+                    window.dbh.alertError(err);
                     that.loading = false
                 }
             }

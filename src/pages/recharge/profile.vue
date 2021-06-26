@@ -152,7 +152,7 @@ export default {
           )
         },
         resp => {
-          window.tools.alertError(resp.msg)
+          window.dbh.alertError(resp.msg)
           this.loading = false
         }
       )

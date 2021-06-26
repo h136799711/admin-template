@@ -473,7 +473,7 @@ export default {
         that.loading = false
       } catch (err) {
         console.debug(err)
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
         that.loading = false
       }
     },
@@ -486,7 +486,7 @@ export default {
       this.loading = true
       let that = this
       dtOrderApi.setOut({ id: this.order_id, uid: this.user_id }).catch((err) => {
-        tools.alertError(err.message);
+        dbh.alertError(err.message);
       }).then(function () {
         that.refresh()
       }).finally(function () {

@@ -334,7 +334,7 @@ export default {
       this.category = resp
       this.refresh()
     }, (resp) => {
-      window.tools.alertError(resp.msg)
+      window.dbh.alertError(resp.msg)
       this.loading = false
     })
   },
@@ -364,7 +364,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -375,7 +375,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -422,7 +422,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     }

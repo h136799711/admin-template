@@ -281,7 +281,7 @@ export default {
         that.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -293,11 +293,11 @@ export default {
           regionApi.create(this.addForm, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp.msg)
+            window.dbh.alertError(resp.msg)
           })
         } else {
           return false
@@ -332,7 +332,7 @@ export default {
         that.tableData = resp
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         that.loading = false
       })
     }

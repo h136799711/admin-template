@@ -337,6 +337,8 @@
   </div>
 </template>
 <script>
+  import {dbhTool} from "@peter_xiter/dbh-js-tools/index";
+
 export default {
   name: 'App',
   components: {},
@@ -345,14 +347,13 @@ export default {
   },
   methods: {
     initialize() {
-      window.itboye.clientInfo.timezone = window.tools.getTimezone()
-      window.itboye.clientInfo.lang = this.$i18n.locale = tools.getBrowseLanguage()
-      let timezone = itboye.clientInfo.timezone;
+      let timezone = window.dbh.clientInfo.timezone = dbhTool.getTimezone()
+      window.dbh.clientInfo.lang = this.$i18n.locale = dbhTool.getBrowseLanguage()
       if (timezone > 0) timezone = '+' + timezone.toString();
-      tools.debug('Environment', process.env.NODE_ENV)
-      tools.debug('Language',  itboye.clientInfo.lang)
-      tools.debug('Timezone', 'GMT' + timezone)
-      tools.debug('Build Version', process.env.APP_VERSION)
+      dbhTool.debug('Environment', process.env.NODE_ENV)
+      dbhTool.debug('Language',  dbh.clientInfo.lang)
+      dbhTool.debug('Timezone', 'GMT' + timezone)
+      dbhTool.debug('Build Version', process.env.APP_VERSION)
     }
   }
 }

@@ -938,12 +938,12 @@ export default {
         this.pcaOptions = this.setPcaOptions(resp, this.pcaMap)
         console.log(this.pcaMap)
       }, (err) => {
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
       })
     },
     onAppendFree () {
       if (this.freeTable.length === 3) {
-        window.tools.alertError('最多3条记录')
+        window.dbh.alertError('最多3条记录')
         return
       }
       // 包邮表单数据
@@ -1001,7 +1001,7 @@ export default {
         this.refresh()
       }, (err) => {
         this.loading = false
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
       })
     },
     onSubmitEditForm () {
@@ -1017,7 +1017,7 @@ export default {
         this.refresh()
       }, (err) => {
         this.loading = false
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
       })
     },
     onDelete (id) {
@@ -1028,14 +1028,14 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             freightApi.delete({ id: id }, (res) => {
               instance.confirmButtonLoading = false
               this.refresh()
               done()
             }, (res) => {
               done()
-              window.tools.alertError(res.msg)
+              window.dbh.alertError(res.msg)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -1187,7 +1187,7 @@ export default {
         this.tableData = resp
         this.loading = false
       } catch (e) {
-        window.tools.alertError(e)
+        window.dbh.alertError(e)
         this.loading = false
       }
     }

@@ -146,7 +146,7 @@ export default {
         that.setYesterdayValue(data)
       }, function (err) {
         console.debug("请求失败",err)
-//        tools.alertError(err);
+//        itboye.alertError(err);
         that.requestSiteUpdateData = false
       })
     },

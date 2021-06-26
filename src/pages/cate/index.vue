@@ -250,7 +250,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
                             dtCateApi.delete({ id: id }).then((res) => {
                                 instance.confirmButtonLoading = false
@@ -259,7 +259,7 @@
                             }).catch((res) => {
                                 console.debug(res)
                                 done()
-                                window.tools.alertError(res)
+                                window.dbh.alertError(res)
                                 instance.confirmButtonLoading = false
                             })
                         } else {
@@ -276,7 +276,7 @@
                     this.dialogEditVisible = false
                     this.refresh()
                 }).catch((resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                     this.dialogEditVisible = false
                 })
@@ -289,11 +289,11 @@
                         dtCateApi.add(this.addForm).then((resp) => {
                             that.loading = false
                             that.dialogAddVisible = false
-                            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                             that.refresh()
                         }).catch((resp) => {
                             that.loading = false
-                            window.tools.alertError(resp)
+                            window.dbh.alertError(resp)
                         })
                     } else {
                         return false
@@ -323,7 +323,7 @@
                 dtCateApi.query(that.queryForm).then((resp) => {
                     that.tableData = resp
                 }).catch((resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                 }).finally(() => {
                     that.loading = false
                 })

@@ -177,7 +177,7 @@ export default {
       api.setDefaultSource({ id: this.id, source_type_id: row.source_type_id }, (resp) => {
         this.loading = false
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     },
@@ -191,7 +191,7 @@ export default {
         this.loading = false
         this.tableData = resp
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     }

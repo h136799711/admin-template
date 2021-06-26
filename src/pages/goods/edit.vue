@@ -410,7 +410,7 @@ export default {
           }
         }
       }, (err) => {
-        window.tools.alertError('获取类目属性失败')
+        window.dbh.alertError('获取类目属性失败')
       })
     },
     onImgListUploadSuccess (data) {
@@ -444,17 +444,17 @@ export default {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
             this.addForm.show_price = 100 * this.addForm.show_price
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             this.addForm.id = this.id
             goodsApi.update(this.addForm, (resp) => {
-              window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+              window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
               instance.confirmButtonLoading = false
               done()
               this.$router.go(-1)
             }, (resp) => {
               done()
               instance.confirmButtonLoading = false
-              window.tools.alertError(resp.msg)
+              window.dbh.alertError(resp.msg)
             })
           } else {
             done()
@@ -487,7 +487,7 @@ export default {
         this.supportServiceOptions = resp.list
         this.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
       goodsApi.info({ id: this.id }, (resp) => {
@@ -506,7 +506,7 @@ export default {
         }))
         this.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         that.loading = false
       })
     }

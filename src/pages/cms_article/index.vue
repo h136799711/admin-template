@@ -512,6 +512,8 @@
 </template>
 
 <script>
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
+
     import fileApi from '../../api/fileApi'
     import articleApi from '../../api/articleApi'
     import ImgUploader from '../../components/img-uploaderV3.vue'
@@ -602,10 +604,10 @@
                 this.loading = true
                 articleApi.publish({ id: id }, (resp) => {
                     this.loading = false
-                    window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+                    window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                 })
             },
@@ -613,10 +615,10 @@
                 this.loading = true
                 articleApi.draft({ id: id }, (resp) => {
                     this.loading = false
-                    window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+                    window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                 })
             },
@@ -667,7 +669,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             articleApi.delete({ id: id }, (resp) => {
                                 this.loading = false
                                 this.refresh()
@@ -690,7 +692,7 @@
             editorUploadImageForAdd (event, insertImage, files) {
                 console.debug('编辑器图片文件', files, insertImage)
                 if (!files || files.length === 0) {
-                    window.tools.alertInfo('请选择文件')
+                    window.dbh.alertInfo('请选择文件')
                     return
                 }
                 fileApi.upload(files[0], 'cms_article').then(({ data }) => {
@@ -702,16 +704,16 @@
                             desc: '图片',
                         })
                     } else {
-                        window.tools.alertError(data.msg)
+                        window.dbh.alertError(data.msg)
                     }
                 }).catch((reason) => {
-                    window.tools.alertError(reason)
+                    window.dbh.alertError(reason)
                 })
             },
             editorUploadImageForEdit (event, insertImage, files) {
                 console.debug('编辑器图片文件', files, insertImage)
                 if (!files || files.length === 0) {
-                    window.tools.alertInfo('请选择文件')
+                    window.dbh.alertInfo('请选择文件')
                     return
                 }
                 fileApi.upload(files[0], 'cms_article').then(({ resp }) => {
@@ -723,10 +725,10 @@
                             desc: '',
                         })
                     } else {
-                        window.tools.alertError(data.msg)
+                        window.dbh.alertError(data.msg)
                     }
                 }).catch((reason) => {
-                    window.tools.alertError(reason)
+                    window.dbh.alertError(reason)
                 })
             },
             onUploadSuccess (data) {
@@ -745,10 +747,10 @@
                         articleApi.update(data, (resp) => {
                             this.loading = false
                             this.dialogEditVisible = false
-                            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+                            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                             this.refresh()
                         }, (resp) => {
-                            window.tools.alertError(resp)
+                            window.dbh.alertError(resp)
                             this.loading = false
                         })
                     } else {
@@ -764,10 +766,10 @@
                         articleApi.create(data, (resp) => {
                             this.loading = false
                             this.dialogAddVisible = false
-                            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+                            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                             this.refresh()
                         }, (resp) => {
-                            window.tools.alertError(resp)
+                            window.dbh.alertError(resp)
                             this.loading = false
                         })
                     } else {
@@ -777,7 +779,7 @@
             },
             onAdd () {
                 this.addForm = {
-                    uid: window.tools.getUID(),
+                    uid: dbhTool.getUID(),
                     title: '',
                     summary: '',
                     source_url: '',
@@ -821,11 +823,11 @@
                         this.count = parseInt(resp.count)
                         this.tableData = resp.list
                     }, (resp) => {
-                        window.tools.alertError(resp)
+                        window.dbh.alertError(resp)
                         this.loading = false
                     })
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                 })
             }

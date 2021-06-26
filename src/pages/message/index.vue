@@ -196,7 +196,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

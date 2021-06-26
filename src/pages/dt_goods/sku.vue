@@ -224,7 +224,7 @@
 <script>
     import goodsSkuApi from '../../api/dtGoodsApi'
     import ImgUploaderV3 from '../../components/img-uploaderV3'
-
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
     export default {
         props: {
             id: String
@@ -271,9 +271,9 @@
             onUploadSuccess(data) {
                 console.debug('image upload success', data)
                 if (this.dialogEditVisible) {
-                    this.editForm.img = window.tools.getImgUrl(data.trim(","))
+                    this.editForm.img = dbhTool.getImgUrl(data.trim(","))
                 } else {
-                    this.addForm.img = window.tools.getImgUrl(data.trim(","))
+                    this.addForm.img = dbhTool.getImgUrl(data.trim(","))
                 }
             },
             onAdd() {
@@ -324,7 +324,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             goodsSkuApi.removeSku({ id: id }).finally(function () {
                                 instance.confirmButtonLoading = false
                                 that.refresh();

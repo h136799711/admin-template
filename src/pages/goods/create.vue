@@ -516,7 +516,7 @@ export default {
         console.debug('Cate', this.cateProperties, this.skuProperties, resp)
         this.selectedPropValueIds = new Array(this.cateProperties.length)
       }, (err) => {
-        window.tools.alertError('获取类目属性失败')
+        window.dbh.alertError('获取类目属性失败')
       })
     },
     onImgListUploadSuccess (data) {
@@ -544,7 +544,7 @@ export default {
       if (this.active >= 0) {
         // 检测类目是否选择
         if (parseInt(this.cateId) === 0) {
-          window.tools.alertError('请选择类目')
+          window.dbh.alertError('请选择类目')
           return
         }
       }
@@ -566,7 +566,7 @@ export default {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
             this.addForm.show_price = (100 * this.addForm.show_price).toFixed(2);
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             console.debug("保存内容", this.addForm);
 
             goodsApi.create(this.addForm, (resp) => {
@@ -576,7 +576,7 @@ export default {
             }, (resp) => {
               done()
               instance.confirmButtonLoading = false
-              window.tools.alertError(resp.msg)
+              window.dbh.alertError(resp.msg)
             })
           } else {
             done()
@@ -610,14 +610,14 @@ export default {
         console.debug('三级类目', resp)
         this.cateOptions = resp
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         that.loading = false
       })
 
       datatreeApi.query({ parent_id: 65 }, (resp) => {
         this.supportServiceOptions = resp.list
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         that.loading = false
       })
     }

@@ -1,19 +1,13 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import axios from 'axios' // Promise based HTTP client for the browser and node.js
-import Lockr from 'lockr' // 用于缓存较大的数据
-
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
+import App from './App.vue'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from './store/index'
 import routes from './routes'
 import './assets/plugins/fullscreen'
-import { Base64 } from 'js-base64'
-import md5Utils from './assets/plugins/md5Utils'
-import cache from './assets/plugins/cache'
-import tools from './assets/plugins/tools'
+import config from './assets/plugins/config'
 // ElementPlus
 import '../static/reset.css'
 import 'element-plus/lib/theme-chalk/index.css'
@@ -42,6 +36,7 @@ import 'codemirror/addon/scroll/simplescrollbars.css';
 // style
 import 'codemirror/lib/codemirror.css';
 import jwtApi from './api/jwtApi'
+import {dbhTool} from '@peter_xiter/dbh-js-tools/index';
 
 VMdEditor.Codemirror = Codemirror;
 VMdEditor.use(githubTheme);
@@ -51,12 +46,6 @@ VMdEditor.use(githubTheme);
 import zhCN from './i18n/zh-CN'
 import en from './i18n/en'
 import 'vue-json-pretty/lib/styles.css'
-
-axios.defaults.baseURL = ''
-axios.defaults.timeout = 30000
-axios.defaults.headers['Content-Type'] = 'application/json'
-axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.withCredentials = false
 
 const router = createRouter({
   history: createWebHashHistory(__dirname),
@@ -68,14 +57,14 @@ router.beforeEach((to, from) => {
   if (to.path === '/login') {
     return true;
   }
-  let jwt = tools.getJwt();
+  let jwt = dbhTool.getJwt();
   if (jwt) {
-    let expTime = tools.getJwtExpireTime();
+    let expTime = dbhTool.getJwtExpireTime();
     if (expTime < (new Date()).getTimestamp() + 300) {
       jwtApi.refresh({}).then((resp) => {
         if (resp.jwt && resp.jwt_expire) {
           console.debug("Refresh Token");
-          tools.setJwt(resp.jwt, resp.jwt_expire);
+          dbhTool.setJwt(resp.jwt, resp.jwt_expire);
         }
       }).catch((reason => {
         console.debug("Refresh Token Failed", reason);
@@ -109,19 +98,6 @@ const i18n = createI18n({
   messages
 })
 
-
-window.itboye = window.itboye || {}
-window.itboye.clientInfo = window.itboye.clientInfo || {}
-window.Lockr = Lockr
-window.axios = axios
-window.cache = cache
-window.tools = tools
-window.tools.md5Utils = md5Utils
-window.tools.base64Utils = Base64
-window.tools.getDeviceToken = function () {
-  return tools.getSessionId();
-}
-
 const app = createApp(App)
 
 app.use(ElementPlus, {
@@ -132,50 +108,49 @@ app.use(router)
 app.use(store)
 app.use(VMdEditor)
 
-window.itboye.vue_instance = app.mount('#app')
-window.tools.alertError = (msg) => {
-  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
-  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
+
+window.config = config
+
+window.dbh = window.dbh || {}
+window.dbh.clientInfo = window.dbh.clientInfo || {}
+window.dbh.clientInfo.env = process.env.NODE_ENV;
+window.dbh.vue_instance = app.mount('#app')
+window.dbh.alertError = (msg) => {
+  if (window.dbh.vue_instance._byAlert) window.dbh.vue_instance._byAlert.close()
+  window.dbh.vue_instance._byAlert = window.dbh.vue_instance.$message({
     message: msg,
     type: 'error',
     showClose: true,
     duration: 4000
   })
 }
-window.tools.alertInfo = (msg) => {
-  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
-  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
+window.dbh.alertInfo = (msg) => {
+  if (window.dbh.vue_instance._byAlert) window.dbh.vue_instance._byAlert.close()
+  window.dbh.vue_instance._byAlert = window.dbh.vue_instance.$message({
     message: msg,
     type: 'info',
     showClose: true,
     duration: 3000
   })
 }
-window.tools.alertSuc = (msg, duration) => {
-  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
-  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
+window.dbh.alertSuc = (msg, duration) => {
+  if (window.dbh.vue_instance._byAlert) window.dbh.vue_instance._byAlert.close()
+  window.dbh.vue_instance._byAlert = window.dbh.vue_instance.$message({
     message: msg,
     type: 'success',
     showClose: true,
     duration: duration || 1500
   })
 }
-window.tools.alertWarn = (msg) => {
-  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
-  window.itboye.vue_instance._byAlert = window.itboye.vue_instance.$message({
+window.dbh.alertWarn = (msg) => {
+  if (window.dbh.vue_instance._byAlert) window.dbh.vue_instance._byAlert.close()
+  window.dbh.vue_instance._byAlert = window.dbh.vue_instance.$message({
     message: msg,
     type: 'warning',
     showClose: true,
     duration: 2500
   })
 }
-window.tools.alertClose = () => {
-  if (window.itboye.vue_instance._byAlert) window.itboye.vue_instance._byAlert.close()
-}
-window.itboye.clientInfo.env = process.env.NODE_ENV;
-
-if (process.env.NODE_ENV === 'production') {
-  // 正式环境不打印
-  // window.console.debug = () => {
-  // };
+window.dbh.alertClose = () => {
+  if (window.dbh.vue_instance._byAlert) window.dbh.vue_instance._byAlert.close()
 }

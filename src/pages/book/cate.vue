@@ -254,7 +254,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -265,10 +265,10 @@ export default {
           api.create(this.addForm, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp.msg)
+            window.dbh.alertError(resp.msg)
             this.loading = false
           })
         } else {
@@ -306,7 +306,7 @@ export default {
         this.loading = false
         this.tableData = resp
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     }

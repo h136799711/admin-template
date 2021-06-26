@@ -122,7 +122,7 @@ export default {
             this.loading = false
             this.$router.push('/logout')
           }, (resp) => {
-            window.tools.alertError(resp)
+            window.dbh.alertError(resp)
             this.loading = false
           })
         } else {

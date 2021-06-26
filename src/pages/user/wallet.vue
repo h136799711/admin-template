@@ -132,7 +132,7 @@
                     this.tableData = resp.list;
                     this.count = parseInt(resp.count);
                 }).catch((resp) => {
-                    window.tools.alertError(resp.msg);
+                    window.dbh.alertError(resp.msg);
                     this.loading = false
                 });
             }

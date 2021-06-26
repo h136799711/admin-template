@@ -238,7 +238,7 @@ export default {
   },
   methods: {
     getPageContent (row) {
-      var url = new URL(window.tools.getApiUrl())
+      var url = new URL(window.config.getApiUrl())
       return url.origin + '/book/' + row.source_type_id + '/' + row.book_id + '/' + row.id
     },
     submitEditForm () {
@@ -247,10 +247,10 @@ export default {
           api.updateSource(this.editForm, (resp) => {
             this.loading = false
             this.dialogEditVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp.msg)
+            window.dbh.alertError(resp.msg)
             this.loading = false
           })
         } else {
@@ -287,7 +287,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     }

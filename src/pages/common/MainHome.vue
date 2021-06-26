@@ -1051,6 +1051,7 @@
     import SecondNavBar from '../common/SecondNavBar'
     import TopBarDropMenu from '../common/TopBarDropMenu'
     import _ from 'lodash'
+    import {dbhCache} from '@peter_xiter/dbh-js-tools/index';
 
     export default {
         name: 'MainHome',
@@ -1118,7 +1119,7 @@
                 }
                 if (newValue.code === 0) {
                     if (newValue.data.length === 0) {
-                        window.tools.alertWarn('请重新登录')
+                        window.dbh.alertWarn('请重新登录')
                         setTimeout(() => {
                             this.$router.push('/login')
                         }, 2500)
@@ -1134,14 +1135,14 @@
                     this.loadMenu(data.menuList)
                     this.loadUserInfo(data.userInfo)
                     this.loadPlatformInfo(data.platformInfo)
-                    window.tools.alertClose()
+                    window.dbh.alertClose()
                     let avatarPath = '/admin/account/avatar';
                     if (this.$route.fullPath !== avatarPath || this.currentTab !== avatarPath) {
                         this.$router.push('/admin/index')
                     }
                 } else if (newValue.msg) {
                     console.debug('登录失败', newValue)
-                    window.tools.alertWarn(newValue.msg)
+                    window.dbh.alertWarn(newValue.msg)
                     setTimeout(() => {
                         this.$router.push('/login')
                     }, 2500)
@@ -1259,7 +1260,7 @@
                 this.currentTab = menu.url
             },
             getUnreadMsg () {
-                let msgCnt = parseInt(cache.getValue('unread_msg_cnt'));
+                let msgCnt = parseInt(dbhCache.getCookie('unread_msg_cnt'));
                 if (!isNaN(msgCnt)) {
                     console.debug('Cache unread_msg_cnt', msgCnt);
                     this.unreadMsgCnt = msgCnt;
@@ -1267,17 +1268,17 @@
                 }
                 api.getUnreadCount({}, (resp) => {
                     this.unreadMsgCnt = resp
-                    cache.setValue('unread_msg_cnt', resp, 3600);
+                    dbhCache.setCookie('unread_msg_cnt', resp, 3600);
                 }, (resp) => {
                 })
             },
             changeLanguages (lang) {
                 this.$i18n.locale = lang;
                 console.debug('更换语言', this.$i18n.locale)
-                window.cache.setValue('lang', lang, 24 * 3600)
+                dbhCache.setValue('lang', lang, 24 * 3600)
             },
             getUserData () {
-                window.tools.alertInfo(this.$i18n.t('Loading'))
+                window.dbh.alertInfo(this.$i18n.t('Loading'))
                 this.$store.dispatch('getUserSessionData')
             },
             // 切换迷你侧边导航
@@ -1341,7 +1342,7 @@
                 this.menuList = newList
             },
             getApiUrl (url) {
-                return window.tools.getApiUrl(url)
+                return window.config.getApiUrl(url)
             },
             // 加载用户信息
             loadUserInfo (userInfo) {

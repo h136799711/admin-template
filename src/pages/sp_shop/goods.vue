@@ -267,7 +267,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
             spShopApi.removeGoods({ id: this.id, goods_id: id }, (res) => {
               instance.confirmButtonLoading = false
@@ -276,7 +276,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res.msg)
+              window.dbh.alertError(res.msg)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -293,11 +293,11 @@ export default {
           spShopApi.addGoods(this.addForm, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp.msg)
+            window.dbh.alertError(resp.msg)
           })
         } else {
           return false
@@ -320,7 +320,7 @@ export default {
         that.count = parseInt(resp.count)
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         that.loading = false
       })
     }

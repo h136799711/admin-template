@@ -221,7 +221,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
             spCateApi.removeBrand({ prop_id: id, cate_id: this.$route.params.id }, (res) => {
               instance.confirmButtonLoading = false
@@ -230,7 +230,7 @@ export default {
               done()
             }, (res) => {
               done()
-              window.tools.alertError(res)
+              window.dbh.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -248,7 +248,7 @@ export default {
         this.refresh()
       }, (resp) => {
         this.loading = false
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
       })
     },
     refresh () {
@@ -261,7 +261,7 @@ export default {
         that.tableData = resp.list
         that.loading = false
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         that.loading = false
       })
     },
@@ -275,7 +275,7 @@ export default {
         that.loading = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         that.loading = false
       })
     }

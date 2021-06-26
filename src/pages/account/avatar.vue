@@ -41,6 +41,7 @@
 </template>
 
 <script>
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
     import userApi from '../../api/userApi'
     import ImgUploader from '../../components/img-uploaderV3.vue'
 
@@ -64,8 +65,8 @@
         },
         watch: {},
         created () {
-            this.editForm.head = tools.getAvatar()
-            this.editForm.nickname = tools.getNick()
+            this.editForm.head = dbhTool.getAvatar()
+            this.editForm.nickname = dbhTool.getNick()
         },
         mounted: function () {
         },
@@ -78,17 +79,17 @@
                 this.loading = true
                 userApi.updateNicknameHead(this.editForm, (suc) => {
                     this.loading = false
-                    tools.setAvatar(this.editForm.head)
-                    tools.setNick(this.editForm.nickname)
+                    dbhTool.setAvatar(this.editForm.head)
+                    dbhTool.setNick(this.editForm.nickname)
                     this.$store.dispatch('updateNicknameHead', {
                         head: this.editForm.head,
                         nickname: this.editForm.nickname
                     })
 
-                    window.tools.alertSuc('操作成功')
+                    window.dbh.alertSuc('操作成功')
                 }, (err) => {
                     this.loading = false
-                    window.tools.alertError(err)
+                    window.dbh.alertError(err)
                 })
             }
         }

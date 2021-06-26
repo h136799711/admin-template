@@ -1,6 +1,7 @@
 /* eslint-disable */
 'use strict'
 import http from '../assets/plugins/http.js'
+import { dbhCache } from '@peter_xiter/dbh-js-tools'
 
 const userApi = {
     resetPwd: (data, suc, fail) => {
@@ -62,7 +63,7 @@ const userApi = {
     },
     logout(data , suc, fail) {
         // console.debug('[ajax] userApi::logout 用户登出', data)
-        window.tools.clear()
+        dbhCache.clearAll()
         http.defaultPost('/100/UserLoginSession/logout', data, suc, fail)
     },
     login (data, suc,fail) {

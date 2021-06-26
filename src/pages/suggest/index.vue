@@ -213,10 +213,10 @@ export default {
       suggestApi.reply(this.replyForm, (resp) => {
         this.loading = false
         this.dialogReplyVisible = false
-        window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+        window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     },
@@ -249,7 +249,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     }

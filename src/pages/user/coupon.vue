@@ -173,7 +173,7 @@ export default {
         that.loading = false
       } catch (err) {
         console.debug(err)
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
         that.loading = false
       }
     }

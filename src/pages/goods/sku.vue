@@ -278,7 +278,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             this.loading = true
             console.debug("保存内容", this.skuForm);
             goodsSkuApi.create(this.skuForm, (resp) => {
@@ -286,7 +286,7 @@ export default {
               this.loading = false
             }, (err) => {
               done()
-              window.tools.alertError(err)
+              window.dbh.alertError(err)
               this.loading = false
             })
           } else {
@@ -348,7 +348,7 @@ export default {
         // 设置已经选择的
         this.setExistsProps()
       }, (err) => {
-        window.tools.alertError('获取类目属性失败')
+        window.dbh.alertError('获取类目属性失败')
       })
     },
     onBack (row) {
@@ -523,7 +523,7 @@ export default {
         this.main_img = resp.cover_img
         this.loading = false
       }, (err) => {
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
         this.loading = false
       })
     }

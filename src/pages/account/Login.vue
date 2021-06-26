@@ -307,6 +307,7 @@
 <script>
 import * as types from '../../store/mutation-types'
 import securityCodeApi from '../../api/securityCodeApi.js'
+import {dbhTool,dbhCache} from '@peter_xiter/dbh-js-tools';
 
 export default {
   data () {
@@ -341,21 +342,21 @@ export default {
       if (oldVal === types.ByUserLoginFail) {
         this.isLogging = false
         this.refresh_verify()
-        window.tools.alertError(this.loginError.msg)
+        window.dbh.alertError(this.loginError.msg)
       }
       if (oldVal === types.ByUserLoginReq) {
-        window.tools.alertInfo('process...')
+        window.dbh.alertInfo('process...')
       }
       if (oldVal === types.ByUserLoginSuc && this.loginUser) {
         this.isLogging = false
         let msg = this.loginUser.nickname + ', Login Success'
         // 登录用户的clientId
 //        console.debug('用户信息', this.loginUser)
-        window.tools.setJwt(this.loginUser.jwt, this.loginUser.jwt_expire);
-        window.tools.setUID(this.loginUser.id, this.loginUser.jwt_expire);
-        window.tools.setNick(this.loginUser.nickname, this.loginUser.jwt_expire);
-        window.tools.setClientId(this.loginUser.client_id, this.loginUser.jwt_expire);
-        window.tools.setAvatar(this.loginUser.avatar, this.loginUser.jwt_expire);
+        dbhTool.setJwt(this.loginUser.jwt, this.loginUser.jwt_expire);
+        dbhTool.setUID(this.loginUser.id, this.loginUser.jwt_expire);
+        dbhTool.setNick(this.loginUser.nickname, this.loginUser.jwt_expire);
+        dbhTool.setClientId(this.loginUser.client_id, this.loginUser.jwt_expire);
+        dbhTool.setAvatar(this.loginUser.avatar, this.loginUser.jwt_expire);
         this.jump2Admin()
       }
     }
@@ -363,7 +364,7 @@ export default {
   created () {
   },
   mounted () {
-    tools.clear();
+    dbhCache.clearAll();
     this.refresh_verify();
   },
   methods: {
@@ -372,12 +373,12 @@ export default {
     },
     checkLogin () {
       if (this.user.mobile === '') {
-        window.tools.alertError('mobile required')
+        window.dbh.alertError('mobile required')
         this.$refs.username_input.focus()
         return false
       }
       if (this.user.password === '') {
-        window.tools.alertError('password required')
+        window.dbh.alertError('password required')
         this.$refs.password_input.focus()
         return false
       }

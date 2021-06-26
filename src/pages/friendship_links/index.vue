@@ -275,7 +275,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
             api.delete({ id: id }, (res) => {
               instance.confirmButtonLoading = false
@@ -284,7 +284,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res)
+              window.dbh.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -301,7 +301,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -313,11 +313,11 @@ export default {
           api.add(this.addForm, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
             this.loading = false
-            window.tools.alertError(resp)
+            window.dbh.alertError(resp)
           })
         } else {
           return false
@@ -349,7 +349,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

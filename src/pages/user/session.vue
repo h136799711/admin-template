@@ -173,7 +173,7 @@ export default {
         this.loading = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     },
@@ -183,7 +183,7 @@ export default {
         this.loading = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     },
@@ -196,7 +196,7 @@ export default {
         this.loading = false
         this.tableData = resp
       }, (resp) => {
-        window.tools.alertError(resp.msg)
+        window.dbh.alertError(resp.msg)
         this.loading = false
       })
     }

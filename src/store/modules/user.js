@@ -3,6 +3,8 @@
  */
 import userApi from '../../api/userApi'
 import * as types from '../mutation-types'
+import { dbhCache, dbhTool } from '@peter_xiter/dbh-js-tools'
+import {Base64} from 'js-base64'
 
 // initial state
 // shape: [{ id, quantity }]
@@ -45,7 +47,7 @@ const actions = {
 		console.debug ('用户登录成功后获取用户会话数据')
 		commit (types.ByUserSessionDataReq)
 
-		let sessionData = tools.getUserSessionData();
+		let sessionData = dbhTool.getUserSessionData();
 		if (sessionData) {
 			console.debug ('[cache] getUserSessionData 使用缓存')
 			commit (types.ByUserSessionDataSuc, sessionData)
@@ -59,9 +61,9 @@ const actions = {
 	},
 	updateNicknameHead({commit}, userInfo) {
 		console.debug ('修改缓存信息的头像或昵称', userInfo)
-		let sessionData = window.cache.getBigDataValue (types.ByUserSessionDataReq)
+		let sessionData = dbhCache.getBigDataValue (types.ByUserSessionDataReq)
 		if (sessionData && sessionData !== '') {
-			sessionData = JSON.parse (window.tools.base64Utils.decode (sessionData));
+			sessionData = JSON.parse (Base64.decode(sessionData));
 
 			console.debug ('[cache] 获取到了本地缓存', sessionData)
 			sessionData.userInfo.head = userInfo.head
@@ -90,7 +92,7 @@ const mutations = {
 		console.debug ('ByUserLogoutDone')
 		state.loginStatus = types.ByUserLogoutDone
 		state.userInfo = []
-		window.cache.clear ()
+		dbhCache.clearAll()
 	},
 	[types.ByUserLogoutReq](state) {
 		console.debug ('ByUserLogoutReq')
@@ -126,7 +128,7 @@ const mutations = {
 		console.debug ('ByUserSessionDataFail', state.loginError)
 	},
 	[types.ByUserSessionDataSuc](state, data) {
-		tools.setUserSessionData(data);
+		dbhTool.setUserSessionData(data);
 		state.userSessionData.loading = 1
 		state.userSessionData.code = 0;
 		state.userSessionData = {...state.userSessionData, data: data}

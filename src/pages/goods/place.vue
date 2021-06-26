@@ -393,7 +393,7 @@ export default {
         this.refresh()
       }, (err) => {
         this.loading = false
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
       })
     },
     onSubmitEditForm () {
@@ -407,7 +407,7 @@ export default {
         this.refresh()
       }, (err) => {
         this.loading = false
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
       })
     },
     onDelete (id) {
@@ -418,7 +418,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             goodsPlaceApi.delete({ id: id }, (res) => {
               instance.confirmButtonLoading = false
               this.refresh()
@@ -426,7 +426,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res)
+              window.dbh.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {

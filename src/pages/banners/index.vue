@@ -449,7 +449,7 @@
 
 <script>
     import api from '../../api/bannersApi'
-
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
     import ImgUploader from '../../components/img-uploaderV3.vue'
 
     export default {
@@ -540,7 +540,7 @@
                 }
                 that.refresh()
             }, (resp) => {
-                window.tools.alertError(resp)
+                window.dbh.alertError(resp)
                 that.loading = false
             })
         },
@@ -549,7 +549,7 @@
         },
         methods: {
             getImgUrl (url) {
-                return window.tools.getImgUrl(url)
+                return dbhTool.getImgUrl(url)
             },
             onDelete (id) {
                 this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
@@ -559,7 +559,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
                             api.delete({ id: id }, (res) => {
                                 instance.confirmButtonLoading = false
@@ -568,7 +568,7 @@
                             }, (res) => {
                                 console.debug(res)
                                 done()
-                                window.tools.alertError(res.msg)
+                                window.dbh.alertError(res.msg)
                                 instance.confirmButtonLoading = false
                             })
                         } else {
@@ -591,7 +591,7 @@
                 }
             },
             ifLoginUser (uid) {
-                return uid === window.tools.getUID() ? 'You' : 'Other'
+                return uid === dbhTool.getUID() ? 'You' : 'Other'
             },
             submitEditForm () {
               this.editForm.start_time = this.date_range[0].getTime() / 1000
@@ -603,7 +603,7 @@
                     this.dialogEditVisible = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                     this.dialogEditVisible = false
                 })
@@ -619,11 +619,11 @@
                         api.create(this.addForm, (resp) => {
                             this.loading = false
                             this.dialogAddVisible = false
-                            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+                            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                             this.refresh()
                         }, (resp) => {
                             this.loading = false
-                            window.tools.alertError(resp)
+                            window.dbh.alertError(resp)
                         })
                     } else {
                         return false
@@ -641,7 +641,7 @@
                     jump_type: 'url',
                     user_id: 0
                 }
-                this.addForm.user_id = window.tools.getUID()
+                this.addForm.user_id = dbhTool.getUID()
                 this.dialogAddVisible = true
             },
             onEdit (row) {
@@ -652,7 +652,7 @@
                     img_url: row.img_url,
                     jump_url: row.jump_url,
                     jump_type: row.jump_type,
-                    user_id: window.tools.getUID(),
+                    user_id: dbhTool.getUID(),
                     w: row.w,
                     h: row.h
                 }
@@ -678,7 +678,7 @@
                     this.count = parseInt(resp.count)
                     this.tableData = resp.list
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                 })
             }

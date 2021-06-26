@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@kangc/v-md-editor": "2.3.*",
+    "@peter_xiter/dbh-js-tools": "0.0.3",
     "@vue/compiler-sfc": "3.1.1",
     "axios": "0.21.*",
     "codemirror": "latest",

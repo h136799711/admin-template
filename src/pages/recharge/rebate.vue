@@ -205,7 +205,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             rebateApi.delete({id: id}).finally(function () {
                                 instance.confirmButtonLoading = false
                                 that.refresh();
@@ -241,7 +241,7 @@
                         data.money = this.editForm.money * 100;
                         data.rebate = this.editForm.rebate * 100;
                         rebateApi.edit(data).then(function () {
-                            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                         }).finally(function () {
                                 that.loading = false
                                 that.dialogEditVisible = false
@@ -262,7 +262,7 @@
                         data.rebate = this.addForm.rebate * 100;
                         this.loading = true;
                         rebateApi.create(data).then(function () {
-                            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                         }).finally(function () {
                             that.loading = false
                             that.dialogAddVisible = false
@@ -288,7 +288,7 @@
                     that.loading = false
                 } catch (err) {
                     console.debug(err);
-                    window.tools.alertError(err);
+                    window.dbh.alertError(err);
                     that.loading = false
                 }
             }

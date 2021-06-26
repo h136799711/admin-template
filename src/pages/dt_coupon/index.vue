@@ -551,7 +551,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
                             dtCouponApi.delete({ id: id }).finally(function () {
                                 instance.confirmButtonLoading = false
                                 that.refresh()
@@ -626,7 +626,7 @@
                     }
                     cb(formatRes)
                 }, (res) => {
-                    window.tools.alertError(res.msg)
+                    window.dbh.alertError(res.msg)
                 })
             },
             handleSelect (item) {
@@ -641,7 +641,7 @@
                         data.coupon_id = this.coupon_id
                         this.loading = true
                         dtCouponApi.give(data).then(function () {
-                            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                         }).finally(function () {
                             setTimeout(function () {
                                 that.loading = false
@@ -686,7 +686,7 @@
                         data.cond_order_amount = data.cond_order_amount * 100
                         this.loading = true
                         dtCouponApi.edit(data).then(function () {
-                            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                         }).finally(function () {
                             setTimeout(function () {
                                 that.loading = false
@@ -717,7 +717,7 @@
                         data.cond_order_amount = data.cond_order_amount * 100
                         this.loading = true
                         dtCouponApi.create(data).then(function () {
-                            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                         }).finally(function () {
                             setTimeout(function () {
                                 that.loading = false
@@ -747,7 +747,7 @@
                     that.loading = false
                 } catch (err) {
                     console.debug(err)
-                    window.tools.alertError(err)
+                    window.dbh.alertError(err)
                     that.loading = false
                 }
             },
@@ -759,7 +759,7 @@
                     that.options = data.list
                 } catch (err) {
                     console.debug(err)
-                    window.tools.alertError(err)
+                    window.dbh.alertError(err)
                 }
             }
         }

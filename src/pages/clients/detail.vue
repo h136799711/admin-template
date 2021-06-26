@@ -114,7 +114,7 @@ export default {
         this.loading = false
         this.editForm.clientSecret = resp
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     },
@@ -135,7 +135,7 @@ export default {
         this.editForm.dailyLimit = resp.day_limit
         this.editForm.projectId = resp.project_id
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     },
@@ -162,7 +162,7 @@ export default {
         this.editForm.dailyLimit = resp.day_limit
         this.editForm.projectId = resp.project_id
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

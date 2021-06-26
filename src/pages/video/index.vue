@@ -603,7 +603,7 @@ export default {
       this.category = resp
       this.refresh()
     }, (resp) => {
-      window.tools.alertError(resp)
+      window.dbh.alertError(resp)
       this.loading = false
     })
   },
@@ -655,14 +655,14 @@ export default {
         api.unrecommend({ id: id }, (resp) => {
           this.loading = false
         }, (resp) => {
-          window.tools.alertError(resp)
+          window.dbh.alertError(resp)
           this.loading = false
         })
       } else {
         api.recommend({ id: id }, (resp) => {
           this.loading = false
         }, (resp) => {
-          window.tools.alertError(resp)
+          window.dbh.alertError(resp)
           this.loading = false
         })
       }
@@ -673,7 +673,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -684,7 +684,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -717,7 +717,7 @@ export default {
         this.dialogEditVisible = false
         this.refresh()
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
         this.dialogEditVisible = false
       })
@@ -730,10 +730,10 @@ export default {
           api.create(data, (resp) => {
             this.loading = false
             this.dialogAddVisible = false
-            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
             this.refresh()
           }, (resp) => {
-            window.tools.alertError(resp)
+            window.dbh.alertError(resp)
             this.loading = false
           })
         } else {
@@ -790,7 +790,7 @@ export default {
         this.count = parseInt(resp.count)
         this.tableData = resp.list
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

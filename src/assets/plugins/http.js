@@ -1,24 +1,27 @@
 /* eslint-disable */
 'use strict'
+import axios from 'axios'
+import {dbhTool} from '@peter_xiter/dbh-js-tools/index';
+
 const promisePost = function (servicePath, data) {
-    let url = tools.getApiUrl() + servicePath
+    let url = config.getApiUrl() + servicePath
     return apiPost(url, data).then((resp) => {
         return resp.data
     })
 }
 const defaultPost = function (servicePath, data, suc, fail) {
-    let url = tools.getApiUrl() + servicePath
+    let url = config.getApiUrl() + servicePath
     apiPost(url, data).then((data) => {
         if (typeof suc === 'function') {
             suc(data.data)
         } else {
-            window.tools.alertSuc(data.msg)
+            window.dbh.alertSuc(data.msg)
         }
     }).catch((err) => {
         if (typeof fail === 'function') {
             fail(err)
         } else {
-            window.tools.alertError(err)
+            window.dbh.alertError(err)
         }
     })
 }
@@ -48,18 +51,22 @@ const convertFormData = function (obj) {
 const apiPost = function (url, data) {
     return new Promise((resolve, reject) => {
         if (!data) data = {}
-        data.app_version = window.tools.getVersion()
-        data.app_type = window.tools.getDeviceType()
-        data.client_id = window.tools.getAppId()
-        data.device_type = window.tools.getDeviceType()
-        data.device_token = window.tools.getDeviceToken()
+        data.app_version = window.config.getVersion()
+        data.app_type = 'admin-pc'
+        data.client_id = window.config.getClientId()
+        data.device_type = dbhTool.getDeviceType()
+        data.device_token = dbhTool.getSessionId();
         let headers = {
             'Content-Type': 'multipart/form-data',
         }
-        let bear = window.tools.getJwt()
+        let bear = dbhTool.getJwt()
         if (bear.length > 0) {
             headers.Authorization = 'Bearer ' + bear
         }
+
+        axios.defaults.timeout = 30000
+        axios.defaults.headers['Content-Type'] = 'application/json'
+        axios.defaults.withCredentials = false
 
         axios.post(url, convertFormData(data), {
             headers: headers
@@ -67,9 +74,9 @@ const apiPost = function (url, data) {
             let data = response.data
 
             if (data.code === 1111) {
-                window.tools.alertWarn(itboye.vue_instance.$i18n.t('Please Login Again'))
+                window.dbh.alertWarn(dbh.vue_instance.$i18n.t('Please Login Again'))
                 // reject(data);
-                window.itboye.vue_instance.$router.push('/login')
+                window.dbh.vue_instance.$router.push('/login')
                 resolve(data)
             } else {
                 if (0 === parseInt(data.code)) {

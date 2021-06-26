@@ -434,7 +434,7 @@
                 this.category = resp
                 this.refresh()
             }, (resp) => {
-                window.tools.alertError(resp)
+                window.dbh.alertError(resp)
                 this.loading = false
             })
         },
@@ -469,7 +469,7 @@
                     this.dialogEditVisible = false
                     this.refresh()
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                     this.dialogEditVisible = false
                 })
@@ -480,10 +480,10 @@
                         api.create(this.addForm, (resp) => {
                             this.loading = false
                             this.dialogAddVisible = false
-                            window.tools.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
+                            window.dbh.alertSuc(this.$i18n.t('Action') + this.$i18n.t('Success'))
                             this.refresh()
                         }, (resp) => {
-                            window.tools.alertError(resp)
+                            window.dbh.alertError(resp)
                             this.loading = false
                         })
                     } else {
@@ -532,7 +532,7 @@
                     this.count = parseInt(resp.count)
                     this.tableData = resp.list
                 }, (resp) => {
-                    window.tools.alertError(resp)
+                    window.dbh.alertError(resp)
                     this.loading = false
                 })
             }

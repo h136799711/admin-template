@@ -461,7 +461,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
             pickupPlaceApi.delete({ id: id }).finally(function () {
               instance.confirmButtonLoading = false
               that.refresh()
@@ -523,7 +523,7 @@ export default {
           let data = Object.assign({}, this.editForm)
           this.loading = true
           pickupPlaceApi.edit(data).then(function () {
-            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
           }).finally(function () {
             setTimeout(function () {
               that.loading = false
@@ -543,7 +543,7 @@ export default {
           let data = Object.assign({}, this.addForm)
           this.loading = true
           pickupPlaceApi.create(data).then(function () {
-            window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+            window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
           }).finally(function () {
             setTimeout(function () {
               that.loading = false
@@ -568,7 +568,7 @@ export default {
         that.loading = false
       } catch (err) {
         console.debug(err)
-        window.tools.alertError(err)
+        window.dbh.alertError(err)
         that.loading = false
       }
     }

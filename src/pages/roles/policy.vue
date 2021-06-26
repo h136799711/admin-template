@@ -114,12 +114,12 @@ export default {
         this.refresh()
       }, (res) => {
         console.debug(res)
-        window.tools.alertError(res.msg)
+        window.dbh.alertError(res.msg)
       })
     },
     onDelete () {
       if (this.getUncheckedKeys().length === 0) {
-        window.tools.alertError(window.itboye.vue_instance.$i18n.t('SelectItems'))
+        window.dbh.alertError(window.dbh.vue_instance.$i18n.t('SelectItems'))
         	    	return
       }
       this.$confirm(this.$i18n.t('Action Confirm'), this.$t('Alert'), {
@@ -129,7 +129,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
             instance.confirmButtonLoading = true
-            instance.confirmButtonText = window.itboye.vue_instance.$i18n.t('Processing').value
+            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
 
             let data = {
                             	'role_id': this.id,
@@ -142,7 +142,7 @@ export default {
             }, (res) => {
               console.debug(res)
               done()
-              window.tools.alertError(res)
+              window.dbh.alertError(res)
               instance.confirmButtonLoading = false
             })
           } else {
@@ -166,7 +166,7 @@ export default {
           this.$refs.tree.setCheckedKeys(resp[0])
         }
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

@@ -123,7 +123,7 @@ export default {
         this.tableData = resp.list
         this.count = parseInt(resp.count)
       }, (resp) => {
-        window.tools.alertError(resp)
+        window.dbh.alertError(resp)
         this.loading = false
       })
     }

@@ -120,6 +120,7 @@
 <script>
     import goodsApi from '../../api/dtGoodsApi'
     import ImgUploaderV3 from '../../components/img-uploaderV3.vue'
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
 
     export default {
         components: {
@@ -166,17 +167,17 @@
             },
             onUploadSuccess (data) {
                 console.debug("onUploadSuccess", data)
-                this.addForm.main_image = window.tools.getImgUrl(data.trim(','))
+                this.addForm.main_image = dbhTool.getImgUrl(data.trim(','))
             },
             onSmallUploadSuccess (data) {
                 console.debug("onSmallUploadSuccess", data)
-                this.addForm.small_image = window.tools.getImgUrl(data.trim(','))
+                this.addForm.small_image = dbhTool.getImgUrl(data.trim(','))
             },
             onCreate () {
                 let that = this
                 that.loading = true
                 goodsApi.create(this.addForm).then(function () {
-                    window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                    window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                 }).finally(function () {
                     setTimeout(function () {
                         that.loading = false

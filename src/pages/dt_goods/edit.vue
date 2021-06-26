@@ -119,7 +119,7 @@
 <script>
     import goodsApi from '../../api/dtGoodsApi'
     import ImgUploaderV3 from '../../components/img-uploaderV3.vue'
-
+    import {dbhTool} from '@peter_xiter/dbh-js-tools'
     export default {
         props: {
             id: String
@@ -165,18 +165,18 @@
             },
             onUploadSuccess (data) {
                 console.debug("onUploadSuccess", data)
-                this.editForm.main_image = window.tools.getImgUrl(data.trim(','))
+                this.editForm.main_image = dbhTool.getImgUrl(data.trim(','))
             },
             onSmallUploadSuccess (data) {
                 console.debug("onSmallUploadSuccess", data)
-                this.editForm.small_image = window.tools.getImgUrl(data.trim(','))
+                this.editForm.small_image = dbhTool.getImgUrl(data.trim(','))
             },
             onSave () {
                 let that = this
                 that.loading = true
                 this.editForm.id = this.id
                 goodsApi.edit(this.editForm).then(function () {
-                    window.tools.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
+                    window.dbh.alertSuc(that.$i18n.t('Action') + that.$i18n.t('Success'))
                 }).finally(function () {
                     that.loading = false;
                     that.back();

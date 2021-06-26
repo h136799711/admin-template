@@ -120,16 +120,14 @@ export default {
     },
     mainFrameJump (UrlAddress, index) {
       this.navOnClick(index)
-      //                if (this.$route.name !== 'Home/Index') this.$router.push({ name: 'Home/Index' });
+
       this.$store.dispatch('mainFrameJump', '')
-      window.tools.returnTop()
       setTimeout(() => {
         this.$store.dispatch('mainFrameJump', this.menuUrl(UrlAddress))
       }, 1)
     },
     routerJump (UrlAddress, index) {
-			    console.log('RouterJump')
-      window.tools.returnTop()
+      console.log('RouterJump')
       console.debug(this.$router, this.$router.resolve(UrlAddress, this.$router.currentRoute, false), this.$router.resolve(UrlAddress, '#', false).href)
       window.location.href = this.$router.resolve(UrlAddress, '#', false).href
     },
