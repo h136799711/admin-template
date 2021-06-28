@@ -71,8 +71,7 @@ const userApi = {
         http.defaultPost('/100/UserLoginSession/loginByMobilePassword', data, suc, fail)
     },
     getUserData (suc, fail) {
-        // console.debug('[ajax] userApi::getUserData 获取用户数据')
-        http.defaultPost('/100/UserLoginSession/adminData', {}, suc, fail)
+        http.defaultPost('/100/UserLoginSession/adminData', {lc_key: '100_user_admin_data', lc_expire: 1200}, suc, fail)
     },
     updateNicknameHead (data, suc, fail) {
         http.defaultPost('/100/UserLoginSession/updateInfo', data, suc, fail)

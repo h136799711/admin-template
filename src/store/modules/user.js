@@ -47,12 +47,12 @@ const actions = {
 		console.debug ('用户登录成功后获取用户会话数据')
 		commit (types.ByUserSessionDataReq)
 
-		let sessionData = dbhTool.getUserSessionData();
-		if (sessionData) {
-			console.debug ('[cache] getUserSessionData 使用缓存')
-			commit (types.ByUserSessionDataSuc, sessionData)
-			return
-		}
+		// let sessionData = dbhTool.getUserSessionData();
+		// if (sessionData) {
+		// 	console.debug ('[cache] getUserSessionData 使用缓存')
+		// 	commit (types.ByUserSessionDataSuc, sessionData)
+		// 	return
+		// }
 		userApi.getUserData ((res) => {
 			commit (types.ByUserSessionDataSuc, res)
 		}, (res) => {
@@ -128,7 +128,7 @@ const mutations = {
 		console.debug ('ByUserSessionDataFail', state.loginError)
 	},
 	[types.ByUserSessionDataSuc](state, data) {
-		dbhTool.setUserSessionData(data);
+		// dbhTool.setUserSessionData(data);
 		state.userSessionData.loading = 1
 		state.userSessionData.code = 0;
 		state.userSessionData = {...state.userSessionData, data: data}
