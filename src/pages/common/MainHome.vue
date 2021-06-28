@@ -55,6 +55,7 @@
         -moz-transition: all 0.2s ease;
         -webkit-transition: all 0.2s ease;
     }
+
     .el-pager li.active {
         color: #f56c6b;
     }
@@ -839,7 +840,7 @@
         right: 2px;
     }
 
-    .el-alert.alert-small,.alert-small {
+    .el-alert.alert-small, .alert-small {
         padding: 0 5px;
     }
 
@@ -848,7 +849,8 @@
         line-height: 14px;
 
     }
-    .main-product .nav-tabs{
+
+    .main-product .nav-tabs {
         padding-bottom: 0px;
         position: fixed;
         height: 40px;
@@ -860,6 +862,7 @@
     .main-sidebar-full .main-product .nav-tabs {
         padding-right: 185px;
     }
+
     .main-sidebar-mini .main-product .nav-tabs {
         padding-right: 55px;
     }
@@ -983,7 +986,7 @@
               <span
                       class="by-icon"
                       :class="isMiniMenu ? 'by-fold' : 'by-santiaogang'"
-              />
+              ></span>
                         </div>
                         <div class="sidebar-nav-wrap">
                             <SideBarNav
@@ -1005,20 +1008,11 @@
             <!--产品部分-->
             <div
                     class="main-product"
-                    :class="{ 'main-product-col-1': isShowSecondMenu }"
             >
-                <SecondNavBar
-                        v-if="secondMenuData"
-                        :is-show-second-menu="isShowSecondMenu"
-                        :menu="secondMenuData"
-                        @isShowSecondMenu="toggleSecondMenu"
-                />
                 <!--中间内容-->
                 <div
                         class="content-wrapper"
-                        :style="{left: isShowSecondMenu ? 180 + 'px' : '0'}"
                 >
-
                     <div class="nav-tabs">
                         <el-tabs type="card" v-model="currentTab" @tab-remove="removeTab"
                                  :closable="true"
@@ -1035,7 +1029,7 @@
                     <router-view v-slot="{ Component, route }">
                         <transition name="custom-classes-transition" enter-active-class="animated fadeIn">
                             <keep-alive>
-                                <component :is="Component" :key="randKey(route.path)" />
+                                <component :is="Component" :key="randKey(route.path)"/>
                             </keep-alive>
                         </transition>
                     </router-view>
@@ -1046,12 +1040,12 @@
 </template>
 
 <script>
+    import _ from 'lodash'
     import api from '../../api/msgApi'
     import SideBarNav from '../common/SideBarNav'
     import SecondNavBar from '../common/SecondNavBar'
     import TopBarDropMenu from '../common/TopBarDropMenu'
-    import _ from 'lodash'
-    import {dbhCache} from '@peter_xiter/dbh-js-tools/index';
+    import { dbhCache } from '@peter_xiter/dbh-js-tools/index'
 
     export default {
         name: 'MainHome',
@@ -1078,10 +1072,8 @@
                     mini: 'BY'
                 },
                 isMiniMenu: false,
-                isShowSecondMenu: false,
                 activeNavIndex: false,
                 activeNavMenuIndex: false,
-                secondMenuData: false,
                 userDropMenus: [
                     { 'name': 'Avatar', value: 'avatar' },
                     { 'name': 'ModifyPassword', value: 'password' },
@@ -1123,20 +1115,17 @@
                         setTimeout(() => {
                             this.$router.push('/login')
                         }, 2500)
-                        return;
+                        return
                     }
-
-                    this.getUnreadMsg();
-                    let data = _.cloneDeep(newValue.data)
-                    if (data.data) {
-                        data = data.data;
-                    }
-                    // console.debug('登录成功', data)
+                    let data = _.cloneDeep(newValue.data);
+                    console.debug('登录成功', data)
                     this.loadMenu(data.menuList)
                     this.loadUserInfo(data.userInfo)
                     this.loadPlatformInfo(data.platformInfo)
+                    this.getUnreadMsg()
+
                     window.dbh.alertClose()
-                    let avatarPath = '/admin/account/avatar';
+                    let avatarPath = '/admin/account/avatar'
                     if (this.$route.fullPath !== avatarPath || this.currentTab !== avatarPath) {
                         this.$router.push('/admin/index')
                     }
@@ -1168,45 +1157,46 @@
             this.getUserData()
         },
         methods: {
-            randKey(path) {
-                return path + (new Date()).getTime();
+            randKey (path) {
+                return path + (new Date()).getTime()
             },
-            menuClick(link) {
-                console.debug(link);
+            menuClick (link) {
+                console.debug(link)
                 let menu = {
                     title: this.$i18n.t('Logout'),
                     url: '/logout'
-                };
+                }
                 switch (link.value) {
                     case 'zh':
                     case 'en':
-                        this.changeLanguages(link.value);
-                        break;
+                        this.changeLanguages(link.value)
+                        break
                     case 'logout':
-                        this.logout();
-                        break;
+                        this.logout()
+                        break
                     case 'avatar':
-                        menu.title = this.$i18n.t('Avatar');
-                        menu.url = '/admin/account/avatar';
-                        this.routeJump(menu);
-                        break;
+                        menu.title = this.$i18n.t('Avatar')
+                        menu.url = '/admin/account/avatar'
+                        this.routeJump(menu)
+                        break
                     case 'password':
-                        menu.title = this.$i18n.t('ModifyPassword');
-                        menu.url = '/admin/account/password';
-                        this.routeJump(menu);
-                        break;
-                    default: break;
+                        menu.title = this.$i18n.t('ModifyPassword')
+                        menu.url = '/admin/account/password'
+                        this.routeJump(menu)
+                        break
+                    default:
+                        break
                 }
             },
             jump2AdminIndex () {
-                this.currentTab = '/admin/index';
+                this.currentTab = '/admin/index'
             },
             goMessage () {
                 let menu = {
                     title: this.$i18n.t('Message'),
                     url: '/admin/message/index'
-                };
-                this.routeJump(menu);
+                }
+                this.routeJump(menu)
             },
             removeTab (targetName) {
                 console.debug('remove tab', targetName)
@@ -1260,20 +1250,13 @@
                 this.currentTab = menu.url
             },
             getUnreadMsg () {
-                let msgCnt = parseInt(dbhCache.getCookie('unread_msg_cnt'));
-                if (!isNaN(msgCnt)) {
-                    console.debug('Cache unread_msg_cnt', msgCnt);
-                    this.unreadMsgCnt = msgCnt;
-                    return;
-                }
-                api.getUnreadCount({}, (resp) => {
+                api.getUnreadCount((resp) => {
                     this.unreadMsgCnt = resp
-                    dbhCache.setCookie('unread_msg_cnt', resp, 3600);
                 }, (resp) => {
                 })
             },
             changeLanguages (lang) {
-                this.$i18n.locale = lang;
+                this.$i18n.locale = lang
                 console.debug('更换语言', this.$i18n.locale)
                 dbhCache.setCookie('lang', lang, 24 * 3600)
             },
@@ -1285,15 +1268,9 @@
             toggleMiniMenu () {
                 this.isMiniMenu = !this.isMiniMenu
             },
-            // 切换显示二级菜单
-            toggleSecondMenu () {
-                this.isShowSecondMenu = !this.isShowSecondMenu
-            },
             // 导航按钮被点击
             SideBarNavOnClick (index, menu) {
                 this.activeNavMenuIndex = index
-                this.secondMenuData = menu
-                this.isShowSecondMenu = !!menu
             },
             // 导航激活点亮
             SideBarNavOnActive (index) {
@@ -1347,9 +1324,9 @@
             // 加载用户信息
             loadUserInfo (userInfo) {
                 if (!userInfo) {
-                    return ;
+                    return
                 }
-                console.debug("MainHome载入用户信息 ", userInfo);
+                console.debug('MainHome载入用户信息 ', userInfo)
                 this.userInfo.nickname = userInfo.nickname
                 this.userInfo.id = userInfo.id
                 this.userInfo.username = userInfo.username

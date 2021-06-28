@@ -1,16 +1,3 @@
-<style>
-  .avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin-right: 8px;
-  }
-  a.topbar-btn.topbar-info-dropdown-toggle {
-    flex: 1;
-    justify-content: space-between;
-    align-items: center;
-  }
-</style>
 <template>
   <div class="dropdown topbar-left topbar-info-item topbar-info-dropdown">
     <a

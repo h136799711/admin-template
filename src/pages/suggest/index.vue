@@ -1,6 +1,4 @@
-<style>
 
-</style>
 <template>
   <div class="main-content by-datatree padding-md-bottom padding-md-top">
     <el-row :gutter="20">

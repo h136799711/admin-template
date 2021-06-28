@@ -8,7 +8,12 @@ const path = require('path')
 
 module.exports = merge(baseConfig, {
     mode: 'development',
-
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            'vue-i18n': 'vue-i18n/dist/vue-i18n.esm-browser.js'
+        }
+    },
     devServer: {
         clientLogLevel: 'warning',
         hot: true,

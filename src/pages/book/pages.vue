@@ -1,5 +1,4 @@
-<style>
-</style>
+
 <template>
   <div class="main-content by-album padding-md-bottom padding-md-top">
     <label>{{ $t('PageNo') }}</label>:

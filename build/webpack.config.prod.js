@@ -9,6 +9,12 @@ const utils = require('./utils')
 
 module.exports = merge(baseConfig, {
     mode: 'production',
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            'vue-i18n': 'vue-i18n/dist/vue-i18n.esm-browser.prod.js'
+        }
+    },
     output: {
         path: utils.resolve('dist'),
         filename: 'static/js/[name].[hash:7].js'

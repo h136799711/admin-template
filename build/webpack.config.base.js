@@ -22,7 +22,6 @@ module.exports = {
             'api': utils.resolve('src/api'),
             'components': utils.resolve('src/components'),
             '@': utils.resolve('./src'),
-            'vue-i18n': 'vue-i18n/dist/vue-i18n.esm-browser.js'
         }
     },
 

@@ -35,7 +35,8 @@
     "vue-loader": "16.2.*",
     "vue-router": "4.0.*",
     "vue-style-loader": "4.1.*",
-    "vuex": "4.0.*"
+    "vuex": "4.0.*",
+    "lodash": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",

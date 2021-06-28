@@ -15,8 +15,8 @@ const msgApi = {
 	async createSystem (data) {
 		return http.promisePost('/100/Message/createSystemMessage', data)
 	},
-	getUnreadCount (data, suc, fail) {
-		http.defaultPost( '/100/Message/countUserUnreadMessage', data, suc, fail)
+	getUnreadCount (suc, fail) {
+		http.defaultPost( '/100/Message/countUserUnreadMessage', {lc_key: '100_Message_countUserUnreadMessage', lc_expire: 600}, suc, fail)
 	},
 	queryPublicMsg (data, suc, fail) {
 		http.defaultPost('/100/Message/queryPublicMessage', data, suc, fail)
