@@ -21,7 +21,8 @@ module.exports = {
             'store': utils.resolve('src/store'),
             'api': utils.resolve('src/api'),
             'components': utils.resolve('src/components'),
-            '@': utils.resolve('./src')
+            '@': utils.resolve('./src'),
+            'vue-i18n': 'vue-i18n/dist/vue-i18n.esm-browser.js'
         }
     },
 
@@ -47,10 +48,10 @@ module.exports = {
 		new webpack.DefinePlugin({
 			__VUE_OPTIONS_API__: true,
 			__VUE_PROD_DEVTOOLS__: false,
-            __VUE_I18N_FULL_INSTALL__: true,
-            __VUE_I18N_LEGACY_API__: true,
-            __VUE_I18N_PROD_DEVTOOLS__: false,
-            __INTLIFY_PROD_DEVTOOLS__: false,
+            // __VUE_I18N_FULL_INSTALL__: true,
+            // __VUE_I18N_LEGACY_API__: true,
+            // __VUE_I18N_PROD_DEVTOOLS__: false,
+            // __INTLIFY_PROD_DEVTOOLS__: false,
 		}),
         new HtmlWebpackPlugin({
             filename: 'index.html',

@@ -1275,7 +1275,7 @@
             changeLanguages (lang) {
                 this.$i18n.locale = lang;
                 console.debug('更换语言', this.$i18n.locale)
-                dbhCache.setValue('lang', lang, 24 * 3600)
+                dbhCache.setCookie('lang', lang, 24 * 3600)
             },
             getUserData () {
                 window.dbh.alertInfo(this.$i18n.t('Loading'))
@@ -1342,7 +1342,7 @@
                 this.menuList = newList
             },
             getApiUrl (url) {
-                return window.config.getApiUrl(url)
+                return dbh.config.getApiUrl(url)
             },
             // 加载用户信息
             loadUserInfo (userInfo) {

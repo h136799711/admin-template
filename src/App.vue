@@ -347,8 +347,8 @@ export default {
   },
   methods: {
     initialize() {
-      let timezone = window.dbh.clientInfo.timezone = dbhTool.getTimezone()
-      window.dbh.clientInfo.lang = this.$i18n.locale = dbhTool.getBrowseLanguage()
+      let timezone = dbh.clientInfo.timezone = dbhTool.getTimezone()
+      dbh.clientInfo.lang = this.$i18n.locale = dbhTool.getBrowseLanguage()
       if (timezone > 0) timezone = '+' + timezone.toString();
       dbhTool.debug('Environment', process.env.NODE_ENV)
       dbhTool.debug('Language',  dbh.clientInfo.lang)

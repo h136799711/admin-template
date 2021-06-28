@@ -500,7 +500,7 @@
                     beforeClose: (action, instance, done) => {
                         if (action === 'confirm') {
                             instance.confirmButtonLoading = true
-                            instance.confirmButtonText = window.dbh.vue_instance.$i18n.t('Processing').value
+                            instance.confirmButtonText = dbh.vue_instance.$i18n.t('Processing').value
 
                             api.resetSysRsaKey({ user_id: this.editForm.uid, id: this.editForm.id })
                                 .then((resp) => {

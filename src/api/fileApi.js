@@ -6,7 +6,7 @@ import { dbhTool } from '@peter_xiter/dbh-js-tools'
 const fileApi = {
     upload (file, imgType) {
         imgType = imgType || 'other'
-        let url = config.getAvatarUploadUrl() + '/v2/upload';
+        let url = dbh.config.getAvatarUploadUrl() + '/v2/upload';
         url = url + '?t=' + imgType
         let formData = new FormData()
         formData.append('image', file)
@@ -16,7 +16,7 @@ const fileApi = {
         return axios.post(url, formData);
     },
     query (date, pageIndex, pageSize) {
-        let url = config.getAvatarUploadUrl() + '/picture/query'
+        let url = dbh.config.getAvatarUploadUrl() + '/picture/query'
         let formData = new FormData();
         formData.append('uid', dbhTool.getUID())
         formData.append('jwt', dbhTool.getJwt())

@@ -18,13 +18,13 @@
       class="topbar-btn topbar-info-dropdown-toggle"
       @click.stop="dropMenu()"
     >
-      <img
-        v-if="head"
-        :src="head.removeSchema()"
-        alt="avatar"
-        class="avatar"
-      >
-      <i :class="iconClass" />
+      <el-image
+              v-if="head"
+              class="avatar"
+              lazy
+              :src="head.removeSchema()">
+      </el-image>
+      <i :class="iconClass"></i>
       <span>{{ name }}</span>
     </a>
     <ul
@@ -61,7 +61,10 @@ export default {
     },
     head: {
       required: false,
-      type: String
+      type: String,
+      default: function () {
+        return '';
+      }
     },
     iconClass: {
       type: String,

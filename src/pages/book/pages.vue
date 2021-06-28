@@ -246,7 +246,7 @@ export default {
   },
   methods: {
     getPageContent (row) {
-      var url = new URL(config.getApiUrl())
+      var url = new URL(dbh.config.getApiUrl())
       return url.origin + '/book/' + row.source_type_id + '/' + row.book_id + '/' + row.id
     },
     submitEditForm () {

@@ -251,7 +251,7 @@
         },
         created () {
             this.extraData.t = this.imgType
-            this.uploadApiUrl = window.config.getAvatarUploadUrl() + '/v2/upload';
+            this.uploadApiUrl = dbh.config.getAvatarUploadUrl() + '/v2/upload';
             this.extraData.uid = dbhTool.getUID()
             this.extraData.jwt = dbhTool.getJwt();
             this.extraData.oss_type = this.oss_type
@@ -331,10 +331,10 @@
 
                         that.count = parseInt(data.data.count)
                     } else {
-                        window.dbh.alertError(data.msg)
+                        dbh.alertError(data.msg)
                     }
                 }).catch((reason) => {
-                    window.dbh.alertError(reason)
+                    dbh.alertError(reason)
                 }).finally(() => {
                     console.debug('finally')
                     that.loadingUploadedImgs = false

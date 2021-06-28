@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 const DotEnv = require('dotenv-webpack')
+const path = require('path')
 
 module.exports = merge(baseConfig, {
     mode: 'development',
@@ -57,6 +58,13 @@ module.exports = merge(baseConfig, {
         new DotEnv({
             path: './.env.dev',
             safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+        }), new webpack.DefinePlugin({
+            // __VUE_OPTIONS_API__: true,
+            // __VUE_PROD_DEVTOOLS__: false,
+            __VUE_I18N_FULL_INSTALL__: true,
+            __VUE_I18N_LEGACY_API__: true,
+            __VUE_I18N_PROD_DEVTOOLS__: false,
+            __INTLIFY_PROD_DEVTOOLS__: false,
         }),
         new webpack.HotModuleReplacementPlugin()
     ]

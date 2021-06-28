@@ -5,14 +5,14 @@ import { dbhTool,dbhCache } from '@peter_xiter/dbh-js-tools/index'
 
 // 支持本地缓存操作
 const promisePost = function (servicePath, data) {
-    let url = config.getApiUrl() + servicePath
+    let url = dbh.config.getApiUrl() + servicePath
     return apiPost(url, data).then((resp) => {
         return resp.data
     })
 }
 // 支持本地缓存操作
 const defaultPost = function (servicePath, data, suc, fail) {
-    let url = config.getApiUrl() + servicePath
+    let url = dbh.config.getApiUrl() + servicePath
     apiPost(url, data).then((data) => {
         if (typeof suc === 'function') {
             suc(data.data)
@@ -54,9 +54,9 @@ const convertFormData = function (obj) {
 
 const apiPost = function (url, data) {
     if (!data) data = {}
-    data.app_version = window.config.getVersion()
+    data.app_version = dbh.config.getVersion()
     data.app_type = 'admin-pc'
-    data.client_id = window.config.getClientId()
+    data.client_id = dbh.config.getClientId()
     data.device_type = dbhTool.getDeviceType()
     data.device_token = dbhTool.getSessionId()
     let headers = {
@@ -121,9 +121,9 @@ const apiPost = function (url, data) {
 // const apiPost = function (url, data) {
 //     return new Promise((resolve, reject) => {
 //         if (!data) data = {}
-//         data.app_version = window.config.getVersion()
+//         data.app_version = dbh.config.getVersion()
 //         data.app_type = 'admin-pc'
-//         data.client_id = window.config.getClientId()
+//         data.client_id = dbh.config.getClientId()
 //         data.device_type = dbhTool.getDeviceType()
 //         data.device_token = dbhTool.getSessionId();
 //         let headers = {
