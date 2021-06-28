@@ -63,29 +63,12 @@
 <!--                          placeholder="商品简介"/>-->
 <!--            </el-form-item>-->
             <el-form-item
-                    :label="$t('Stock')"
-                    required
-            >
-                <el-input-number :min="0" :max="9999999"  size="mini"  v-model="addForm.stock" placeholder="库存"/>
-            </el-form-item>
-            <el-form-item
                     :label="$t('Unit')"
                     required
             >
                 <el-input maxlength="8" size="mini" show-word-limit v-model="addForm.unit" placeholder="单位"/>
             </el-form-item>
-            <el-form-item
-                    label="限购数量"
-                    required>
-                <el-input type="number" v-model="addForm.limit_items"/>
 
-                <div>(0: 表示不限购)</div>
-            </el-form-item>
-            <el-form-item
-                    label="多少天内"
-                    required>
-                <el-input type="number" v-model="addForm.limit_days"/>
-            </el-form-item>
             <el-form-item
                     :label="$t('Cover')">
                 <ImgUploaderV3 show="local" imgCls="coverImg" ref="addImgUploader" @onUploadSuccess="onUploadSuccess"
@@ -132,9 +115,9 @@
                 active: 0, // 当前步骤
                 cateOptions: [],
                 addForm: {
-                    stock: 0,
-                    limit_days: 1,
-                    limit_items: 0,
+                    // stock: 0,
+                    // limit_days: 1,
+                    // limit_items: 0,
                     small_image:'',
                     title: '',
                     sub_title: '',

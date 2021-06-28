@@ -1,4 +1,5 @@
 export default  {
+	"Unit": "单位",
 	"English": "English",
 	"中文简体": "中文简体",
 	"Weixin": "微信",

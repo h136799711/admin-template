@@ -63,29 +63,14 @@
 <!--                          v-model="editForm.description"-->
 <!--                          placeholder="商品简介"/>-->
 <!--            </el-form-item>-->
-            <el-form-item
-                    :label="$t('Stock')"
-                    required
-            >
-                <el-input-number :min="0" :max="9999999"  size="mini"  v-model="editForm.stock" placeholder="库存"/>
-            </el-form-item>
+
             <el-form-item
                     :label="$t('Unit')"
                     required
             >
                 <el-input maxlength="8" size="mini" show-word-limit v-model="editForm.unit" placeholder="单位"/>
             </el-form-item>
-            <el-form-item
-                    label="限购数量"
-                    required>
-                <el-input type="number" v-model="editForm.limit_items"/>
-                <div>(0: 表示不限购)</div>
-            </el-form-item>
-            <el-form-item
-                    label="多少天内"
-                    required>
-                <el-input type="number" v-model="editForm.limit_days"/>
-            </el-form-item>
+
             <el-form-item
                     :label="$t('Cover')">
                 <ImgUploaderV3 show="local" imgCls="coverImg" ref="addImgUploader" @onUploadSuccess="onUploadSuccess"
@@ -130,9 +115,9 @@
         data () {
             return {
                 editForm: {
-                    stock: 0,
-                    limit_days: 1,
-                    limit_items: 0,
+                    // stock: 0,
+                    // limit_days: 1,
+                    // limit_items: 0,
                     title: '',
                     sub_title: '',
                     main_image: '',
@@ -194,10 +179,10 @@
                 this.editForm.main_image = resp.main_image;
                 this.editForm.display_order = resp.display_order;
                 this.editForm.small_image = resp.small_image;
-                this.editForm.limit_days = resp.limit_days;
-                this.editForm.limit_items = resp.limit_items;
+                // this.editForm.limit_days = resp.limit_days;
+                // this.editForm.limit_items = resp.limit_items;
                 this.editForm.unit = resp.unit;
-                this.editForm.stock = parseInt(resp.stock);
+                // this.editForm.stock = parseInt(resp.stock);
 
                 this.loading = false;
             }

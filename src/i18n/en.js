@@ -1,4 +1,5 @@
 export default  {
+	"Unit": "Unit",
 	"English": "English",
 	"中文简体": "中文简体",
 	"Rebate": "Rebate",

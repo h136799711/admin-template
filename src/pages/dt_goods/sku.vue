@@ -62,6 +62,11 @@
                         :label="$t('ID')"
                 />
                 <el-table-column
+                        width="120px"
+                        prop="stock"
+                        :label="$t('Stock')"
+                />
+                <el-table-column
                         width="200px"
                         prop="title"
                         :label="$t('Title')"
@@ -91,6 +96,11 @@
                     <template #default="scope">
                         <el-button
                                 size="mini"
+                                @click="onStock(scope.row)">
+                            库存管理
+                        </el-button>
+                        <el-button
+                                size="mini"
                                 icon="el-icon-edit"
                                 @click="onEdit(scope.row)">
                             {{$t('Edit')}}
@@ -108,6 +118,49 @@
             </el-table>
         </div>
 
+        <el-dialog
+                :show-close="false"
+                :append-to-body="false"
+                title="库存管理"
+                v-model="dialogStockVisible"
+        >
+            <el-form
+                    ref="stockForm"
+                    :model="stockForm"
+                    label-position="right"
+                    label-width="100px"
+            >
+
+                <el-form-item
+                        label="库存变化"
+                        required
+                        prop="change_num" >
+                    <el-input v-model="stockForm.change_num"/>
+                </el-form-item>
+
+                <el-form-item
+                        :label="$t('Note')"
+                         >
+                    <el-input type="textarea" rows="5" v-model="stockForm.note"/>
+                </el-form-item>
+
+
+            </el-form>
+            <template #footer>
+                <div  class="dialog-footer" >
+                    <el-button @click="dialogStockVisible = false">
+                        {{ $t('Cancel') }}
+                    </el-button>
+                    <el-button
+                            :loading="loading"
+                            type="primary"
+                            @click="submitStockForm()"
+                    >
+                        {{ $t('Confirm') }}
+                    </el-button>
+                </div>
+            </template>
+        </el-dialog>
 
         <el-dialog
                 :show-close="false"
@@ -198,7 +251,19 @@
                 >
                     <ImgUploaderV3 imgCls="goodsImg" :default-img-url="editForm.img"  @onUploadSuccess="onUploadSuccess" :clear="imgUploadClear" imgType="goods" />
                 </el-form-item>
-
+                <el-form-item
+                        style="display: none"
+                        label="限购数量"
+                        >
+                    <el-input type="number" v-model="editForm.limit_items"/>
+                    <div>(0: 表示不限购)</div>
+                </el-form-item>
+                <el-form-item
+                        style="display: none"
+                        label="多少天内"
+                        >
+                    <el-input type="number" v-model="editForm.limit_days"/>
+                </el-form-item>
             </el-form>
             <template #footer>
 
@@ -222,6 +287,7 @@
 </template>
 
 <script>
+    import dtStockHisApi from "../../api/dtStockHisApi";
     import goodsSkuApi from '../../api/dtGoodsApi'
     import ImgUploaderV3 from '../../components/img-uploaderV3'
     import {dbhTool} from '@peter_xiter/dbh-js-tools'
@@ -235,17 +301,27 @@
         data() {
             return {
                 imgUploadClear: false,
+                dialogStockVisible: false,
+                stockForm: {
+                    sku_id: 0,
+                    change_num: 0,
+                    note: ""
+                },
                 addForm: {
                     price: 0,
                     img: '',
                     title: '',
-                    goods_id: 0
+                    goods_id: 0,
+                    limit_items: 0,
+                    limit_days: 0,
                 },
                 editForm: {
                     id: 0,
                     price: '',
                     img: '',
-                    title: ''
+                    title: '',
+                    limit_items: 0,
+                    limit_days: 0,
                 },
                 rules: {
                     title: [
@@ -276,6 +352,23 @@
                     this.addForm.img = dbhTool.getImgUrl(data.trim(","))
                 }
             },
+            onStock(row) {
+                this.stockForm.sku_id = row.id;
+                this.stockForm.change_num = 0;
+                this.stockForm.note = '';
+                this.dialogStockVisible = true;
+            },
+            submitStockForm() {
+                let that = this;
+                this.loading = true;
+                dtStockHisApi.create(this.stockForm).catch(function (err) {
+                    tools.alertError(err);
+                }).finally(function () {
+                    that.dialogStockVisible = false;
+                    that.loading = false;
+                    that.refresh();
+                })
+            },
             onAdd() {
                 this.imgUploadClear = true;
                 this.dialogAddVisible = true;
@@ -283,11 +376,13 @@
                 this.addForm.title = '';
                 this.addForm.price = 0;
                 this.addForm.img = '';
+                this.addForm.limit_days = 0;
+                this.addForm.limit_items = 0;
             },
             submitAddForm() {
                 let that = this;
                 this.loading = true;
-                this.addForm.price = (this.addForm.price * 100).toFixed(0);
+                this.addForm.price = (this.addForm.price * 100).toFixed(2);
                 goodsSkuApi.addSku(this.addForm).finally(function () {
                     that.dialogAddVisible = false;
                     that.loading = false;
@@ -301,11 +396,13 @@
                 this.editForm.title = row.title;
                 this.editForm.price = row.price / 100.0;
                 this.editForm.img = row.img;
+                this.editForm.limit_days = row.limit_days;
+                this.editForm.limit_items = row.limit_items;
             },
             submitEditForm() {
                 let that = this;
                 this.loading = true;
-                this.editForm.price = (this.editForm.price * 100).toFixed(0);
+                this.editForm.price = (this.editForm.price * 100);
                 goodsSkuApi.editSku(this.editForm).finally(function () {
                     that.dialogEditVisible = false;
                     that.loading = false;

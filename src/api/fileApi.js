@@ -2,7 +2,7 @@
 'use strict'
 
 import { dbhTool } from '@peter_xiter/dbh-js-tools'
-
+import axios from 'axios'
 const fileApi = {
     upload (file, imgType) {
         imgType = imgType || 'other'

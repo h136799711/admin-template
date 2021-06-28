@@ -125,6 +125,7 @@ const DtGoodsIndex = (() => import('./pages/dt_goods/index.vue'))
 const DtGoodsCreate = (() => import('./pages/dt_goods/create.vue'))
 const DtGoodsEdit = (() => import('./pages/dt_goods/edit.vue'))
 const DtGoodsSku = (() => import('./pages/dt_goods/sku.vue'))
+const DtGoodsStock = (() => import('./pages/dt_goods/stock.vue'))
 
 const DtCate = (() => import('./pages/cate/index.vue'))
 const DtCateGoods = (() => import('./pages/cate/relate_goods.vue'))
@@ -180,6 +181,7 @@ const routes = [
             { path: 'goods/edit/:id', component: GoodsEdit, props: true },
             { path: 'goods/sku/:id', component: GoodsSku, props: true },
             { path: 'goods/place/:id', component: GoodsPlace, props: true },
+            { path: 'stock/index', component: DtGoodsStock },
             { path: 'video/index', component: VideoIndex },
             { path: 'video/cate', component: VideoCate, props: false },
             { path: 'video/source/:id', component: VideoSource, props: true },

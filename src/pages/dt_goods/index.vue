@@ -50,7 +50,7 @@
                         :label="$t('ID')"
                 />
                 <el-table-column
-                        width="160px"
+                        width="140px"
                         prop="title"
                         :label="$t('Title')"
                 >
@@ -60,16 +60,16 @@
                         {{scope.row.sub_title}}
                     </template>
                 </el-table-column>
-                <el-table-column
-                        header-align="center"
-                        width="100px"
-                        :label="$t('Stock')"
-                >
-                    <template #default="scope">
-                        <el-input size="mini" v-model="scope.row.stock"></el-input>
-                        <el-button class="margin-sm-top" @click="onSaveStock(scope.row)" v-if="scope.row.id == currentRow" size="mini" type="primary">保存</el-button>
-                    </template>
-                </el-table-column>
+<!--                <el-table-column-->
+<!--                        header-align="center"-->
+<!--                        width="100px"-->
+<!--                        :label="$t('Stock')"-->
+<!--                >-->
+<!--                    <template #default="scope">-->
+<!--                        <el-input size="mini" v-model="scope.row.stock"></el-input>-->
+<!--                        <el-button class="margin-sm-top" @click="onSaveStock(scope.row)" v-if="scope.row.id == currentRow" size="mini" type="primary">保存</el-button>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
                 <el-table-column
                         header-align="center"
                         width="120px"
@@ -237,7 +237,7 @@
                 dtGoodsApi.saveStock({id: row.id, stock: row.stock}).then(() => {
                     that.refresh();
                 }).catch((msg) => {
-                    dbh.alertError(msg);
+                    tools.alertError(msg);
                 }).finally(() => {
                     that.loading = false;
                 })
