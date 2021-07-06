@@ -1,10 +1,10 @@
 /* eslint-disable */
 'use strict';
-import http from '../assets/plugins/http.js';
+import {defaultPost} from '../assets/plugins/http.js';
 
 const apiLogApi = {
   query (data, suc, fail) {
-    http.defaultPost('/100/Log/queryApi', data, suc, fail);
+    defaultPost('/100/Log/queryApi', data, suc, fail);
   }
 };
 
